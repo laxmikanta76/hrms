@@ -149,9 +149,9 @@ class Auth extends MX_Controller {
 		} else {
 
 			$captcha = create_captcha(array(
-			    'img_path'      => './assets/img/captcha/',
+			    'img_path'      => FCPATH . 'assets/img/captcha/',
 			    'img_url'       => base_url('assets/img/captcha/'),
-			    'font_path'     => './assets/fonts/captcha.ttf',
+			    'font_path'     => FCPATH . 'assets/fonts/captcha.ttf',
 			    'img_width'     => '328',
 			    'img_height'    => 64,
 			    'expiration'    => 600, //5 min
