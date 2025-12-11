@@ -76,11 +76,11 @@ $active_record = TRUE;//ci version 2.x
 
 $db['default'] = array(
     'dsn'      => '',
-    'hostname' => getenv('DB_HOST'),
-    'username' => getenv('DB_USERNAME'),
-    'password' => getenv('DB_PASSWORD'),
-    'database' => getenv('DB_DATABASE'),
-    'port'     => getenv('DB_PORT'),
+    'hostname' => 'ballast.proxy.rlwy.net',
+    'username' => 'root',
+    'password' => 'wArTppYvKqEsrtsKeaXbRDHnRAIbXgol',
+    'database' => 'railway',
+    'port'     => 38802,
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
