@@ -319,23 +319,23 @@ switch (ENVIRONMENT)
 Check Database Connection
 ----------------------------
 *********/
-include('application/config/database.php');
-//$mysqli = new mysqli($db['default']['hostname'],$db['default']['username'],$db['default']['password'],$db['default']['database']);
+// include('application/config/database.php');
+// $mysqli = new mysqli($db['default']['hostname'],$db['default']['username'],$db['default']['password'],$db['default']['database']);
 
-// Check connection
-if ($mysqli -> connect_errno) {
- $https = false;
- if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-  $protocol = 'https://';
-}
-else {
-  $protocol = 'http://';
-}
-$dirname = rtrim(dirname($_SERVER['PHP_SELF']), '/').'/';
-    if(isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] != 'off') $https = true;
-$installerurl=$protocol.$_SERVER['HTTP_HOST'].$dirname;
-header('Location: '.$installerurl.'install');
-exit;
-}
+// // Check connection
+// if ($mysqli -> connect_errno) {
+//  $https = false;
+//  if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+//   $protocol = 'https://';
+// }
+// else {
+//   $protocol = 'http://';
+// }
+// $dirname = rtrim(dirname($_SERVER['PHP_SELF']), '/').'/';
+//     if(isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] != 'off') $https = true;
+// $installerurl=$protocol.$_SERVER['HTTP_HOST'].$dirname;
+// header('Location: '.$installerurl.'install');
+// exit;
+// }
 
 require_once BASEPATH.'core/CodeIgniter.php';
