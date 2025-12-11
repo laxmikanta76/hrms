@@ -320,7 +320,7 @@ Check Database Connection
 ----------------------------
 *********/
 include('application/config/database.php');
-$mysqli = new mysqli($db['default']['hostname'],$db['default']['username'],$db['default']['password'],$db['default']['database']);
+//$mysqli = new mysqli($db['default']['hostname'],$db['default']['username'],$db['default']['password'],$db['default']['database']);
 
 // Check connection
 if ($mysqli -> connect_errno) {
