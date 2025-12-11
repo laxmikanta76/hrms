@@ -42,6 +42,9 @@ $config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ?
 */
 $config['index_page'] = '';
 
+$config['log_path'] = '/tmp/';
+$config['cache_path'] = '/tmp/';
+
 /*
 |--------------------------------------------------------------------------
 | URI PROTOCOL
