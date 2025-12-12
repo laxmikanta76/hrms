@@ -48,22 +48,31 @@
                           <input type="hidden" name="attendanc_id" value="<?php echo (!empty($editdata)?$editdata->atten_his_id:'')?>">
                             <label for="employee_id" class="col-sm-3 col-form-label"><?php echo display('emp_id') ?> *</label>
                             <div class="col-sm-4">
-                       <?php  if($this->session->userdata('isAdmin')==1 || $this->session->userdata('supervisor')==1){?> 
-                              <?php if ($is_employee): ?>
-                                <!-- Hidden real value -->
-                                <input type="hidden" name="employee_id" value="<?php echo key($dropdownatn); ?>">
+                       <?php  
+            $role_id = $this->session->userdata('role_id');  
+            // role_id = 1 → Admin
+            // role_id = 8 → HR
+            // role_id = 7 → Employee
+        ?>
 
-                                <!-- Read-only display -->
-                                <input type="text" class="form-control" 
-                                value="<?php echo reset($dropdownatn); ?>" disabled>
+        <?php if ($role_id == 1 || $role_id == 8): ?>  
+            <!-- Admin or HR → Show Dropdown -->
+            <?php echo form_dropdown(
+                'employee_id',
+                $dropdownatn,
+                (!empty($editdata)?$editdata->uid:''),
+                'class="form-control" id="employee_id" style="width:100%"'
+            ); ?>
+        
+        <?php else: ?>  
+            <!-- Employee → No Dropdown -->
+            <input type="text" class="form-control" 
+                   value="<?php echo $this->session->userdata('first_name') . ' ' . $this->session->userdata('last_name'); ?>" 
+                   readonly>
 
-                                <?php else: ?>
-                                   <?php echo form_dropdown('employee_id', $dropdownatn, '', 'class="form-control"'); ?>
-                                <?php endif; ?>
-                              <?php }else{?> 
-                                <input type="text" name="employee_name" class="form-control" value="<?php echo $this->session->userdata('first_name').' '.$this->session->userdata('last_name');?>" readonly>
-                                 <input type="hidden" name="employee_id" id="employee_id" class="form-control" value="<?php echo $this->session->userdata('employee_id');?>">
-                               <?php }?>
+            <input type="hidden" name="employee_id" 
+                   value="<?php echo $this->session->userdata('employee_id'); ?>">
+        <?php endif; ?>
                                
                             </div>
                         </div> 
