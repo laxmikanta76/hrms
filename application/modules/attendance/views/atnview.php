@@ -49,7 +49,17 @@
                             <label for="employee_id" class="col-sm-3 col-form-label"><?php echo display('emp_id') ?> *</label>
                             <div class="col-sm-4">
                        <?php  if($this->session->userdata('isAdmin')==1 || $this->session->userdata('supervisor')==1){?> 
-                              <?php echo form_dropdown('employee_id',$dropdownatn,(!empty($editdata)?$editdata->uid:''),'class="form-control" id="employee_id" style="width:100%" ') ?>
+                              <?php if ($is_employee): ?>
+                                <!-- Hidden real value -->
+                                <input type="hidden" name="employee_id" value="<?php echo key($dropdownatn); ?>">
+
+                                <!-- Read-only display -->
+                                <input type="text" class="form-control" 
+                                value="<?php echo reset($dropdownatn); ?>" disabled>
+
+                                <?php else: ?>
+                                   <?php echo form_dropdown('employee_id', $dropdownatn, '', 'class="form-control"'); ?>
+                                <?php endif; ?>
                               <?php }else{?> 
                                 <input type="text" name="employee_name" class="form-control" value="<?php echo $this->session->userdata('first_name').' '.$this->session->userdata('last_name');?>" readonly>
                                  <input type="hidden" name="employee_id" id="employee_id" class="form-control" value="<?php echo $this->session->userdata('employee_id');?>">

@@ -20,6 +20,25 @@ class Home extends MX_Controller {
     function index($id = null) {
         $this->permission->module('attendance','read')->redirect();
         $data['title']            = display('attendance_list');
+
+        // Fetch logged-in user information
+        $user_id    = $this->session->userdata('id');
+        $user_name  = $this->session->userdata('fullname');
+        $role_id    = $this->session->userdata('role_id');  // adjust if your HRMS uses different field
+
+        if ($role_id == 2) {  // Employee
+          // Show only the logged-in employee
+          $data['dropdownatn'] = [
+            $user_id => $user_name
+          ];
+          $data['is_employee'] = true;
+
+        } else {
+          // Admin / HR → show all employees
+          $data['dropdownatn'] = $this->Csv_model->Employeename();
+          $data['is_employee'] = false;
+       }
+
         $data['addressbook']      = $this->Csv_model->get_addressbook();
         $data['dropdownatn']      = $this->Csv_model->Employeename();
         if(!empty($id)){
