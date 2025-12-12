@@ -20,26 +20,6 @@ class Home extends MX_Controller {
     function index($id = null) {
         $this->permission->module('attendance','read')->redirect();
         $data['title']            = display('attendance_list');
-
-        // Get logged-in user data
-    $user_id     = $this->session->userdata('id');
-    $role_id     = $this->session->userdata('role_id');
-    $first_name  = $this->session->userdata('first_name');
-    $last_name   = $this->session->userdata('last_name');
-
-    // Role-based Attendance dropdown control
-    if ($role_id == 7) {  // Employee role
-        // Only logged-in user
-        $data['dropdownatn'] = [
-            $user_id => $first_name . ' ' . $last_name
-        ];
-        $data['is_employee'] = true;
-
-    } else {
-        // Admin or HR: show full list
-        $data['dropdownatn'] = $this->Csv_model->Employeename();
-        $data['is_employee'] = false;
-    }
         $data['addressbook']      = $this->Csv_model->get_addressbook();
         $data['dropdownatn']      = $this->Csv_model->Employeename();
         if(!empty($id)){
