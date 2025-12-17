@@ -73,8 +73,9 @@ class Home extends MX_Controller {
     { 
         $this->load->helper('employee');
         $data['title'] = display('employee');
-        $time = $this->input->post('intime');
-        $att_time = date('Y-m-d H:i:s', strtotime($time));
+        // $time = $this->input->post('intime');
+        // $att_time = date('Y-m-d H:i:s', strtotime($time));
+        $att_time = date('Y-m-d H:i:s');
         $id = $this->input->post('attendanc_id');
         #-------------------------------#intime
         if (can_select_employee()) {

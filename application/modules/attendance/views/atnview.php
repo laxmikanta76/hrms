@@ -93,7 +93,7 @@
                         <div class="form-group row">
                           <label for="intime" class="col-sm-3 col-form-label"><?php echo display('time')?>*</label>
                           <div class="col-sm-4">
-                            <input type="text" name="intime" id="" class="form-control datetimepicker" value="<?php echo (!empty($editdata)?$editdata->time:'')?>">
+                            <input type="text" name="intime" id="" class="form-control datetimepicker" value="<?php echo date('Y-m-d H:i:s');?>"readonly>
                           </div>
 
                         </div>
