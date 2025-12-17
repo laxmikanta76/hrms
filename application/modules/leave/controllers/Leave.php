@@ -282,7 +282,7 @@ public function application(){
   public function others_leave(){ 
 
 	    $this->load->model('attendance/Csv_model');
-	    $data['dropdownatn'] = $this->Leave_model->Employeename();
+	    //$data['dropdownatn'] = $this->Leave_model->Employeename();
         $data['title'] = display('application');//agent_picture
 		$data['dropdownatn'] = $this->Csv_model->Employeename();
         #-------------------------------#
