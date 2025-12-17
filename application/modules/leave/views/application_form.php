@@ -1,3 +1,4 @@
+<?php die('THIS VIEW IS LOADED'); ?>
 <div class="form-group text-right">
 <?php if($this->permission->method('leave','create')->access()): ?>
 <button type="button" class="btn btn-primary btn-md" data-target="#add" data-toggle="modal"  ><i class="fa fa-plus-circle" aria-hidden="true"></i>
