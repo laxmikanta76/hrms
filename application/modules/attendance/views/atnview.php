@@ -93,7 +93,7 @@
                         <div class="form-group row">
                           <label for="intime" class="col-sm-3 col-form-label"><?php echo display('time')?>*</label>
                           <div class="col-sm-4">
-                            <input type="text" name="intime" id="" class="form-control" value="<?php echo date('Y-m-d H:i:s');?>"readonly>
+                            <input type="text" name="intime" id="" class="form-control datetimepicker" value="<?php echo date('Y-m-d H:i:s');?>"readonly>
                           </div>
 
                         </div>
@@ -202,7 +202,7 @@
 
 <script type="text/javascript">
   $(function () {
-    $('.admin-datetimepicker').datetimepicker({
+    $('.datetimepicker').datetimepicker({
         use24hours: true,
         format: 'yyyy-mm-dd HH:mm'
     });
