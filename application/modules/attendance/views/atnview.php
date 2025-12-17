@@ -45,18 +45,19 @@
     <div id="checkin" class="tab-pane fade in active">
       <?= form_open('attendance/Home/create_atten') ?>
                         <div class="form-group row">
-                          <input type="hidden" name="attendanc_id" value="<?php echo (!empty($editdata)?$editdata->atten_his_id:'')?>">
-                            <label for="employee_id" class="col-sm-3 col-form-label"><?php echo display('emp_id') ?> *</label>
-                            <div class="col-sm-4">
-                       <?php  if($this->session->userdata('isAdmin')==1 || $this->session->userdata('supervisor')==1){?> 
-                              <?php echo form_dropdown('employee_id',$dropdownatn,(!empty($editdata)?$editdata->uid:''),'class="form-control" id="employee_id" style="width:100%" ') ?>
-                              <?php }else{?> 
-                                <input type="text" name="employee_name" class="form-control" value="<?php echo $this->session->userdata('first_name').' '.$this->session->userdata('last_name');?>" readonly>
-                                 <input type="hidden" name="employee_id" id="employee_id" class="form-control" value="<?php echo $this->session->userdata('employee_id');?>">
-                               <?php }?>
-                               
-                            </div>
-                        </div> 
+                             <input type="hidden" name="attendanc_id" value="<?php echo (!empty($editdata)?$editdata->atten_his_id:'')?>">
+                                <label for="employee_id" class="col-sm-3 col-form-label"><?php echo display('emp_id') ?> *</label>
+                                   <div class="col-sm-4">
+                                      <?php if (can_select_employee()): ?>
+                                       <!-- ADMIN / HR / SUPERVISOR -->
+                                      <?php echo form_dropdown('employee_id',$dropdownatn,(!empty($editdata)?$editdata->uid:''),'class="form-control" id="employee_id" style="width:100%"'); ?>
+                                      <?php else: ?>
+                                      <!-- EMPLOYEE -->
+                                      <input type="text"name="employee_name"class="form-control"value="<?php echo $this->session->userdata('first_name').' '.$this->session->userdata('last_name'); ?>"readonly>
+                                      <input type="hidden"name="employee_id"value="<?php echo $this->session->userdata('employee_id'); ?>">
+                                      <?php endif; ?>
+                                   </div>
+                         </div> 
                         <div class="form-group row">
                           <label for="intime" class="col-sm-3 col-form-label"><?php echo display('time')?>*</label>
                           <div class="col-sm-4">
