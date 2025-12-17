@@ -235,6 +235,13 @@ public function application(){
       
         #-------------------------------#
         if ($this->form_validation->run() === true) {
+			$this->load->helper('employee');
+
+           if (can_select_employee()) {
+               $employee_id = $this->input->post('employee_id', true);
+            } else {
+               $employee_id = $this->session->userdata('employee_id');
+            }
 				$postData = [
 			'employee_id'           => $this->input->post('employee_id',true),
 			'apply_strt_date' 	    => $this->input->post('apply_strt_date',true),
