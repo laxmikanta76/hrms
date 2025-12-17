@@ -244,7 +244,6 @@ public function application(){
             }
 				$postData = [
 			'employee_id'           => $employee_id,
-			'employee_id'           => $this->input->post('employee_id',true),
 			'apply_strt_date' 	    => $this->input->post('apply_strt_date',true),
 			'apply_end_date' 	    => $this->input->post('apply_end_date',true),
 			'leave_aprv_strt_date' 	=> $this->input->post('leave_aprv_strt_date',true),
@@ -280,11 +279,7 @@ public function application(){
 
     // others leave info
   public function others_leave(){ 
-
-	    $this->load->model('attendance/Csv_model');
-	    //$data['dropdownatn'] = $this->Leave_model->Employeename();
         $data['title'] = display('application');//agent_picture
-		$data['dropdownatn'] = $this->Csv_model->Employeename();
         #-------------------------------#
         $this->form_validation->set_rules('employee_id',display('employee_id'));
 		$this->form_validation->set_rules('apply_strt_date',display('apply_strt_date'));
