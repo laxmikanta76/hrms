@@ -9,7 +9,7 @@ function can_select_employee()
     $role_id  = $CI->session->userdata('role_id');
 
     // Roles that can select employee
-    $allowed_roles = [7, 8, 9]; 
+    $allowed_roles = [7, 8, 9];
     // 8 = HR
     // 9 = Supervisor
     // 10 = Manager

@@ -71,12 +71,17 @@ class Home extends MX_Controller {
     } 
     public function create_atten()
     { 
+        $this->load->helper('employee');
         $data['title'] = display('employee');
         $time = $this->input->post('intime');
         $att_time = date('Y-m-d H:i:s', strtotime($time));
         $id = $this->input->post('attendanc_id');
         #-------------------------------#intime
-        $this->form_validation->set_rules('employee_id',display('employee_id'),'required');
+        if (can_select_employee()) {
+           $employee_id = $this->input->post('employee_id', true);
+        } else {
+           $employee_id = $this->session->userdata('employee_id');
+        }
          $this->form_validation->set_rules('intime',display('time'),'required');
         #-------------------------------#
         if ($this->form_validation->run() === true) {
