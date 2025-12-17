@@ -202,7 +202,7 @@
 
 <script type="text/javascript">
   $(function () {
-    $('.datetimepicker').datetimepicker({
+    $('.admin-datetimepicker').datetimepicker({
         use24hours: true,
         format: 'yyyy-mm-dd HH:mm'
     });
