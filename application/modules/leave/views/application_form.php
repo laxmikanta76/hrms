@@ -75,6 +75,11 @@
                         <div class="form-group row">
                             <label for="employee_id" class="col-sm-2 col-form-label">Select <?php echo display('employee_name') ?></label>
                             <div class="col-sm-4">
+                                <?php
+                                  $this->load->helper('employee');
+                                  $emp_id   = $this->session->userdata('employee_id');
+                                  $emp_name = $this->session->userdata('first_name').' '.$this->session->userdata('last_name');
+                               ?>
                           <!--  <input type="text" name="employee_id" class="form-control"> -->
                             <?php if (can_select_employee()): ?>
                                        <!-- ADMIN / HR / SUPERVISOR -->

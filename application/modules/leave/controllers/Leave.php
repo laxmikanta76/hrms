@@ -243,6 +243,7 @@ public function application(){
                $employee_id = $this->session->userdata('employee_id');
             }
 				$postData = [
+			'employee_id'           => $employee_id,
 			'employee_id'           => $this->input->post('employee_id',true),
 			'apply_strt_date' 	    => $this->input->post('apply_strt_date',true),
 			'apply_end_date' 	    => $this->input->post('apply_end_date',true),
