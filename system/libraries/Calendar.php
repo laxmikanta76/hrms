@@ -290,10 +290,18 @@ class CI_Calendar {
 
 					if (isset($data[$day]))
 					{
+						// Prepare content safely
+                        if (is_array($data[$day])) {
+                            $content = implode('<br>', $data[$day]);
+                        } else {
+                            $content = $data[$day];
+                      }
 						// Cells with content
-						$temp = ($is_current_month === TRUE && $day == $cur_day) ?
-								$this->replacements['cal_cell_content_today'] : $this->replacements['cal_cell_content'];
-						$out .= str_replace(array('{content}', '{day}'),array($content, $day),$temp);
+						$temp = ($is_current_month === TRUE && $day == $cur_day)
+                                ? $this->replacements['cal_cell_content_today']
+                                : $this->replacements['cal_cell_content'];
+
+                       $out .= str_replace(array('{content}', '{day}'),array($content, $day),$temp);
 					}
 					else
 					{
