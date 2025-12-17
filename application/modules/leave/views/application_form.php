@@ -76,7 +76,14 @@
                             <label for="employee_id" class="col-sm-2 col-form-label">Select <?php echo display('employee_name') ?></label>
                             <div class="col-sm-4">
                           <!--  <input type="text" name="employee_id" class="form-control"> -->
-                            <?php echo form_dropdown('employee_id',$dropdown,null,'class="form-control" style="width:100%"') ?>
+                            <?php if (can_select_employee()): ?>
+                                       <!-- ADMIN / HR / SUPERVISOR -->
+                                      <?php echo form_dropdown('employee_id',$dropdownatn,(!empty($editdata)?$editdata->uid:''),'class="form-control" id="employee_id" style="width:100%"'); ?>
+                                      <?php else: ?>
+                                      <!-- EMPLOYEE -->
+                                      <input type="text"name="employee_name"class="form-control"value="<?php echo $this->session->userdata('first_name').' '.$this->session->userdata('last_name'); ?>"readonly>
+                                      <input type="hidden"name="employee_id"value="<?php echo $this->session->userdata('employee_id'); ?>">
+                                 <?php endif; ?>
                                
                             </div>
                             <label for="apply_date" class="col-sm-2 col-form-label">
