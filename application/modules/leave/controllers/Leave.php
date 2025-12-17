@@ -5,7 +5,6 @@ class Leave extends MX_Controller {
 
 public function __construct()
 	{
-		$this->load->model('Csv_model');
 		parent::__construct();
 		$this->db->query('SET SESSION sql_mode = ""');
 		$this->load->model(array(
@@ -281,6 +280,8 @@ public function application(){
 
     // others leave info
   public function others_leave(){ 
+
+	    $this->load->model('attendance/Csv_model');
 	    $data['dropdownatn'] = $this->Leave_model->Employeename();
         $data['title'] = display('application');//agent_picture
 		$data['dropdownatn'] = $this->Csv_model->Employeename();
