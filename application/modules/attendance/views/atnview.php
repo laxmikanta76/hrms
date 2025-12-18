@@ -61,7 +61,7 @@
                         <div class="form-group row">
                           <label for="intime" class="col-sm-3 col-form-label"><?php echo display('time')?>*</label>
                           <div class="col-sm-4">
-                            <input type="text" name="intime" id="" class="form-control" value="<?php echo date('Y-m-d H:i:s'); ?>">
+                            <input type="hidden" name="intime" id="" class="form-control" value="<?php echo date('Y-m-d H:i:s'); ?>">
                           </div>
 
                         </div>
