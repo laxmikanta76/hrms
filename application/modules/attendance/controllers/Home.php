@@ -456,6 +456,7 @@ public function report_user(){
     } 
     //Attendance Log report
     public function att_log_report(){
+        die("INSIDE att_log_report()");
         $this->load->helper('employee'); // role checker
         $data['title']   = 'Attendance Log';
         // Determine user access
