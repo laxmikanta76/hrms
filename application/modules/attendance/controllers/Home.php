@@ -467,7 +467,7 @@ public function report_user(){
         $employee_id = $this->session->userdata('employee_id');
         }
         $config["base_url"] = base_url('attendance/home/att_log_report/');
-        $config["total_rows"]  = $this->Csv_model->count_att_report();
+        $config["total_rows"]  = $this->Csv_model->count_att_report($employee_id);
         $config["per_page"]    = 10;
         $config["uri_segment"] = 4;
         $config["last_link"] = "Last"; 
@@ -493,7 +493,7 @@ public function report_user(){
         $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
         $data["links"] = $this->pagination->create_links();
         $data['module']  = "attendance";
-        $data['queryd']=$this->Csv_model->att_report($config["per_page"], $page);
+        $data['queryd']=$this->Csv_model->att_report($config["per_page"], $page,$employee_id);
         // User dropdown (only show for admins)
         if (can_select_employee()) {
         $data['userlist'] = $this->Csv_model->userlist();
