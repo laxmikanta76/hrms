@@ -12,9 +12,8 @@
                                 <label for="employeelist"><?php echo display('user_name')?>:</label>
                                 <?php if (can_select_employee()): ?>
                                          <select name="employee_id" class="form-control">
-                                         <option value="">Select User</option>
-                                         <?php foreach ($userlist as $user): ?>
-                                         <option value="<?= $user->employee_id ?>"><?= $user->first_name ?> <?= $user->last_name ?></option>
+                                         <?php foreach ($userlist as $id => $name): ?>
+                                         <option value="<?= $id ?>"><?= $name ?></option>
                                          <?php endforeach; ?>
                                          </select>
                                      <?php else: ?>
