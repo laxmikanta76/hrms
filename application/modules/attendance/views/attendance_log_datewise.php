@@ -63,14 +63,28 @@ foreach ($queryd as $attendance) {?>
                 <th><?php echo display('action')?></th>
             </tr>
            <?php
-$att_in = $this->db->select('MIN(a.time) as intime,MAX(a.time) as outtime,a.uid,b.first_name,b.last_name')
-->from('attendance_history a')
-->join('employee_history b','a.uid = b.employee_id','left')
-->like('a.time',date( "Y-m-d", strtotime($attendance->mydate)),'after')
-->group_by('a.uid')
-->order_by('a.uid','ASC')
-->get()
-->result();
+           // GET attendance records for this date
+$this->db->select('MIN(a.time) as intime, MAX(a.time) as outtime, a.uid, b.first_name, b.last_name');
+$this->db->from('attendance_history a');
+$this->db->join('employee_history b', 'a.uid = b.employee_id', 'left');
+$this->db->like('a.time', date("Y-m-d", strtotime($attendance->mydate)), 'after');
+$this->db->group_by('a.uid');
+$this->db->order_by('a.uid', 'ASC');
+
+// 🔥 If employee (NOT admin), show only own attendance
+if (!can_select_employee()) {
+    $this->db->where('a.uid', $this->session->userdata('employee_id'));
+}
+
+$att_in = $this->db->get()->result();
+// $att_in = $this->db->select('MIN(a.time) as intime,MAX(a.time) as outtime,a.uid,b.first_name,b.last_name')
+// ->from('attendance_history a')
+// ->join('employee_history b','a.uid = b.employee_id','left')
+// ->like('a.time',date( "Y-m-d", strtotime($attendance->mydate)),'after')
+// ->group_by('a.uid')
+// ->order_by('a.uid','ASC')
+// ->get()
+// ->result();
 
 
 
