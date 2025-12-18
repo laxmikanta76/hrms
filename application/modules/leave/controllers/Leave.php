@@ -280,6 +280,12 @@ public function application(){
     // others leave info
   public function others_leave(){ 
         $data['title'] = display('application');//agent_picture
+		
+    //  Load correct model
+        $this->load->model('attendance/Csv_model');
+
+    //  GET employee dropdown data
+		$data['dropdownatn'] = $this->Csv_model->Employeename();
         #-------------------------------#
         $this->form_validation->set_rules('employee_id',display('employee_id'));
 		$this->form_validation->set_rules('apply_strt_date',display('apply_strt_date'));
