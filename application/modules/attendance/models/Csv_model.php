@@ -170,6 +170,7 @@ public function att_log($limit = null, $start = null){
    
 // Attendance log report
 public function att_report($limit = null, $start = null, $employee_id = null){
+        die("MODEL: employee_id = " . $employee_id);
         $this->db->select('*,DATE(time) as mydate');
         $this->db->from('attendance_history');
         //Add this conditionally
