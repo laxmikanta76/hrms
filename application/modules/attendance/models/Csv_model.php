@@ -169,9 +169,13 @@ public function att_log($limit = null, $start = null){
     }
    
 // Attendance log report
-public function att_report($limit = null, $start = null){
+public function att_report($limit = null, $start = null, $employee_id = null){
         $this->db->select('*,DATE(time) as mydate');
         $this->db->from('attendance_history');
+        //Add this conditionally
+        if (!empty($employee_id)) {
+        $this->db->where('uid', $employee_id);
+        }
         $this->db->group_by('mydate');
         $this->db->order_by('time', 'desc');
         $this->db->limit($limit, $start);
@@ -184,10 +188,13 @@ public function att_report($limit = null, $start = null){
 
 
 // count attendance log
- public function count_att_report()
+ public function count_att_report($employee_id = null)
     {
         $this->db->select('*,DATE(time) as mydate');
         $this->db->from('attendance_history');
+         if (!empty($employee_id)) {
+        $this->db->where('uid', $employee_id);
+       }
         $this->db->group_by('mydate');
         $this->db->order_by('time', 'desc');
         $query = $this->db->get();

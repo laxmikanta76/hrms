@@ -456,7 +456,16 @@ public function report_user(){
     } 
     //Attendance Log report
     public function att_log_report(){
+        $this->load->helper('employee'); // role checker
         $data['title']   = 'Attendance Log';
+        // Determine user access
+        if (can_select_employee()) {
+        // Admin / HR / Supervisor → Can select users
+        $employee_id = $this->input->get('employee_id');
+        } else {
+        // Employee → Only own records
+        $employee_id = $this->session->userdata('employee_id');
+        }
         $config["base_url"] = base_url('attendance/home/att_log_report/');
         $config["total_rows"]  = $this->Csv_model->count_att_report();
         $config["per_page"]    = 10;
@@ -485,6 +494,12 @@ public function report_user(){
         $data["links"] = $this->pagination->create_links();
         $data['module']  = "attendance";
         $data['queryd']=$this->Csv_model->att_report($config["per_page"], $page);
+        // User dropdown (only show for admins)
+        if (can_select_employee()) {
+        $data['userlist'] = $this->Csv_model->userlist();
+        } else {
+        $data['userlist'] = [];
+        }
         $data['userlist'] =$this->Csv_model->userlist();
         $data['page']    = "attendance_log_datewise";
         echo Modules::run('template/layout', $data); 

@@ -10,7 +10,20 @@
                         <?php echo form_open('attendance/Home/datebetween_attendance',array('class' => 'form-inline','method'=>'get'))?>
                          <div class="form-group">
                                 <label for="employeelist"><?php echo display('user_name')?>:</label>
-                                <?php echo form_dropdown('employee_id',$userlist,null,'class="form-control" id="employee_id" required') ?>
+                                <?php if (can_select_employee()): ?>
+                                         <select name="employee_id" class="form-control">
+                                         <option value="">Select User</option>
+                                         <?php foreach ($userlist as $user): ?>
+                                         <option value="<?= $user->employee_id ?>"><?= $user->first_name ?> <?= $user->last_name ?></option>
+                                         <?php endforeach; ?>
+                                         </select>
+                                     <?php else: ?>
+    <!-- Employee sees only their own name (readonly) -->
+    <input type="text"
+           class="form-control"
+           value="<?= $this->session->userdata('first_name').' '.$this->session->userdata('last_name') ?>"
+           readonly>
+<?php endif; ?>
                             </div> 
                             <div class="form-group">
                                 <label for="start_date"><?php echo display('start_date')?> :</label>
