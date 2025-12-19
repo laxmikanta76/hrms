@@ -27,6 +27,7 @@ public function weekly_leave_view()
 
 public function create_weekleave()
 	{ 
+		$this->permission->check_label("weekly_holiday")->create()->redirect();//new line
 		$data['title'] = display('selectionlist');
 		#-------------------------------#
 		$this->form_validation->set_rules('dayname[]',display('dayname[]'),'max_length[30]');
@@ -58,6 +59,7 @@ public function create_weekleave()
 	}
 public function delete_weekleave($id = null) 
 	{ 
+		$this->permission->check_label("weekly_holiday")->delete()->redirect();//new line
         $this->permission->method('leave','delete')->redirect();
 
 		if ($this->Leave_model->weekleave_delete($id)) {
@@ -72,6 +74,7 @@ public function delete_weekleave($id = null)
 	}
 
 public function update_weekleave_form($id = null){
+	    $this->permission->check_label("weekly_holiday")->update()->redirect();//new line
  		$this->form_validation->set_rules('wk_id');
  		$this->form_validation->set_rules('dayname[]',display('dayname'),'max_length[30]');
 		
@@ -125,6 +128,7 @@ public function manage_holiday(){
 
 
 public function create_holiday(){ 
+	    $this->permission->check_label("holiday")->create()->redirect();//new line
 		$data['title'] = display('ab');
 		#-------------------------------#
 		$this->form_validation->set_rules('holiday_name',display('holiday_name'),'required|max_length[50]');
@@ -163,6 +167,7 @@ public function create_holiday(){
 
 
 public function delete_holiday($id = null){ 
+	    $this->permission->check_label("holiday")->delete()->redirect();//new line
         $this->permission->module('leave','delete')->redirect();
 
 		if ($this->Leave_model->holiday_delete($id)) {
@@ -176,6 +181,7 @@ public function delete_holiday($id = null){
 	}
 
 	public function update_holiday_form($id = null){
+		$this->permission->check_label("holiday")->update()->redirect();//new line
  		$this->form_validation->set_rules('payrl_holi_id',null,'required|max_length[11]');
  		$this->form_validation->set_rules('holiday_name',display('holiday_name'),'max_length[30]');
  		$this->form_validation->set_rules('start_date',display('start_date'),'max_length[30]');
@@ -340,6 +346,11 @@ public function application(){
     // add others leave type form
 	public function add_leave_type()
 	 {
+	  if ($this->session->userdata('isAdmin') != 1 &&
+               $this->session->userdata('role_id') != 8)
+       {
+              show_404();
+       }
 	  $data['title'] = display('leave_type');
 	  #-------------------------------#
 	  $this->form_validation->set_rules('leave_type', display('leave_type_name')  ,'required|max_length[100]');
@@ -369,6 +380,11 @@ public function application(){
 
  // update leave type 
   public function update_leave_type($id = nul){
+	if ($this->session->userdata('isAdmin') != 1 &&
+           $this->session->userdata('role_id') != 8)
+    {
+      show_404();
+    }
   		$data['title'] = display('update');
 	  #-------------------------------#
 	  $this->form_validation->set_rules('leave_type', display('leave_type_name')  ,'required|max_length[100]');
@@ -399,6 +415,11 @@ public function application(){
 
  // delete leave type
   public function delete_leave_type($id = null){ 
+	  if ($this->session->userdata('isAdmin') != 1 &&
+         $this->session->userdata('role_id') != 8)
+      {
+         show_404();
+      }
         $this->permission->module('leave','delete')->redirect();
 
 		if ($this->Leave_model->delete_leave_type($id)) {
