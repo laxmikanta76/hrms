@@ -113,21 +113,21 @@
                                     value="<?php echo date('Y-m-d H:i:s'); ?>" readonly
                                     style="background-color:#f5f5f5; cursor:not-allowed;">
                             </div>
-
                         </div>
+                        <div class="form-group">
+                            <label>Location (Auto)</label>
+                            <input type="text" id="location_display" class="form-control" readonly>
+                        </div>
+
+                        <input type="text" name="latitude" id="latitude">
+                        <input type="text" name="longitude" id="longitude">
                         <div class="form-group text-center">
                             <button type="submit"
                                 class="btn btn-success w-md m-b-5"><?php echo display('check_out') ?></button>
                         </div>
                         <?php echo form_close() ?>
                     </div>
-                    <div class="form-group">
-                        <label>Location (Auto)</label>
-                        <input type="text" id="location_display" class="form-control" readonly>
-                    </div>
 
-                    <input type="hidden" name="latitude" id="latitude">
-                    <input type="hidden" name="longitude" id="longitude">
 
 
                 </div>
