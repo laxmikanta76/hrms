@@ -73,8 +73,16 @@
                                     value="<?php echo date('Y-m-d H:i:s'); ?>" readonly
                                     style="background-color:#f5f5f5; cursor:not-allowed;">
                             </div>
-
                         </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Location (Auto)</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="location_display" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="latitude" id="latitude">
+                        <input type="hidden" name="longitude" id="longitude">
                         <div class="form-group text-center">
                             <button type="submit"
                                 class="btn btn-success w-md m-b-5"><?php echo display('check_in') ?></button>
