@@ -76,6 +76,8 @@ class Home extends MX_Controller {
         // $time = $this->input->post('intime');
         // $att_time = date('Y-m-d H:i:s', strtotime($time));
         $att_time = date('Y-m-d H:i:s');
+        $latitude  = $this->input->post('latitude', true);
+        $longitude = $this->input->post('longitude', true);
         $id = $this->input->post('attendanc_id');
         #-------------------------------#intime
         if (can_select_employee()) {
@@ -582,4 +584,3 @@ public function report_user(){
         redirect("attendance/home/user_attendanc_details/".$user_id);
     }
 }
-

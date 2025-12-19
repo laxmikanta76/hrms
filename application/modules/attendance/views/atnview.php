@@ -254,3 +254,26 @@ $(function() {
     });
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+
+                document.getElementById('location_display').value =
+                    "Lat: " + position.coords.latitude +
+                    ", Lng: " + position.coords.longitude;
+            },
+            function(error) {
+                alert("Location access denied. Enable GPS.");
+            }
+        );
+    } else {
+        alert("Geolocation not supported by browser.");
+    }
+
+});
+</script>
