@@ -13,31 +13,36 @@ function printDiv() {
     <!--  table area -->
     <div class="col-sm-12">
 
-        <div class="panel panel-default thumbnail"> 
+        <div class="panel panel-default thumbnail">
             <div class="panel-body">
-                 <div class="text-right" id="print" style="margin: 20px">
-               <button type="button" class="btn btn-warning" id="btnPrint" onclick="printDiv();"><i class="fa fa-print"></i></button>
-                
-            </div>
+                <div class="text-right" id="print" style="margin: 20px">
+                    <button type="button" class="btn btn-warning" id="btnPrint" onclick="printDiv();"><i
+                            class="fa fa-print"></i></button>
+
+                </div>
                 <div id="printArea">
-                   <center><img src="<?php echo base_url().$company->logo;?>"></center>
-                <h2><center>  <?php
-           echo $user->first_name.' '.$user->last_name;?></center></h2>
-                 <?php
+                    <center><img src="<?php echo base_url().$company->logo;?>"></center>
+                    <h2>
+                        <center> <?php
+           echo $user->first_name.' '.$user->last_name;?></center>
+                    </h2>
+                    <?php
 foreach ($queryd as $attendance) {?>
-               <table class="table table-striped table-bordered table-hover">
-                <caption><?php echo display('att_history_of')?> <?php echo date( "F d, Y", strtotime($attendance->mydate));?></caption>
-    
-            <thead>
-            <tr>
-                <th><?php echo display('sl')?></th>
-                <th><?php echo display('time')?></th>
-                <th><?php echo display('status')?></th>
-                <th><?php echo display('action')?></th>  
-            </tr>
-            </thead>
-            <tbody>
-           <?php
+                    <table class="table table-striped table-bordered table-hover">
+                        <caption><?php echo display('att_history_of')?>
+                            <?php echo date( "F d, Y", strtotime($attendance->mydate));?></caption>
+
+                        <thead>
+                            <tr>
+                                <th><?php echo display('sl')?></th>
+                                <th><?php echo display('time')?></th>
+                                <th><?php echo display('status')?></th>
+                                <th>Location</th>
+                                <th><?php echo display('action')?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
 $att_in = $this->db->select('a.*,b.first_name,b.last_name')
 ->from('attendance_history a')
 ->join('employee_history b','a.uid = b.employee_id','left')
@@ -61,21 +66,34 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
     }
 
             ?>
-            <tr>
-                <td><?php echo $idx ?></td>
-                <td><?php echo date( "H:i:s", strtotime($attendancedata->time)) ?></td>
-                <td><?php echo $status ?></td>
-                <td>
-                     <?php if($this->permission->method('atn_log_datewise','delete')->access()): ?>
-                    <a href="<?php echo base_url("attendance/home/delete_attendance/$attendancedata->atten_his_id/$attendancedata->uid") ?>" onclick="return confirm('Are You Sure To Want to Delete?')" class="btn btn-danger"><i class="fa fa-close"></i></a>
-               <?php endif; ?>
-               <?php if($this->permission->method('atn_log_datewise','update')->access()): ?>
-                    <a href="<?php echo base_url("attendance/home/index/$attendancedata->atten_his_id") ?>" class="btn btn-info"><i class="fa fa-edit"></i></a>
-               <?php endif; ?>
-                </td>
-            </tr>
-                
-            <?php
+                            <tr>
+                                <td><?php echo $idx ?></td>
+                                <td><?php echo date( "H:i:s", strtotime($attendancedata->time)) ?></td>
+                                <td><?php echo $status ?></td>
+                                <td>
+                                    <?php if (!empty($attendancedata->latitude) && !empty($attendancedata->longitude)) { ?>
+                                    <a href="https://www.google.com/maps?q=<?php echo $attendancedata->latitude; ?>,<?php echo $attendancedata->longitude; ?>"
+                                        target="_blank" class="btn btn-xs btn-success">
+                                        View Map
+                                    </a>
+                                    <?php } else { ?>
+                                    N/A
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                    <?php if($this->permission->method('atn_log_datewise','delete')->access()): ?>
+                                    <a href="<?php echo base_url("attendance/home/delete_attendance/$attendancedata->atten_his_id/$attendancedata->uid") ?>"
+                                        onclick="return confirm('Are You Sure To Want to Delete?')"
+                                        class="btn btn-danger"><i class="fa fa-close"></i></a>
+                                    <?php endif; ?>
+                                    <?php if($this->permission->method('atn_log_datewise','update')->access()): ?>
+                                    <a href="<?php echo base_url("attendance/home/index/$attendancedata->atten_his_id") ?>"
+                                        class="btn btn-info"><i class="fa fa-edit"></i></a>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+
+                            <?php
          $idx++; }
         $result_in = array_values($in_data);
         $result_out = array_values($out_data);
@@ -119,17 +137,25 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
             $hours += $hou % 24;
             $totaltime = $hours.":".$minutes.":".$seconds;
             ?>
-            </tbody>
-            <tfoot>
-                <tr><td colspan="4"><b><?php echo display('n_b_spendtime')?> <?php echo $totaltime;?> <?php echo display('hours_out_of_workinghour')?></b></td></tr>
-            </tfoot>
-        </table>
-    <?php } ?>
-    </div>
-           <?= $links ?> 
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4"><b><?php echo display('n_b_spendtime')?> <?php echo $totaltime;?>
+                                        <?php echo display('hours_out_of_workinghour')?></b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <b><?php echo display('n_b_spendtime')?> <?php echo $totaltime;?>
+                                        <?php echo display('hours_out_of_workinghour')?></b>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <?php } ?>
+                </div>
+                <?= $links ?>
             </div>
 
         </div>
     </div>
 </div>
- 
