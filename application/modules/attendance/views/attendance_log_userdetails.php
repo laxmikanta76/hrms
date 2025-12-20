@@ -37,7 +37,6 @@ foreach ($queryd as $attendance) {?>
                                 <th><?php echo display('sl')?></th>
                                 <th><?php echo display('time')?></th>
                                 <th><?php echo display('status')?></th>
-                                <th>Location</th>
                                 <th><?php echo display('action')?></th>
                             </tr>
                         </thead>
@@ -70,16 +69,6 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                 <td><?php echo $idx ?></td>
                                 <td><?php echo date( "H:i:s", strtotime($attendancedata->time)) ?></td>
                                 <td><?php echo $status ?></td>
-                                <td>
-                                    <?php if (!empty($attendancedata->latitude) && !empty($attendancedata->longitude)) { ?>
-                                    <a href="https://www.google.com/maps?q=<?php echo $attendancedata->latitude; ?>,<?php echo $attendancedata->longitude; ?>"
-                                        target="_blank" class="btn btn-xs btn-success">
-                                        View Map
-                                    </a>
-                                    <?php } else { ?>
-                                    N/A
-                                    <?php } ?>
-                                </td>
                                 <td>
                                     <?php if($this->permission->method('atn_log_datewise','delete')->access()): ?>
                                     <a href="<?php echo base_url("attendance/home/delete_attendance/$attendancedata->atten_his_id/$attendancedata->uid") ?>"
@@ -142,12 +131,6 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                             <tr>
                                 <td colspan="4"><b><?php echo display('n_b_spendtime')?> <?php echo $totaltime;?>
                                         <?php echo display('hours_out_of_workinghour')?></b></td>
-                            </tr>
-                            <tr>
-                                <td colspan="5">
-                                    <b><?php echo display('n_b_spendtime')?> <?php echo $totaltime;?>
-                                        <?php echo display('hours_out_of_workinghour')?></b>
-                                </td>
                             </tr>
                         </tfoot>
                     </table>
