@@ -78,6 +78,13 @@ class Home extends MX_Controller {
         $att_time = date('Y-m-d H:i:s');
         $latitude  = $this->input->post('latitude', true);
         $longitude = $this->input->post('longitude', true);
+        if (empty($latitude) || empty($longitude)) {
+            $this->session->set_flashdata(
+            'exception',
+            'Location permission is required to punch in'
+         );
+         redirect("attendance/Home/index");
+        }
         $id = $this->input->post('attendanc_id');
         #-------------------------------#intime
         if (can_select_employee()) {
@@ -93,6 +100,8 @@ class Home extends MX_Controller {
                 'state'  => 1,
                 'id'     => 0,
                 'time'   => $att_time,
+                'latitude'  => $latitude,
+                'longitude' => $longitude
                 
             ]; 
 
@@ -102,6 +111,8 @@ class Home extends MX_Controller {
                 'state'  => 1,
                 'id'     => 0,
                 'time'   => $att_time,
+                'latitude'  => $latitude,
+                'longitude' => $longitude
                 
             ]; 
 
@@ -413,7 +424,9 @@ public function report_user(){
                 'uid'       => $attendancedata[1],
                 'id'        => $attendancedata[0],
                 'state'     => $attendancedata[2],
-                'time'      => $attendancedata[3]
+                'time'      => $attendancedata[3],
+                'latitude'  => null,//new line
+                'longitude' => null //new line
             ]; 
             $att_insertdata = $this->db->insert('attendance_history',$attdata);
             if(!empty($attendancedata[0])){

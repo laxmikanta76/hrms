@@ -257,23 +257,24 @@ $(function() {
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
+    const btn = document.querySelector('button[type="submit"]');
+
+    btn.disabled = true;
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function(position) {
                 document.getElementById('latitude').value = position.coords.latitude;
                 document.getElementById('longitude').value = position.coords.longitude;
 
-                document.getElementById('location_display').value =
-                    "Lat: " + position.coords.latitude +
-                    ", Lng: " + position.coords.longitude;
+                btn.disabled = false; // ENABLE submit ONLY after GPS
             },
-            function(error) {
-                alert("Location access denied. Enable GPS.");
+            function() {
+                alert("Location permission is required to punch in");
             }
         );
     } else {
-        alert("Geolocation not supported by browser.");
+        alert("Geolocation not supported");
     }
-
 });
 </script>
