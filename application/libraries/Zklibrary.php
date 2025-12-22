@@ -266,11 +266,15 @@ class ZKLibrary {
 		$u = unpack('S', $this->checkSum($buf));
 		if(is_array($u))
 		{
-			while(list($key) = each($u))
-			{
-				$u = $u[$key];
-				break;
+			foreach ($u as $key => $value) {
+                     $u = $value;
+                     break;
 			}
+			// while(list($key) = each($u))
+			// {
+			// 	$u = $u[$key];
+			// 	break;
+			// }
 		}
 		$chksum = $u;
 		$reply_id += 1;
