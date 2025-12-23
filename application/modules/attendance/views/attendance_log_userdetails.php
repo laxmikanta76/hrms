@@ -80,17 +80,14 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                     <?php } ?>
                                 </td>
                                 <td>
-                                    <?php if ($this->session->userdata('isAdmin') == 1): ?>
+                                    <?php if($this->permission->method('attendance','delete')->access()): ?>
                                     <a href="<?php echo base_url("attendance/home/delete_attendance/$attendancedata->atten_his_id/$attendancedata->uid") ?>"
                                         onclick="return confirm('Are You Sure To Want to Delete?')"
-                                        class="btn btn-danger">
-                                        <i class="fa fa-close"></i>
-                                    </a>
-
+                                        class="btn btn-danger"><i class="fa fa-close"></i></a>
+                                    <?php endif; ?>
+                                    <?php if($this->permission->method('attendance','update')->access()): ?>
                                     <a href="<?php echo base_url("attendance/home/index/$attendancedata->atten_his_id") ?>"
-                                        class="btn btn-info">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
+                                        class="btn btn-info"><i class="fa fa-edit"></i></a>
                                     <?php endif; ?>
                                 </td>
                             </tr>
