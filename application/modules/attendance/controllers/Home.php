@@ -147,7 +147,10 @@ class Home extends MX_Controller {
     }
     public function delete_atn($id = null) 
     { 
-        $this->permission->method('attendance','delete')->redirect();
+        $this->load->helper('employee');
+        if (!can_manage_attendance()) {
+           show_error('Unauthorized access', 403);
+        }
 
         if ($this->Csv_model->delete_attn($id)) {
             #set success message
@@ -160,6 +163,10 @@ class Home extends MX_Controller {
     }
 
     public function update_atn_form($id = null){
+        $this->load->helper('employee');
+        if (!can_manage_attendance()) {
+              show_error('Unauthorized access', 403);
+        }  
         $this->permission->method('attendance','delete')->redirect();
         $this->form_validation->set_rules('att_id',null,'required|max_length[11]');
         $this->form_validation->set_rules('employee_id',display('employee_id'),'required');
