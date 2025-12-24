@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript">
 function printDiv() {
     var divName = "printArea";
@@ -82,12 +83,12 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                 <td>
                                     <a href="<?php echo base_url("attendance/home/delete_attendance/$attendancedata->atten_his_id/$attendancedata->uid") ?>"
                                         onclick="return confirm('Are You Sure To Want to Delete?')"
-                                        class="btn btn-danger btn-sm" title="Delete">
+                                        class="btn btn-danger btn-sm">
                                         <i class="fa fa-trash"></i>
                                     </a>
 
                                     <a href="<?php echo base_url("attendance/home/index/$attendancedata->atten_his_id") ?>"
-                                        class="btn btn-info btn-sm" title="Edit">
+                                        class="btn btn-info btn-sm">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                 </td>
