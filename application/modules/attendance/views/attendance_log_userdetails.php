@@ -147,7 +147,7 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                         </tfoot>
                     </table>
                     <?php } ?>
-                </div>
+                </div class="text-center" style="margin: 20px 0; clear: both;">
                 <?= $links ?>
             </div>
 
