@@ -147,8 +147,13 @@ class Home extends MX_Controller {
     }
     public function delete_atn($id = null) 
     { 
-       
+        // Load helper if not autoloaded
+         $this->load->helper('attendance');
 
+        // 🔐 Access control: Admin / HR / Manager only
+        if (!can_manage_attendance()) {
+            show_error('Unauthorized access', 403);
+        }
         if ($this->Csv_model->delete_attn($id)) {
             #set success message
             $this->session->set_flashdata('message',display('delete_successfully'));
@@ -160,7 +165,13 @@ class Home extends MX_Controller {
     }
 
     public function update_atn_form($id = null){
-        
+        // Load helper if not autoloaded
+        $this->load->helper('attendance');
+
+        // 🔐 Access control: Admin / HR / Manager only
+        if (!can_manage_attendance()) {
+            show_error('Unauthorized access', 403);
+        }
         $this->form_validation->set_rules('att_id',null,'required|max_length[11]');
         $this->form_validation->set_rules('employee_id',display('employee_id'),'required');
         $this->form_validation->set_rules('date',display('date')  ,'required');
@@ -586,6 +597,13 @@ public function report_user(){
     }
 
     public function delete_attendance($id,$user_id){
+    // Load helper if not autoloaded
+    $this->load->helper('attendance');
+
+    // 🔐 Access control: Admin / HR / Manager only
+    if (!can_manage_attendance()) {
+        show_error('Unauthorized access', 403);
+    }
     if ($this->Csv_model->attendance_delete($id)) {
             #set success message
             $this->session->set_flashdata('message',display('delete_successfully'));
