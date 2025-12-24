@@ -80,15 +80,16 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                     <?php } ?>
                                 </td>
                                 <td>
-                                    <?php if($this->permission->method('atn_log_datewise','delete')->access()): ?>
                                     <a href="<?php echo base_url("attendance/home/delete_attendance/$attendancedata->atten_his_id/$attendancedata->uid") ?>"
                                         onclick="return confirm('Are You Sure To Want to Delete?')"
-                                        class="btn btn-danger"><i class="fa fa-close"></i></a>
-                                    <?php endif; ?>
-                                    <?php if($this->permission->method('atn_log_datewise','update')->access()): ?>
+                                        class="btn btn-danger btn-sm" title="Delete">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+
                                     <a href="<?php echo base_url("attendance/home/index/$attendancedata->atten_his_id") ?>"
-                                        class="btn btn-info"><i class="fa fa-edit"></i></a>
-                                    <?php endif; ?>
+                                        class="btn btn-info btn-sm" title="Edit">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
                                 </td>
                             </tr>
 
