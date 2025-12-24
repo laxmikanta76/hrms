@@ -147,7 +147,7 @@ class Home extends MX_Controller {
     }
     public function delete_atn($id = null) 
     { 
-        $this->permission->method('attendance','delete')->redirect();
+       
 
         if ($this->Csv_model->delete_attn($id)) {
             #set success message
@@ -160,7 +160,7 @@ class Home extends MX_Controller {
     }
 
     public function update_atn_form($id = null){
-        $this->permission->method('attendance','delete')->redirect();
+        
         $this->form_validation->set_rules('att_id',null,'required|max_length[11]');
         $this->form_validation->set_rules('employee_id',display('employee_id'),'required');
         $this->form_validation->set_rules('date',display('date')  ,'required');
