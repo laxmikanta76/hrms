@@ -111,10 +111,6 @@ $att_in = $this->db->get()->result();
                                 href="<?php echo base_url('attendance/home/user_attendanc_details/'.$attendancedata->uid) ?>">
                                 <i class="fa fa-eye"></i> Details
                             </a>
-                            <?php else: ?>
-                            <button class="btn btn-info" disabled title="Only admin can view details">
-                                <i class="fa fa-eye"></i> Details
-                            </button>
                             <?php endif; ?>
                         </td>
                     </tr>
