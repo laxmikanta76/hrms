@@ -559,8 +559,8 @@ public function report_user(){
         $data['page'] = "attendance/attendance_log_userdetails";
         $office = $this->get_office_location();
 
-        $data['office_lat'] = $office->office_latitude;
-        $data['office_lng'] = $office->office_longitude;
+        $data['office_lat'] = $office->Latitude;
+        $data['office_lng'] = $office->Longitude;
         $this->load->view('attendance/attendance_log_userdetails', $data); 
     }
     // Date between and user wise attendance log
