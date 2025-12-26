@@ -78,6 +78,9 @@ class Home extends MX_Controller {
         $att_time = date('Y-m-d H:i:s');
         $latitude  = $this->input->post('latitude', true);
         $longitude = $this->input->post('longitude', true);
+        $office = $this->get_office_location();
+        $office_lat = $office->Latitude;
+        $office_lng = $office->Longitude; 
         if (empty($latitude) || empty($longitude)) {
             $this->session->set_flashdata(
             'exception',
@@ -522,7 +525,7 @@ public function report_user(){
      //Attendance Log report userwise
     public function user_attendanc_details($id){
         $data['title']   = 'Attendance Log';
-         $config["base_url"] = base_url('attendance/home/user_attendanc_details/'.$id);
+        $config["base_url"] = base_url('attendance/home/user_attendanc_details/'.$id);
         $config["total_rows"]  = $this->Csv_model->count_atn_log($id);
         $config["per_page"]    = 3;
         $config["uri_segment"] = 5;
@@ -554,6 +557,10 @@ public function report_user(){
         $data['company'] = $this->Csv_model->company_info();
         $data['user']  = $this->Csv_model->deviceuser($id);
         $data['page'] = "attendance/attendance_log_userdetails";
+        $office = $this->get_office_location();
+
+        $data['office_lat'] = $office->office_latitude;
+        $data['office_lng'] = $office->office_longitude;
         $this->load->view('attendance/attendance_log_userdetails', $data); 
     }
     // Date between and user wise attendance log
@@ -595,5 +602,13 @@ public function report_user(){
 
         }
         redirect("attendance/home/user_attendanc_details/".$user_id);
+    }
+    private function get_office_location()
+    {
+       return $this->db
+        ->select('Latitude, Longitude')
+        ->from('setting')
+        ->get()
+        ->row();
     }
 }

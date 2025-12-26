@@ -39,6 +39,7 @@ foreach ($queryd as $attendance) {?>
                                 <th><?php echo display('time')?></th>
                                 <th><?php echo display('status')?></th>
                                 <th>Location</th>
+                                <th>Radius</th>
                                 <th><?php echo display('action')?></th>
                             </tr>
                         </thead>
@@ -79,6 +80,17 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                     <?php } else { ?>
                                     N/A
                                     <?php } ?>
+                                </td>
+                                <td>
+                                    <?php $distance = distance_from_office($attendancedata->latitude,$attendancedata->longitude,$office_lat,$office_lng);
+                                      if ($distance === null) {
+                                          echo 'N/A';
+                                        } elseif ($distance <= 50) {
+                                          echo "<span style='color:green'>{$distance} m</span>";
+                                        } else {
+                                          echo "<span style='color:red'>{$distance} m</span>";
+                                     }
+                                    ?>
                                 </td>
                                 <td>
                                     <a href="<?php echo base_url("attendance/home/delete_attendance/$attendancedata->atten_his_id/$attendancedata->uid") ?>"
