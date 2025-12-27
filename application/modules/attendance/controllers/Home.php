@@ -71,137 +71,82 @@ class Home extends MX_Controller {
     } 
     public function create_atten()
     { 
-    log_message('error', 'CREATE_ATTEN HIT: '.json_encode($_POST));
         $this->load->helper('employee');
-    $att_time = date('Y-m-d H:i:s');
-
-    // Employee ID
-    if (can_select_employee()) {
-        $employee_id = $this->input->post('employee_id', true);
-    } else {
-        $employee_id = $this->session->userdata('employee_id');
-    }
-
-    // Location required for both
-    $latitude  = $this->input->post('latitude', true);
-    $longitude = $this->input->post('longitude', true);
-
-    if (empty($latitude) || empty($longitude)) {
-        $this->session->set_flashdata(
+        $data['title'] = display('employee');
+        // $time = $this->input->post('intime');
+        // $att_time = date('Y-m-d H:i:s', strtotime($time));
+        $att_time = date('Y-m-d H:i:s');
+        $latitude  = $this->input->post('latitude', true);
+        $longitude = $this->input->post('longitude', true);
+        $office = $this->get_office_location();
+        $office_lat = $office->Latitude;
+        $office_lng = $office->Longitude; 
+        if (empty($latitude) || empty($longitude)) {
+            $this->session->set_flashdata(
             'exception',
-            'Location permission is required to punch in / punch out'
-        );
-        redirect("attendance/Home/index");
-    }
-
-    // 🔎 Check if last punch was IN
-    $last = $this->db
-        ->where('uid', $employee_id)
-        ->order_by('atten_his_id', 'DESC')
-        ->limit(1)
-        ->get('attendance_history')
-        ->row();
-
-    // Decide state
-    $state = (!$last || $last->state == 0) ? 1 : 0;
-
-    // INSERT attendance row
-    $attendance = [
-        'uid'       => $employee_id,
-        'state'     => $state,        // 👈 THIS IS THE FIX
-        'id'        => 0,
-        'time'      => $att_time,
-        'latitude'  => $latitude,
-        'longitude' => $longitude
-    ];
-
-    if ($this->Csv_model->atten_create($attendance)) {
-        $this->session->set_flashdata(
-            'message',
-            $state == 1 ? 'Punch in successful' : 'Punch out successful'
-        );
-    } else {
-        $this->session->set_flashdata('exception', 'Please try again');
-    }
-
-    redirect("attendance/Home/att_log_report");
-    
-    //     $this->load->helper('employee');
-    //     $data['title'] = display('employee');
-    //     // $time = $this->input->post('intime');
-    //     // $att_time = date('Y-m-d H:i:s', strtotime($time));
-    //     $att_time = date('Y-m-d H:i:s');
-    //     $latitude  = $this->input->post('latitude', true);
-    //     $longitude = $this->input->post('longitude', true);
-    //     $office = $this->get_office_location();
-    //     $office_lat = $office->Latitude;
-    //     $office_lng = $office->Longitude; 
-    //     if (empty($latitude) || empty($longitude)) {
-    //         $this->session->set_flashdata(
-    //         'exception',
-    //         'Location permission is required to punch in'
-    //      );
-    //      redirect("attendance/Home/index");
-    //     }
-    //     $id = $this->input->post('attendanc_id');
-    //     #-------------------------------#intime
-    //     if (can_select_employee()) {
-    //        $employee_id = $this->input->post('employee_id', true);
-    //     } else {
-    //        $employee_id = $this->session->userdata('employee_id');
-    //     }
-    //      $this->form_validation->set_rules('intime',display('time'),'required');
-    //     #-------------------------------#
-    //     if ($this->form_validation->run() === true) {
-    //       $attendance_history = [
-    //             'uid'    => $this->input->post('employee_id',true),
-    //             'state'  => 1,
-    //             'id'     => 0,
-    //             'time'   => $att_time,
-    //             'latitude'  => $latitude,
-    //             'longitude' => $longitude
+            'Location permission is required to punch in'
+         );
+         redirect("attendance/Home/index");
+        }
+        $id = $this->input->post('attendanc_id');
+        #-------------------------------#intime
+        if (can_select_employee()) {
+           $employee_id = $this->input->post('employee_id', true);
+        } else {
+           $employee_id = $this->session->userdata('employee_id');
+        }
+         $this->form_validation->set_rules('intime',display('time'),'required');
+        #-------------------------------#
+        if ($this->form_validation->run() === true) {
+          $attendance_history = [
+                'uid'    => $this->input->post('employee_id',true),
+                'state'  => 1,
+                'id'     => 0,
+                'time'   => $att_time,
+                'latitude'  => $latitude,
+                'longitude' => $longitude
                 
-    //         ]; 
+            ]; 
 
-    //            $update_attendance = [
-    //             'atten_his_id'=> $id,
-    //             'uid'    => $this->input->post('employee_id',true),
-    //             'state'  => 1,
-    //             'id'     => 0,
-    //             'time'   => $att_time,
-    //             'latitude'  => $latitude,
-    //             'longitude' => $longitude
+               $update_attendance = [
+                'atten_his_id'=> $id,
+                'uid'    => $this->input->post('employee_id',true),
+                'state'  => 1,
+                'id'     => 0,
+                'time'   => $att_time,
+                'latitude'  => $latitude,
+                'longitude' => $longitude
                 
-    //         ]; 
+            ]; 
 
-    //         if(empty($id)){
+            if(empty($id)){
 
-    //         if ($this->Csv_model->atten_create($attendance_history)) { 
-    //             $this->session->set_flashdata('message', display('save_successfull'));
-    //         } else {
-    //             $this->session->set_flashdata('exception',  display('please_try_again'));
-    //         }
+            if ($this->Csv_model->atten_create($attendance_history)) { 
+                $this->session->set_flashdata('message', display('save_successfull'));
+            } else {
+                $this->session->set_flashdata('exception',  display('please_try_again'));
+            }
 
-    //        redirect("attendance/Home/att_log_report");
-    //    }else{
-    //      if ($this->Csv_model->atten_update($update_attendance)) { 
-    //             $this->session->set_flashdata('message', display('update_successfully'));
-    //         } else {
-    //             $this->session->set_flashdata('exception',  display('please_try_again'));
-    //         }
+           redirect("attendance/Home/att_log_report");
+       }else{
+         if ($this->Csv_model->atten_update($update_attendance)) { 
+                $this->session->set_flashdata('message', display('update_successfully'));
+            } else {
+                $this->session->set_flashdata('exception',  display('please_try_again'));
+            }
 
-    //        redirect("attendance/Home/user_attendanc_details/".$this->input->post('employee_id',true));
+           redirect("attendance/Home/user_attendanc_details/".$this->input->post('employee_id',true));
 
-    //    }
+       }
 
-    //     } else {
-    //         $data['title']  = display('create');
-    //         $data['module'] = "attendance";
-    //         $data['page']   = "attendance_form";
-    //         $data['dropdownatn'] =$this->Csv_model->Employeename();
-    //         echo Modules::run('template/layout', $data);   
+        } else {
+            $data['title']  = display('create');
+            $data['module'] = "attendance";
+            $data['page']   = "attendance_form";
+            $data['dropdownatn'] =$this->Csv_model->Employeename();
+            echo Modules::run('template/layout', $data);   
             
-    //     }   
+        }   
     }
     public function delete_atn($id = null) 
     { 
