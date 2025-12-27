@@ -71,6 +71,7 @@ class Home extends MX_Controller {
     } 
     public function create_atten()
     { 
+    log_message('error', 'CREATE_ATTEN HIT: '.json_encode($_POST));
         $this->load->helper('employee');
     $att_time = date('Y-m-d H:i:s');
 
