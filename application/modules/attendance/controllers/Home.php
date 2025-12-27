@@ -72,8 +72,6 @@ class Home extends MX_Controller {
     public function create_atten()
     { 
         $this->load->helper('employee');
-    $data['title'] = display('employee');
-
     $att_time = date('Y-m-d H:i:s');
 
     // Employee ID
@@ -83,7 +81,7 @@ class Home extends MX_Controller {
         $employee_id = $this->session->userdata('employee_id');
     }
 
-    // Location REQUIRED for both IN & OUT
+    // Location required for both
     $latitude  = $this->input->post('latitude', true);
     $longitude = $this->input->post('longitude', true);
 
@@ -95,57 +93,38 @@ class Home extends MX_Controller {
         redirect("attendance/Home/index");
     }
 
-    // 🔎 Check if already punched in (open attendance)
-    $open_attendance = $this->db
+    // 🔎 Check if last punch was IN
+    $last = $this->db
         ->where('uid', $employee_id)
-        ->where('state', 1)
+        ->order_by('atten_his_id', 'DESC')
+        ->limit(1)
         ->get('attendance_history')
         ->row();
 
-    /* =======================
-       👉 PUNCH IN
-    ======================= */
-    if (!$open_attendance) {
+    // Decide state
+    $state = (!$last || $last->state == 0) ? 1 : 0;
 
-        $attendance_history = [
-            'uid'       => $employee_id,
-            'state'     => 1,
-            'time'      => $att_time,   // IN time
-            'latitude'  => $latitude,
-            'longitude' => $longitude
-        ];
+    // INSERT attendance row
+    $attendance = [
+        'uid'       => $employee_id,
+        'state'     => $state,        // 👈 THIS IS THE FIX
+        'id'        => 0,
+        'time'      => $att_time,
+        'latitude'  => $latitude,
+        'longitude' => $longitude
+    ];
 
-        if ($this->Csv_model->atten_create($attendance_history)) {
-            $this->session->set_flashdata('message', 'Punch in successful');
-        } else {
-            $this->session->set_flashdata('exception', 'Please try again');
-        }
-
-        redirect("attendance/Home/att_log_report");
+    if ($this->Csv_model->atten_create($attendance)) {
+        $this->session->set_flashdata(
+            'message',
+            $state == 1 ? 'Punch in successful' : 'Punch out successful'
+        );
+    } else {
+        $this->session->set_flashdata('exception', 'Please try again');
     }
 
-    /* =======================
-       👉 PUNCH OUT
-    ======================= */
-    else {
-
-        $update_attendance = [
-            'atten_his_id' => $open_attendance->atten_his_id ?? $open_attendance->id,
-            'uid'          => $employee_id,
-            'state'        => 0,
-            'time'         => $att_time, // OUT time
-            'latitude'     => $latitude,
-            'longitude'    => $longitude
-        ];
-
-        if ($this->Csv_model->atten_update($update_attendance)) {
-            $this->session->set_flashdata('message', 'Punch out successful');
-        } else {
-            $this->session->set_flashdata('exception', 'Please try again');
-        }
-
-        redirect("attendance/Home/att_log_report");
-    }
+    redirect("attendance/Home/att_log_report");
+    
     //     $this->load->helper('employee');
     //     $data['title'] = display('employee');
     //     // $time = $this->input->post('intime');
