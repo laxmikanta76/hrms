@@ -70,90 +70,98 @@ class Home extends MX_Controller {
 }
     } 
     public function create_atten()
-{ 
-    $this->load->helper('employee');
-    $data['title'] = display('employee');
-    $att_time = date('Y-m-d H:i:s');
-    $latitude  = $this->input->post('latitude', true);
-    $longitude = $this->input->post('longitude', true);
-    
-    $id = $this->input->post('attendanc_id');
-    
-    // Get employee ID
-    if (can_select_employee()) {
-       $employee_id = $this->input->post('employee_id', true);
-    } else {
-       $employee_id = $this->session->userdata('employee_id');
-    }
-    
-    $this->form_validation->set_rules('intime', display('time'), 'required');
-    
-    if ($this->form_validation->run() === true) {
-        
-        // Check if already checked in today (only for new check-ins)
-        if (empty($id)) {
-            $today_date = date('Y-m-d');
-            $existing_checkin = $this->db->select('atten_his_id')
-                ->from('attendance_history')
-                ->where('uid', $employee_id)
-                ->where('state', 1)
-                ->like('time', $today_date, 'after')
-                ->get()
-                ->row();
-            
-            if ($existing_checkin) {
-                $this->session->set_flashdata('exception', 'You have already checked in today!');
-                redirect("attendance/Home/att_log_report");
-                return;
-            }
+    { 
+        $this->load->helper('employee');
+        $data['title'] = display('employee');
+        // $time = $this->input->post('intime');
+        // $att_time = date('Y-m-d H:i:s', strtotime($time));
+        $att_time = date('Y-m-d H:i:s');
+        $latitude  = $this->input->post('latitude', true);
+        $longitude = $this->input->post('longitude', true);
+        $office = $this->get_office_location();
+        $office_lat = $office->Latitude;
+        $office_lng = $office->Longitude; 
+        if (empty($latitude) || empty($longitude)) {
+            $this->session->set_flashdata(
+            'exception',
+            'Location permission is required to punch in'
+         );
+         redirect("attendance/Home/index");
         }
-        
-        $attendance_history = [
-            'uid'       => $employee_id,
-            'state'     => 1,  // 1 for check-in
-            'id'        => 0,
-            'time'      => $att_time,
-            'latitude'  => $latitude,
-            'longitude' => $longitude
-        ]; 
-
-        $update_attendance = [
-            'atten_his_id' => $id,
-            'uid'       => $employee_id,
-            'state'     => 1,
-            'id'        => 0,
-            'time'      => $att_time,
-            'latitude'  => $latitude,
-            'longitude' => $longitude
-        ]; 
-
-        if (empty($id)) {
-            // Create new check-in
-            if ($this->Csv_model->atten_create($attendance_history)) { 
-                $this->session->set_flashdata('message', 'Check-in successful');
-            } else {
-                $this->session->set_flashdata('exception', display('please_try_again'));
-            }
-            redirect("attendance/Home/att_log_report");
-            
+        $id = $this->input->post('attendanc_id');
+        #-------------------------------#intime
+        if (can_select_employee()) {
+           $employee_id = $this->input->post('employee_id', true);
         } else {
-            // Update existing record
-            if ($this->Csv_model->atten_update($update_attendance)) { 
+           $employee_id = $this->session->userdata('employee_id');
+        }
+         $this->form_validation->set_rules('intime',display('time'),'required');
+        #-------------------------------#
+        if ($this->form_validation->run() === true) {
+          $attendance_history = [
+                'uid'    => $this->input->post('employee_id',true),
+                'state'  => 1,
+                'id'     => 0,
+                'time'   => $att_time,
+                'latitude'  => $latitude,
+                'longitude' => $longitude
+                
+            ]; 
+
+               $update_attendance = [
+                'atten_his_id'=> $id,
+                'uid'    => $this->input->post('employee_id',true),
+                'state'  => 1,
+                'id'     => 0,
+                'time'   => $att_time,
+                'latitude'  => $latitude,
+                'longitude' => $longitude
+                
+            ]; 
+
+            if(empty($id)){
+
+            if ($this->Csv_model->atten_create($attendance_history)) { 
+                $this->session->set_flashdata('message', display('save_successfull'));
+            } else {
+                $this->session->set_flashdata('exception',  display('please_try_again'));
+            }
+
+           redirect("attendance/Home/att_log_report");
+       }else{
+         if ($this->Csv_model->atten_update($update_attendance)) { 
                 $this->session->set_flashdata('message', display('update_successfully'));
             } else {
-                $this->session->set_flashdata('exception', display('please_try_again'));
+                $this->session->set_flashdata('exception',  display('please_try_again'));
             }
-            redirect("attendance/Home/user_attendanc_details/".$employee_id);
-        }
 
-    } else {
-        $data['title']  = display('create');
-        $data['module'] = "attendance";
-        $data['page']   = "attendance_form";
-        $data['dropdownatn'] = $this->Csv_model->Employeename();
-        echo Modules::run('template/layout', $data);   
-    }   
-}
+           redirect("attendance/Home/user_attendanc_details/".$this->input->post('employee_id',true));
+
+       }
+
+        } else {
+            $data['title']  = display('create');
+            $data['module'] = "attendance";
+            $data['page']   = "attendance_form";
+            $data['dropdownatn'] =$this->Csv_model->Employeename();
+            echo Modules::run('template/layout', $data);   
+            
+        }   
+    }
+    public function delete_atn($id = null) 
+    { 
+        $this->permission->method('attendance','delete')->redirect();
+
+        if ($this->Csv_model->delete_attn($id)) {
+            #set success message
+            $this->session->set_flashdata('message',display('delete_successfully'));
+        } else {
+            #set exception message
+            $this->session->set_flashdata('exception',display('please_try_again'));
+        }
+        redirect("attendance/Home/manageatn");
+    }
+
     public function update_atn_form($id = null){
         $this->permission->method('attendance','delete')->redirect();
         $this->form_validation->set_rules('att_id',null,'required|max_length[11]');
