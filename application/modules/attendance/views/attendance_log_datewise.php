@@ -106,7 +106,8 @@ $att_in = $this->db->get()->result();
                 $interval = date_diff($date_a,$date_b);
 
             echo $interval->format('%h:%i:%s');?></td>
-                        <td><a class="btn btn-info"
+                        <td>
+                            <a class="btn btn-info"
                                 href="<?php echo base_url('attendance/home/user_attendanc_details/'.$attendancedata->uid) ?>">
                                 <i class="fa fa-eye"></i> Details
                             </a>

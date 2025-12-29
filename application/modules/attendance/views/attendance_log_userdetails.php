@@ -93,6 +93,7 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                     ?>
                                 </td>
                                 <td>
+                                    <?php if ($this->session->userdata('isAdmin') == 1): ?>
                                     <a href="<?php echo base_url("attendance/home/delete_attendance/$attendancedata->atten_his_id/$attendancedata->uid") ?>"
                                         onclick="return confirm('Are You Sure To Want to Delete?')"
                                         class="btn btn-danger btn-sm">
@@ -103,6 +104,7 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                         class="btn btn-info btn-sm">
                                         <i class="fa fa-pencil"></i>
                                     </a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
 
