@@ -60,7 +60,7 @@ foreach ($queryd as $attendance) {?>
                         <th><?php echo display('employee_name')?></th>
                         <th><?php echo display('in_time')?></th>
                         <th><?php echo display('out_time')?></th>
-                        <th><?php echo display('worked_hour')?></th>
+                        <th><?php echo display('Stay')?></th>
                         <th><?php echo display('action')?></th>
                     </tr>
                     <?php
@@ -106,12 +106,10 @@ $att_in = $this->db->get()->result();
                 $interval = date_diff($date_a,$date_b);
 
             echo $interval->format('%h:%i:%s');?></td>
-                        <td><?php if ($this->session->userdata('isAdmin') == 1): ?>
-                            <a class="btn btn-info"
+                        <td><a class="btn btn-info"
                                 href="<?php echo base_url('attendance/home/user_attendanc_details/'.$attendancedata->uid) ?>">
                                 <i class="fa fa-eye"></i> Details
                             </a>
-                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php
