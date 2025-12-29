@@ -148,6 +148,84 @@ class Home extends MX_Controller {
             
         }   
     }
+        //// checkout atn ///
+ public function checkout(){
+    $this->load->helper('employee');
+    $timezone = $this->db->select('timezone')->from('setting')->get()->row();
+    date_default_timezone_set($timezone->timezone);
+
+    $att_time = date('Y-m-d H:i:s');
+    $latitude  = $this->input->post('latitude', true);
+    $longitude = $this->input->post('longitude', true);
+    
+    // Get employee ID
+    if (can_select_employee()) {
+       $employee_id = $this->input->post('employee_id', true);
+    } else {
+       $employee_id = $this->session->userdata('employee_id');
+    }
+    
+    // Validate that outtime is provided
+    if (empty($this->input->post('outtime'))) {
+        $this->session->set_flashdata('exception', 'Time is required');
+        redirect("attendance/Home/index");
+        return;
+    }
+    
+    // Find today's check-in record for this employee
+    $today_date = date('Y-m-d');
+    $checkin_record = $this->db->select('atten_his_id, time')
+        ->from('attendance_history')
+        ->where('uid', $employee_id)
+        ->where('state', 1) // Check-in state
+        ->like('time', $today_date, 'after')
+        ->order_by('time', 'DESC')
+        ->limit(1)
+        ->get()
+        ->row();
+    
+    if (!$checkin_record) {
+        $this->session->set_flashdata('exception', 'No check-in record found for today. Please check-in first.');
+        redirect("attendance/Home/index");
+        return;
+    }
+    
+    // Check if already checked out today
+    $checkout_exists = $this->db->select('atten_his_id')
+        ->from('attendance_history')
+        ->where('uid', $employee_id)
+        ->where('state', 0) // Check-out state
+        ->like('time', $today_date, 'after')
+        ->get()
+        ->row();
+    
+    if ($checkout_exists) {
+        $this->session->set_flashdata('exception', 'You have already checked out today!');
+        redirect("attendance/Home/att_log_report");
+        return;
+    }
+    
+    // Insert checkout record
+    $postData = [
+        'uid'       => $employee_id,
+        'state'     => 0, // 0 for check-out
+        'id'        => 0,
+        'time'      => $att_time,
+        'latitude'  => $latitude,
+        'longitude' => $longitude
+    ]; 
+    
+    $update = $this->db->insert('attendance_history', $postData);
+    
+    if ($update) { 
+        $this->session->set_flashdata('message', display('successfully_checkout'));
+        redirect("attendance/Home/att_log_report");
+    } else {
+        $this->session->set_flashdata('exception', 'Check-out failed. Please try again.');
+        redirect("attendance/Home/index");
+    }
+
+}
     public function delete_atn($id = null) 
     { 
         $this->permission->method('attendance','delete')->redirect();
@@ -200,30 +278,7 @@ class Home extends MX_Controller {
      }
 
  }
-    //// checkout atn ///
- public function checkout(){
-    $timezone = $this->db->select('timezone')->from('setting')->get()->row();
-   date_default_timezone_set($timezone->timezone);
 
-   $sign_out =  date("h:i:s a", time());
-   $sign_in  =  $this->input->post('sign_in',true);
-   $in=new DateTime($sign_in);
-   $Out=new DateTime($sign_out);
-   $interval=$in->diff($Out);
-   $stay =  $interval->format('%H:%I:%S');
-   $postData = [
-    'att_id'               => $this->input->post('att_id',true),
-    'sign_out'             =>  $sign_out,
-    'staytime'             => $stay,
-]; 
-$update = $this->db->where('att_id',$this->input->post('att_id',true))
-            ->update("emp_attendance", $postData);
-            if ($update) { 
-                $this->session->set_flashdata('message', display('successfully_checkout'));
-                  redirect("attendance/Home/index");
-            }
-
-}
 
 /* ########## Report Start ####################*/
 public function report_user(){
