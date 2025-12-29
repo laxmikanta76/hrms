@@ -257,23 +257,58 @@ $(function() {
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            function(position) {
-                document.getElementById('latitude').value = position.coords.latitude;
-                document.getElementById('longitude').value = position.coords.longitude;
+    // CHECK IN - Get Location
+    const checkinBtn = document.getElementById('checkin_btn');
+    if (checkinBtn) {
+        checkinBtn.disabled = true;
 
-                document.getElementById('location_display').value =
-                    "Lat: " + position.coords.latitude +
-                    ", Lng: " + position.coords.longitude;
-            },
-            function(error) {
-                alert("Location access denied. Enable GPS.");
-            }
-        );
-    } else {
-        alert("Geolocation not supported by browser.");
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    document.getElementById('latitude_in').value = position.coords.latitude;
+                    document.getElementById('longitude_in').value = position.coords.longitude;
+                    document.getElementById('location_display_in').value =
+                        position.coords.latitude.toFixed(6) + ', ' + position.coords.longitude.toFixed(6);
+                    checkinBtn.disabled = false;
+                },
+                function(error) {
+                    console.log("Check-in location error:", error);
+                    document.getElementById('location_display_in').value = "Location unavailable";
+                    // Allow check-in even without location
+                    checkinBtn.disabled = false;
+                }
+            );
+        } else {
+            document.getElementById('location_display_in').value = "Geolocation not supported";
+            checkinBtn.disabled = false;
+        }
     }
 
+    // CHECK OUT - Get Location
+    const checkoutBtn = document.getElementById('checkout_btn');
+    if (checkoutBtn) {
+        checkoutBtn.disabled = true;
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    document.getElementById('latitude_out').value = position.coords.latitude;
+                    document.getElementById('longitude_out').value = position.coords.longitude;
+                    document.getElementById('location_display_out').value =
+                        position.coords.latitude.toFixed(6) + ', ' + position.coords.longitude.toFixed(6);
+                    checkoutBtn.disabled = false;
+                },
+                function(error) {
+                    console.log("Check-out location error:", error);
+                    document.getElementById('location_display_out').value = "Location unavailable";
+                    // Allow check-out even without location
+                    checkoutBtn.disabled = false;
+                }
+            );
+        } else {
+            document.getElementById('location_display_out').value = "Geolocation not supported";
+            checkoutBtn.disabled = false;
+        }
+    }
 });
 </script>
