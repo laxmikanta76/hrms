@@ -159,12 +159,9 @@ class Home extends MX_Controller {
         $office_lat = $office->Latitude;
         $office_lng = $office->Longitude; 
         if (empty($latitude) || empty($longitude)) {
-            $this->session->set_flashdata(
-            'exception',
-            'Location permission is required to punch in'
-         );
-         redirect("attendance/Home/index");
-        }
+            $latitude = null;
+            $longitude = null;
+       }
     
     $id = $this->input->post('attendanc_id');
     
@@ -245,13 +242,21 @@ class Home extends MX_Controller {
 }
         //// checkout atn ///
  public function checkout(){
-    $this->load->helper('employee');
+     $this->load->helper('employee');
     $timezone = $this->db->select('timezone')->from('setting')->get()->row();
     date_default_timezone_set($timezone->timezone);
 
     $att_time = date('Y-m-d H:i:s');
     $latitude  = $this->input->post('latitude', true);
     $longitude = $this->input->post('longitude', true);
+    
+    // Allow null coordinates if location permission denied
+    if (empty($latitude)) {
+        $latitude = null;
+    }
+    if (empty($longitude)) {
+        $longitude = null;
+    }
     
     // Get employee ID
     if (can_select_employee()) {
@@ -260,9 +265,9 @@ class Home extends MX_Controller {
        $employee_id = $this->session->userdata('employee_id');
     }
     
-    // Validate that outtime is provided
-    if (empty($this->input->post('outtime'))) {
-        $this->session->set_flashdata('exception', 'Time is required');
+    // Validate employee ID
+    if (empty($employee_id)) {
+        $this->session->set_flashdata('exception', 'Employee ID is required');
         redirect("attendance/Home/index");
         return;
     }
@@ -313,13 +318,12 @@ class Home extends MX_Controller {
     $update = $this->db->insert('attendance_history', $postData);
     
     if ($update) { 
-        $this->session->set_flashdata('message', display('successfully_checkout'));
+        $this->session->set_flashdata('message', 'Check-out successful!');
         redirect("attendance/Home/att_log_report");
     } else {
         $this->session->set_flashdata('exception', 'Check-out failed. Please try again.');
         redirect("attendance/Home/index");
     }
-
 }
     public function delete_atn($id = null) 
     { 
