@@ -792,7 +792,7 @@ ul li a {
                                         <div class="form-group">
                                             <label for="h_phone"><?php echo display('home_phone')?></label>
                                             <input type="text" class="form-control" id="h_phone" name="h_phone"
-                                                placeholder="<?php echo display('home_phone')?>">
+                                                placeholder="<?php echo display('home_phone')?>" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -834,11 +834,10 @@ ul li a {
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="s_name"><?php echo display('emerg_contct')?> <sup
-                                                    class="color-red ">*</sup></label>
+                                            <label for="s_name"><?php echo display('emerg_contct')?>
 
-                                            <input type="text" class="form-control" id="em_contact" name="em_contact"
-                                                placeholder="Emergency Contact">
+                                                <input type="text" class="form-control" id="em_contact"
+                                                    name="em_contact" placeholder="Emergency Contact">
 
                                         </div>
                                     </div>
@@ -1334,70 +1333,121 @@ function valid_inf5() {
 
 }
 
+// function valid_inf6() {
+
+//     var h_phoneInput = document.getElementById('h_phone');
+//     var c_phoneInput = document.getElementById('c_phone');
+//     var h_phone = $('#h_phone').val();
+//     var c_phone = $('#c_phone').val();
+//     if (h_phone == "") {
+//         document.getElementById("h_phone").style.borderColor = "red";
+//     } else {
+//         $("#h_phone").on('keyup', function() {
+//             document.getElementById("h_phone").style.borderColor = "green";
+//         });
+
+//     }
+//     if (c_phone == "") {
+//         document.getElementById("c_phone").style.borderColor = "red";
+//     } else {
+//         $("#c_phone").on('keyup', function() {
+//             document.getElementById("c_phone").style.borderColor = "green";
+//         });
+
+//     }
+//     if (h_phone !== "" && c_phone !== "") {
+//         $('.nav-tabs > .active').next('li').find('a').trigger('click');
+//     }
+
+// }
 function valid_inf6() {
 
-    var h_phoneInput = document.getElementById('h_phone');
-    var c_phoneInput = document.getElementById('c_phone');
-    var h_phone = $('#h_phone').val();
-    var c_phone = $('#c_phone').val();
-    if (h_phone == "") {
-        document.getElementById("h_phone").style.borderColor = "red";
-    } else {
-        $("#h_phone").on('keyup', function() {
-            document.getElementById("h_phone").style.borderColor = "green";
-        });
+    var h_phone = $('#h_phone').val().trim();
+    var c_phone = $('#c_phone').val().trim();
 
-    }
-    if (c_phone == "") {
-        document.getElementById("c_phone").style.borderColor = "red";
-    } else {
-        $("#c_phone").on('keyup', function() {
-            document.getElementById("c_phone").style.borderColor = "green";
-        });
+    // Reset borders
+    $('#h_phone, #c_phone').css('border-color', '');
 
-    }
-    if (h_phone !== "" && c_phone !== "") {
-        $('.nav-tabs > .active').next('li').find('a').trigger('click');
+    // If user typed something, validate length only
+    if (h_phone !== "" && h_phone.length < 10) {
+        $('#h_phone').css('border-color', 'red');
+        return false;
     }
 
+    if (c_phone !== "" && c_phone.length < 10) {
+        $('#c_phone').css('border-color', 'red');
+        return false;
+    }
+
+    // Move to next tab ALWAYS
+    $('.nav-tabs > .active').next('li').find('a').trigger('click');
 }
 
+
+// function valid_inf7() {
+//     var em_contactInput = document.getElementById('em_contact');
+//     var em_contact = $('#em_contact').val();
+//     var e_h_phoneInput = document.getElementById('e_h_phone');
+//     var e_h_phone = $('#e_h_phone').val();
+//     var e_w_phoneInput = document.getElementById('e_w_phone');
+//     var e_w_phone = $('#e_w_phone').val();
+//     if (em_contact == "") {
+//         document.getElementById("em_contact").style.borderColor = "red";
+//     } else {
+//         $("#em_contact").on('keyup', function() {
+//             document.getElementById("em_contact").style.borderColor = "green";
+//         });
+
+//     }
+//     if (e_h_phone == "") {
+//         document.getElementById("e_h_phone").style.borderColor = "red";
+//     } else {
+//         $("#e_h_phone").on('keyup', function() {
+//             document.getElementById("e_h_phone").style.borderColor = "green";
+//         });
+
+//     }
+//     if (e_w_phone == "") {
+//         document.getElementById("e_w_phone").style.borderColor = "red";
+//     } else {
+//         $("#e_w_phone").on('keyup', function() {
+//             document.getElementById("e_w_phone").style.borderColor = "green";
+//         });
+
+//     }
+//     if (em_contact !== "" && e_h_phone !== "" && e_w_phone !== "") {
+//         $('.nav-tabs > .active').next('li').find('a').trigger('click');
+//     }
+
+// }
 function valid_inf7() {
-    var em_contactInput = document.getElementById('em_contact');
-    var em_contact = $('#em_contact').val();
-    var e_h_phoneInput = document.getElementById('e_h_phone');
-    var e_h_phone = $('#e_h_phone').val();
-    var e_w_phoneInput = document.getElementById('e_w_phone');
-    var e_w_phone = $('#e_w_phone').val();
-    if (em_contact == "") {
-        document.getElementById("em_contact").style.borderColor = "red";
-    } else {
-        $("#em_contact").on('keyup', function() {
-            document.getElementById("em_contact").style.borderColor = "green";
-        });
 
-    }
-    if (e_h_phone == "") {
-        document.getElementById("e_h_phone").style.borderColor = "red";
-    } else {
-        $("#e_h_phone").on('keyup', function() {
-            document.getElementById("e_h_phone").style.borderColor = "green";
-        });
+    var em_contact = $('#em_contact').val().trim();
+    var e_h_phone = $('#e_h_phone').val().trim();
+    var e_w_phone = $('#e_w_phone').val().trim();
 
-    }
-    if (e_w_phone == "") {
-        document.getElementById("e_w_phone").style.borderColor = "red";
-    } else {
-        $("#e_w_phone").on('keyup', function() {
-            document.getElementById("e_w_phone").style.borderColor = "green";
-        });
+    $('#em_contact, #e_h_phone, #e_w_phone').css('border-color', '');
 
-    }
-    if (em_contact !== "" && e_h_phone !== "" && e_w_phone !== "") {
-        $('.nav-tabs > .active').next('li').find('a').trigger('click');
+    // Only em_contact is required
+    if (em_contact === "") {
+        $('#em_contact').css('border-color', 'red');
+        return false;
     }
 
+    // Phone numbers optional, validate only if entered
+    if (e_h_phone !== "" && e_h_phone.length < 10) {
+        $('#e_h_phone').css('border-color', 'red');
+        return false;
+    }
+
+    if (e_w_phone !== "" && e_w_phone.length < 10) {
+        $('#e_w_phone').css('border-color', 'red');
+        return false;
+    }
+
+    $('.nav-tabs > .active').next('li').find('a').trigger('click');
 }
+
 
 function valid_inf8() {
 
