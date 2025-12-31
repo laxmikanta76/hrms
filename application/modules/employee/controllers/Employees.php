@@ -772,352 +772,172 @@ public function cv()
 
 	}
 	////************Employee Update Part***********//
-	// public function update_employee_form($id = null)
-	// { 
-	// 	/***** file upload code start ***********/ 
-
-	// 	$data['title'] = display('employee_update_form');
-    //     $device_ip = $this->deviceData()->device_ip;
-		
-	// 	$this->form_validation->set_rules('first_name',display('first_name'),'max_length[50]');
-	// 	$this->load->library('myupload');
-	// 	$img = $this->myupload->do_upload(
-	// 		'./application/modules/employee/assets/images/', 
-	// 		'picture'
-
-	// 	);
-	// 	$this->form_validation->set_rules('c_f_name[]','Custom Field Name');
-	// 	$this->form_validation->set_rules('c_f_type[]','Custom Field Type');
-	// 	$this->form_validation->set_rules('customvalue[]','Custom Value');
-	// 	$customr_field = $this->input->post('c_f_name');
-	// 	$customr_field_type = $this->input->post('c_f_type');
-	// 	$customr_value = $this->input->post('customvalue');
-
-	// 	$benifit_code = $this->input->post('benifit_c_code',true);
-	// 	$benifit_code_desc = $this->input->post('benifit_c_code_d',true);
-	// 	$benifit_acc_date = $this->input->post('benifit_acc_date',true);
-	// 	$benift_status = $this->input->post('benifit_sst',true);
-
-	// 	$c_code = $id;
-	// 	$c_name = $this->input->post('first_name').$this->input->post('last_name');
-	// 	$c_acc=$c_code.'-'.$c_name;
-
-	// 	$old_accname = $id.'-'.$this->input->post('oldfirstname').$this->input->post('oldlastname');
-
-	// 	#-------------------------------#
-	// 	if ($this->form_validation->run() === true) {
-
-
-	// 		$data['employee']   = (Object) $postData = [
-	// 			'employee_id'             => $this->input->post('employee_id',true),
-	// 			'pos_id' 	              => $this->input->post('pos_id',true),
-	// 			'first_name' 	          => $this->input->post('first_name',true),
-	// 			'maiden_name'             => $this->input->post('maiden_name'),
-	// 			'last_name' 	          => $this->input->post('last_name',true),
-	// 			'maiden_name'             => $this->input->post('maiden_name'),
-	// 			'email' 	              => $this->input->post('email',true),
-	// 			'phone' 	              => $this->input->post('phone',true),
-	// 			'alter_phone' 	          => $this->input->post('alter_phone',true),
-	// 			'present_address' 	      => $this->input->post('present_address',true),
-	// 			'parmanent_address' 	  => $this->input->post('parmanent_address',true),
-	// 			'picture' 	              => (!empty($img) ? $img : $this->input->post('old_image')),
-	// 			'dept_id'                 => $this->input->post('division',true),
-	// 			'state'                   => $this->input->post('state',true),
-	// 			'city'                    => $this->input->post('city',true),
-	// 			'zip'                     => $this->input->post('zip_code',true),
-	// 			'citizenship'             => $this->input->post('citizenship',true),
-	// 			'duty_type'               => $this->input->post('duty_type',true),
-	// 			'hire_date'               => date("Y-m-d", strtotime(!empty($this->input->post('hiredate',true))?$this->input->post('hiredate',true):date('Y-m-d'))),
-	// 			'original_hire_date'      => date("Y-m-d", strtotime(!empty($this->input->post('ohiredate',true))?$this->input->post('ohiredate',true):date('Y-m-d'))),
-	// 			'termination_date'        => date("Y-m-d", strtotime(!empty($this->input->post('terminatedate',true))?$this->input->post('terminatedate',true):date('Y-m-d'))),
-	// 			'termination_reason'      => $this->input->post('termreason',true),
-	// 			'voluntary_termination'   => $this->input->post('volunt_termination',true),
-	// 			'rehire_date'             => date("Y-m-d", strtotime(!empty($this->input->post('rehiredate',true))?$this->input->post('rehiredate',true):date('Y-m-d'))),
-	// 			'rate_type'               => $this->input->post('rate_type',true),
-	// 			'rate'                    => $this->input->post('rate',true),
-	// 			'pay_frequency'           => $this->input->post('pay_frequency',true),
-	// 			'pay_frequency_txt'       => $this->input->post('pay_f_text',true),
-	// 			'hourly_rate2'            => $this->input->post('h_rate2',true),
-	// 			'hourly_rate3'            => $this->input->post('h_rate3',true),
-	// 			'home_department'         => $this->input->post('h_department',true),
-	// 			'department_text'         => $this->input->post('h_dep_text',true),
-	// 			'class_code'              => $this->input->post('c_code',true),
-	// 			'class_code_desc'         => $this->input->post('c_code_d',true),
-	// 			'class_acc_date'          => date("Y-m-d", strtotime(!empty($this->input->post('class_acc_date',true))?$this->input->post('class_acc_date',true):date('Y-m-d'))),
-	// 			'class_status'            =>  $this->input->post('class_sst',true),
-	// 			'is_super_visor'          => $this->input->post('is_supervisor',true),
-	// 			'super_visor_id'          => $this->input->post('supervisorname',true),
-	// 			'supervisor_report'       => $this->input->post('reports',true),
-	// 			'dob'                     => date("Y-m-d", strtotime(!empty($this->input->post('dob',true))?$this->input->post('dob',true):date('Y-m-d'))),
-	// 			'gender'                  => $this->input->post('gender',true),
-	// 			'marital_status'          => $this->input->post('marital_status',true),
-	// 			'ethnic_group'            => $this->input->post('ethnic',true),
-	// 			'eeo_class_gp'            => $this->input->post('eeo_class',true),
-	// 			'ssn'                     => $this->input->post('ssn',true),
-	// 			'work_in_state'           => $this->input->post('w_s',true),
-	// 			'live_in_state'           => $this->input->post('l_in_s',true),
-	// 			'home_email'              => $this->input->post('h_email',true),
-	// 			'business_email'          => $this->input->post('b_email',true),
-	// 			'home_phone'              => $this->input->post('h_phone',true),
-	// 			'business_phone'          => $this->input->post('w_phone',true),
-	// 			'cell_phone'              => $this->input->post('c_phone',true),
-	// 			'emerg_contct'            => $this->input->post('em_contact',true),
-	// 			'emrg_h_phone'            => $this->input->post('e_h_phone',true),
-	// 			'emrg_w_phone'            => $this->input->post('e_w_phone',true),
-	// 			'emgr_contct_relation'    => $this->input->post('e_c_relation',true),
-	// 			'alt_em_contct'           => $this->input->post('alt_em_cont',true),
-	// 			'alt_emg_h_phone'         => $this->input->post('a_e_h_phone',true),
-	// 			'alt_emg_w_phone'         => $this->input->post('a_e_w_phone',true),
-	// 		];    
-	// 		$accHead = [
-	// 			'HeadName'=> $c_acc,
-	// 		];
-
-	// 		if ($this->Employees_model->update_employee($postData)) { 
-
-	// 			$this->db->where('HeadName', $old_accname)
-	// 			->update("acc_coa", $accHead);
-	// 			 $zk = new ZKLibrary($device_ip, 4370);
-	//         // echo 'welcome';exit();
-	//             $zk->connect();
-	//             $zk->disableDevice();
-	// 		$delete = $zk->deleteUser($id);
-	// 		$zk->setUser($id, $id, $this->input->post('first_name').' '.$this->input->post('last_name'), '', 0);
-	// 		$zk->enableDevice();
-    //             $zk->disconnect();
-
-	// 			$this->db->where('employee_id',$this->input->post('employee_id',true))
-	// 			->delete('custom_table');
-	// 			$this->db->where('employee_id',$this->input->post('employee_id',true))
-	// 			->delete('employee_benifit');
-	// 			for ($i=0; $i < sizeof($customr_field); $i++) {
-	// 				//print_r(count($customr_field));exit();
-	// 				$custom = [
-	// 					'custom_field'            =>  $customr_field[$i],
-	// 					'custom_data_type' 	      => $customr_field_type[$i],
-	// 					'custom_data' 	          => $customr_value[$i],
-	// 					'employee_id' 	          => $this->input->post('employee_id',true),
-	// 				];
-	// 				if(!empty($customr_field[$i])){
-	// 					$this->db->insert('custom_table', $custom);
-	// 				}
-	// 			}
-
-	// 			for ($i=0; $i < count($benifit_code); $i++) {
-
-	// 				$benifit = [
-	// 					'bnf_cl_code'           =>  $benifit_code[$i],
-	// 					'bnf_cl_code_des' 	    => $benifit_code_desc[$i],
-	// 					'bnff_acural_date' 	    => date("Y-m-d", strtotime(!empty($benifit_acc_date[$i])?$benifit_acc_date[$i]:date('Y-m-d'))),
-	// 					'bnf_status'            => $benift_status[$i],
-	// 					'employee_id' 	        => $this->input->post('employee_id',true),
-	// 				];
-	// 				if(!empty($benifit_code[$i])){
-	// 					$this->db->insert('employee_benifit', $benifit);
-	// 				}
-	// 			}
-
-	// 			$this->session->set_flashdata('message', display('update_successfully'));
-	// 			redirect("employee/Employees/cv/". $id);
-	// 		} else {
-	// 			$this->session->set_flashdata('exception',  display('please_try_again'));
-	// 		}	
-	// 	} else {
-	// 		$data['data']=$this->Employees_model->employee_updateForm($id);
-	// 		$data['module'] = "employee";
-	// 		$data['page']   = "update_employee_form";
-	// 		$data['dropdowndept'] = $this->Employees_model->dropdowndept();
-	// 		$data['designation']  = $this->Employees_model->designation();
-	// 		$data['supervisor']   = $this->Employees_model->supervisorlist();
-	// 		$data['custominfo']   = $this->Employees_model->customifo($id);
-	// 		$data['benifit']      = $this->Employees_model->benifit($id);
-	// 		$data['bb']           = $this->Employees_model->get_pos($id);
-	// 		$data['country_list'] = $this->Country_model->state();
-			
-	// 		echo Modules::run('template/layout', $data); 
-			
-	// 	}   
-	// }
 	public function update_employee_form($id = null)
-{ 
-	$data['title'] = display('employee_update_form');
-	$device_ip = $this->deviceData()->device_ip;
-	
-	$this->form_validation->set_rules('first_name',display('first_name'),'max_length[50]');
-	$this->load->library('myupload');
-	$img = $this->myupload->do_upload(
-		'./application/modules/employee/assets/images/', 
-		'picture'
-	);
-	
-	$this->form_validation->set_rules('c_f_name[]','Custom Field Name');
-	$this->form_validation->set_rules('c_f_type[]','Custom Field Type');
-	$this->form_validation->set_rules('customvalue[]','Custom Value');
-	
-	$customr_field = $this->input->post('c_f_name');
-	$customr_field_type = $this->input->post('c_f_type');
-	$customr_value = $this->input->post('customvalue');
+	{ 
+		/***** file upload code start ***********/ 
 
-	$benifit_code = $this->input->post('benifit_c_code',true);
-	$benifit_code_desc = $this->input->post('benifit_c_code_d',true);
-	$benifit_acc_date = $this->input->post('benifit_acc_date',true);
-	$benift_status = $this->input->post('benifit_sst',true);
-
-	$c_code = $id;
-	$c_name = $this->input->post('first_name').$this->input->post('last_name');
-	$c_acc=$c_code.'-'.$c_name;
-
-	$old_accname = $id.'-'.$this->input->post('oldfirstname').$this->input->post('oldlastname');
-
-	if ($this->form_validation->run() === true) {
-
-		$data['employee'] = (Object) $postData = [
-			'employee_id'             => $this->input->post('employee_id',true),
-			'pos_id' 	              => $this->input->post('pos_id',true),
-			'first_name' 	          => $this->input->post('first_name',true),
-			'middle_name'             => $this->input->post('middle_name',true),
-			'maiden_name'             => $this->input->post('maiden_name'),
-			'last_name' 	          => $this->input->post('last_name',true),
-			'email' 	              => $this->input->post('email',true),
-			'phone' 	              => $this->input->post('phone',true),
-			'alter_phone' 	          => $this->input->post('alter_phone',true),
-			'present_address' 	      => $this->input->post('present_address',true),
-			'parmanent_address' 	  => $this->input->post('parmanent_address',true),
-			'picture' 	              => (!empty($img) ? $img : $this->input->post('old_image')),
-			'dept_id'                 => $this->input->post('division',true),
-			'state'                   => $this->input->post('state',true),
-			'city'                    => $this->input->post('city',true),
-			'zip'                     => $this->input->post('zip_code',true),
-			'citizenship'             => $this->input->post('citizenship',true),
-			'duty_type'               => $this->input->post('duty_type',true),
-			'hire_date'               => date("Y-m-d", strtotime(!empty($this->input->post('hiredate',true))?$this->input->post('hiredate',true):date('Y-m-d'))),
-			'original_hire_date'      => date("Y-m-d", strtotime(!empty($this->input->post('ohiredate',true))?$this->input->post('ohiredate',true):date('Y-m-d'))),
-			'termination_date'        => date("Y-m-d", strtotime(!empty($this->input->post('terminatedate',true))?$this->input->post('terminatedate',true):date('Y-m-d'))),
-			'termination_reason'      => $this->input->post('termreason',true),
-			'voluntary_termination'   => $this->input->post('volunt_termination',true),
-			'rehire_date'             => date("Y-m-d", strtotime(!empty($this->input->post('rehiredate',true))?$this->input->post('rehiredate',true):date('Y-m-d'))),
-			'rate_type'               => $this->input->post('rate_type',true),
-			'rate'                    => $this->input->post('rate',true),
-			'pay_frequency'           => $this->input->post('pay_frequency',true),
-			'pay_frequency_txt'       => $this->input->post('pay_f_text',true),
-			'hourly_rate2'            => $this->input->post('h_rate2',true),
-			'hourly_rate3'            => $this->input->post('h_rate3',true),
-			'home_department'         => $this->input->post('h_department',true),
-			'department_text'         => $this->input->post('h_dep_text',true),
-			'class_code'              => $this->input->post('c_code',true),
-			'class_code_desc'         => $this->input->post('c_code_d',true),
-			'class_acc_date'          => date("Y-m-d", strtotime(!empty($this->input->post('class_acc_date',true))?$this->input->post('class_acc_date',true):date('Y-m-d'))),
-			'class_status'            => $this->input->post('class_sst',true),
-			'is_super_visor'          => $this->input->post('is_supervisor',true),
-			'super_visor_id'          => $this->input->post('supervisorname',true),
-			'supervisor_report'       => $this->input->post('reports',true),
-			'dob'                     => date("Y-m-d", strtotime(!empty($this->input->post('dob',true))?$this->input->post('dob',true):date('Y-m-d'))),
-			'gender'                  => $this->input->post('gender',true),
-			'marital_status'          => $this->input->post('marital_status',true),
-			'ethnic_group'            => $this->input->post('ethnic',true),
-			'eeo_class_gp'            => $this->input->post('eeo_class',true),
-			'ssn'                     => $this->input->post('ssn',true),
-			'work_in_state'           => $this->input->post('w_s',true),
-			'live_in_state'           => $this->input->post('l_in_s',true),
-			'home_email'              => $this->input->post('h_email',true),
-			'business_email'          => $this->input->post('b_email',true),
-			'home_phone'              => $this->input->post('h_phone',true),
-			'business_phone'          => $this->input->post('w_phone',true),
-			'cell_phone'              => $this->input->post('c_phone',true),
-			'emerg_contct'            => $this->input->post('em_contact',true),
-			'emrg_h_phone'            => $this->input->post('e_h_phone',true),
-			'emrg_w_phone'            => $this->input->post('e_w_phone',true),
-			'emgr_contct_relation'    => $this->input->post('e_c_relation',true),
-			'alt_em_contct'           => $this->input->post('alt_em_cont',true),
-			'alt_emg_h_phone'         => $this->input->post('a_e_h_phone',true),
-			'alt_emg_w_phone'         => $this->input->post('a_e_w_phone',true),
-		];    
+		$data['title'] = display('employee_update_form');
+        $device_ip = $this->deviceData()->device_ip;
 		
-		$accHead = [
-			'HeadName'=> $c_acc,
-		];
+		$this->form_validation->set_rules('first_name',display('first_name'),'max_length[50]');
+		$this->load->library('myupload');
+		$img = $this->myupload->do_upload(
+			'./application/modules/employee/assets/images/', 
+			'picture'
 
-		if ($this->Employees_model->update_employee($postData)) { 
+		);
+		$this->form_validation->set_rules('c_f_name[]','Custom Field Name');
+		$this->form_validation->set_rules('c_f_type[]','Custom Field Type');
+		$this->form_validation->set_rules('customvalue[]','Custom Value');
+		$customr_field = $this->input->post('c_f_name');
+		$customr_field_type = $this->input->post('c_f_type');
+		$customr_value = $this->input->post('customvalue');
 
-			// Update account head name
-			$this->db->where('HeadName', $old_accname)
+		$benifit_code = $this->input->post('benifit_c_code',true);
+		$benifit_code_desc = $this->input->post('benifit_c_code_d',true);
+		$benifit_acc_date = $this->input->post('benifit_acc_date',true);
+		$benift_status = $this->input->post('benifit_sst',true);
+
+		$c_code = $id;
+		$c_name = $this->input->post('first_name').$this->input->post('last_name');
+		$c_acc=$c_code.'-'.$c_name;
+
+		$old_accname = $id.'-'.$this->input->post('oldfirstname').$this->input->post('oldlastname');
+
+		#-------------------------------#
+		if ($this->form_validation->run() === true) {
+
+
+			$data['employee']   = (Object) $postData = [
+				'employee_id'             => $this->input->post('employee_id',true),
+				'pos_id' 	              => $this->input->post('pos_id',true),
+				'first_name' 	          => $this->input->post('first_name',true),
+				'maiden_name'             => $this->input->post('maiden_name'),
+				'last_name' 	          => $this->input->post('last_name',true),
+				'maiden_name'             => $this->input->post('maiden_name'),
+				'email' 	              => $this->input->post('email',true),
+				'phone' 	              => $this->input->post('phone',true),
+				'alter_phone' 	          => $this->input->post('alter_phone',true),
+				'present_address' 	      => $this->input->post('present_address',true),
+				'parmanent_address' 	  => $this->input->post('parmanent_address',true),
+				'picture' 	              => (!empty($img) ? $img : $this->input->post('old_image')),
+				'dept_id'                 => $this->input->post('division',true),
+				'state'                   => $this->input->post('state',true),
+				'city'                    => $this->input->post('city',true),
+				'zip'                     => $this->input->post('zip_code',true),
+				'citizenship'             => $this->input->post('citizenship',true),
+				'duty_type'               => $this->input->post('duty_type',true),
+				'hire_date'               => date("Y-m-d", strtotime(!empty($this->input->post('hiredate',true))?$this->input->post('hiredate',true):date('Y-m-d'))),
+				'original_hire_date'      => date("Y-m-d", strtotime(!empty($this->input->post('ohiredate',true))?$this->input->post('ohiredate',true):date('Y-m-d'))),
+				'termination_date'        => date("Y-m-d", strtotime(!empty($this->input->post('terminatedate',true))?$this->input->post('terminatedate',true):date('Y-m-d'))),
+				'termination_reason'      => $this->input->post('termreason',true),
+				'voluntary_termination'   => $this->input->post('volunt_termination',true),
+				'rehire_date'             => date("Y-m-d", strtotime(!empty($this->input->post('rehiredate',true))?$this->input->post('rehiredate',true):date('Y-m-d'))),
+				'rate_type'               => $this->input->post('rate_type',true),
+				'rate'                    => $this->input->post('rate',true),
+				'pay_frequency'           => $this->input->post('pay_frequency',true),
+				'pay_frequency_txt'       => $this->input->post('pay_f_text',true),
+				'hourly_rate2'            => $this->input->post('h_rate2',true),
+				'hourly_rate3'            => $this->input->post('h_rate3',true),
+				'home_department'         => $this->input->post('h_department',true),
+				'department_text'         => $this->input->post('h_dep_text',true),
+				'class_code'              => $this->input->post('c_code',true),
+				'class_code_desc'         => $this->input->post('c_code_d',true),
+				'class_acc_date'          => date("Y-m-d", strtotime(!empty($this->input->post('class_acc_date',true))?$this->input->post('class_acc_date',true):date('Y-m-d'))),
+				'class_status'            =>  $this->input->post('class_sst',true),
+				'is_super_visor'          => $this->input->post('is_supervisor',true),
+				'super_visor_id'          => $this->input->post('supervisorname',true),
+				'supervisor_report'       => $this->input->post('reports',true),
+				'dob'                     => date("Y-m-d", strtotime(!empty($this->input->post('dob',true))?$this->input->post('dob',true):date('Y-m-d'))),
+				'gender'                  => $this->input->post('gender',true),
+				'marital_status'          => $this->input->post('marital_status',true),
+				'ethnic_group'            => $this->input->post('ethnic',true),
+				'eeo_class_gp'            => $this->input->post('eeo_class',true),
+				'ssn'                     => $this->input->post('ssn',true),
+				'work_in_state'           => $this->input->post('w_s',true),
+				'live_in_state'           => $this->input->post('l_in_s',true),
+				'home_email'              => $this->input->post('h_email',true),
+				'business_email'          => $this->input->post('b_email',true),
+				'home_phone'              => $this->input->post('h_phone',true),
+				'business_phone'          => $this->input->post('w_phone',true),
+				'cell_phone'              => $this->input->post('c_phone',true),
+				'emerg_contct'            => $this->input->post('em_contact',true),
+				'emrg_h_phone'            => $this->input->post('e_h_phone',true),
+				'emrg_w_phone'            => $this->input->post('e_w_phone',true),
+				'emgr_contct_relation'    => $this->input->post('e_c_relation',true),
+				'alt_em_contct'           => $this->input->post('alt_em_cont',true),
+				'alt_emg_h_phone'         => $this->input->post('a_e_h_phone',true),
+				'alt_emg_w_phone'         => $this->input->post('a_e_w_phone',true),
+			];    
+			$accHead = [
+				'HeadName'=> $c_acc,
+			];
+
+			if ($this->Employees_model->update_employee($postData)) { 
+
+				$this->db->where('HeadName', $old_accname)
 				->update("acc_coa", $accHead);
+				 $zk = new ZKLibrary($device_ip, 4370);
+	        // echo 'welcome';exit();
+	            $zk->connect();
+	            $zk->disableDevice();
+			$delete = $zk->deleteUser($id);
+			$zk->setUser($id, $id, $this->input->post('first_name').' '.$this->input->post('last_name'), '', 0);
+			$zk->enableDevice();
+                $zk->disconnect();
 
-			// Update fingerprint device - WRAPPED IN TRY-CATCH
-			try {
-				if (!empty($device_ip)) {
-					$zk = new ZKLibrary($device_ip, 4370);
-					if ($zk->connect()) {
-						$zk->disableDevice();
-						$zk->deleteUser($id);
-						$zk->setUser($id, $id, $this->input->post('first_name').' '.$this->input->post('last_name'), '', 0);
-						$zk->enableDevice();
-						$zk->disconnect();
-					}
-				}
-			} catch (Exception $e) {
-				// Log the error but don't stop the update process
-				log_message('error', 'Fingerprint device update failed: ' . $e->getMessage());
-			}
-
-			// Delete and re-insert custom fields
-			$this->db->where('employee_id', $this->input->post('employee_id',true))
+				$this->db->where('employee_id',$this->input->post('employee_id',true))
 				->delete('custom_table');
-			
-			$this->db->where('employee_id', $this->input->post('employee_id',true))
+				$this->db->where('employee_id',$this->input->post('employee_id',true))
 				->delete('employee_benifit');
-			
-			// Insert custom fields
-			if (!empty($customr_field)) {
 				for ($i=0; $i < sizeof($customr_field); $i++) {
-					if (!empty($customr_field[$i])) {
-						$custom = [
-							'custom_field'     => $customr_field[$i],
-							'custom_data_type' => $customr_field_type[$i],
-							'custom_data'      => $customr_value[$i],
-							'employee_id'      => $this->input->post('employee_id',true),
-						];
+					//print_r(count($customr_field));exit();
+					$custom = [
+						'custom_field'            =>  $customr_field[$i],
+						'custom_data_type' 	      => $customr_field_type[$i],
+						'custom_data' 	          => $customr_value[$i],
+						'employee_id' 	          => $this->input->post('employee_id',true),
+					];
+					if(!empty($customr_field[$i])){
 						$this->db->insert('custom_table', $custom);
 					}
 				}
-			}
 
-			// Insert benefits
-			if (!empty($benifit_code)) {
 				for ($i=0; $i < count($benifit_code); $i++) {
-					if (!empty($benifit_code[$i])) {
-						$benifit = [
-							'bnf_cl_code'      => $benifit_code[$i],
-							'bnf_cl_code_des'  => $benifit_code_desc[$i],
-							'bnff_acural_date' => date("Y-m-d", strtotime(!empty($benifit_acc_date[$i])?$benifit_acc_date[$i]:date('Y-m-d'))),
-							'bnf_status'       => $benift_status[$i],
-							'employee_id'      => $this->input->post('employee_id',true),
-						];
+
+					$benifit = [
+						'bnf_cl_code'           =>  $benifit_code[$i],
+						'bnf_cl_code_des' 	    => $benifit_code_desc[$i],
+						'bnff_acural_date' 	    => date("Y-m-d", strtotime(!empty($benifit_acc_date[$i])?$benifit_acc_date[$i]:date('Y-m-d'))),
+						'bnf_status'            => $benift_status[$i],
+						'employee_id' 	        => $this->input->post('employee_id',true),
+					];
+					if(!empty($benifit_code[$i])){
 						$this->db->insert('employee_benifit', $benifit);
 					}
 				}
-			}
 
-			$this->session->set_flashdata('message', display('update_successfully'));
-			redirect("employee/Employees/manageemployee");
+				$this->session->set_flashdata('message', display('update_successfully'));
+				redirect("employee/Employees/cv/". $id);
+			} else {
+				$this->session->set_flashdata('exception',  display('please_try_again'));
+			}	
 		} else {
-			$this->session->set_flashdata('exception', display('please_try_again'));
-		}	
-	} else {
-		$data['data']         = $this->Employees_model->employee_updateForm($id);
-		$data['module']       = "employee";
-		$data['page']         = "update_employee_form";
-		$data['dropdowndept'] = $this->Employees_model->dropdowndept();
-		$data['designation']  = $this->Employees_model->designation();
-		$data['supervisor']   = $this->Employees_model->supervisorlist();
-		$data['custominfo']   = $this->Employees_model->customifo($id);
-		$data['benifit']      = $this->Employees_model->benifit($id);
-		$data['bb']           = $this->Employees_model->get_pos($id);
-		$data['country_list'] = $this->Country_model->state();
-		
-		echo Modules::run('template/layout', $data); 
-	}   
-}
+			$data['data']=$this->Employees_model->employee_updateForm($id);
+			$data['module'] = "employee";
+			$data['page']   = "update_employee_form";
+			$data['dropdowndept'] = $this->Employees_model->dropdowndept();
+			$data['designation']  = $this->Employees_model->designation();
+			$data['supervisor']   = $this->Employees_model->supervisorlist();
+			$data['custominfo']   = $this->Employees_model->customifo($id);
+			$data['benifit']      = $this->Employees_model->benifit($id);
+			$data['bb']           = $this->Employees_model->get_pos($id);
+			$data['country_list'] = $this->Country_model->state();
+			
+			echo Modules::run('template/layout', $data); 
+			
+		}   
+	}
 
 
 	public function randID()

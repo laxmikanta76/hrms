@@ -1205,7 +1205,7 @@ ul li a {
 
                                 <div class="form-group text-right">
                                     <input type="button" class="btn btn-primary btnPrevious" value="Previous">
-                                    <input type="submit" class="btn btn-success" onclick="valid_inf8()" value="Update">
+                                    <input type="submit" class="btn btn-success" value="Update">
                                 </div>
 
                                 <?php echo form_close() ?>
