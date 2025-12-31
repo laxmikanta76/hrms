@@ -925,8 +925,7 @@ ul li a {
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="h_phone"><?php echo display('home_phone')?> <sup
-                                                    class="color-red ">*</sup></label>
+                                            <label for="h_phone"><?php echo display('home_phone')?></label>
                                             <input type="text" class="form-control" id="h_phone" name="h_phone"
                                                 placeholder="Home Phone" value="<?php echo $data->home_phone;?>">
 
@@ -941,8 +940,7 @@ ul li a {
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="c_phone"><?php echo display('cell_phone')?> <sup
-                                                    class="color-red ">*</sup></label>
+                                            <label for="c_phone"><?php echo display('cell_phone')?></label>
 
                                             <input type="text" class="form-control" id="c_phone" name="c_phone"
                                                 placeholder="Cell Phone" value="<?php echo $data->cell_phone;?>">
@@ -974,7 +972,7 @@ ul li a {
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="s_name"><?php echo display('emerg_contct')?> <sup
+                                            <label for="s_name"><?php echo display('emerg_contct')?><sup
                                                     class="color-red ">*</sup></label>
                                             <input type="text" class="form-control" id="em_contact" name="em_contact"
                                                 placeholder="Emergency Contact"
@@ -985,8 +983,7 @@ ul li a {
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="e_h_phone"><?php echo display('emerg_home_phone')?> <sup
-                                                    class="color-red ">*</sup></label>
+                                            <label for="e_h_phone"><?php echo display('emerg_home_phone')?></label>
 
                                             <input type="text" class="form-control" id="e_h_phone" name="e_h_phone"
                                                 placeholder="Emergency Home Phone"
@@ -996,8 +993,7 @@ ul li a {
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="e_w_phone"><?php echo display('emrg_w_phone')?> <sup
-                                                    class="color-red ">*</sup></label>
+                                            <label for="e_w_phone"><?php echo display('emrg_w_phone')?></label>
                                             <input type="text" class="form-control" id="e_w_phone" name="e_w_phone"
                                                 placeholder="Emergency Work Phone"
                                                 value="<?php echo $data->emrg_w_phone;?>">
