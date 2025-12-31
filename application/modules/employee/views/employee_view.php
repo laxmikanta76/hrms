@@ -81,11 +81,8 @@
                         <?php foreach ($emp_history as $row) { ?>
                         <tr class="<?php echo ($sl & 1)?"odd gradeX":"even gradeC" ?>">
                             <td><?php echo $sl; ?></td>
-                            <td>
-                                <img src="<?php echo base_url(!empty($row->picture)? 'application/modules/employee/assets/images/'.$row->picture: 'assets/img/icons/default.jpg'); ?>"
-                                    alt="Image" height="64"
-                                    onerror="this.src='<?php echo base_url('assets/img/icons/default.jpg'); ?>'">
-                            </td>
+                            <td><img src="<?php echo base_url(!empty($row->picture)?$row->picture:'assets/img/icons/default.jpg'); ?>"
+                                    alt="Image" height="64"></td>
                             <td><?php echo $row->first_name; ?></td>
                             <td><?php echo $row->last_name; ?></td>
                             <td><?php echo $row->maiden_name; ?></td>
