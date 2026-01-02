@@ -437,6 +437,10 @@ public function cv()
 
 	public function create_employee()
 	{ 
+		$employee_id = $this->db->insert_id(); // after employee insert
+
+        // Auto create leave row
+        $this->Employees_model->create_employee_leave_row($employee_id);
 		/***** file upload code start ***********/ 
          $device_ip = $this->deviceData()->device_ip;
 		$data['title'] = display('create_employee');
