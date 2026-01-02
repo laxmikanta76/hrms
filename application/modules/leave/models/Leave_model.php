@@ -190,4 +190,20 @@ public function holiday_delete($id = null){
     public function supervisorList(){
         return $result = $this->db->select('first_name,last_name,employee_id')->from('employee_history')->where('is_super_visor',1)->get()->result();
     }
+	
+	public function approve_leave($employee_id, $leave_type, $days)
+{
+    if ($leave_type == 'SL') {
+        $this->db->set('sick_balance', 'sick_balance - '.$days, false)
+                 ->set('sick_taken', 'sick_taken + '.$days, false);
+    }
+
+    if ($leave_type == 'CL') {
+        $this->db->set('casual_balance', 'casual_balance - '.$days, false)
+                 ->set('casual_taken', 'casual_taken + '.$days, false);
+    }
+
+    $this->db->where('employee_id', $employee_id)
+             ->update('employee_leave');
+}
 }

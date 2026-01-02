@@ -515,15 +515,52 @@ public function application(){
 	}
 	// Leave free for employee
 	public function free_leave(){
-		$employee_id    = $this->input->post('employee_id');
-		$type           = $this->input->post('leave_type');
-		$employee_leave = $this->db->select('SUM(num_aprv_day) as lv')->from('leave_apply')->where('employee_id',$employee_id)->where('leave_type_id',$type)->get()->row();
-		$totalleave = $this->db->select('leave_days')->from('leave_type')->where('leave_type_id',$type)->get()->row();
-		$data = array(
-			'enjoy' => (!empty($employee_leave->lv)?$employee_leave->lv:0),
-			'due'   => (!empty($totalleave->leave_days)?$totalleave->leave_days:0),
-		);
-		echo json_encode($data);
+		// $employee_id    = $this->input->post('employee_id');
+		// $type           = $this->input->post('leave_type');
+		// $employee_leave = $this->db->select('SUM(num_aprv_day) as lv')->from('leave_apply')->where('employee_id',$employee_id)->where('leave_type_id',$type)->get()->row();
+		// $totalleave = $this->db->select('leave_days')->from('leave_type')->where('leave_type_id',$type)->get()->row();
+		// $data = array(
+		// 	'enjoy' => (!empty($employee_leave->lv)?$employee_leave->lv:0),
+		// 	'due'   => (!empty($totalleave->leave_days)?$totalleave->leave_days:0),
+		// );
+		// echo json_encode($data);
+		
+		$employee_id = $this->input->post('employee_id');
+        $type = $this->input->post('leave_type');
+
+        $row = $this->db->where('employee_id', $employee_id)
+                    ->get('employee_leave')
+                    ->row();
+
+    // Safety check
+        if (!$row) {
+         echo json_encode([
+            'enjoy' => 0,
+            'due'   => 0
+         ]);
+         return;
+        }   
+
+    // Sick Leave
+        if ($type == 1) {
+          $enjoy = $row->sick_taken;
+          $due   = $row->sick_balance;
+        }
+    // Casual Leave
+        else if ($type == 1) {
+          $enjoy = $row->casual_taken;
+          $due   = $row->casual_balance;
+        }
+    // Unknown leave type
+        else {
+           $enjoy = 0;
+           $due   = 0;
+        }
+
+        echo json_encode([
+          'enjoy' => $enjoy,
+          'due'   => $due
+        ]);
 	}
 
 }
