@@ -629,23 +629,52 @@ public function cv()
 	}
 	public function delete_employhistory($id = null) 
 	{ 
-		$this->permission->module('employee','delete')->redirect();
-         $device_ip = $this->deviceData()->device_ip;
-		if ($this->Employees_model->emplyee_history_delete($id)) {
-			 $zk = new ZKLibrary($device_ip, 4370);
-	        // echo 'welcome';exit();
-	            $zk->connect();
-	            $zk->disableDevice();
-			$delete = $zk->deleteUser($id);
-			$zk->enableDevice();
-                $zk->disconnect();
-			#set success message
-			$this->session->set_flashdata('message',display('delete_successfully'));
-		} else {
-			#set exception message
-			$this->session->set_flashdata('exception',display('please_try_again'));
-		}
-		redirect("employee/Employees/viewEmhistory");
+		 // Permission check
+    $this->permission->module('employee', 'delete')->redirect();
+
+    // Validate ID
+    if (empty($id)) {
+        $this->session->set_flashdata('exception', display('please_try_again'));
+        return redirect("employee/Employees/viewEmhistory");
+    }
+
+    // Delete employee history from database only
+    if ($this->Employees_model->emplyee_history_delete($id)) {
+
+        // Success message
+        $this->session->set_flashdata(
+            'message',
+            display('delete_successfully')
+        );
+
+    } else {
+
+        // Failure message
+        $this->session->set_flashdata(
+            'exception',
+            display('please_try_again')
+        );
+    }
+
+    // Redirect back to history page
+    redirect("employee/Employees/viewEmhistory");
+		// $this->permission->module('employee','delete')->redirect();
+        //  $device_ip = $this->deviceData()->device_ip;
+		// if ($this->Employees_model->emplyee_history_delete($id)) {
+		// 	 $zk = new ZKLibrary($device_ip, 4370);
+	    //     // echo 'welcome';exit();
+	    //         $zk->connect();
+	    //         $zk->disableDevice();
+		// 	$delete = $zk->deleteUser($id);
+		// 	$zk->enableDevice();
+        //         $zk->disconnect();
+		// 	#set success message
+		// 	$this->session->set_flashdata('message',display('delete_successfully'));
+		// } else {
+		// 	#set exception message
+		// 	$this->session->set_flashdata('exception',display('please_try_again'));
+		// }
+		// redirect("employee/Employees/viewEmhistory");
 	}
 
 
