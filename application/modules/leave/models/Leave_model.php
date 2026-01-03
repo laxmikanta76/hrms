@@ -249,9 +249,7 @@ public function holiday_delete($id = null){
         'month'         => $month
     ])->row();
 
-    if ($exists) {
-        return;
-    }
+    if ($exists) return;
 
     $leaveType = $this->db->get_where('leave_type', [
         'leave_type_id' => $leave_type_id
@@ -272,22 +270,25 @@ public function holiday_delete($id = null){
         'month'         => $prevMonth
     ])->row();
 
-    $opening = 0;
-
-    // Casual Leave → carry forward
-    if ($leaveType && $leaveType->carry_forward == 1 && $prev) {
-        $opening = $prev->closing_balance;
+    // ✅ CORRECT OPENING LOGIC
+    if ($prev) {
+        if ($leaveType->carry_forward == 1) {
+            $opening = $prev->closing_balance;   // CL
+        } else {
+            $opening = $leaveType->leave_days;   // SL
+        }
+    } else {
+        $opening = $leaveType->leave_days;       // First month
     }
 
     $this->db->insert('employee_leave_balance', [
-        'employee_id'      => $employee_id,
-        'leave_type_id'    => $leave_type_id,
-        'year'             => $year,
-        'month'            => $month,
-        'opening_balance'  => $opening,
-        'used_leave'       => 0,
-        'closing_balance'  => $opening
+        'employee_id'     => $employee_id,
+        'leave_type_id'   => $leave_type_id,
+        'year'            => $year,
+        'month'           => $month,
+        'opening_balance' => $opening,
+        'used_leave'      => 0,
+        'closing_balance' => $opening
     ]);
-}
-
+ }
 }
