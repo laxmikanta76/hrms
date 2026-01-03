@@ -221,6 +221,9 @@ public function delete_holiday($id = null){
 
 public function application(){ 
         $data['title'] = display('application');//agent_picture
+		$this->load->model('Leave_model');
+
+        $this->Leave_model->ensure_monthly_balance($employee_id,$leave_type_id,date('Y'),date('n'));
         #-------------------------------#
         $this->form_validation->set_rules('employee_id',display('employee_id'));
 		$this->form_validation->set_rules('apply_strt_date',display('apply_strt_date'));
