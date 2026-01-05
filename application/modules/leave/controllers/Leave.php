@@ -536,8 +536,6 @@ public function application(){
 
 		 // 🔹 LOAD MODEL
         $this->load->model('Leave_model');
-		
-		echo 'MODEL_LOADED<br>';
 
          // 🔹 AUTO CREATE MONTHLY ROW (Railway-safe cron)
         $this->Leave_model->ensure_monthly_balance(
