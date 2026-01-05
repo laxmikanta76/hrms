@@ -14,5 +14,5 @@ function can_select_employee()
     // 9 = Supervisor
     // 10 = Manager
 
-    return ($is_admin == 1 || in_array($role_id, $allowed_roles,true));
+    return ($is_admin == 1 || in_array($role_id, $allowed_roles));
 }
