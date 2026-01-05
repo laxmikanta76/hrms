@@ -25,7 +25,9 @@ class Home extends MX_Controller {
 		$cur_event = $this->evencal->getEvent($year, $month, $day);
 		$leave = $this->evencal->getLeave($year, $month, $day);
 		$loans = $this->evencal->getLoan($year, $month, $day);
-        $leave_employee = $this->evencal->leave_employee()->leave_total;
+         // 🔥 FIX HERE
+        $leave_row = $this->evencal->leave_employee();
+        $leave_employee = ($leave_row && isset($leave_row->leave_total)) ? $leave_row->leave_total : 0;
 		$data      = array(
 						'notes' => $this->calendar->generate($year, $month, $date),
 						'year'  => $year, 
