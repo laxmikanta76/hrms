@@ -14,45 +14,40 @@ class Home extends MX_Controller {
 		if (! $this->session->userdata('isLogIn'))
 			redirect('login');
  	}
-	public function index()
-{
-    echo "DASHBOARD CONTROLLER OK";
-    exit;
-}
  
-	// 	function index($year = null, $month = null, $day = null){
-	// 	$year  = (empty($year) || !is_numeric($year))?  date('Y') :  $year;
-	// 	$month = (is_numeric($month) &&  $month > 0 && $month < 13)? $month : date('m');
-	// 	$day   = (is_numeric($day) &&  $day > 0 && $day < 31)?  $day : date('d');
-	// 	$d=date('Y-m-d');
-	// 	$date      = $this->evencal->getDateEvent($year, $month);
-	// 	$notice = $this->evencal->getNotice($year, $month, $day);
-	// 	$cur_event = $this->evencal->getEvent($year, $month, $day);
-	// 	$leave = $this->evencal->getLeave($year, $month, $day);
-	// 	$loans = $this->evencal->getLoan($year, $month, $day);
-    //     $leave_employee = $this->evencal->leave_employee()->leave_total;
-	// 	$data      = array(
-	// 					'notes' => $this->calendar->generate($year, $month, $date),
-	// 					'year'  => $year, 
-	// 					'mon'   => $month,
-	// 					'month' => $this->_month($month),
-	// 					'day'   => $day,
-	// 					'leave' => $leave,
-	// 					'leave_total' => $leave_employee,
-	// 					'loans'  => $loans,
-	// 					'events'=> $cur_event,
-	// 				    'notice'=> $notice,
-	//                     'module' => "dashboard", 
-	// 					'page'   => "home/index"
-	// 					);
-	// 	$data['emp']   = $this->home_model->empnumber();
-	// 	$data['atn']   = $this->home_model->atntd();
-	// 	$data['atnworkhour']   = $this->home_model->atnwork();
-	// 	$data['lnamount']   = $this->home_model->loanamnt();
-	// 	//$data['transaction']   = $this->home_model->totaltransaction();
-	// 	//$data['transactiondduct']   = $this->home_model->totaltransactiondeduct();
-	// 	echo Modules::run('template/layout', $data); 
-	// }
+		function index($year = null, $month = null, $day = null){
+		$year  = (empty($year) || !is_numeric($year))?  date('Y') :  $year;
+		$month = (is_numeric($month) &&  $month > 0 && $month < 13)? $month : date('m');
+		$day   = (is_numeric($day) &&  $day > 0 && $day < 31)?  $day : date('d');
+		$d=date('Y-m-d');
+		$date      = $this->evencal->getDateEvent($year, $month);
+		$notice = $this->evencal->getNotice($year, $month, $day);
+		$cur_event = $this->evencal->getEvent($year, $month, $day);
+		$leave = $this->evencal->getLeave($year, $month, $day);
+		$loans = $this->evencal->getLoan($year, $month, $day);
+        $leave_employee = $this->evencal->leave_employee()->leave_total;
+		$data      = array(
+						'notes' => $this->calendar->generate($year, $month, $date),
+						'year'  => $year, 
+						'mon'   => $month,
+						'month' => $this->_month($month),
+						'day'   => $day,
+						'leave' => $leave,
+						'leave_total' => $leave_employee,
+						'loans'  => $loans,
+						'events'=> $cur_event,
+					    'notice'=> $notice,
+	                    'module' => "dashboard", 
+						'page'   => "home/index"
+						);
+		$data['emp']   = $this->home_model->empnumber();
+		$data['atn']   = $this->home_model->atntd();
+		$data['atnworkhour']   = $this->home_model->atnwork();
+		$data['lnamount']   = $this->home_model->loanamnt();
+		//$data['transaction']   = $this->home_model->totaltransaction();
+		//$data['transactiondduct']   = $this->home_model->totaltransactiondeduct();
+		echo Modules::run('template/layout', $data); 
+	}
 	
 	// for convert (int) month to (string) month in Indonesian
 	function _month($month){
