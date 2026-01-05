@@ -14,7 +14,7 @@ class Auth extends MX_Controller {
  		));
 
 		$this->load->helper('captcha');
-		$this->load->library('zklibrary');  
+		//$this->load->library('zklibrary');  
  	}
 
 	public function index()
