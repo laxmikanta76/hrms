@@ -94,6 +94,7 @@ class Auth extends MX_Controller {
 					'isAdmin' 	  => (($user->row()->is_admin == 1)?true:false),
 					'is_admin'    => $user->row()->is_admin,
 					'user_type'   => $user->row()->is_admin,
+					'role_id'     => $user->row()->role_id,
 					'id' 		  => $user->row()->id,
 					'client_id'   => @$row->client_id,
 					'fullname'	  => $user->row()->fullname,
