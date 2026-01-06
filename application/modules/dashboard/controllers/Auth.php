@@ -80,189 +80,124 @@ class Auth extends MX_Controller {
 			}
 
 
-			
-// Replace the section after $row = null; in your Auth.php with this:
 
-$row = null;
-if ($user->row()->is_admin == 2 && $this->db->table_exists('setup_client_tbl')) {
-    $row = $this->db->select('client_id,client_email')
-        ->where('client_email',$user->row()->email)
-        ->get('setup_client_tbl')
-        ->row();
-}
+			  $row = null;
+              if ($user->row()->is_admin == 2 && $this->db->table_exists('setup_client_tbl')) {
+                  $row = $this->db->select('client_id,client_email')
+                    ->where('client_email',$user->row()->email)
+                    ->get('setup_client_tbl')
+                    ->row();
+			    }
+              $employee_info = $this->db->select('employee_id,first_name,last_name,is_super_visor')->from('employee_history')->where('email',$user->row()->email)->get()->row();
+				$sData = array(
+					'isLogIn' 	  => true,
+					'isAdmin' 	  => (($user->row()->is_admin == 1)?true:false),
+					'is_admin'    => $user->row()->is_admin,
+					'user_type'   => $user->row()->is_admin,
+					'role_id'     => $user->row()->role_id,
+					'id' 		  => $user->row()->id,
+					'client_id'   => @$row->client_id,
+					'fullname'	  => $user->row()->fullname,
+					'user_level'  => $user->row()->user_level,
+					'email' 	  => $user->row()->email,
+					'image' 	  => $user->row()->image,
+					'last_login'  => $user->row()->last_login,
+					'last_logout' => $user->row()->last_logout,
+					'ip_address'  => $user->row()->ip_address,
+					'employee_id' => $employee_info->employee_id,
+					'first_name'  => $employee_info->first_name,
+					'last_name'   => $employee_info->last_name,
+					'supervisor'  => $employee_info->is_super_visor,
+					'permission'  => json_encode(@$permission), 
+					'label_permission'  => json_encode(@$permission1) 
+					);	
 
-// FIX: Add proper null checking for employee_info
-$employee_info = $this->db->select('employee_id,first_name,last_name,is_super_visor')
-    ->from('employee_history')
-    ->where('email',$user->row()->email)
-    ->get()
-    ->row();
+					//store date to session 
+					$this->session->set_userdata($sData);
+					//update database status
+					$this->auth_model->last_login();
+					//welcome message
+		// $device_ip = $this->deviceData()->device_ip;			
+		// $zk = new ZKLibrary($device_ip, 4370);
+  //       $zk->connect();
+  //       $zk->disableDevice();
+  //       //if($connect){
+  //       $attendanced = $zk->getAttendance();
+  //           foreach ($attendanced as $attendancedata) {
+  //                $attdata = [
+  //               'uid'       => $attendancedata[1],
+  //               'id'        => $attendancedata[0],
+  //               'state'     => $attendancedata[2],
+  //               'time'      => $attendancedata[3]
+  //           ]; 
+  //           $att_insertdata = $this->db->insert('attendance_history',$attdata);
+  //           if(!empty($attendancedata[0])){
+  //           $zk->deleteAttendance($attendancedata[0]);
+  //           }
+  //       }
+  //       $zk->enableDevice();
+  //       $zk->disconnect();
+    // }else{
+    // $this->session->set_flashdata('exception', "Please Connect Your Fingerprint Device");	
+    // }
+					$this->session->set_flashdata('message', display('welcome_back').' '.$user->row()->fullname);
+					redirect('dashboard/home');
 
-// Initialize default values if employee not found
-$employee_id = null;
-$first_name = '';
-$last_name = '';
-$supervisor = 0;
+			} else {
+				$this->session->set_flashdata('exception', display('incorrect_email_or_password'));
+				redirect('login');
+			} 
 
-if ($employee_info) {
-    $employee_id = $employee_info->employee_id;
-    $first_name = $employee_info->first_name;
-    $last_name = $employee_info->last_name;
-    $supervisor = $employee_info->is_super_visor;
-}
+		} else {
 
-$sData = array(
-    'isLogIn'       => true,
-    'isAdmin'       => (($user->row()->is_admin == 1)?true:false),
-    'is_admin'      => $user->row()->is_admin,
-    'user_type'     => $user->row()->is_admin,
-    'role_id'       => $user->row()->role_id,
-    'id'            => $user->row()->id,
-    'client_id'     => @$row->client_id,
-    'fullname'      => $user->row()->fullname,
-    'user_level'    => $user->row()->user_level,
-    'email'         => $user->row()->email,
-    'image'         => $user->row()->image,
-    'last_login'    => $user->row()->last_login,
-    'last_logout'   => $user->row()->last_logout,
-    'ip_address'    => $user->row()->ip_address,
-    'employee_id'   => $employee_id,
-    'first_name'    => $first_name,
-    'last_name'     => $last_name,
-    'supervisor'    => $supervisor,
-    'permission'    => json_encode(@$permission), 
-    'label_permission' => json_encode(@$permission1) 
-);
+			$captcha = create_captcha(array(
+			    'img_path'      => FCPATH . 'assets/img/captcha/',
+			    'img_url'       => base_url('assets/img/captcha/'),
+			    'font_path'     => FCPATH . 'assets/fonts/captcha.ttf',
+			    'img_width'     => '328',
+			    'img_height'    => 64,
+			    'expiration'    => 600, //5 min
+			    'word_length'   => 4,
+			    'font_size'     => 26,
+			    'img_id'        => 'Imageid',
+			    'pool'          => '0123456789abcdefghijklmnopqrstuvwxyz',
 
-//store data to session 
-$this->session->set_userdata($sData);
-//update database status
-$this->auth_model->last_login();
-//welcome message
-$this->session->set_flashdata('message', display('welcome_back').' '.$user->row()->fullname);
-redirect('dashboard/home');
+			    // White background and border, black text and red grid
+			    'colors'        => array(
+			            'background' => array(255, 255, 255),
+			            'border' => array(228, 229, 231),
+			            'text' => array(49, 141, 1),
+			            'grid' => array(241, 243, 246)
+			    )
+			));
+			if($captcha !== false && is_array($captcha)) {
+			   $data['captcha_word'] = $captcha['word'];
+			   $data['captcha_image'] = $captcha['image'];
+			   $this->session->set_userdata('captcha', $captcha['word']);
+			}else{
+				$data['captcha_word'] = '';
+				$data['captcha_image'] = '';
+				$this->session->set_userdata('captcha', '');
+			}
 
-
-// $row = null;
-// if ($user->row()->is_admin == 2 && $this->db->table_exists('setup_client_tbl')) {
-// $row = $this->db->select('client_id,client_email')
-// ->where('client_email',$user->row()->email)
-// ->get('setup_client_tbl')
-// ->row();
-// }
-// $employee_info =
-//$this->db->select('employee_id,first_name,last_name,is_super_visor')->from('employee_history')->where('email',$user->row()->email)->get()->row();
-// $sData = array(
-// 'isLogIn' => true,
-// 'isAdmin' => (($user->row()->is_admin == 1)?true:false),
-// 'is_admin' => $user->row()->is_admin,
-// 'user_type' => $user->row()->is_admin,
-// 'role_id' => $user->row()->role_id,
-// 'id' => $user->row()->id,
-// 'client_id' => @$row->client_id,
-// 'fullname' => $user->row()->fullname,
-// 'user_level' => $user->row()->user_level,
-// 'email' => $user->row()->email,
-// 'image' => $user->row()->image,
-// 'last_login' => $user->row()->last_login,
-// 'last_logout' => $user->row()->last_logout,
-// 'ip_address' => $user->row()->ip_address,
-// 'employee_id' => $employee_info->employee_id,
-// 'first_name' => $employee_info->first_name,
-// 'last_name' => $employee_info->last_name,
-// 'supervisor' => $employee_info->is_super_visor,
-// 'permission' => json_encode(@$permission),
-// 'label_permission' => json_encode(@$permission1)
-// );
-
-// //store date to session
-// $this->session->set_userdata($sData);
-// //update database status
-// $this->auth_model->last_login();
-// //welcome message
-// // $device_ip = $this->deviceData()->device_ip;
-// // $zk = new ZKLibrary($device_ip, 4370);
-// // $zk->connect();
-// // $zk->disableDevice();
-// // //if($connect){
-// // $attendanced = $zk->getAttendance();
-// // foreach ($attendanced as $attendancedata) {
-// // $attdata = [
-// // 'uid' => $attendancedata[1],
-// // 'id' => $attendancedata[0],
-// // 'state' => $attendancedata[2],
-// // 'time' => $attendancedata[3]
-// // ];
-// // $att_insertdata = $this->db->insert('attendance_history',$attdata);
-// // if(!empty($attendancedata[0])){
-// // $zk->deleteAttendance($attendancedata[0]);
-// // }
-// // }
-// // $zk->enableDevice();
-// // $zk->disconnect();
-// // }else{
-// // $this->session->set_flashdata('exception', "Please Connect Your Fingerprint Device");
-// // }
-// $this->session->set_flashdata('message', display('welcome_back').' '.$user->row()->fullname);
-// redirect('dashboard/home');
-
-// } else {
-// $this->session->set_flashdata('exception', display('incorrect_email_or_password'));
-// redirect('login');
-// }
-
-// } else {
-
-// $captcha = create_captcha(array(
-// 'img_path' => FCPATH . 'assets/img/captcha/',
-// 'img_url' => base_url('assets/img/captcha/'),
-// 'font_path' => FCPATH . 'assets/fonts/captcha.ttf',
-// 'img_width' => '328',
-// 'img_height' => 64,
-// 'expiration' => 600, //5 min
-// 'word_length' => 4,
-// 'font_size' => 26,
-// 'img_id' => 'Imageid',
-// 'pool' => '0123456789abcdefghijklmnopqrstuvwxyz',
-
-// // White background and border, black text and red grid
-// 'colors' => array(
-// 'background' => array(255, 255, 255),
-// 'border' => array(228, 229, 231),
-// 'text' => array(49, 141, 1),
-// 'grid' => array(241, 243, 246)
-// )
-// ));
-// if($captcha !== false && is_array($captcha)) {
-// $data['captcha_word'] = $captcha['word'];
-// $data['captcha_image'] = $captcha['image'];
-// $this->session->set_userdata('captcha', $captcha['word']);
-// }else{
-// $data['captcha_word'] = '';
-// $data['captcha_image'] = '';
-// $this->session->set_userdata('captcha', '');
-// }
-
-// echo Modules::run('template/login', $data);
-// }
-}
-}
-}
-
-public function logout()
-{
-//update database status
-$this->auth_model->last_logout();
-//destroy session
-$this->session->sess_destroy();
-redirect('login');
-}
-/*
-|--------------------------------------------------------
-| Finger print Device information
-|--------------------------------------------------------
-*/
-public function deviceData(){
-return $this->db->select('*')->from('deviceinfo')->get()->row();
-}
+			echo Modules::run('template/login', $data);
+		}
+	}
+  
+	public function logout()
+	{ 
+		//update database status
+		$this->auth_model->last_logout();
+		//destroy session
+		$this->session->sess_destroy();
+		redirect('login');
+	}
+    /*
+ |--------------------------------------------------------
+ | Finger print Device information
+ |--------------------------------------------------------
+ */
+ public function deviceData(){
+    return $this->db->select('*')->from('deviceinfo')->get()->row();
+ }
 }
