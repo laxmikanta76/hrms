@@ -9,7 +9,7 @@ class Cron extends CI_Controller {
             show_error('Unauthorized', 401);
         }
 
-        $this->load->model('Leave_model');
+        $this->load->model('leave/Leave_model');
 
         $year  = date('Y');
         $month = date('n');
