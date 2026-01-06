@@ -94,7 +94,7 @@ class Auth extends MX_Controller {
 					'isAdmin' 	  => (($user->row()->is_admin == 1)?true:false),
 					'is_admin'    => $user->row()->is_admin,
 					'user_type'   => $user->row()->is_admin,
-					'role_id' => $user->row()->role_id ?? null,
+					'role_id'     => $user->row()->role_id,
 					'id' 		  => $user->row()->id,
 					'client_id'   => @$row->client_id,
 					'fullname'	  => $user->row()->fullname,
@@ -109,12 +109,7 @@ class Auth extends MX_Controller {
 					'last_name'   => $employee_info->last_name,
 					'supervisor'  => $employee_info->is_super_visor,
 					'permission'  => json_encode(@$permission), 
-					'label_permission'  => json_encode(@$permission1),
-
-					'employee_id' => $employee_info ? $employee_info->employee_id : null,
-                    'first_name'  => $employee_info ? $employee_info->first_name : '',
-                    'last_name'   => $employee_info ? $employee_info->last_name : '',
-                    'supervisor'  => $employee_info ? $employee_info->is_super_visor : 0,
+					'label_permission'  => json_encode(@$permission1) 
 					);	
 
 					//store date to session 
@@ -191,31 +186,11 @@ class Auth extends MX_Controller {
   
 	public function logout()
 	{ 
-		// update last logout time
-    $this->auth_model->last_logout();
-
-    // explicitly remove session data
-    $this->session->unset_userdata([
-        'isLogIn',
-        'isAdmin',
-        'is_admin',
-        'id',
-        'email',
-        'employee_id',
-        'role_id',
-        'permission',
-        'label_permission'
-    ]);
-
-    // regenerate session ID (VERY IMPORTANT)
-    $this->session->sess_regenerate(TRUE);
-
-    redirect('login');
-		// //update database status
-		// $this->auth_model->last_logout();
-		// //destroy session
-		// $this->session->sess_destroy();
-		// redirect('login');
+		//update database status
+		$this->auth_model->last_logout();
+		//destroy session
+		$this->session->sess_destroy();
+		redirect('login');
 	}
     /*
  |--------------------------------------------------------
