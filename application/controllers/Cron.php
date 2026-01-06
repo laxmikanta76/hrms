@@ -33,4 +33,7 @@ class Cron extends CI_Controller {
 
         echo "Yearly leave reset completed";
     }
+    public function new_atn(){
+        
+    }
 }
