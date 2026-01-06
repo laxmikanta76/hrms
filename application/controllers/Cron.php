@@ -4,20 +4,40 @@ class Cron extends CI_Controller {
 
     public function monthly_leave_process()
     {
-        // security token
         if ($this->input->get('token') !== 'SECURE123') {
             show_error('Unauthorized', 401);
         }
 
+        // HMVC model load
         $this->load->model('leave/Leave_model');
+
+        // 🔥 USE CORRECT EMPLOYEE TABLE HERE
+        $employees = $this->db
+            ->select('id as employee_id')
+            ->from('user')
+            ->where('status', 1)
+            ->where('is_admin', 0)
+            ->get()
+            ->result();
+
+        $leaveTypes = $this->db->get('leave_type')->result();
 
         $year  = date('Y');
         $month = date('n');
 
-        $this->Leave_model->process_monthly_leave($year, $month);
+        foreach ($employees as $emp) {
+            foreach ($leaveTypes as $lt) {
+                $this->Leave_model->ensure_monthly_balance(
+                    $emp->employee_id,
+                    $lt->leave_type_id,
+                    $year,
+                    $month
+                );
+            }
+        }
 
         echo "Monthly leave processed successfully";
-    }
+    }   
 
     public function yearly_reset()
     {
