@@ -318,22 +318,25 @@ $(document).ready(function(e) {
 });
 
 function leavetypechange(id) {
-    var leave_type = id;
-    var employee_id = $('#employee_id').val();
+    let employee_id = $('#employee_id').length ?
+        $('#employee_id').val() :
+        "<?php echo $this->session->userdata('id'); ?>";
+
     $.ajax({
-        url: "<?php echo base_url('leave/Leave/free_leave')?>",
-        method: 'post',
+        url: "<?php echo base_url('leave/Leave/free_leave'); ?>",
+        type: 'POST',
         dataType: 'json',
         data: {
-            'employee_id': employee_id,
-            'leave_type': id
+            employee_id: employee_id,
+            leave_type: id
         },
         success: function(data) {
-            document.getElementById('enjoy').innerHTML = 'You Enjoyed : ' + data.enjoy + ' Ds';
-            document.getElementById('checkleave').innerHTML = 'Total Leave : ' + data.due + ' Ds';
+            $('#enjoy').html('You Enjoyed : ' + data.enjoy + ' Ds');
+            $('#checkleave').html('Total Leave : ' + data.due + ' Ds');
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-            alert('Error get data from ajax');
+        error: function(jqXHR) {
+            console.log(jqXHR.responseText); // DEBUG
+            alert('Server error. Check console.');
         }
     });
 }
