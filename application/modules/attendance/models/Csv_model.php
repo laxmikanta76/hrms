@@ -171,13 +171,12 @@ public function att_log($limit = null, $start = null){
 
 // Attendance log report
 public function att_report($limit = null, $start = null, $employee_id = null){
-    // $this->db->select('
-    //     DATE(time) as mydate,
-    //     uid,
-    //     MIN(CASE WHEN state = 1 THEN time END) as intime,
-    //     MAX(CASE WHEN state = 0 THEN time END) as outtime
-    // ');
-    $this->db->select('DATE(time) as mydate');
+    $this->db->select('
+        DATE(time) as mydate,
+        uid,
+        MIN(CASE WHEN state = 1 THEN time END) as intime,
+        MAX(CASE WHEN state = 0 THEN time END) as outtime
+    ');
     $this->db->from('attendance_history');
     
     // Add employee filter if provided
@@ -202,12 +201,13 @@ public function att_report($limit = null, $start = null, $employee_id = null){
         $this->db->select('*,DATE(time) as mydate');
         $this->db->from('attendance_history');
          if (!empty($employee_id)) {
-            $this->db->where('uid', $employee_id);
-        }
-        $this->db->group_by('DATE(time)');
+        $this->db->where('uid', $employee_id);
+       }
+        $this->db->group_by('mydate');
+        $this->db->order_by('time', 'desc');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
-           return $query->result();  
+            return $query->num_rows();  
         }
         return false;
     }
