@@ -193,4 +193,105 @@ public function holiday_delete($id = null){
 	
 	
  
+	public function process_monthly_leave($year, $month)
+{
+    $employees = $this->db->get('employee')->result();
+    $leaveTypes = $this->db->get('leave_type')->result();
+
+    foreach ($employees as $emp) {
+
+        foreach ($leaveTypes as $lt) {
+
+            // previous month
+            $prevMonth = $month - 1;
+            $prevYear  = $year;
+
+            if ($prevMonth == 0) {
+                $prevMonth = 12;
+                $prevYear--;
+            }
+
+            $prev = $this->db->get_where('employee_leave_balance', [
+                'employee_id' => $emp->employee_id,
+                'leave_type_id' => $lt->leave_type_id,
+                'year' => $prevYear,
+                'month' => $prevMonth
+            ])->row();
+
+            $opening = 0;
+
+            if ($lt->carry_forward == 1 && $prev) {
+                // Casual Leave → carry forward
+                $opening = $prev->closing_balance;
+            }
+
+            // Sick Leave → no carry forward → opening = 0
+
+            $data = [
+                'employee_id' => $emp->employee_id,
+                'leave_type_id' => $lt->leave_type_id,
+                'year' => $year,
+                'month' => $month,
+                'opening_balance' => $opening,
+                'used_leave' => 0,
+                'closing_balance' => $opening
+            ];
+
+            $this->db->insert('employee_leave_balance', $data);
+        }
+    }
+}
+
+     public function ensure_monthly_balance($employee_id, $leave_type_id, $year, $month)
+{
+    $exists = $this->db->get_where('employee_leave_balance', [
+        'employee_id'   => $employee_id,
+        'leave_type_id' => $leave_type_id,
+        'year'          => $year,
+        'month'         => $month
+    ])->row();
+
+    if ($exists) return;
+
+    $leaveType = $this->db->get_where('leave_type', [
+        'leave_type_id' => $leave_type_id
+    ])->row();
+
+    $prevMonth = $month - 1;
+    $prevYear  = $year;
+
+    if ($prevMonth == 0) {
+        $prevMonth = 12;
+        $prevYear--;
+    }
+
+    $prev = $this->db->get_where('employee_leave_balance', [
+        'employee_id'   => $employee_id,
+        'leave_type_id' => $leave_type_id,
+        'year'          => $prevYear,
+        'month'         => $prevMonth
+    ])->row();
+
+    // ✅ CORRECT OPENING LOGIC
+    if ($prev) {
+        if ($leaveType->carry_forward == 1) {
+            $opening = $prev->closing_balance;   // CL
+        } else {
+            $opening = $leaveType->leave_days;   // SL
+        }
+    } else {
+        $opening = $leaveType->leave_days;       // First month
+    }
+
+    $this->db->insert('employee_leave_balance', [
+        'employee_id'     => $employee_id,
+        'leave_type_id'   => $leave_type_id,
+        'year'            => $year,
+        'month'           => $month,
+        'opening_balance' => $opening,
+        'used_leave'      => 0,
+        'closing_balance' => $opening
+    ]);
+ }
+
 }

@@ -221,6 +221,10 @@ public function delete_holiday($id = null){
 
 public function application(){ 
         $data['title'] = display('application');//agent_picture
+
+		$this->load->model('leave/Leave_model');
+        $this->Leave_model->ensure_monthly_balance($employee_id,$leave_type,$year,$month);
+		
 		        #-------------------------------#
         $this->form_validation->set_rules('employee_id',display('employee_id'));
 		$this->form_validation->set_rules('apply_strt_date',display('apply_strt_date'));
@@ -515,15 +519,46 @@ public function application(){
 	}
 	// Leave free for employee
 	public function free_leave(){
-		$employee_id    = $this->input->post('employee_id');
-		$type           = $this->input->post('leave_type');
-		$employee_leave = $this->db->select('SUM(num_aprv_day) as lv')->from('leave_apply')->where('employee_id',$employee_id)->where('leave_type_id',$type)->get()->row();
-		$totalleave = $this->db->select('leave_days')->from('leave_type')->where('leave_type_id',$type)->get()->row();
-		$data = array(
-			'enjoy' => (!empty($employee_leave->lv)?$employee_leave->lv:0),
-			'due'   => (!empty($totalleave->leave_days)?$totalleave->leave_days:0),
-		);
-		echo json_encode($data);
-	}
 
+		
+		// $employee_id    = $this->input->post('employee_id');
+		// $type           = $this->input->post('leave_type');
+		// $employee_leave = $this->db->select('SUM(num_aprv_day) as lv')->from('leave_apply')->where('employee_id',$employee_id)->where('leave_type_id',$type)->get()->row();
+		// $totalleave = $this->db->select('leave_days')->from('leave_type')->where('leave_type_id',$type)->get()->row();
+		// $data = array(
+		// 	'enjoy' => (!empty($employee_leave->lv)?$employee_leave->lv:0),
+		// 	'due'   => (!empty($totalleave->leave_days)?$totalleave->leave_days:0),
+		// );
+		// echo json_encode($data);
+
+		$employee_id = $this->input->post('employee_id');
+    $leave_type  = $this->input->post('leave_type');
+
+    $year  = date('Y');
+    $month = date('n');
+
+    // 🔹 LOAD MODEL
+    $this->load->model('Leave_model');
+
+    // 🔹 AUTO CREATE MONTHLY ROW (Railway-safe cron)
+    $this->Leave_model->ensure_monthly_balance(
+        $employee_id,
+        $leave_type,
+        $year,
+        $month
+    );
+
+    // 🔹 FETCH MONTHLY BALANCE
+    $balance = $this->db->get_where('employee_leave_balance', [
+        'employee_id'   => $employee_id,
+        'leave_type_id' => $leave_type,
+        'year'          => $year,
+        'month'         => $month
+    ])->row();
+
+    echo json_encode([
+        'enjoy' => $balance ? (int)$balance->used_leave : 0,
+        'due'   => $balance ? (int)$balance->closing_balance : 0
+    ]);
+  }
 }
