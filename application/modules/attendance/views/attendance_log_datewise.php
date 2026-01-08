@@ -47,17 +47,7 @@
         <div class="panel panel-default thumbnail">
             <div class="panel-body">
                 <?php
-                // Group attendance records by date
-                $grouped_attendance = [];
                 foreach ($queryd as $attendance) {
-                    $date_key = date("Y-m-d", strtotime($attendance->mydate));
-                    if (!isset($grouped_attendance[$date_key])) {
-                        $grouped_attendance[$date_key] = $attendance;
-                    }
-                }
-                
-                // Now loop through unique dates only
-                foreach ($grouped_attendance as $date_key => $attendance) {
                 ?>
                 <table width="100%" class="table table-striped table-bordered table-hover" style="margin-bottom: 30px;">
                     <thead>
