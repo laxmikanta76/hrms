@@ -59,12 +59,12 @@ td {
             ?>
                     <tr>
                         <td><?php echo $idx ?></td>
-                        <td><?php echo date( "F d, Y", strtotime($attendancedata[0]->time));?></td>
+                        <td><?php echo date( "F d, Y", strtotime($attendancedata->intime));?></td>
                         <td><?php echo date( "H:i:s", strtotime($attendancedata->intime)) ?></td>
-                        <td><?php echo date( "H:i:s", strtotime($attendancedata[0]->outtime)) ?></td>
+                        <td><?php echo date( "H:i:s", strtotime($attendancedata->outtime)) ?></td>
                         <td><?php 
-                $date_a = new DateTime($attendancedata[0]->outtime);
-                $date_b = new DateTime($attendancedata[0]->intime);
+                $date_a = new DateTime($attendancedata->outtime);
+                $date_b = new DateTime($attendancedata->intime);
                 $interval = date_diff($date_a,$date_b);
 
             echo $totalwhour = $interval->format('%h:%i:%s');
@@ -72,27 +72,27 @@ td {
             ?></td>
                         <td> <?php
 
- $att_dates = date( "Y-m-d", strtotime($attendancedata[0]->time));            
+ $att_dates = date( "Y-m-d", strtotime($attendancedata->time));            
 $att_in = $this->db->select('a.*,b.first_name,b.last_name')
 ->from('attendance_history a')
 ->join('employee_history b','a.uid = b.employee_id','left')
 ->like('a.time',$att_dates,'after')
-->where('a.uid',$attendancedata[0]->uid)
+->where('a.uid',$attendancedata->uid)
 ->order_by('a.atten_his_id','ASC')
 ->get()
 ->result();
  $ix=1;
              $in_data = [];
              $out_data = [];
-           foreach ($att_in as $attendancedata) {
+           foreach ($att_in as $row) {
 
             if($ix % 2){
        $status = "IN";
-       $in_data[$ix] = $attendancedata->time;
+       $in_data[$ix] = $row->time;
 
     }else{
         $status = "OUT";
-        $out_data[$ix] = $attendancedata->time;
+        $out_data[$ix] = $row->time;
     }
      $ix++;
 }
