@@ -122,11 +122,13 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
      $totaltime = '00:00:00';
     $length = sizeof($total);
 
-            for($x=0; $x <= $length; $x++){
-                    $split = explode(":", @$total[$x]); 
-                    $hou += @$split[0];
-                    $min += @$split[1];
-                    $sec += @$split[2];
+            for ($x = 0; $x < $length; $x++) {
+               if (!isset($total[$x])) continue;
+                   $split = explode(":", $total[$x]);
+
+                  $hou += (int)($split[0] ?? 0);
+                  $min += (int)($split[1] ?? 0);
+                  $sec += (int)($split[2] ?? 0);
             }
             $seconds = $sec % 60;
             $minutes = $sec / 60;
@@ -169,7 +171,7 @@ $timeArr = array_reverse(explode(":", $t));
 foreach ($timeArr as $key => $value)
 {
     if ($key > 2) break;
-    $seconds += pow(60, $key) * $value;
+    $seconds += pow(60, $key) * (int)$value;
 }
 
 }
