@@ -717,33 +717,71 @@ public function report_user(){
         $data['office_lng'] = $office->Longitude;
         $this->load->view('attendance/attendance_log_userdetails', $data); 
     }
+    
     // Date between and user wise attendance log
     public function datebetween_attendance(){
-        $id = $this->input->get('employee_id');
-        $from_date =$this->input->get('start_date');
-        $to_date = $this->input->get('end_date');
-        $data['module']  = "attendance";
-        $data['atten_in'] =  $this->Csv_model->att_log_datebetween($id,$from_date,$to_date);
-        $data['userlist'] =$this->Csv_model->userlist();
-        $data['start'] = $from_date;
-        $data['end']   = $to_date;
-        $data['user']  = $this->Csv_model->deviceuser($id);
-        $data['company'] = $this->Csv_model->company_info();
-           $this->load->library('pdfgenerator');
-            $this->load->library('pdfgenerator');
-            $this->pdfgenerator->generate($html, "AttendanceReport", true, "A4", "portrait");
-            $page = $this->load->view('attendance/individual_att_history_pdf',$data,true);
-            $dompdf->load_html($page);
-            $dompdf->render();
-            $output = $dompdf->output();
-            file_put_contents('assets/data/pdf/attendance/Attendance History of '.$id.' '.$from_date.' To '.$to_date.'.pdf', $output);
+
+    $id        = $this->input->get('employee_id');
+    $from_date = $this->input->get('start_date');
+    $to_date   = $this->input->get('end_date');
+
+    // Data
+    $data['module']   = "attendance";
+    $data['atten_in'] = $this->Csv_model->att_log_datebetween($id, $from_date, $to_date);
+    $data['userlist'] = $this->Csv_model->userlist();
+    $data['start']    = $from_date;
+    $data['end']      = $to_date;
+    $data['user']     = $this->Csv_model->deviceuser($id);
+    $data['company']  = $this->Csv_model->company_info();
+
+    // ✅ CREATE HTML FIRST
+    $html = $this->load->view(
+        'attendance/individual_att_history_pdf',
+        $data,
+        true
+    );
+
+    // ✅ LOAD PDF LIBRARY ONCE
+    $this->load->library('pdfgenerator');
+
+    // ✅ GENERATE PDF
+    $file_name = 'Attendance_History_'.$id.'_'.$from_date.'_to_'.$to_date;
+
+    $this->pdfgenerator->generate(
+        $html,
+        $file_name,
+        true,      // stream (show in browser)
+        "A4",
+        "portrait"
+    );
+
+    // STOP execution (important)
+    exit;
+        // $id = $this->input->get('employee_id');
+        // $from_date =$this->input->get('start_date');
+        // $to_date = $this->input->get('end_date');
+        // $data['module']  = "attendance";
+        // $data['atten_in'] =  $this->Csv_model->att_log_datebetween($id,$from_date,$to_date);
+        // $data['userlist'] =$this->Csv_model->userlist();
+        // $data['start'] = $from_date;
+        // $data['end']   = $to_date;
+        // $data['user']  = $this->Csv_model->deviceuser($id);
+        // $data['company'] = $this->Csv_model->company_info();
+        //    $this->load->library('pdfgenerator');
+        //     $this->load->library('pdfgenerator');
+        //     $this->pdfgenerator->generate($html, "AttendanceReport", true, "A4", "portrait");
+        //     $page = $this->load->view('attendance/individual_att_history_pdf',$data,true);
+        //     $dompdf->load_html($page);
+        //     $dompdf->render();
+        //     $output = $dompdf->output();
+        //     file_put_contents('assets/data/pdf/attendance/Attendance History of '.$id.' '.$from_date.' To '.$to_date.'.pdf', $output);
 
 
-            $data['pdf']    = 'assets/data/pdf/attendance/Attendance History of '.$id.' '.$from_date.' To '.$to_date.'.pdf';
+        //     $data['pdf']    = 'assets/data/pdf/attendance/Attendance History of '.$id.' '.$from_date.' To '.$to_date.'.pdf';
 
 
-        $data['page']   = "attendance_log_datebetween";
-        echo Modules::run('template/layout', $data);
+        // $data['page']   = "attendance_log_datebetween";
+        // echo Modules::run('template/layout', $data);
     }
 
     public function delete_attendance($id,$user_id){
