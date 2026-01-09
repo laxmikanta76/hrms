@@ -248,37 +248,34 @@ public function att_report_userwise($limit = null, $start = null,$id){
 // attendance log datebetween search
 public function att_log_datebetween($id,$from_date,$to_date){
 
-     // First query: get unique attendance dates
     $sql = "SELECT uid, DATE(time) AS mydate
         FROM attendance_history
         WHERE uid = ?
-        AND DATE(time) BETWEEN ? AND ?
+        AND time >= CONCAT(?, ' 00:00:00')
+        AND time <= CONCAT(?, ' 23:59:59')
         GROUP BY uid, mydate
         ORDER BY mydate DESC";
 
-    $query = $this->db->query($sql, [$id, $from_date, $to_date])->result();
+    $dates = $this->db->query($sql, [$id, $from_date, $to_date])->result();
 
-    $att_in = [];
+    $data = [];
     $i = 1;
 
-    foreach ($query as $attendance) {
-
-        // Second query: get in & out time for that date
-        $att_in[$i] = $this->db->select('
-                a.uid,
-                MIN(a.time) AS intime,
-                MAX(a.time) AS outtime
+    foreach ($dates as $row) {
+        $data[$i] = $this->db->select('
+                uid,
+                MIN(time) AS intime,
+                MAX(time) AS outtime
             ')
-            ->from('attendance_history a')
-            ->where('a.uid', $attendance->uid)
-            ->where('DATE(a.time)', $attendance->mydate)
+            ->from('attendance_history')
+            ->where('uid', $row->uid)
+            ->where('DATE(time)', $row->mydate)
             ->get()
-            ->row(); // one row per day
-
+            ->row();
         $i++;
     }
 
-    return $att_in;
+    return $data;
 
     
 //     $att = "SELECT *, DATE(time) as mydate FROM `attendance_history` WHERE `uid`=$id AND DATE(time) BETWEEN '" . $from_date . "' AND  '" . $to_date . "' GROUP BY mydate ORDER BY time desc";

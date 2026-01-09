@@ -725,7 +725,10 @@ public function report_user(){
     $from_date = $this->input->get('start_date');
     $to_date   = $this->input->get('end_date');
 
-    // Data
+    if (!$id || !$from_date || !$to_date) {
+        show_error('Invalid input');
+    }
+
     $data['module']   = "attendance";
     $data['atten_in'] = $this->Csv_model->att_log_datebetween($id, $from_date, $to_date);
     $data['userlist'] = $this->Csv_model->userlist();
@@ -734,29 +737,26 @@ public function report_user(){
     $data['user']     = $this->Csv_model->deviceuser($id);
     $data['company']  = $this->Csv_model->company_info();
 
-    // ✅ CREATE HTML FIRST
+    // Create HTML first
     $html = $this->load->view(
         'attendance/individual_att_history_pdf',
         $data,
         true
     );
 
-    // ✅ LOAD PDF LIBRARY ONCE
+    // Generate PDF
     $this->load->library('pdfgenerator');
-
-    // ✅ GENERATE PDF
-    $file_name = 'Attendance_History_'.$id.'_'.$from_date.'_to_'.$to_date;
+    $file_name = 'Attendance_'.$id.'_'.$from_date.'_to_'.$to_date;
 
     $this->pdfgenerator->generate(
         $html,
         $file_name,
-        true,      // stream (show in browser)
+        true,
         "A4",
         "portrait"
     );
 
-    // STOP execution (important)
-    exit;
+    exit; // IMPORTANT
         // $id = $this->input->get('employee_id');
         // $from_date =$this->input->get('start_date');
         // $to_date = $this->input->get('end_date');

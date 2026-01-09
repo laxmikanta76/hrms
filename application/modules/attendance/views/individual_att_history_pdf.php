@@ -1,57 +1,68 @@
 <style type="text/css">
-.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+.table-bordered>tbody>tr>td,
+.table-bordered>tbody>tr>th,
+.table-bordered>tfoot>tr>td,
+.table-bordered>tfoot>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>thead>tr>th {
     border: 1px solid #000;
 }
-td, th {
+
+td,
+th {
     padding: 0;
-    margin:0;
+    margin: 0;
 }
-.table{
+
+.table {
     width: 100%;
 }
-td{
-  text-align:center;
+
+td {
+    text-align: center;
 }
-  
 </style>
 <div class="row">
-    
+
     <!--  table area -->
     <div class="col-sm-12">
 
-        <div class="panel panel-default thumbnail"> 
+        <div class="panel panel-default thumbnail">
             <div class="panel-body">
-            
-                  <center> <img src="<?php echo $company->logo; ?>" class="img-responsive" alt="">
-                   </center>
-           <h2><center>  <?php
-           echo $user->first_name.' '.$user->last_name;?></center></h2>
-               <table class="table table-bordered">
-            <tr>
-                <th colspan="7" class="text-center"><?php echo display('attendance_history')?> <?php echo '( From '.$start.' To '.$end.' )';?> </th>
-            </tr>
-            <tr>
-               <th><?php echo display('sl')?></th>
-                <th><?php echo display('date')?></th>
-                <th><?php echo display('in_time')?></th>
-                <th><?php echo display('out_time')?></th>
-                <th><?php echo display('worked_hours')?></th>
-                <th><?php echo display('wasteg_hour')?></th>
-                <th><?php echo display('net_hour')?></th>
-            </tr>
-           <?php
+
+                <center> <img src="<?php echo $company->logo; ?>" class="img-responsive" alt="">
+                </center>
+                <h2>
+                    <center> <?php
+           echo $user->first_name.' '.$user->last_name;?></center>
+                </h2>
+                <table class="table table-bordered">
+                    <tr>
+                        <th colspan="7" class="text-center"><?php echo display('attendance_history')?>
+                            <?php echo '( From '.$start.' To '.$end.' )';?> </th>
+                    </tr>
+                    <tr>
+                        <th><?php echo display('sl')?></th>
+                        <th><?php echo display('date')?></th>
+                        <th><?php echo display('in_time')?></th>
+                        <th><?php echo display('out_time')?></th>
+                        <th><?php echo display('worked_hours')?></th>
+                        <th><?php echo display('wasteg_hour')?></th>
+                        <th><?php echo display('net_hour')?></th>
+                    </tr>
+                    <?php
             $idx=1;
             $totalhour=[];
             $totalwasthour = [];
             $totalnetworkhour = [];
            foreach ($atten_in as $attendancedata) {
             ?>
-            <tr>
-                <td><?php echo $idx ?></td>
-                <td><?php echo date( "F d, Y", strtotime($attendancedata[0]->time));?></td>
-                <td><?php echo date( "H:i:s", strtotime($attendancedata[0]->intime)) ?></td>
-                <td><?php echo date( "H:i:s", strtotime($attendancedata[0]->outtime)) ?></td>
-                <td><?php 
+                    <tr>
+                        <td><?php echo $idx ?></td>
+                        <td><?php echo date( "F d, Y", strtotime($attendancedata[0]->time));?></td>
+                        <td><?php echo date( "H:i:s", strtotime($attendancedata->intime)) ?></td>
+                        <td><?php echo date( "H:i:s", strtotime($attendancedata[0]->outtime)) ?></td>
+                        <td><?php 
                 $date_a = new DateTime($attendancedata[0]->outtime);
                 $date_b = new DateTime($attendancedata[0]->intime);
                 $interval = date_diff($date_a,$date_b);
@@ -59,7 +70,7 @@ td{
             echo $totalwhour = $interval->format('%h:%i:%s');
               $totalhour[$idx] = $totalwhour;
             ?></td>
-            <td> <?php
+                        <td> <?php
 
  $att_dates = date( "Y-m-d", strtotime($attendancedata[0]->time));            
 $att_in = $this->db->select('a.*,b.first_name,b.last_name')
@@ -131,7 +142,7 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
         // print_r($total);
     
             ?></td>
-            <td  style="border:1px solid #000;"><?php 
+                        <td style="border:1px solid #000;"><?php 
                $date_a = new DateTime($totalwhour);
                 $date_b = new DateTime($totalwastage);
                 $networkhours = date_diff($date_a,$date_b);
@@ -140,13 +151,15 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
             $totalnetworkhour[$idx] = $ntworkh;
 
              ?></td>
-            </tr>
-            <?php
+                    </tr>
+                    <?php
          $idx++; }
         
             ?>
-            <tr><td colspan="4" class="text-center"><b>Working Hours Summary</b></td><td><b>
-                <?php 
+                    <tr>
+                        <td colspan="4" class="text-center"><b>Working Hours Summary</b></td>
+                        <td><b>
+                                <?php 
 
 $seconds = 0;
 foreach($totalhour as $t)
@@ -168,9 +181,9 @@ $secs = floor($seconds % 60);
 echo $hours.':'.$mins.':'.$secs;
 
                 ?></b>
-            </td>
-            <td><b>
-                <?php 
+                        </td>
+                        <td><b>
+                                <?php 
 
 $wastsecond = 0;
 foreach($totalwasthour as $wastagetime)
@@ -192,9 +205,9 @@ $wastsc = floor($wastsecond % 60);
 echo $wasthours.':'.$wastmin.':'.$wastsc;
 
                 ?></b>
-            </td>
-             <td><b>
-               <?php 
+                        </td>
+                        <td><b>
+                                <?php 
 
 $netsecond = 0;
 foreach($totalnetworkhour as $nettime)
@@ -215,14 +228,12 @@ $ntsec = floor($netsecond % 60);
 
 echo $nettlehour.':'.$netmin.':'.$ntsec;
 
-                ?>  </b> 
-             </td>
-        </tr>
-        </table>
-</div>
-         <!--  <?= $links ?> -->
+                ?> </b>
+                        </td>
+                    </tr>
+                </table>
             </div>
+            <!--  <?= $links ?> -->
         </div>
     </div>
-
- 
+</div>
