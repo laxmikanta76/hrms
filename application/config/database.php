@@ -76,11 +76,11 @@ $active_record = TRUE;//ci version 2.x
 
 $db['default'] = array(
     'dsn'      => '',
-    'hostname' => 'ballast.proxy.rlwy.net',
-    'username' => 'root',
-    'password' => 'wArTppYvKqEsrtsKeaXbRDHnRAIbXgol',
-    'database' => 'railway',
-    'port'     => 38802,
+    'hostname' => 'localhost',
+    'username' => 'u321770099_hrms',
+    'password' => 'Accrosian@123',
+    'database' => 'u321770099_hrms_db',
+    'port'     => 3306,
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
