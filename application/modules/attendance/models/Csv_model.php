@@ -247,25 +247,60 @@ public function att_report_userwise($limit = null, $start = null,$id){
     }
 // attendance log datebetween search
 public function att_log_datebetween($id,$from_date,$to_date){
-    $att = "SELECT *, DATE(time) as mydate FROM `attendance_history` WHERE `uid`=$id AND DATE(time) BETWEEN '" . $from_date . "' AND  '" . $to_date . "' GROUP BY mydate ORDER BY time desc";
-    $query = $this->db->query($att)->result();
+
+     // First query: get unique attendance dates
+    $sql = "SELECT uid, DATE(time) AS mydate
+        FROM attendance_history
+        WHERE uid = ?
+        AND DATE(time) BETWEEN ? AND ?
+        GROUP BY uid, mydate
+        ORDER BY mydate DESC";
+
+    $query = $this->db->query($sql, [$id, $from_date, $to_date])->result();
+
     $att_in = [];
-$i=1;
-// print_r($query);exit();
-//return $query;
+    $i = 1;
+
     foreach ($query as $attendance) {
-        $att_in[$i] = $this->db->select('a.time,MIN(a.time) as intime,MAX(a.time) as outtime,a.uid')
-->from('attendance_history a')
-->like('a.time',date( "Y-m-d", strtotime($attendance->mydate)),'after')
-->where('a.uid',$attendance->uid)
-->order_by('a.time','DESC')
-->get()
-->result();
-$i++;
+
+        // Second query: get in & out time for that date
+        $att_in[$i] = $this->db->select('
+                a.uid,
+                MIN(a.time) AS intime,
+                MAX(a.time) AS outtime
+            ')
+            ->from('attendance_history a')
+            ->where('a.uid', $attendance->uid)
+            ->where('DATE(a.time)', $attendance->mydate)
+            ->get()
+            ->row(); // one row per day
+
+        $i++;
     }
-    // echo '<pre>';
-    // print_r($att_in);exit();
+
     return $att_in;
+
+    
+//     $att = "SELECT *, DATE(time) as mydate FROM `attendance_history` WHERE `uid`=$id AND DATE(time) BETWEEN '" . $from_date . "' AND  '" . $to_date . "' GROUP BY mydate ORDER BY time desc";
+//     $query = $this->db->query($att)->result();
+//     $att_in = [];
+// $i=1;
+// // print_r($query);exit();
+// //return $query;
+//     foreach ($query as $attendance) {
+//         $att_in[$i] = $this->db->select('a.time,MIN(a.time) as intime,MAX(a.time) as outtime,a.uid')
+// ->from('attendance_history a')
+// ->like('a.time',date( "Y-m-d", strtotime($attendance->mydate)),'after')
+// ->where('a.uid',$attendance->uid)
+// ->order_by('a.time','DESC')
+// ->get()
+// ->result();
+// $i++;
+//     }
+//     // echo '<pre>';
+//     // print_r($att_in);exit();
+//     return $att_in;
+
     
 }
 // User inforamtion
