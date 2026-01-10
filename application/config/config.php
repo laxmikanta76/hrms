@@ -153,7 +153,7 @@ $config['subclass_prefix'] = 'MY_';
 */
 $config['composer_autoload'] = TRUE;
 
-require FCPATH.'vendor/autoload.php';
+//require FCPATH.'vendor/autoload.php';
 
 
 /*
