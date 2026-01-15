@@ -719,31 +719,73 @@ public function report_user(){
     }
     // Date between and user wise attendance log
     public function datebetween_attendance(){
+
         $id = $this->input->get('employee_id');
-        $from_date =$this->input->get('start_date');
-        $to_date = $this->input->get('end_date');
-        $data['module']  = "attendance";
-        $data['atten_in'] =  $this->Csv_model->att_log_datebetween($id,$from_date,$to_date);
-        $data['userlist'] =$this->Csv_model->userlist();
-        $data['start'] = $from_date;
-        $data['end']   = $to_date;
-        $data['user']  = $this->Csv_model->deviceuser($id);
-        $data['company'] = $this->Csv_model->company_info();
-           $this->load->library('pdfgenerator');
-            $this->load->library('pdfgenerator');
-            $this->pdfgenerator->generate($html, "AttendanceReport", true, "A4", "portrait");
-            $page = $this->load->view('attendance/individual_att_history_pdf',$data,true);
-            $dompdf->load_html($page);
-            $dompdf->render();
-            $output = $dompdf->output();
-            file_put_contents('assets/data/pdf/attendance/Attendance History of '.$id.' '.$from_date.' To '.$to_date.'.pdf', $output);
+    $from_date = $this->input->get('start_date');
+    $to_date = $this->input->get('end_date');
+    
+    // Validate inputs
+    if (empty($id) || empty($from_date) || empty($to_date)) {
+        $this->session->set_flashdata('exception', 'Please select employee and date range');
+        redirect('attendance/home/att_log_report');
+        return;
+    }
+    
+    $data['module']  = "attendance";
+    $data['atten_in'] = $this->Csv_model->att_log_datebetween($id, $from_date, $to_date);
+    $data['userlist'] = $this->Csv_model->userlist();
+    $data['start'] = $from_date;
+    $data['end']   = $to_date;
+    $data['user']  = $this->Csv_model->deviceuser($id);
+    $data['company'] = $this->Csv_model->company_info();
+    
+    // Generate PDF
+    $this->load->library('pdfgenerator');
+    
+    // Load the view as HTML string
+    $html = $this->load->view('attendance/individual_att_history_pdf', $data, true);
+    
+    // Generate PDF file
+    $pdf_filename = 'Attendance History of '.$id.' '.$from_date.' To '.$to_date.'.pdf';
+    $pdf_path = 'assets/data/pdf/attendance/';
+    
+    // Create directory if it doesn't exist
+    if (!is_dir($pdf_path)) {
+        mkdir($pdf_path, 0755, true);
+    }
+    
+    // Generate and save PDF
+    $this->pdfgenerator->generate($html, $pdf_filename, false, 'A4', 'portrait');
+    
+    $data['pdf'] = $pdf_path . $pdf_filename;
+    $data['page'] = "attendance_log_datebetween";
+    
+    echo Modules::run('template/layout', $data);
+        // $id = $this->input->get('employee_id');
+        // $from_date =$this->input->get('start_date');
+        // $to_date = $this->input->get('end_date');
+        // $data['module']  = "attendance";
+        // $data['atten_in'] =  $this->Csv_model->att_log_datebetween($id,$from_date,$to_date);
+        // $data['userlist'] =$this->Csv_model->userlist();
+        // $data['start'] = $from_date;
+        // $data['end']   = $to_date;
+        // $data['user']  = $this->Csv_model->deviceuser($id);
+        // $data['company'] = $this->Csv_model->company_info();
+        //    $this->load->library('pdfgenerator');
+        //     $this->load->library('pdfgenerator');
+        //     $this->pdfgenerator->generate($html, "AttendanceReport", true, "A4", "portrait");
+        //     $page = $this->load->view('attendance/individual_att_history_pdf',$data,true);
+        //     $dompdf->load_html($page);
+        //     $dompdf->render();
+        //     $output = $dompdf->output();
+        //     file_put_contents('assets/data/pdf/attendance/Attendance History of '.$id.' '.$from_date.' To '.$to_date.'.pdf', $output);
 
 
-            $data['pdf']    = 'assets/data/pdf/attendance/Attendance History of '.$id.' '.$from_date.' To '.$to_date.'.pdf';
+        //     $data['pdf']    = 'assets/data/pdf/attendance/Attendance History of '.$id.' '.$from_date.' To '.$to_date.'.pdf';
 
 
-        $data['page']   = "attendance_log_datebetween";
-        echo Modules::run('template/layout', $data);
+        // $data['page']   = "attendance_log_datebetween";
+        // echo Modules::run('template/layout', $data);
     }
 
     public function delete_attendance($id,$user_id){
