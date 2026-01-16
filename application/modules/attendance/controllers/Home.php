@@ -720,16 +720,31 @@ public function report_user(){
     // Date between and user wise attendance log
     public function datebetween_attendance(){
 
+    $this->load->helper('employee'); // Load role checker
+    
+    // Determine employee ID based on role
+    if (can_select_employee()) {
+        // Admin/HR/Supervisor - can select any employee
         $id = $this->input->get('employee_id');
+        
+        if (empty($id)) {
+            $this->session->set_flashdata('exception', 'Please select an employee');
+            redirect('attendance/home/att_log_report');
+            return;
+        }
+    } else {
+        // Regular employee - can only view own records
+        $id = $this->session->userdata('employee_id');
+        
+        if (empty($id)) {
+            $this->session->set_flashdata('exception', 'Employee ID not found in session');
+            redirect('attendance/home/att_log_report');
+            return;
+        }
+    }
+    
     $from_date = $this->input->get('start_date');
     $to_date = $this->input->get('end_date');
-    
-    // Validate inputs
-    if (empty($id)) {
-        $this->session->set_flashdata('exception', 'Please select an employee');
-        redirect('attendance/home/att_log_report');
-        return;
-    }
     
     if (empty($from_date)) {
         $from_date = date('Y-m-01');
@@ -741,16 +756,23 @@ public function report_user(){
     
     $data['module']  = "attendance";
     $data['atten_in'] = $this->Csv_model->att_log_datebetween($id, $from_date, $to_date);
-    $data['userlist'] = $this->Csv_model->userlist();
+    
+    // User dropdown (only for admins/supervisors)
+    if (can_select_employee()) {
+        $data['userlist'] = $this->Csv_model->userlist();
+    } else {
+        $data['userlist'] = [];
+    }
+    
     $data['start'] = $from_date;
     $data['end']   = $to_date;
     $data['user']  = $this->Csv_model->deviceuser($id);
     $data['company'] = $this->Csv_model->company_info();
     
-    // Set a dummy PDF path for now (or comment out PDF generation)
+    // Set a dummy PDF path for now
     $data['pdf'] = '#';
     
-    // OPTIONAL: Uncomment this block if you want to enable PDF generation
+    // OPTIONAL: Uncomment if you want PDF generation
     /*
     try {
         $this->load->library('pdfgenerator');
@@ -763,12 +785,10 @@ public function report_user(){
             mkdir($pdf_path, 0755, true);
         }
         
-        // Adjust this based on your pdfgenerator library
         file_put_contents($pdf_path . $pdf_filename, $this->pdfgenerator->generate($html, $pdf_filename, true, 'A4', 'portrait'));
         
         $data['pdf'] = $pdf_path . $pdf_filename;
     } catch (Exception $e) {
-        // If PDF generation fails, continue without it
         $data['pdf'] = '#';
     }
     */

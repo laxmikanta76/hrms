@@ -1,3 +1,4 @@
+<?php $this->load->helper('employee'); // Load role checker ?>
 <script type="text/javascript">
 function printDiv() {
     var divName = "printArea";
@@ -19,6 +20,9 @@ function printDiv() {
             <div class="panel panel-bd">
                 <div class="panel-body">
                     <?php echo form_open('attendance/Home/datebetween_attendance',array('class' => 'form-inline','method'=>'get'))?>
+
+                    <?php if (can_select_employee()): ?>
+                    <!-- Admin/HR/Supervisor - Show employee dropdown -->
                     <div class="form-group">
                         <label for="employeelist"><?php echo display('user_name')?> :</label>
                         <?php 
@@ -26,6 +30,16 @@ function printDiv() {
                                 echo form_dropdown('employee_id', $userlist, $selected_employee, 'class="form-control" id="employee_id"') 
                                 ?>
                     </div>
+                    <?php else: ?>
+                    <!-- Regular Employee - Show only their name (readonly) -->
+                    <div class="form-group">
+                        <label for="employeelist"><?php echo display('user_name')?> :</label>
+                        <input type="text" class="form-control"
+                            value="<?php echo $this->session->userdata('first_name').' '.$this->session->userdata('last_name'); ?>"
+                            readonly>
+                    </div>
+                    <?php endif; ?>
+
                     <div class="form-group">
                         <label for="start_date"><?php echo display('start_date')?> :</label>
                         <input type="text" name="start_date"
