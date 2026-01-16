@@ -171,12 +171,8 @@ public function att_log($limit = null, $start = null){
 
 // Attendance log report
 public function att_report($limit = null, $start = null, $employee_id = null){
-    $this->db->select('
-        DATE(time) as mydate,
-        uid,
-        MIN(CASE WHEN state = 1 THEN time END) as intime,
-        MAX(CASE WHEN state = 0 THEN time END) as outtime
-    ');
+
+    $this->db->select('DATE(time) as mydate');
     $this->db->from('attendance_history');
     
     // Add employee filter if provided
@@ -184,8 +180,8 @@ public function att_report($limit = null, $start = null, $employee_id = null){
         $this->db->where('uid', $employee_id);
     }
     
-    $this->db->group_by('DATE(time), uid');
-    $this->db->order_by('mydate', 'desc');
+    $this->db->group_by('DATE(time)');
+    $this->db->order_by('DATE(time)', 'DESC');
     $this->db->limit($limit, $start);
     $query = $this->db->get();
     
@@ -193,23 +189,61 @@ public function att_report($limit = null, $start = null, $employee_id = null){
         return $query->result();    
     }
     return false;
+    
+    // $this->db->select('
+    //     DATE(time) as mydate,
+    //     uid,
+    //     MIN(CASE WHEN state = 1 THEN time END) as intime,
+    //     MAX(CASE WHEN state = 0 THEN time END) as outtime
+    // ');
+    // $this->db->from('attendance_history');
+    
+    // // Add employee filter if provided
+    // if (!empty($employee_id)) {
+    //     $this->db->where('uid', $employee_id);
+    // }
+    
+    // $this->db->group_by('DATE(time), uid');
+    // $this->db->order_by('mydate', 'desc');
+    // $this->db->limit($limit, $start);
+    // $query = $this->db->get();
+    
+    // if ($query->num_rows() > 0) {
+    //     return $query->result();    
+    // }
+    // return false;
 }
 
 // count attendance log
  public function count_att_report($employee_id = null)
     {
-        $this->db->select('*,DATE(time) as mydate');
-        $this->db->from('attendance_history');
-         if (!empty($employee_id)) {
+
+         $this->db->select('DATE(time) as mydate');
+    $this->db->from('attendance_history');
+    
+    if (!empty($employee_id)) {
         $this->db->where('uid', $employee_id);
-       }
-        $this->db->group_by('mydate');
-        $this->db->order_by('time', 'desc');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->num_rows();  
-        }
-        return false;
+    }
+    
+    $this->db->group_by('DATE(time)');
+    $query = $this->db->get();
+    
+    if ($query->num_rows() > 0) {
+        return $query->num_rows();  
+    }
+    return false;
+    //     $this->db->select('*,DATE(time) as mydate');
+    //     $this->db->from('attendance_history');
+    //      if (!empty($employee_id)) {
+    //     $this->db->where('uid', $employee_id);
+    //    }
+    //     $this->db->group_by('mydate');
+    //     $this->db->order_by('time', 'desc');
+    //     $query = $this->db->get();
+    //     if ($query->num_rows() > 0) {
+    //         return $query->num_rows();  
+    //     }
+    //     return false;
     }
 
 // Attendance log report user wise
@@ -247,57 +281,25 @@ public function att_report_userwise($limit = null, $start = null,$id){
     }
 // attendance log datebetween search
 public function att_log_datebetween($id,$from_date,$to_date){
-
-    $sql = "SELECT uid, DATE(time) AS mydate
-        FROM attendance_history
-        WHERE uid = ?
-        AND time >= CONCAT(?, ' 00:00:00')
-        AND time <= CONCAT(?, ' 23:59:59')
-        GROUP BY uid, mydate
-        ORDER BY mydate DESC";
-
-    $dates = $this->db->query($sql, [$id, $from_date, $to_date])->result();
-
-    $data = [];
-    $i = 1;
-
-    foreach ($dates as $row) {
-        $data[$i] = $this->db->select('
-                uid,
-                MIN(time) AS intime,
-                MAX(time) AS outtime
-            ')
-            ->from('attendance_history')
-            ->where('uid', $row->uid)
-            ->where('DATE(time)', $row->mydate)
-            ->get()
-            ->row();
-        $i++;
+    $att = "SELECT *, DATE(time) as mydate FROM `attendance_history` WHERE `uid`=$id AND DATE(time) BETWEEN '" . $from_date . "' AND  '" . $to_date . "' GROUP BY mydate ORDER BY time desc";
+    $query = $this->db->query($att)->result();
+    $att_in = [];
+$i=1;
+// print_r($query);exit();
+//return $query;
+    foreach ($query as $attendance) {
+        $att_in[$i] = $this->db->select('a.time,MIN(a.time) as intime,MAX(a.time) as outtime,a.uid')
+->from('attendance_history a')
+->like('a.time',date( "Y-m-d", strtotime($attendance->mydate)),'after')
+->where('a.uid',$attendance->uid)
+->order_by('a.time','DESC')
+->get()
+->result();
+$i++;
     }
-
-    return $data;
-
-    
-//     $att = "SELECT *, DATE(time) as mydate FROM `attendance_history` WHERE `uid`=$id AND DATE(time) BETWEEN '" . $from_date . "' AND  '" . $to_date . "' GROUP BY mydate ORDER BY time desc";
-//     $query = $this->db->query($att)->result();
-//     $att_in = [];
-// $i=1;
-// // print_r($query);exit();
-// //return $query;
-//     foreach ($query as $attendance) {
-//         $att_in[$i] = $this->db->select('a.time,MIN(a.time) as intime,MAX(a.time) as outtime,a.uid')
-// ->from('attendance_history a')
-// ->like('a.time',date( "Y-m-d", strtotime($attendance->mydate)),'after')
-// ->where('a.uid',$attendance->uid)
-// ->order_by('a.time','DESC')
-// ->get()
-// ->result();
-// $i++;
-//     }
-//     // echo '<pre>';
-//     // print_r($att_in);exit();
-//     return $att_in;
-
+    // echo '<pre>';
+    // print_r($att_in);exit();
+    return $att_in;
     
 }
 // User inforamtion
@@ -363,8 +365,6 @@ public function company_info(){
         return $this->db->where('atten_his_id',$postData['atten_his_id'])
             ->update('attendance_history',$postData); 
     } 
-    
-
     
 
 }

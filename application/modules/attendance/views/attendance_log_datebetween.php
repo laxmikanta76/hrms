@@ -1,87 +1,121 @@
+<?php $this->load->helper('employee'); // Load role checker ?>
 <script type="text/javascript">
 function printDiv() {
     var divName = "printArea";
     var printContents = document.getElementById(divName).innerHTML;
     var originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;
-    // document.body.style.marginTop="-45px";
     window.print();
     document.body.innerHTML = originalContents;
 }
 </script>
 <div class="row">
-     <div class="col-sm-12 col-md-12">
-            <div class="panel">
-                <div class="panel-heading">
-                    <div class="panel-title">
-                       
-                    </div>
+    <div class="col-sm-12 col-md-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+
                 </div>
-        <div class="panel panel-bd">
-                    <div class="panel-body"> 
-                        <?php echo form_open('attendance/Home/datebetween_attendance',array('class' => 'form-inline','method'=>'get'))?>
-                         <div class="form-group">
-                                <label for="employeelist"><?php echo display('user_name')?> :</label>
-                                <?php echo form_dropdown('employee_id',$userlist,(!empty($user->employee_id)?$user->employee_id:null),'class="form-control" id="employee_id"') ?>
-                            </div> 
-                            <div class="form-group">
-                                <label for="start_date"><?php echo display('start_date')?> :</label>
-                                <input type="text" name="start_date"  value="<?php echo (!empty($start)?$start:date('Y-m-01'))  ?>" class="datepicker form-control" />
-                            </div> 
-                          <div class="form-group">
-                                <label for="end_date"><?php echo display('end_date')?> :</label>
-                                <input type="text" class="datepicker form-control" name="end_date" value="<?php echo (!empty($end)?$end:date('Y-m-20')) ?>"  />
-                            </div> 
-                            <button type="submit" class="btn btn-success"><?php echo display('search') ?></button>
-                          
-                       <?php echo form_close()?>
-                    </div>
-                
             </div>
-              </div>
-             </div>
+            <div class="panel panel-bd">
+                <div class="panel-body">
+                    <?php echo form_open('attendance/Home/datebetween_attendance',array('class' => 'form-inline','method'=>'get'))?>
+
+                    <?php if (can_select_employee()): ?>
+                    <!-- Admin/HR/Supervisor - Show employee dropdown -->
+                    <div class="form-group">
+                        <label for="employeelist"><?php echo display('user_name')?> :</label>
+                        <?php 
+                                $selected_employee = (!empty($user->employee_id) ? $user->employee_id : '');
+                                echo form_dropdown('employee_id', $userlist, $selected_employee, 'class="form-control" id="employee_id"') 
+                                ?>
+                    </div>
+                    <?php else: ?>
+                    <!-- Regular Employee - Show only their name (readonly) -->
+                    <div class="form-group">
+                        <label for="employeelist"><?php echo display('user_name')?> :</label>
+                        <input type="text" class="form-control"
+                            value="<?php echo $this->session->userdata('first_name').' '.$this->session->userdata('last_name'); ?>"
+                            readonly>
+                    </div>
+                    <?php endif; ?>
+
+                    <div class="form-group">
+                        <label for="start_date"><?php echo display('start_date')?> :</label>
+                        <input type="text" name="start_date"
+                            value="<?php echo (!empty($start) ? $start : date('Y-m-01'))  ?>"
+                            class="datepicker form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date"><?php echo display('end_date')?> :</label>
+                        <input type="text" class="datepicker form-control" name="end_date"
+                            value="<?php echo (!empty($end) ? $end : date('Y-m-d')) ?>" />
+                    </div>
+                    <button type="submit" class="btn btn-success"><?php echo display('search') ?></button>
+
+                    <?php echo form_close()?>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <!--  table area -->
     <div class="col-sm-12">
 
-        <div class="panel panel-default thumbnail"> 
+        <div class="panel panel-default thumbnail">
             <div class="panel-body">
-                   <div class="text-right" id="print" style="margin: 20px">
-               <button type="button" class="btn btn-warning" id="btnPrint" onclick="printDiv();"><i class="fa fa-print"></i></button>
-                <a href="<?php echo base_url($pdf)?>"download>
-                    <button type="button" class="btn btn-success" id="btnPdf">pdf</button>
-                </a>
-                
-            </div>
-              <div id="printArea">
-                  <center><img src="<?php echo base_url().$company->logo;?>"></center>
-           <h2><center>  <?php
-           echo $user->first_name.' '.$user->last_name;?></center></h2>
-               <table width="100%" class="table datatable table-striped table-bordered table-hover">
-            <tr>
-                <th colspan="7" class="text-center">Attendance History <?php echo '( From '.$start.' To '.$end.' )';?> </th>
-            </tr>
-            <tr>
-                <th><?php echo display('sl')?></th>
-                <th><?php echo display('date')?></th>
-                <th><?php echo display('in_time')?></th>
-                <th><?php echo display('out_time')?></th>
-                <th><?php echo display('worked_hours')?></th>
-                <th><?php echo display('wasteg_hour')?></th>
-                <th><?php echo display('net_hour')?></th>
-            </tr>
-           <?php
+                <div class="text-right" id="print" style="margin: 20px">
+                    <button type="button" class="btn btn-warning" id="btnPrint" onclick="printDiv();"><i
+                            class="fa fa-print"></i></button>
+                    <?php if(!empty($pdf) && $pdf != '#'): ?>
+                    <a href="<?php echo base_url($pdf)?>" download>
+                        <button type="button" class="btn btn-success" id="btnPdf">PDF</button>
+                    </a>
+                    <?php endif; ?>
+
+                </div>
+                <div id="printArea">
+                    <?php if(!empty($company->logo)): ?>
+                    <center><img src="<?php echo base_url().$company->logo;?>" style="max-width: 200px;"></center>
+                    <?php endif; ?>
+
+                    <h2>
+                        <center><?php
+           if(!empty($user)) {
+               echo $user->first_name.' '.$user->last_name;
+           }
+           ?></center>
+                    </h2>
+
+                    <?php if(!empty($atten_in) && is_array($atten_in) && count($atten_in) > 0): ?>
+                    <table width="100%" class="table datatable table-striped table-bordered table-hover">
+                        <tr>
+                            <th colspan="7" class="text-center">Attendance History
+                                <?php echo '( From '.$start.' To '.$end.' )';?> </th>
+                        </tr>
+                        <tr>
+                            <th><?php echo display('sl')?></th>
+                            <th><?php echo display('date')?></th>
+                            <th><?php echo display('in_time')?></th>
+                            <th><?php echo display('out_time')?></th>
+                            <th><?php echo display('worked_hours')?></th>
+                            <th><?php echo display('wasteg_hour')?></th>
+                            <th><?php echo display('net_hour')?></th>
+                        </tr>
+                        <?php
             $idx=1;
             $totalhour=[];
             $totalwasthour = [];
             $totalnetworkhour = [];
            foreach ($atten_in as $attendancedata) {
+            if(!empty($attendancedata[0])):
             ?>
-            <tr>
-                <td><?php echo $idx ?></td>
-                <td><?php echo date( "F d, Y", strtotime($attendancedata[0]->time));?></td>
-                <td><?php echo date( "H:i:s", strtotime($attendancedata[0]->intime)) ?></td>
-                <td><?php echo date( "H:i:s", strtotime($attendancedata[0]->outtime)) ?></td>
-                <td><?php 
+                        <tr>
+                            <td><?php echo $idx ?></td>
+                            <td><?php echo date( "F d, Y", strtotime($attendancedata[0]->time));?></td>
+                            <td><?php echo date( "H:i:s", strtotime($attendancedata[0]->intime)) ?></td>
+                            <td><?php echo date( "H:i:s", strtotime($attendancedata[0]->outtime)) ?></td>
+                            <td><?php 
                 $date_a = new DateTime($attendancedata[0]->outtime);
                 $date_b = new DateTime($attendancedata[0]->intime);
                 $interval = date_diff($date_a,$date_b);
@@ -89,7 +123,7 @@ function printDiv() {
             echo $totalwhour = $interval->format('%h:%i:%s');
               $totalhour[$idx] = $totalwhour;
             ?></td>
-            <td> <?php
+                            <td> <?php
 
  $att_dates = date( "Y-m-d", strtotime($attendancedata[0]->time));            
 $att_in = $this->db->select('a.*,b.first_name,b.last_name')
@@ -103,15 +137,15 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
  $ix=1;
              $in_data = [];
              $out_data = [];
-           foreach ($att_in as $attendancedata) {
+           foreach ($att_in as $attendancedata_detail) {
 
             if($ix % 2){
        $status = "IN";
-       $in_data[$ix] = $attendancedata->time;
+       $in_data[$ix] = $attendancedata_detail->time;
 
     }else{
         $status = "OUT";
-        $out_data[$ix] = $attendancedata->time;
+        $out_data[$ix] = $attendancedata_detail->time;
     }
      $ix++;
 }
@@ -126,7 +160,7 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
         }else{
          $n_out = $count_out-1;   
         }
-        for($i=0;$i < $n_out; $i++) {
+        for($i=0; $i < $n_out; $i++) {
 
                 $date_a = new DateTime($result_in[$i+1]);
                 $date_b = new DateTime($result_out[$i]);
@@ -134,8 +168,6 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
 
             $total[$i] =  $interval->format('%h:%i:%s');
         }
-        // echo '<pre>';
-        // print_r($total);
      $hou = 0;
      $min = 0;
      $sec = 0;
@@ -158,11 +190,9 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
             $hours += $hou % 24;
            echo  $totalwastage = $hours.":".$minutes.":".$seconds;
             $totalwasthour[$idx] = $totalwastage;
-        // echo '<pre>';
-        // print_r($total);
     
             ?></td>
-            <td><?php 
+                            <td><?php 
                $date_a = new DateTime($totalwhour);
                 $date_b = new DateTime($totalwastage);
                 $networkhours = date_diff($date_a,$date_b);
@@ -171,13 +201,16 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
             $totalnetworkhour[$idx] = $ntworkh;
 
              ?></td>
-            </tr>
-            <?php
+                        </tr>
+                        <?php
+            endif;
          $idx++; }
         
             ?>
-            <tr><td colspan="4" class="text-center"><b>Working Hours Summary</b></td><td><b>
-                <?php 
+                        <tr>
+                            <td colspan="4" class="text-center"><b>Working Hours Summary</b></td>
+                            <td><b>
+                                    <?php 
 
 $seconds = 0;
 foreach($totalhour as $t)
@@ -199,9 +232,9 @@ $secs = floor($seconds % 60);
 echo $hours.':'.$mins.':'.$secs;
 
                 ?></b>
-            </td>
-            <td><b>
-                <?php 
+                            </td>
+                            <td><b>
+                                    <?php 
 
 $wastsecond = 0;
 foreach($totalwasthour as $wastagetime)
@@ -223,9 +256,9 @@ $wastsc = floor($wastsecond % 60);
 echo $wasthours.':'.$wastmin.':'.$wastsc;
 
                 ?></b>
-            </td>
-             <td><b>
-               <?php 
+                            </td>
+                            <td><b>
+                                    <?php 
 
 $netsecond = 0;
 foreach($totalnetworkhour as $nettime)
@@ -246,20 +279,25 @@ $ntsec = floor($netsecond % 60);
 
 echo $nettlehour.':'.$netmin.':'.$ntsec;
 
-                ?>  </b> 
-             </td>
-        </tr>
-        </table>
-</div>
-         <!--  <?= $links ?> -->
+                ?> </b>
+                            </td>
+                        </tr>
+                    </table>
+                    <?php else: ?>
+                    <div class="alert alert-info">
+                        <p>No attendance records found for the selected date range.</p>
+                    </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>
 </div>
- 
-<script language="javascript"> 
 
- $(function(){
-        $(".datepicker").datepicker({ dateFormat:'yy-mm-dd' });
+<script language="javascript">
+$(function() {
+    $(".datepicker").datepicker({
+        dateFormat: 'yy-mm-dd'
     });
-    </script>
+});
+</script>
