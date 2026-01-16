@@ -530,17 +530,25 @@ public function application(){
 		// 	'due'   => (!empty($totalleave->leave_days)?$totalleave->leave_days:0),
 		// );
 		// echo json_encode($data);
-
-		$employee_id = $this->input->post('employee_id');
+$employee_id = $this->input->post('employee_id');
     $leave_type  = $this->input->post('leave_type');
+
+    if (empty($employee_id) || empty($leave_type)) {
+        echo json_encode([
+            'enjoy' => 0,
+            'due'   => 0,
+            'error' => 'Invalid parameters'
+        ]);
+        return;
+    }
 
     $year  = date('Y');
     $month = date('n');
 
-    // 🔹 LOAD MODEL
+    // Load model
     $this->load->model('Leave_model');
 
-    // 🔹 AUTO CREATE MONTHLY ROW (Railway-safe cron)
+    // Auto create monthly row if doesn't exist
     $this->Leave_model->ensure_monthly_balance(
         $employee_id,
         $leave_type,
@@ -548,17 +556,26 @@ public function application(){
         $month
     );
 
-    // 🔹 FETCH MONTHLY BALANCE
-    $balance = $this->db->get_where('employee_leave_balance', [
-        'employee_id'   => $employee_id,
-        'leave_type_id' => $leave_type,
-        'year'          => $year,
-        'month'         => $month
-    ])->row();
+    // Fetch monthly balance
+    $balance = $this->Leave_model->get_employee_leave_balance(
+        $employee_id,
+        $leave_type,
+        $year,
+        $month
+    );
 
-    echo json_encode([
-        'enjoy' => $balance ? (int)$balance->used_leave : 0,
-        'due'   => $balance ? (int)$balance->closing_balance : 0
-    ]);
-  }
+    if ($balance) {
+        echo json_encode([
+            'enjoy' => (int)$balance->used_leave,
+            'due'   => (int)$balance->closing_balance,
+            'opening' => (int)$balance->opening_balance
+        ]);
+    } else {
+        echo json_encode([
+            'enjoy' => 0,
+            'due'   => 0,
+            'error' => 'Balance not found'
+        ]);
+    }
+ }
 }
