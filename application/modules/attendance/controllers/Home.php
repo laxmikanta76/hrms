@@ -725,10 +725,18 @@ public function report_user(){
     $to_date = $this->input->get('end_date');
     
     // Validate inputs
-    if (empty($id) || empty($from_date) || empty($to_date)) {
-        $this->session->set_flashdata('exception', 'Please select employee and date range');
+    if (empty($id)) {
+        $this->session->set_flashdata('exception', 'Please select an employee');
         redirect('attendance/home/att_log_report');
         return;
+    }
+    
+    if (empty($from_date)) {
+        $from_date = date('Y-m-01');
+    }
+    
+    if (empty($to_date)) {
+        $to_date = date('Y-m-d');
     }
     
     $data['module']  = "attendance";
@@ -739,27 +747,33 @@ public function report_user(){
     $data['user']  = $this->Csv_model->deviceuser($id);
     $data['company'] = $this->Csv_model->company_info();
     
-    // Generate PDF
-    $this->load->library('pdfgenerator');
+    // Set a dummy PDF path for now (or comment out PDF generation)
+    $data['pdf'] = '#';
     
-    // Load the view as HTML string
-    $html = $this->load->view('attendance/individual_att_history_pdf', $data, true);
-    
-    // Generate PDF file
-    $pdf_filename = 'Attendance History of '.$id.' '.$from_date.' To '.$to_date.'.pdf';
-    $pdf_path = 'assets/data/pdf/attendance/';
-    
-    // Create directory if it doesn't exist
-    if (!is_dir($pdf_path)) {
-        mkdir($pdf_path, 0755, true);
+    // OPTIONAL: Uncomment this block if you want to enable PDF generation
+    /*
+    try {
+        $this->load->library('pdfgenerator');
+        $html = $this->load->view('attendance/individual_att_history_pdf', $data, true);
+        
+        $pdf_filename = 'Attendance_History_'.$id.'_'.$from_date.'_to_'.$to_date.'.pdf';
+        $pdf_path = 'assets/data/pdf/attendance/';
+        
+        if (!is_dir($pdf_path)) {
+            mkdir($pdf_path, 0755, true);
+        }
+        
+        // Adjust this based on your pdfgenerator library
+        file_put_contents($pdf_path . $pdf_filename, $this->pdfgenerator->generate($html, $pdf_filename, true, 'A4', 'portrait'));
+        
+        $data['pdf'] = $pdf_path . $pdf_filename;
+    } catch (Exception $e) {
+        // If PDF generation fails, continue without it
+        $data['pdf'] = '#';
     }
+    */
     
-    // Generate and save PDF
-    $this->pdfgenerator->generate($html, $pdf_filename, false, 'A4', 'portrait');
-    
-    $data['pdf'] = $pdf_path . $pdf_filename;
     $data['page'] = "attendance_log_datebetween";
-    
     echo Modules::run('template/layout', $data);
         // $id = $this->input->get('employee_id');
         // $from_date =$this->input->get('start_date');
