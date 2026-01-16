@@ -210,8 +210,19 @@ class Leave_model extends CI_Model {
     }
 
     public function save_update_leave_type($data = array()){
-        $this->db->where('leave_type_id', $data["leave_type_id"])
-                 ->update('leave_type', $data);
+        $this->db->where('leave_type_id', $data['leave_type_id']);
+        $this->db->update('leave_type', [
+        'leave_type' => $data['leave_type'],
+        'leave_days' => $data['leave_days']
+    ]);
+
+    // Check for DB error
+    if ($this->db->error()['code'] != 0) {
+        return false;
+    }
+    return true;
+        // $this->db->where('leave_type_id', $data["leave_type_id"])
+        //          ->update('leave_type', $data);
     }
 
     public function delete_leave_type($id = null)
