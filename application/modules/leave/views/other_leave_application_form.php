@@ -318,37 +318,146 @@ $(document).ready(function(e) {
 });
 
 function leavetypechange(id) {
+
+
+    console.log('leavetypechange called with id:', id);
+
     var leave_type = id;
     var employee_id = $('#employee_id').val();
+
+    console.log('Employee ID:', employee_id);
+    console.log('Leave Type:', leave_type);
+
+    // Clear previous messages
+    $('#enjoy').html('');
+    $('#checkleave').html('');
+
+    // Validate inputs
+    if (!employee_id) {
+        $('#enjoy').html('<span style="color: red;">Please select an employee first</span>');
+        return;
+    }
+
+    if (!leave_type) {
+        $('#enjoy').html('<span style="color: red;">Please select a leave type</span>');
+        return;
+    }
+
+    // Show loading
+    $('#enjoy').html('Loading...');
+    $('#checkleave').html('');
+
+    // Make AJAX call
     $.ajax({
-        url: "<?php echo base_url('leave/Leave/free_leave')?>",
-        method: 'post',
+        url: "<?php echo base_url('leave/Leave/free_leave'); ?>",
+        method: 'POST',
         dataType: 'json',
         data: {
             'employee_id': employee_id,
-            'leave_type': id
+            'leave_type': leave_type
+        },
+        beforeSend: function() {
+            console.log('Sending AJAX request...');
         },
         success: function(data) {
-            document.getElementById('enjoy').innerHTML = 'You Enjoyed : ' + data.enjoy + ' Ds';
-            document.getElementById('checkleave').innerHTML = 'Total Leave : ' + data.due + ' Ds';
+            console.log('AJAX Response:', data);
+
+            if (data.status === 'success' || data.status === 'warning') {
+                $('#enjoy').html('You Enjoyed: ' + data.enjoy + ' Days');
+                $('#checkleave').html('Available Leave: ' + data.due + ' Days');
+
+                // Color coding based on balance
+                if (data.due < 3) {
+                    $('#checkleave').css('color', 'orange');
+                } else {
+                    $('#checkleave').css('color', 'green');
+                }
+            } else {
+                $('#enjoy').html('<span style="color: red;">Error: ' + data.message + '</span>');
+                $('#checkleave').html('');
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            alert('Error get data from ajax');
+            console.error('AJAX Error Details:');
+            console.error('Status:', textStatus);
+            console.error('Error:', errorThrown);
+            console.error('Response Text:', jqXHR.responseText);
+            console.error('Status Code:', jqXHR.status);
+
+            // Try to parse error response
+            var errorMsg = 'Error loading leave balance';
+            try {
+                var errorData = JSON.parse(jqXHR.responseText);
+                errorMsg = errorData.message || errorMsg;
+            } catch (e) {
+                // If not JSON, show status text
+                if (jqXHR.status === 404) {
+                    errorMsg = 'URL not found (404). Check your base_url configuration.';
+                } else if (jqXHR.status === 500) {
+                    errorMsg = 'Server error (500). Check PHP error logs.';
+                } else if (jqXHR.status === 0) {
+                    errorMsg = 'Network error. Check your internet connection.';
+                }
+            }
+
+            $('#enjoy').html('<span style="color: red;">' + errorMsg + '</span>');
+            $('#checkleave').html('<span style="color: red;">Please try again or contact support</span>');
         }
     });
 }
 
-$(document).ready(function(e) {
-    function datecheck() {
-        var date = new Date($('#apply_start').val());
-        var date1 = new Date($('#leave_aprv_strt_date').val());
-        var date2 = new Date($('#leave_aprv_end_date').val());
-        if (date > date1 || date > date2) {
-            alert('Can not greater than');
-            document.getElementById('leave_aprv_strt_date').value = '';
-            document.getElementById('leave_aprv_end_date').value = '';
+// Trigger when employee is selected (for admin)
+$(document).ready(function() {
+    console.log('Document ready');
+
+    // When employee changes
+    $('#employee_id').on('change', function() {
+        var leave_type_id = $('select[name="leave_type_id"]').val();
+        console.log('Employee changed, leave type:', leave_type_id);
+        if (leave_type_id) {
+            leavetypechange(leave_type_id);
         }
-    }
-    $('.leave_aprv_strt_date,.leave_aprv_end_date').change(datecheck);
+    });
+
+    // When leave type changes
+    $('select[name="leave_type_id"]').on('change', function() {
+        var leave_type_id = $(this).val();
+        console.log('Leave type changed:', leave_type_id);
+        leavetypechange(leave_type_id);
+    });
 });
+
+//     var leave_type = id;
+//     var employee_id = $('#employee_id').val();
+//     $.ajax({
+//         url: " echo base_url('leave/Leave/free_leave')?>",
+//         method: 'post',
+//         dataType: 'json',
+//         data: {
+//             'employee_id': employee_id,
+//             'leave_type': id
+//         },
+//         success: function(data) {
+//             document.getElementById('enjoy').innerHTML = 'You Enjoyed : ' + data.enjoy + ' Ds';
+//             document.getElementById('checkleave').innerHTML = 'Total Leave : ' + data.due + ' Ds';
+//         },
+//         error: function(jqXHR, textStatus, errorThrown) {
+//             alert('Error get data from ajax');
+//         }
+//     });
+// }
+
+// $(document).ready(function(e) {
+//     function datecheck() {
+//         var date = new Date($('#apply_start').val());
+//         var date1 = new Date($('#leave_aprv_strt_date').val());
+//         var date2 = new Date($('#leave_aprv_end_date').val());
+//         if (date > date1 || date > date2) {
+//             alert('Can not greater than');
+//             document.getElementById('leave_aprv_strt_date').value = '';
+//             document.getElementById('leave_aprv_end_date').value = '';
+//         }
+//     }
+//     $('.leave_aprv_strt_date,.leave_aprv_end_date').change(datecheck);
+// });
 </script>
