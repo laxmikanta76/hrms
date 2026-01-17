@@ -101,10 +101,10 @@
         ?>
 
                                         <?php if (can_select_employee()): ?>
-                                        <!-- ADMIN / HR / SUPERVISOR - Show Dropdown -->
+                                        <!-- ADMIN / HR / SUPERVISOR -->
                                         <?php echo form_dropdown('employee_id',$dropdownatn,(!empty($editdata)?$editdata->uid:''),'class="form-control" id="employee_id" style="width:100%"'); ?>
                                         <?php else: ?>
-                                        <!-- REGULAR EMPLOYEE - Show Name and Hidden Field -->
+                                        <!-- REGULAR EMPLOYEE -->
                                         <input type="text" name="employee_name" class="form-control"
                                             value="<?php echo $emp_name; ?>" readonly>
                                         <input type="hidden" name="employee_id" id="employee_id_hidden"
@@ -115,10 +115,10 @@
                                     <label for="leave_type" class="col-sm-2 col-form-label">Select
                                         <?php echo display('leave_type') ?></label>
                                     <div class="col-sm-4">
-                                        <?php echo form_dropdown('leave_type_id',$type,null,'class="form-control" id="leave_type_id" style="width:100%" onchange="leavetypechange(this.value)"') ?>
+                                        <?php echo form_dropdown('leave_type_id',$type,null,'class="form-control" id="leave_type_id" style="width:100%"'); ?>
                                         <div style="margin-top: 5px;">
-                                            <span id="enjoy" style="color: red; font-weight: bold;"></span><br>
-                                            <span id="checkleave" style="color: green; font-weight: bold;"></span>
+                                            <span id="enjoy" style="color: #d9534f; font-weight: bold;"></span><br>
+                                            <span id="checkleave" style="color: #5cb85c; font-weight: bold;"></span>
                                         </div>
                                     </div>
 
@@ -263,8 +263,8 @@ $(function() {
         dateFormat: 'yy-mm-dd'
     });
 });
-</script>
-<script language="javascript">
+
+// Calculate approved days (excluding weekends)
 $(document).ready(function(e) {
     function calculation() {
         var date1 = new Date($('.leave_aprv_strt_date').val());
@@ -272,12 +272,11 @@ $(document).ready(function(e) {
         var from = new Date($('.leave_aprv_strt_date').val());
         var to = new Date($('.leave_aprv_end_date').val());
         var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
         var d = from;
         var count = 0;
         var weekend = "<?php echo $weekend ?>";
-        var w = weekend.split(',')
-        //alert(w[0]);
+        var w = weekend.split(',');
+
         while (d <= to) {
             d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
             if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
@@ -291,24 +290,25 @@ $(document).ready(function(e) {
     }
     $('.leave_aprv_strt_date,.leave_aprv_end_date').change(calculation);
 });
+
+// Calculate apply days (excluding weekends)
 $(document).ready(function(e) {
     function applyday() {
-
         var from = new Date($('.apply_start').val());
         var to = new Date($('.apply_end').val());
         var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
         var d = from;
         var count = 0;
         var weekend = "<?php echo $weekend ?>";
-        var w = weekend.split(',')
-        //alert(w[0]);
+        var w = weekend.split(',');
+
         while (d <= to) {
             d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
             if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
                 count += 1;
             }
         }
+
         var date1 = new Date($('.apply_start').val());
         var date2 = new Date($('.apply_end').val());
         var timeDiff = Math.abs(date2.getTime() - date1.getTime());
@@ -318,54 +318,53 @@ $(document).ready(function(e) {
     $('.apply_start,.apply_end').change(applyday);
 });
 
+// Date validation
+$(document).ready(function(e) {
+    function datecheck() {
+        var date = new Date($('#apply_start').val());
+        var date1 = new Date($('#leave_aprv_strt_date').val());
+        var date2 = new Date($('#leave_aprv_end_date').val());
+        if (date > date1 || date > date2) {
+            alert('Approved date cannot be less than apply date');
+            document.getElementById('leave_aprv_strt_date').value = '';
+            document.getElementById('leave_aprv_end_date').value = '';
+        }
+    }
+    $('.leave_aprv_strt_date,.leave_aprv_end_date').change(datecheck);
+});
+
+/**
+ * Get Employee ID - works for both admin dropdown and user hidden field
+ */
 function getEmployeeId() {
-    // Try select dropdown first (admin)
-    var empId = $('#employee_id').val();
-
-    if (!empId || empId === '') {
-        // Try hidden input (regular user)
-        empId = $('#employee_id_hidden').val();
-    }
-
-    if (!empId || empId === '') {
-        // Last resort - try any input with name employee_id
-        empId = $('input[name="employee_id"]').val();
-    }
-
-    return empId;
+    return $('#employee_id').val() ||
+        $('#employee_id_hidden').val() ||
+        $('input[name="employee_id"]').val() ||
+        '';
 }
 
 /**
- * Main function to fetch and display leave balance
+ * Fetch and display leave balance
  */
 function leavetypechange(leave_type_id) {
-    console.log('=== leavetypechange called ===');
-    console.log('Leave Type ID:', leave_type_id);
-
     var employee_id = getEmployeeId();
-    console.log('Employee ID:', employee_id);
 
     // Clear previous messages
-    document.getElementById('enjoy').innerHTML = '';
-    document.getElementById('checkleave').innerHTML = '';
+    $('#enjoy').html('');
+    $('#checkleave').html('');
 
-    // Validate employee ID
-    if (!employee_id || employee_id === '') {
-        console.error('ERROR: Employee ID is empty');
-        document.getElementById('enjoy').innerHTML = '<span style="color: red;">Error: Employee ID not found</span>';
-        return false;
+    if (!employee_id) {
+        $('#enjoy').html('<span style="color: red;">Employee ID not found</span>');
+        return;
     }
 
-    // Validate leave type
-    if (!leave_type_id || leave_type_id === '') {
-        console.warn('Leave type not selected');
-        return false;
+    if (!leave_type_id) {
+        return;
     }
 
-    // Show loading indicator
-    document.getElementById('enjoy').innerHTML = '<i class="fa fa-spinner fa-spin"></i> Loading...';
+    // Show loading
+    $('#enjoy').html('Loading...');
 
-    // AJAX call
     $.ajax({
         url: "<?php echo base_url('leave/Leave/free_leave'); ?>",
         method: 'POST',
@@ -374,370 +373,63 @@ function leavetypechange(leave_type_id) {
             'employee_id': employee_id,
             'leave_type': leave_type_id
         },
-        beforeSend: function() {
-            console.log('Sending AJAX request:', {
-                url: "<?php echo base_url('leave/Leave/free_leave'); ?>",
-                employee_id: employee_id,
-                leave_type: leave_type_id
-            });
-        },
-        success: function(response) {
-            console.log('AJAX Success Response:', response);
+        success: function(data) {
+            if (data.status === 'success' || data.status === 'warning') {
+                $('#enjoy').html('You Enjoyed: ' + data.enjoy + ' Days');
+                $('#checkleave').html('Available Leave: ' + data.due + ' Days');
 
-            // Handle different response formats
-            var enjoy = 0;
-            var due = 0;
-
-            if (response.status === 'success' || response.status === 'warning') {
-                enjoy = response.enjoy || 0;
-                due = response.due || 0;
-            } else if (response.status === 'error') {
-                // Show error message
-                document.getElementById('enjoy').innerHTML =
-                    '<span style="color: red;">Error: ' + (response.message || 'Unknown error') + '</span>';
-                document.getElementById('checkleave').innerHTML = '';
-                return;
+                // Color based on balance
+                if (data.due < 3) {
+                    $('#checkleave').css('color', 'orange');
+                } else {
+                    $('#checkleave').css('color', 'green');
+                }
             } else {
-                // Fallback for old format
-                enjoy = response.enjoy || 0;
-                due = response.due || 0;
+                $('#enjoy').html('<span style="color: red;">' + (data.message || 'Error loading balance') +
+                    '</span>');
             }
-
-            // Display results
-            document.getElementById('enjoy').innerHTML =
-                '<span style="color: #d9534f; font-weight: bold;">You Enjoyed: ' + enjoy + ' Days</span>';
-
-            var dueColor = due < 3 ? '#f0ad4e' : '#5cb85c'; // orange if low, green if good
-            document.getElementById('checkleave').innerHTML =
-                '<span style="color: ' + dueColor + '; font-weight: bold;">Available Leave: ' + due +
-                ' Days</span>';
-
-            console.log('Balance displayed successfully');
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.error('=== AJAX ERROR ===');
-            console.error('Status:', textStatus);
-            console.error('Error:', errorThrown);
-            console.error('HTTP Status Code:', jqXHR.status);
-            console.error('Response Text:', jqXHR.responseText);
-
             var errorMsg = 'Error loading leave balance';
 
-            // Try to parse JSON error response
-            try {
-                var errorData = JSON.parse(jqXHR.responseText);
-                if (errorData.message) {
-                    errorMsg = errorData.message;
-                }
-            } catch (e) {
-                // Not JSON, determine error from status code
-                if (jqXHR.status === 404) {
-                    errorMsg = 'URL not found (404). Check configuration.';
-                } else if (jqXHR.status === 500) {
-                    errorMsg = 'Server error (500). Check server logs.';
-                } else if (jqXHR.status === 403) {
-                    errorMsg = 'Access denied (403). Check permissions.';
-                } else if (jqXHR.status === 0) {
-                    errorMsg = 'Network error. Check your connection.';
-                } else if (textStatus === 'parsererror') {
-                    errorMsg = 'Invalid response format. Expected JSON.';
-                }
+            if (jqXHR.status === 404) {
+                errorMsg = 'Service not found';
+            } else if (jqXHR.status === 500) {
+                errorMsg = 'Server error';
             }
 
-            document.getElementById('enjoy').innerHTML =
-                '<span style="color: red; font-weight: bold;">' + errorMsg + '</span>';
-            document.getElementById('checkleave').innerHTML =
-                '<span style="color: red;">Please contact support if issue persists</span>';
+            $('#enjoy').html('<span style="color: red;">' + errorMsg + '</span>');
         }
     });
-
-    return false;
 }
 
-/**
- * Initialize on page load
- */
+// Initialize on page load
 $(document).ready(function() {
-    console.log('=== Page Loaded - Initializing Leave Balance System ===');
-
-    // Debug: Check what employee ID elements exist
-    console.log('Employee ID dropdown exists:', $('#employee_id').length > 0);
-    console.log('Employee ID hidden exists:', $('#employee_id_hidden').length > 0);
-    console.log('Employee ID input exists:', $('input[name="employee_id"]').length > 0);
-
-    var employee_id = getEmployeeId();
-    console.log('Current Employee ID:', employee_id);
-
-    // Determine if admin or user
     var isAdmin = $('#employee_id').is('select');
-    console.log('User Type:', isAdmin ? 'Admin/HR' : 'Regular Employee');
 
     if (isAdmin) {
-        // === ADMIN MODE ===
-        console.log('Setting up Admin mode event handlers');
-
-        // When admin selects an employee
+        // Admin: when employee changes
         $('#employee_id').on('change', function() {
-            var empId = $(this).val();
             var leaveType = $('#leave_type_id').val();
-            console.log('Admin selected employee:', empId);
-
-            if (empId && leaveType) {
+            if (leaveType) {
                 leavetypechange(leaveType);
             }
         });
     } else {
-        // === USER MODE ===
-        console.log('Setting up User mode');
-
-        // Auto-load if leave type already selected
+        // User: auto-load if leave type selected
         var initialLeaveType = $('#leave_type_id').val();
-        if (employee_id && initialLeaveType) {
-            console.log('Auto-loading balance for initial selection');
+        var empId = getEmployeeId();
+        if (empId && initialLeaveType) {
             leavetypechange(initialLeaveType);
         }
     }
 
-    // When leave type changes (works for both admin and user)
+    // When leave type changes (both admin and user)
     $('#leave_type_id').on('change', function() {
         var leaveType = $(this).val();
-        console.log('Leave type changed to:', leaveType);
-
         if (leaveType) {
             leavetypechange(leaveType);
         }
     });
-
-    console.log('=== Initialization Complete ===');
-});
-
-// function leavetypechange(id) {
-
-
-//     console.log('leavetypechange called with id:', id);
-
-//     var leave_type = id;
-//     var employee_id = $('#employee_id').val();
-
-//     console.log('Employee ID:', employee_id);
-//     console.log('Leave Type:', leave_type);
-
-//     // Clear previous messages
-//     $('#enjoy').html('');
-//     $('#checkleave').html('');
-
-//     // Validate inputs
-//     if (!employee_id) {
-//         $('#enjoy').html('<span style="color: red;">Please select an employee first</span>');
-//         return;
-//     }
-
-//     if (!leave_type) {
-//         $('#enjoy').html('<span style="color: red;">Please select a leave type</span>');
-//         return;
-//     }
-
-//     // Show loading
-//     $('#enjoy').html('Loading...');
-//     $('#checkleave').html('');
-
-//     // Make AJAX call
-//     $.ajax({
-//         url: " echo base_url('leave/Leave/free_leave'); ?>",
-//         method: 'POST',
-//         dataType: 'json',
-//         data: {
-//             'employee_id': employee_id,
-//             'leave_type': leave_type
-//         },
-//         beforeSend: function() {
-//             console.log('Sending AJAX request...');
-//         },
-//         success: function(data) {
-//             console.log('AJAX Response:', data);
-
-//             if (data.status === 'success' || data.status === 'warning') {
-//                 $('#enjoy').html('You Enjoyed: ' + data.enjoy + ' Days');
-//                 $('#checkleave').html('Available Leave: ' + data.due + ' Days');
-
-//                 // Color coding based on balance
-//                 if (data.due < 3) {
-//                     $('#checkleave').css('color', 'orange');
-//                 } else {
-//                     $('#checkleave').css('color', 'green');
-//                 }
-//             } else {
-//                 $('#enjoy').html('<span style="color: red;">Error: ' + data.message + '</span>');
-//                 $('#checkleave').html('');
-//             }
-//         },
-//         error: function(jqXHR, textStatus, errorThrown) {
-//             console.error('AJAX Error Details:');
-//             console.error('Status:', textStatus);
-//             console.error('Error:', errorThrown);
-//             console.error('Response Text:', jqXHR.responseText);
-//             console.error('Status Code:', jqXHR.status);
-
-//             // Try to parse error response
-//             var errorMsg = 'Error loading leave balance';
-//             try {
-//                 var errorData = JSON.parse(jqXHR.responseText);
-//                 errorMsg = errorData.message || errorMsg;
-//             } catch (e) {
-//                 // If not JSON, show status text
-//                 if (jqXHR.status === 404) {
-//                     errorMsg = 'URL not found (404). Check your base_url configuration.';
-//                 } else if (jqXHR.status === 500) {
-//                     errorMsg = 'Server error (500). Check PHP error logs.';
-//                 } else if (jqXHR.status === 0) {
-//                     errorMsg = 'Network error. Check your internet connection.';
-//                 }
-//             }
-
-//             $('#enjoy').html('<span style="color: red;">' + errorMsg + '</span>');
-//             $('#checkleave').html('<span style="color: red;">Please try again or contact support</span>');
-//         }
-//     });
-// }
-
-// // Trigger when employee is selected (for admin)
-// $(document).ready(function() {
-//     console.log('Document ready');
-
-//     // When employee changes
-//     $('#employee_id').on('change', function() {
-//         var leave_type_id = $('select[name="leave_type_id"]').val();
-//         console.log('Employee changed, leave type:', leave_type_id);
-//         if (leave_type_id) {
-//             leavetypechange(leave_type_id);
-//         }
-//     });
-
-//     // When leave type changes
-//     $('select[name="leave_type_id"]').on('change', function() {
-//         var leave_type_id = $(this).val();
-//         console.log('Leave type changed:', leave_type_id);
-//         leavetypechange(leave_type_id);
-//     });
-// });
-
-//     var leave_type = id;
-//     var employee_id = $('#employee_id').val();
-//     $.ajax({
-//         url: " echo base_url('leave/Leave/free_leave')?>",
-//         method: 'post',
-//         dataType: 'json',
-//         data: {
-//             'employee_id': employee_id,
-//             'leave_type': id
-//         },
-//         success: function(data) {
-//             document.getElementById('enjoy').innerHTML = 'You Enjoyed : ' + data.enjoy + ' Ds';
-//             document.getElementById('checkleave').innerHTML = 'Total Leave : ' + data.due + ' Ds';
-//         },
-//         error: function(jqXHR, textStatus, errorThrown) {
-//             alert('Error get data from ajax');
-//         }
-//     });
-// }
-
-// $(document).ready(function(e) {
-//     function datecheck() {
-//         var date = new Date($('#apply_start').val());
-//         var date1 = new Date($('#leave_aprv_strt_date').val());
-//         var date2 = new Date($('#leave_aprv_end_date').val());
-//         if (date > date1 || date > date2) {
-//             alert('Can not greater than');
-//             document.getElementById('leave_aprv_strt_date').value = '';
-//             document.getElementById('leave_aprv_end_date').value = '';
-//         }
-//     }
-//     $('.leave_aprv_strt_date,.leave_aprv_end_date').change(datecheck);
-// });
-//
-</script>
-<!-- Add this at the bottom of other_leave_application_form.php for debugging -->
-<script>
-// Quick test button (remove after debugging)
-$(document).ready(function() {
-    // Add test button after page loads
-    setTimeout(function() {
-        var testButton = $('<button>')
-            .text('🔍 Test Leave Balance')
-            .css({
-                'position': 'fixed',
-                'bottom': '20px',
-                'right': '20px',
-                'padding': '10px 20px',
-                'background': '#337ab7',
-                'color': 'white',
-                'border': 'none',
-                'border-radius': '5px',
-                'cursor': 'pointer',
-                'z-index': '9999',
-                'font-weight': 'bold'
-            })
-            .click(function(e) {
-                e.preventDefault();
-
-                console.log('=== MANUAL TEST TRIGGERED ===');
-
-                // Get current values
-                var empId = getEmployeeId();
-                var leaveType = $('#leave_type_id').val();
-
-                console.log('Employee ID:', empId);
-                console.log('Leave Type:', leaveType);
-
-                if (!empId) {
-                    alert('Employee ID is missing!\n\nCheck console for details.');
-                    return;
-                }
-
-                if (!leaveType) {
-                    alert('Please select a leave type first');
-                    return;
-                }
-
-                // Trigger the function
-                leavetypechange(leaveType);
-            });
-
-        $('body').append(testButton);
-
-        // Add debug info panel
-        var debugInfo = $('<div>')
-            .css({
-                'position': 'fixed',
-                'bottom': '70px',
-                'right': '20px',
-                'padding': '10px',
-                'background': '#f8f9fa',
-                'border': '1px solid #ddd',
-                'border-radius': '5px',
-                'font-size': '11px',
-                'max-width': '300px',
-                'z-index': '9998'
-            })
-            .html(
-                '<strong>Debug Info:</strong><br>' +
-                'Employee ID: <span id="debug_emp">' + getEmployeeId() + '</span><br>' +
-                'Leave Type: <span id="debug_leave">' + $('#leave_type_id').val() + '</span><br>' +
-                'User Type: ' + ($('#employee_id').is('select') ? 'Admin' : 'User') + '<br>' +
-                '<small>Press F12 to see console logs</small>'
-            );
-
-        $('body').append(debugInfo);
-
-        // Update debug info when values change
-        $('#leave_type_id').on('change', function() {
-            $('#debug_leave').text($(this).val());
-        });
-
-        $('#employee_id').on('change', function() {
-            $('#debug_emp').text($(this).val());
-        });
-
-    }, 1000);
 });
 </script>

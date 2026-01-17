@@ -531,156 +531,72 @@ public function application(){
 		// );
 		// echo json_encode($data);
 
-		header('Content-Type: application/json');
+		 header('Content-Type: application/json');
     
-    try {
-        // Get posted data
-        $employee_id = $this->input->post('employee_id');
-        $leave_type  = $this->input->post('leave_type');
+    $employee_id = $this->input->post('employee_id');
+    $leave_type  = $this->input->post('leave_type');
 
-        // Log for debugging
-        log_message('debug', "free_leave - Employee: $employee_id, Leave Type: $leave_type");
-
-        // Validate inputs
-        if (empty($employee_id)) {
-            echo json_encode([
-                'status' => 'error',
-                'enjoy' => 0,
-                'due'   => 0,
-                'message' => 'Employee ID is required'
-            ]);
-            return;
-        }
-
-        if (empty($leave_type)) {
-            echo json_encode([
-                'status' => 'error',
-                'enjoy' => 0,
-                'due'   => 0,
-                'message' => 'Leave type is required'
-            ]);
-            return;
-        }
-
-        $year  = date('Y');
-        $month = date('n');
-
-        // Load model
-        $this->load->model('Leave_model');
-
-        // Get leave type details
-        $leaveTypeInfo = $this->db->select('*')
-            ->from('leave_type')
-            ->where('leave_type_id', $leave_type)
-            ->get()
-            ->row();
-
-        if (!$leaveTypeInfo) {
-            echo json_encode([
-                'status' => 'error',
-                'enjoy' => 0,
-                'due'   => 0,
-                'message' => 'Invalid leave type'
-            ]);
-            return;
-        }
-
-        // Ensure balance exists
-        $this->Leave_model->ensure_monthly_balance(
-            $employee_id,
-            $leave_type,
-            $year,
-            $month
-        );
-
-        // Fetch balance
-        $balance = $this->db->select('*')
-            ->from('employee_leave_balance')
-            ->where('employee_id', $employee_id)
-            ->where('leave_type_id', $leave_type)
-            ->where('year', $year)
-            ->where('month', $month)
-            ->get()
-            ->row();
-
-        // Return response
-        if ($balance) {
-            echo json_encode([
-                'status' => 'success',
-                'enjoy' => (float)$balance->used_leave,
-                'due'   => (float)$balance->closing_balance,
-                'opening' => (float)$balance->opening_balance,
-                'message' => 'Balance fetched successfully'
-            ]);
-        } else {
-            // If still not found, return default
-            echo json_encode([
-                'status' => 'warning',
-                'enjoy' => 0,
-                'due'   => (float)$leaveTypeInfo->leave_days,
-                'opening' => (float)$leaveTypeInfo->leave_days,
-                'message' => 'Using default balance'
-            ]);
-        }
-
-    } catch (Exception $e) {
-        log_message('error', 'free_leave error: ' . $e->getMessage());
+    if (empty($employee_id) || empty($leave_type)) {
         echo json_encode([
             'status' => 'error',
             'enjoy' => 0,
             'due'   => 0,
-            'message' => 'Server error: ' . $e->getMessage()
+            'message' => 'Invalid parameters'
+        ]);
+        return;
+    }
+
+    $year  = date('Y');
+    $month = date('n');
+
+    $this->load->model('Leave_model');
+
+    // Get leave type details
+    $leaveTypeInfo = $this->db->get_where('leave_type', [
+        'leave_type_id' => $leave_type
+    ])->row();
+
+    if (!$leaveTypeInfo) {
+        echo json_encode([
+            'status' => 'error',
+            'enjoy' => 0,
+            'due'   => 0,
+            'message' => 'Invalid leave type'
+        ]);
+        return;
+    }
+
+    // Ensure balance exists
+    $this->Leave_model->ensure_monthly_balance(
+        $employee_id,
+        $leave_type,
+        $year,
+        $month
+    );
+
+    // Fetch balance
+    $balance = $this->Leave_model->get_employee_leave_balance(
+        $employee_id,
+        $leave_type,
+        $year,
+        $month
+    );
+
+    if ($balance) {
+        echo json_encode([
+            'status' => 'success',
+            'enjoy' => (float)$balance->used_leave,
+            'due'   => (float)$balance->closing_balance,
+            'opening' => (float)$balance->opening_balance
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'warning',
+            'enjoy' => 0,
+            'due'   => (float)$leaveTypeInfo->leave_days,
+            'message' => 'Using default balance'
         ]);
     }
 		
-
-		// -----------------------------------------------------
-    // $employee_id = $this->input->post('employee_id');
-    // $leave_type  = $this->input->post('leave_type');
-
-    // if (empty($employee_id) || empty($leave_type)) {
-    //     echo json_encode([
-    //         'enjoy' => 0,
-    //         'due'   => 0,
-    //         'error' => 'Invalid parameters'
-    //     ]);
-    //     return;
-    // }
-
-    // $year  = date('Y');
-    // $month = date('n');
-
-    // // Load model
-    // $this->load->model('Leave_model');
-
-    // // Auto create monthly row if doesn't exist
-    // $this->Leave_model->ensure_monthly_balance(
-    //     $employee_id,
-    //     $leave_type,
-    //     $year,
-    //     $month
-    // );
-
-    // // Fetch monthly balance
-    // $balance = $this->Leave_model->get_employee_leave_balance(
-    //     $employee_id,
-    //     $leave_type,
-    //     $year,
-    //     $month
-    // );
-
-    // if ($balance) {
-    //     echo json_encode([
-    //         'enjoy' => (int)$balance->used_leave,
-    //         'due'   => (int)$balance->closing_balance,
-    //         'opening' => (int)$balance->opening_balance
-    //     ]);
-    // } else {
-    //     echo json_encode([
-    //         'enjoy' => 0,
-    //         'due'   => 0,
-    //         'error' => 'Balance not found'
-    //     ]);
-    // }
  }
 }
