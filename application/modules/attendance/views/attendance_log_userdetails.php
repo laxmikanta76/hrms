@@ -95,11 +95,7 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                     ?>
                                 </td>
 
-                                <td>
-                                <td>
-                                    <?= !empty($row->remarks) ? htmlspecialchars($row->remarks) : '-' ?>
-                                </td>
-                                </td>
+
                                 <td>
                                     <?php if ($this->session->userdata('isAdmin') == 1): ?>
                                     <a href="<?php echo base_url("attendance/home/delete_attendance/$attendancedata->atten_his_id/$attendancedata->uid") ?>"
@@ -113,6 +109,9 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                     <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?= !empty($row->remarks) ? htmlspecialchars($row->remarks) : '-' ?>
                                 </td>
                             </tr>
 
