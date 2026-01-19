@@ -704,13 +704,10 @@ ul li a {
                                             <label for="s_name"><?php echo display('super_visor_name')?></label>
                                             <select name="supervisorname" class="form-control" style="width: 480px">
                                                 <option value="">Select One</option>
-                                                <option value="self"
-                                                    <?php if($data->super_visor_id=='self'){echo 'selected';}?>>Self
-                                                </option>
+                                                <option value="self"> Self </option>
                                                 <?php foreach ($supervisor as $suplist) {?>
-                                                <option value="<?php echo $suplist->employee_id?>" <?php if($data->super_visor_id==$suplist->employee_id){
-                                            echo 'selected';
-                                        }?>><?php echo $suplist->first_name.' '.$suplist->last_name?></option>
+                                                <option value="<?php echo $suplist->employee_id?>">
+                                                    <?php echo $suplist->first_name.' '.$suplist->last_name?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
