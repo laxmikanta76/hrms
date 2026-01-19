@@ -161,7 +161,7 @@ class Home extends MX_Controller {
         if (empty($latitude) || empty($longitude)) {
             $latitude = null;
             $longitude = null;
-       }
+       }     
     
     $id = $this->input->post('attendanc_id');
     

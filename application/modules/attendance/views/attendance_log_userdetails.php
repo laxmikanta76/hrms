@@ -40,8 +40,9 @@ foreach ($queryd as $attendance) {?>
                                 <th><?php echo display('status')?></th>
                                 <th>Location</th>
                                 <th>Radius</th>
-                                <th>Remarks</th>
                                 <th><?php echo display('action')?></th>
+                                <th>Remarks</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -92,6 +93,10 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                           echo "<span style='color:red'>{$distance} m</span>";
                                      }
                                     ?>
+                                </td>
+
+                                <td>
+                                    <?= $this->session->userdata('ui_remarks') ?: '-' ?>
                                 </td>
                                 <td>
                                     <?php if ($this->session->userdata('isAdmin') == 1): ?>
