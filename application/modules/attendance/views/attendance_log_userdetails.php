@@ -96,7 +96,9 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                 </td>
 
                                 <td>
-                                    <?= $this->session->userdata('ui_remarks') ?: '-' ?>
+                                <td>
+                                    <?= !empty($row->remarks) ? htmlspecialchars($row->remarks) : '-' ?>
+                                </td>
                                 </td>
                                 <td>
                                     <?php if ($this->session->userdata('isAdmin') == 1): ?>
