@@ -111,7 +111,7 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <?= !empty($row->remarks) ? htmlspecialchars($row->remarks) : '-' ?>
+                                    <?= !empty($attendancedata->remarks)? htmlspecialchars($attendancedata->remarks): '-' ?>
                                 </td>
                             </tr>
 
@@ -162,7 +162,7 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4"><b><?php echo display('n_b_spendtime')?> <?php echo $totaltime;?>
+                                <td colspan="7"><b><?php echo display('n_b_spendtime')?> <?php echo $totaltime;?>
                                         <?php echo display('hours_out_of_workinghour')?></b></td>
                             </tr>
                         </tfoot>
