@@ -159,7 +159,7 @@
 
                                     </div>
                                 </div>
-                                <?php  if($this->session->userdata('isAdmin')==1 || $this->session->userdata('supervisor')==1){?>
+                                <?php  if($this->session->userdata('is_admin')==1 || $this->session->userdata('supervisor')==1){?>
                                 <div class="form-group row">
                                     <label for="leave_aprv_strt_date" class="col-sm-2 col-form-label">
                                         <?php echo display('leave_aprv_strt_date') ?></label>
