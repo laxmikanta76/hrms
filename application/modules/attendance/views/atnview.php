@@ -84,6 +84,10 @@
                         </div>
                         <input type="hidden" name="latitude" id="latitude_in">
                         <input type="hidden" name="longitude" id="longitude_in">
+                        <div class="form-group">
+                            <label for="remarks">Remarks</label>
+                            <input type="text" name="remarks" class="form-control" placeholder="Optional remarks">
+                        </div>
                         <div class="form-group text-center">
                             <button type="submit" id="checkin_btn" class="btn btn-success w-md m-b-5">
                                 <?php echo display('check_in') ?>
