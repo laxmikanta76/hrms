@@ -40,6 +40,7 @@ foreach ($queryd as $attendance) {?>
                                 <th><?php echo display('status')?></th>
                                 <th>Location</th>
                                 <th>Radius</th>
+                                <th>Remarks</th>
                                 <th><?php echo display('action')?></th>
                             </tr>
                         </thead>
