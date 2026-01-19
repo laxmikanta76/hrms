@@ -1078,6 +1078,7 @@ public function cv()
     $data['designation']   = $this->Employees_model->designation();
     $data['custominfo']    = $this->Employees_model->customifo($id);
     $data['benifit']       = $this->Employees_model->benifit($id);
+	$data['supervisor']    = $this->Employees_model->supervisorlist();
     $data['module']        = 'employee';
     $data['page']          = 'update_employee_form';
 
