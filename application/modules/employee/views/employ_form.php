@@ -1362,6 +1362,22 @@ function valid_inf5() {
 
 // }
 
+function valid_inf6() {
+
+    var h_phone = document.getElementById('h_phone');
+    var c_phone = document.getElementById('c_phone');
+
+    // Set border colors only
+    h_phone.style.borderColor = h_phone.value.trim() ? 'green' : 'red';
+    c_phone.style.borderColor = c_phone.value.trim() ? 'green' : 'red';
+
+    // Always move to next tab
+    $('.nav-tabs > .active')
+        .next('li')
+        .find('a')
+        .trigger('click');
+}
+
 function valid_inf7() {
     var em_contactInput = document.getElementById('em_contact');
     var em_contact = $('#em_contact').val();
