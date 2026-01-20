@@ -1012,6 +1012,9 @@ public function cv()
             'home_phone'        => $this->input->post('h_phone', true),
             'business_phone'    => $this->input->post('w_phone', true),
             'cell_phone'        => $this->input->post('c_phone', true),
+			'is_super_visor'    => $this->input->post('is_supervisor',true),
+			'super_visor_id'    => $this->input->post('supervisorname',true),
+	 		'supervisor_report' => $this->input->post('reports',true),
         ];
 
         // ---------- TRANSACTION ----------
@@ -1078,6 +1081,7 @@ public function cv()
     $data['designation']   = $this->Employees_model->designation();
     $data['custominfo']    = $this->Employees_model->customifo($id);
     $data['benifit']       = $this->Employees_model->benifit($id);
+	$data['supervisor']    = $this->Employees_model->supervisorlist();
     $data['module']        = 'employee';
     $data['page']          = 'update_employee_form';
 

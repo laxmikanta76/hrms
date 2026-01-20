@@ -161,10 +161,10 @@ class Home extends MX_Controller {
         if (empty($latitude) || empty($longitude)) {
             $latitude = null;
             $longitude = null;
-       }
+       }     
     
     $id = $this->input->post('attendanc_id');
-    
+    $remarks = $this->input->post('remarks', true);
     // Get employee ID
     if (can_select_employee()) {
        $employee_id = $this->input->post('employee_id', true);
@@ -200,7 +200,8 @@ class Home extends MX_Controller {
             'id'        => 0,
             'time'      => $att_time,
             'latitude'  => $latitude,
-            'longitude' => $longitude
+            'longitude' => $longitude,
+            'remarks'   => $this->input->post('remarks', true)
         ]; 
 
         $update_attendance = [
@@ -210,7 +211,8 @@ class Home extends MX_Controller {
             'id'        => 0,
             'time'      => $att_time,
             'latitude'  => $latitude,
-            'longitude' => $longitude
+            'longitude' => $longitude,
+            'remarks'   => $this->input->post('remarks', true)
         ]; 
 
         if (empty($id)) {
@@ -245,6 +247,7 @@ class Home extends MX_Controller {
      $this->load->helper('employee');
     $timezone = $this->db->select('timezone')->from('setting')->get()->row();
     date_default_timezone_set($timezone->timezone);
+    $remarks = $this->input->post('remarks', true);
 
     $att_time = date('Y-m-d H:i:s');
     $latitude  = $this->input->post('latitude', true);
@@ -312,7 +315,8 @@ class Home extends MX_Controller {
         'id'        => 0,
         'time'      => $att_time,
         'latitude'  => $latitude,
-        'longitude' => $longitude
+        'longitude' => $longitude,
+        'remarks'   => $this->input->post('remarks', true) 
     ]; 
     
     $update = $this->db->insert('attendance_history', $postData);

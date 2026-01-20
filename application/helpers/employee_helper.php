@@ -10,9 +10,9 @@ function can_select_employee()
 
     // Roles that can select employee
     $allowed_roles = [7, 8, 9];
+    // 7 = Employee
     // 8 = HR
-    // 9 = Supervisor
-    // 10 = Manager
+    // 9 = Admin
 
     return ($is_admin == 1 || in_array($role_id, $allowed_roles));
 }
