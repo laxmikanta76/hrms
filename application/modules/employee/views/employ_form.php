@@ -834,8 +834,7 @@ ul li a {
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="s_name"><?php echo display('emerg_contct')?> <sup
-                                                    class="color-red ">*</sup></label>
+                                            <label for="s_name"><?php echo display('emerg_contct')?></label>
 
                                             <input type="text" class="form-control" id="em_contact" name="em_contact"
                                                 placeholder="Emergency Contact">
@@ -1378,41 +1377,59 @@ function valid_inf6() {
         .trigger('click');
 }
 
+// function valid_inf7() {
+//     var em_contactInput = document.getElementById('em_contact');
+//     var em_contact = $('#em_contact').val();
+//     var e_h_phoneInput = document.getElementById('e_h_phone');
+//     var e_h_phone = $('#e_h_phone').val();
+//     var e_w_phoneInput = document.getElementById('e_w_phone');
+//     var e_w_phone = $('#e_w_phone').val();
+//     if (em_contact == "") {
+//         document.getElementById("em_contact").style.borderColor = "red";
+//     } else {
+//         $("#em_contact").on('keyup', function() {
+//             document.getElementById("em_contact").style.borderColor = "green";
+//         });
+
+//     }
+//     if (e_h_phone == "") {
+//         document.getElementById("e_h_phone").style.borderColor = "red";
+//     } else {
+//         $("#e_h_phone").on('keyup', function() {
+//             document.getElementById("e_h_phone").style.borderColor = "green";
+//         });
+
+//     }
+//     if (e_w_phone == "") {
+//         document.getElementById("e_w_phone").style.borderColor = "red";
+//     } else {
+//         $("#e_w_phone").on('keyup', function() {
+//             document.getElementById("e_w_phone").style.borderColor = "green";
+//         });
+
+//     }
+//     if (em_contact !== "" && e_h_phone !== "" && e_w_phone !== "") {
+//         $('.nav-tabs > .active').next('li').find('a').trigger('click');
+//     }
+
+// }
+
 function valid_inf7() {
-    var em_contactInput = document.getElementById('em_contact');
-    var em_contact = $('#em_contact').val();
-    var e_h_phoneInput = document.getElementById('e_h_phone');
-    var e_h_phone = $('#e_h_phone').val();
-    var e_w_phoneInput = document.getElementById('e_w_phone');
-    var e_w_phone = $('#e_w_phone').val();
-    if (em_contact == "") {
-        document.getElementById("em_contact").style.borderColor = "red";
-    } else {
-        $("#em_contact").on('keyup', function() {
-            document.getElementById("em_contact").style.borderColor = "green";
-        });
 
-    }
-    if (e_h_phone == "") {
-        document.getElementById("e_h_phone").style.borderColor = "red";
-    } else {
-        $("#e_h_phone").on('keyup', function() {
-            document.getElementById("e_h_phone").style.borderColor = "green";
-        });
+    var em_contact = document.getElementById('em_contact');
+    var e_h_phone = document.getElementById('e_h_phone');
+    var e_w_phone = document.getElementById('e_w_phone');
 
-    }
-    if (e_w_phone == "") {
-        document.getElementById("e_w_phone").style.borderColor = "red";
-    } else {
-        $("#e_w_phone").on('keyup', function() {
-            document.getElementById("e_w_phone").style.borderColor = "green";
-        });
+    // Border color only (no validation)
+    em_contact.style.borderColor = em_contact.value.trim() ? 'green' : 'red';
+    e_h_phone.style.borderColor = e_h_phone.value.trim() ? 'green' : 'red';
+    e_w_phone.style.borderColor = e_w_phone.value.trim() ? 'green' : 'red';
 
-    }
-    if (em_contact !== "" && e_h_phone !== "" && e_w_phone !== "") {
-        $('.nav-tabs > .active').next('li').find('a').trigger('click');
-    }
-
+    // Always go to next tab
+    $('.nav-tabs > .active')
+        .next('li')
+        .find('a')
+        .trigger('click');
 }
 
 function valid_inf8() {
