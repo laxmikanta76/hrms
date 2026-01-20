@@ -790,8 +790,7 @@ ul li a {
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="h_phone"><?php echo display('home_phone')?> <sup
-                                                    class="color-red ">*</sup></label>
+                                            <label for="h_phone"><?php echo display('home_phone')?></label>
                                             <input type="text" class="form-control" id="h_phone" name="h_phone"
                                                 placeholder="<?php echo display('home_phone')?>">
                                         </div>
@@ -805,8 +804,7 @@ ul li a {
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="c_phone"><?php echo display('cell_phone')?> <sup
-                                                    class="color-red ">*</sup></label>
+                                            <label for="c_phone"><?php echo display('cell_phone')?></label>
                                             <input type="text" class="form-control" id="c_phone" name="c_phone"
                                                 placeholder="<?php echo display('cell_phone')?>">
                                         </div>
@@ -847,16 +845,14 @@ ul li a {
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="e_h_phone"><?php echo display('emerg_home_phone')?> <sup
-                                                    class="color-red ">*</sup></label>
+                                            <label for="e_h_phone"><?php echo display('emerg_home_phone')?></label>
                                             <input type="text" class="form-control" id="e_h_phone" name="e_h_phone"
                                                 placeholder="<?php echo display('emerg_home_phone')?>">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="e_w_phone"><?php echo display('emrg_w_phone')?> <sup
-                                                    class="color-red ">*</sup></label>
+                                            <label for="e_w_phone"><?php echo display('emrg_w_phone')?></label>
                                             <input type="text" class="form-control" id="e_w_phone" name="e_w_phone"
                                                 placeholder="<?php echo display('emrg_w_phone')?>">
                                         </div>
@@ -1338,33 +1334,33 @@ function valid_inf5() {
 
 }
 
-function valid_inf6() {
+// function valid_inf6() {
 
-    var h_phoneInput = document.getElementById('h_phone');
-    var c_phoneInput = document.getElementById('c_phone');
-    var h_phone = $('#h_phone').val();
-    var c_phone = $('#c_phone').val();
-    if (h_phone == "") {
-        document.getElementById("h_phone").style.borderColor = "red";
-    } else {
-        $("#h_phone").on('keyup', function() {
-            document.getElementById("h_phone").style.borderColor = "green";
-        });
+//     var h_phoneInput = document.getElementById('h_phone');
+//     var c_phoneInput = document.getElementById('c_phone');
+//     var h_phone = $('#h_phone').val();
+//     var c_phone = $('#c_phone').val();
+//     if (h_phone == "") {
+//         document.getElementById("h_phone").style.borderColor = "red";
+//     } else {
+//         $("#h_phone").on('keyup', function() {
+//             document.getElementById("h_phone").style.borderColor = "green";
+//         });
 
-    }
-    if (c_phone == "") {
-        document.getElementById("c_phone").style.borderColor = "red";
-    } else {
-        $("#c_phone").on('keyup', function() {
-            document.getElementById("c_phone").style.borderColor = "green";
-        });
+//     }
+//     if (c_phone == "") {
+//         document.getElementById("c_phone").style.borderColor = "red";
+//     } else {
+//         $("#c_phone").on('keyup', function() {
+//             document.getElementById("c_phone").style.borderColor = "green";
+//         });
 
-    }
-    // if (h_phone !== "" && c_phone !== "") {
-    //     $('.nav-tabs > .active').next('li').find('a').trigger('click');
-    // }
+//     }
+//     if (h_phone !== "" && c_phone !== "") {
+//         $('.nav-tabs > .active').next('li').find('a').trigger('click');
+//     }
 
-}
+// }
 
 function valid_inf7() {
     var em_contactInput = document.getElementById('em_contact');
