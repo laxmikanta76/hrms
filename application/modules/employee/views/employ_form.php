@@ -1360,9 +1360,9 @@ function valid_inf6() {
         });
 
     }
-    if (h_phone !== "" && c_phone !== "") {
-        $('.nav-tabs > .active').next('li').find('a').trigger('click');
-    }
+    // if (h_phone !== "" && c_phone !== "") {
+    //     $('.nav-tabs > .active').next('li').find('a').trigger('click');
+    // }
 
 }
 
