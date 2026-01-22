@@ -39,7 +39,7 @@ class Payroll extends MX_Controller {
 			$postData = [
 				'sal_name'        => $this->input->post('sal_name',true),
 				'emp_sal_type' 	  => $this->input->post('emp_sal_type',true),
-				//'default_amount'  => $this->input->post('default_amount',true),
+				'default_amount'  => $this->input->post('default_amount',true),
 			];   
 
 			if ($this->Payroll_model->emp_salsetup_create($postData)) { 
