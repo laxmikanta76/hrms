@@ -66,73 +66,91 @@
                   ?>
                                                  <tr>
                                                      <th style="padding:10px"><?php echo $ab->sal_name ;?>(%)</th>
-                                                     <td><input type="text"
-                                                             name="amount[<?php echo $ab->salary_type_id; ?>]"
-                                                             class="form-control addamount" onkeyup="summary()"
-                                                             id="add_<?php echo $x;?>"></td>
-                                                 </tr>
-                                                 <?php
+                                                     <td>
+                                                         <<div class="input-group">
+                                                             <input type="number"
+                                                                 name="amount[<?php echo $ab->salary_type_id; ?>]"
+                                                                 class="form-control addamount" data-type="percent"
+                                                                 onkeyup="summary()" id="add_<?php echo $x;?>">
+
+                                                             <select class="form-control input-sm amount-type"
+                                                                 onchange="changeType(this)" style="max-width:70px">
+                                                                 <option value="percent">%</option>
+                                                                 <option value="fixed">₹</option>
+                                                             </select>
+                                     </div>
+                                     </tr>
+                                     <?php
                 $x++;}
                 ?>
-                                             </table>
-                                         </td>
-                                         <td class="col-sm-6" style="text-align: center;">
-                                             <h4 style="text-decoration: underline;font-weight: bold;">
-                                                 <?php echo display('deduction')?></h4><br>
-                                             <table id="dduct">
-                                                 <?php
+                                 </table>
+                                 </td>
+                                 <td class="col-sm-6" style="text-align: center;">
+                                     <h4 style="text-decoration: underline;font-weight: bold;">
+                                         <?php echo display('deduction')?></h4><br>
+                                     <table id="dduct">
+                                         <?php
                 $y=0;
                 foreach ($sldname as $row){
                   ?>
-                                                 <tr>
-                                                     <th style="padding:10px"><?php echo $row->sal_name ;?> (%)</th>
-                                                     <td><input type="text"
-                                                             name="amount[<?php echo $row->salary_type_id; ?>]"
-                                                             onkeyup="summary()" class="form-control deducamount"
-                                                             id="dd_<?php echo $y;?>"></td>
-                                                 </tr><?php
+                                         <tr>
+                                             <th style="padding:10px"><?php echo $row->sal_name ;?> (%)</th>
+                                             <td>
+                                                 <div class="input-group">
+                                                     <input type="number"
+                                                         name="amount[<?php echo $row->salary_type_id; ?>]"
+                                                         class="form-control deducamount" data-type="percent"
+                                                         onkeyup="summary()" id="dd_<?php echo $y;?>">
+
+                                                     <select class="form-control input-sm amount-type"
+                                                         onchange="changeType(this)" style="max-width:70px">
+                                                         <option value="percent">%</option>
+                                                         <option value="fixed">₹</option>
+                                                     </select>
+                                                 </div>
+                                             </td>
+                                         </tr><?php
                $y++; }
                 ?>
-                                                 <tr>
-                                                     <th style="padding:10px"><?php echo display('tax')?> (%)</th>
-                                                     <td><input type="text" name="amount[]" onkeyup="summary()"
-                                                             class="form-control deducamount" id="taxinput"></td>
-                                                     <td style="padding:10px"><input type="checkbox" name="tax_manager"
-                                                             id="taxmanager" onchange='handletax(this);' value="1">Tax
-                                                         Manager</td>
-                                                 </tr>
+                                         <tr>
+                                             <th style="padding:10px"><?php echo display('tax')?> (%)</th>
+                                             <td><input type="text" name="amount[]" onkeyup="summary()"
+                                                     class="form-control deducamount" id="taxinput"></td>
+                                             <td style="padding:10px"><input type="checkbox" name="tax_manager"
+                                                     id="taxmanager" onchange='handletax(this);' value="1">Tax
+                                                 Manager</td>
+                                         </tr>
 
-                                             </table>
+                                     </table>
 
-                                         </td>
+                                 </td>
 
-                                     </div>
-
-                                 </table>
-                             </div>
-                             <div class="form-group row">
-                                 <label for="payable" class="col-sm-3 col-form-label"
-                                     style="text-align: center;"><?php echo display('gross_salary')?></label>
-                                 <div class="col-sm-9">
-                                     <input type="text" class="form-control" name="gross_salary" id="grsalary"
-                                         readonly="">
-                                 </div>
                              </div>
 
-                             <div class="form-group text-right">
-                                 <button type="reset"
-                                     class="btn btn-primary w-md m-b-5"><?php echo display('reset') ?></button>
-                                 <button type="submit"
-                                     class="btn btn-success w-md m-b-5"><?php echo display('set') ?></button>
-                             </div>
-                             <?php echo form_close() ?>
-
+                             </table>
                          </div>
+                         <div class="form-group row">
+                             <label for="payable" class="col-sm-3 col-form-label"
+                                 style="text-align: center;"><?php echo display('gross_salary')?></label>
+                             <div class="col-sm-9">
+                                 <input type="text" class="form-control" name="gross_salary" id="grsalary" readonly="">
+                             </div>
+                         </div>
+
+                         <div class="form-group text-right">
+                             <button type="reset"
+                                 class="btn btn-primary w-md m-b-5"><?php echo display('reset') ?></button>
+                             <button type="submit"
+                                 class="btn btn-success w-md m-b-5"><?php echo display('set') ?></button>
+                         </div>
+                         <?php echo form_close() ?>
+
                      </div>
                  </div>
              </div>
          </div>
      </div>
+ </div>
  </div>
  <div class="row">
      <!--  table area -->
@@ -183,31 +201,47 @@
      </div>
  </div>
 
+ <script>
+function changeType(select) {
+    const input = select.previousElementSibling;
+    input.dataset.type = select.value;
+    input.value = '';
+    summary();
+}
+ </script>
  <script type="text/javascript">
 function summary() {
-    var addper = 0;
+    let basic = parseFloat($('#basic').val()) || 0;
+    let add = 0;
+    let deduct = 0;
+
+    // ADDITIONS
     $(".addamount").each(function() {
-        isNaN(this.value) || 0 == this.value.length || (addper += parseFloat(this.value))
+        let val = parseFloat(this.value) || 0;
+        let type = this.dataset.type;
+
+        if (type === 'percent') {
+            add += (basic * val / 100);
+        } else {
+            add += val;
+        }
     });
-    if (addper > 100) {
-        alert('You Can Not input more than 100%');
-    }
-    var b = parseInt($('#basic').val());
-    var add = 0;
-    var deduct = 0;
-    $(".addamount").each(function() {
-        var value = this.value;
-        var basic = parseInt($('#basic').val());
-        isNaN(value * basic / 100) || 0 == (value * basic / 100).length || (add += parseFloat(value * basic /
-            100))
-    });
+
+    // DEDUCTIONS
     $(".deducamount").each(function() {
-        var value = this.value;
-        var basic = parseInt($('#basic').val());
-        isNaN(value * basic / 100) || 0 == (value * basic / 100).length || (deduct += parseFloat(value * basic /
-            100))
+        let val = parseFloat(this.value) || 0;
+        let type = this.dataset.type;
+
+        if (type === 'percent') {
+            deduct += (basic * val / 100);
+        } else {
+            deduct += val;
+        }
     });
-    document.getElementById('grsalary').value = add + b - (deduct);
+
+    let gross = basic + add - deduct;
+    $('#grsalary').val(gross.toFixed(2));
+
 }
 
 function handletax(checkbox) {
@@ -307,28 +341,5 @@ function employechange(id) {
             alert('Error get data from ajax');
         }
     });
-}
- </script>
- <script>
-function calculateGrossSalary() {
-
-    let basic = parseFloat($('#basic').val()) || 0; // your basic salary field
-    let totalAddition = 0;
-
-    // Percentage based fields
-    $('.percentage').each(function() {
-        let percent = parseFloat($(this).val()) || 0;
-        totalAddition += (basic * percent) / 100;
-    });
-
-    // Fixed amount fields (like default_amount)
-    $('.fixed-amount').each(function() {
-        let amount = parseFloat($(this).val()) || 0;
-        totalAddition += amount;
-    });
-
-    let gross = basic + totalAddition;
-
-    $('#gross_salary').val(gross.toFixed(2));
 }
  </script>
