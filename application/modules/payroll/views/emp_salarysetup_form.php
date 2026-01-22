@@ -59,7 +59,7 @@
                                      <div class="col-sm-9">
                                          <input name="default_amount" class="form-control" type="text"
                                              placeholder="<?php echo display('default_amount') ?>" id="default_amount"
-                                             value="1000">
+                                             value="200">
                                      </div>
                                  </div>
 
