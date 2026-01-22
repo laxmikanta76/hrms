@@ -30,12 +30,12 @@
                                     ?></td>
                             <td class="center">
                                 <?php if($this->permission->method('payroll','update')->access()): ?>
-                                <a href="<?php echo base_url("payroll/Payroll/update_salsetup_form/$que->semployee_id") ?>"
+                                <a href="<?php echo base_url("payroll/Payroll/update_salsetup_form/$que->salary_type_id") ?>"
                                     class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a>
                                 <?php endif; ?>
 
                                 <?php if($this->permission->method('employee','delete')->access()): ?>
-                                <a href="<?php echo base_url("payroll/Payroll/delete_salsetup/$que->salary_type_id") ?>"
+                                <a href="<?php echo base_url("payroll/Payroll/delete_salsetup/$que->employee_salary_setup") ?>"
                                     class="btn btn-xs btn-danger"
                                     onclick="return confirm('<?php echo display('are_you_sure') ?>') "><i
                                         class="fa fa-trash"></i></a>

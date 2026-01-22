@@ -17,14 +17,10 @@ public function emp_salsetup_create($data = array())
 	}
 public function emp_salstup_delete($id = null)
 	{
-		$this->db->where('employee_id',$id)
-			->delete('employee_salary_setup');
+		$this->db->where('salary_setup_id', $id);
+    $this->db->delete('employee_salary_setup');
 
-		if ($this->db->affected_rows()) {
-			return true;
-		} else {
-			return false;
-		}
+    return ($this->db->affected_rows() > 0);
 	} 
 
 	public function update_em_salstup($data = array())//
