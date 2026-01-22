@@ -278,7 +278,7 @@ ul li a {
                                             <label for="work_hour"><?php echo display('s_rate')?> <sup
                                                     class="color-red ">*</sup></label>
                                             <input type="number" class="form-control" name="rate" id="rate"
-                                                placeholder="Rate">
+                                                placeholder="Basic Salaray">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -328,9 +328,9 @@ ul li a {
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="work_hour"><?php echo display('department_text')?></label>
-                                            <input type="text" class="form-control" name="h_dep_text" id="hdptext"
-                                                placeholder="<?php echo display('department_text')?>">
+                                            <label for="gross_salary"><?php echo display('gross_salary')?></label>
+                                            <input type="number" class="form-control" name="gross_salary"
+                                                id="gross_salary" step="0.01" placeholder="Enter Gross Salary" required>
                                         </div>
                                     </div>
                                 </div>
