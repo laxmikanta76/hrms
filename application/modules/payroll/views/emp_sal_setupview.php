@@ -35,7 +35,7 @@
                                 <?php endif; ?>
 
                                 <?php if($this->permission->method('employee','delete')->access()): ?>
-                                <a href="<?php echo base_url("payroll/Payroll/delete_salsetup/$que->employee_salary_setup") ?>"
+                                <a href="<?php echo base_url("payroll/Payroll/delete_salsetup/$que->salary_type_id") ?>"
                                     class="btn btn-xs btn-danger"
                                     onclick="return confirm('<?php echo display('are_you_sure') ?>') "><i
                                         class="fa fa-trash"></i></a>
