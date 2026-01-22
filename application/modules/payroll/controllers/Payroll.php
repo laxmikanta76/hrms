@@ -32,6 +32,7 @@ class Payroll extends MX_Controller {
 		#-------------------------------#
 		$this->form_validation->set_rules('sal_name',display('sal_name'),'required|max_length[50]');
 		$this->form_validation->set_rules('emp_sal_type',display('emp_sal_type'));
+		$this->form_validation->set_rules('default_amount',display('default_amount'),'required|numeric');
 		
 		#-------------------------------#
 		if ($this->form_validation->run() === true) {

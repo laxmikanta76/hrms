@@ -57,7 +57,8 @@
                                          class="col-sm-3 col-form-label"><?php echo display('default_amount') ?>
                                          *</label>
                                      <div class="col-sm-9">
-                                         <input name="default_amount" class="form-control" type="text"
+                                         <input class="form-control fixed-amount" onkeyup="calculateGrossSalary()"
+                                             name="default_amount" type="text"
                                              placeholder="<?php echo display('default_amount') ?>" id="default_amount"
                                              value="200">
                                      </div>
