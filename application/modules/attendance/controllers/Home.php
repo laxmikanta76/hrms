@@ -845,4 +845,24 @@ public function report_user(){
         ->get()
         ->row();
     }
+
+
+    public function auto_checkout()
+{
+    // Security token (IMPORTANT)
+    $token = $this->input->get('token');
+    if ($token !== 'SECURE123') {
+        show_error('Unauthorized access', 403);
+    }
+
+    $currentTime = date('H:i');
+
+    // Run only after 8 PM
+    if ($currentTime >= '20:00') {
+        $this->Csv_model->auto_checkout_missing_users();
+        echo "Auto checkout completed";
+    } else {
+        echo "Not time yet";
+    }
+}
 }

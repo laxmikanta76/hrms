@@ -365,6 +365,23 @@ public function company_info(){
         return $this->db->where('atten_his_id',$postData['atten_his_id'])
             ->update('attendance_history',$postData); 
     } 
-    
 
+
+    public function auto_checkout_missing_users()
+{
+    $today = date('Y-m-d');
+
+    $this->db->where('attendance_date', $today);
+    $this->db->where('checkout_time IS NULL', null, false);
+    $this->db->where('checkin_time IS NOT NULL', null, false);
+
+    return $this->db->update(
+        'attendance_history',
+        [
+            'checkout_time' => '17:00:00',
+            'checkout_type' => 'auto' // optional (recommended)
+        ]
+    );
+}
+    
 }
