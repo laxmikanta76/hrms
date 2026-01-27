@@ -17,7 +17,7 @@
                             <th><?php echo display('gross_salary') ?></th>
                             <th><?php echo display('date') ?></th>
                             <th><?php echo display('action') ?></th>
-                            <th><?php echo display('calculation_type') ?></th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +37,6 @@
                             <td><?php echo $que->rate; ?></td>
                             <td><?php echo $que->gross_salary; ?></td>
                             <td><?php echo $que->create_date; ?></td>
-                            <td><?php echo $que->calculation_type; ?></td>
 
                             <td class="center">
                                 <?php if($this->permission->method('payroll','update')->access()): ?>
