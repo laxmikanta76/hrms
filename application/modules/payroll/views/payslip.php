@@ -312,22 +312,16 @@ function printDiv(divName) {
 
                                                 </tr>
                                                 <?php 
-$totalAddition = 0;
-foreach($addition as $additions){
-    if($additions->calculation_type == 1){
-        // Amount-based
-        $addValue = $additions->amount;
-    } else {
-        // Percentage-based
-        $addValue = $basicsal * ($additions->amount) / 100;
-    }
-    $totalAddition += $addValue;
-?>
+                                        $totalAddition = 0;
+                                        foreach($addition as $additions){?>
                                                 <tr class="entry">
                                                     <td class="value"><?= $additions->sal_name;?></td>
                                                     <td class="value">
-                                                        <div><?php echo number_format($addValue, 2); ?></div>
+                                                        <div><?php echo  $basicsal*($additions->amount)/100;
+                                            $totalAddition +=$basicsal*($additions->amount)/100;
+                                            ?></div>
                                                     </td>
+
                                                 </tr>
                                                 <?php }?>
 
@@ -362,16 +356,16 @@ foreach($addition as $additions){
                                             <tbody class="details">
                                                 <?php 
                                       $totalDeduction = 0;
-                                      foreach($deduction as $deductions){
-                                        if($deductions->calculation_type == 1){
-        // Amount-based
-        $deductValue = $deductions->amount;
-    } else {
-        // Percentage-based
-        $deductValue = $basicsal * ($deductions->amount) / 100;
-    }
-    $totalDeduction += $deductValue;?>
+                                      foreach($deduction as $deductions){?>
+                                                <tr class="entry">
+                                                    <td class="value"><?= $deductions->sal_name; ?></td>
+                                                    <td class="value">
+                                                        <div><?php echo  $basicsal*($deductions->amount)/100;
+                                            $totalDeduction +=$basicsal*($deductions->amount)/100;
+                                            ?></div>
+                                                    </td>
 
+                                                </tr>
                                                 <?php }?>
                                                 <?php $gross = $totalAddition+($basicsal-$totalDeduction);
                                      if($paymentdata[0]['total_salary'] < $gross){
