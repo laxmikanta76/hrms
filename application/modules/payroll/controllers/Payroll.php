@@ -107,6 +107,9 @@ class Payroll extends MX_Controller {
 
 	public function salary_setup_view()
 	{   
+		echo "<pre>";
+print_r($data['emp_sl_setup']);
+exit;
 		$this->permission->module('payroll','read')->redirect();
 		$data['title']         = display('view_salary_setup');  ;
 		$data['emp_sl_setup']  = $this->Payroll_model->salary_setupindex();
