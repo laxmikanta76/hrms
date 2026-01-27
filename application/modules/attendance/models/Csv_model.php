@@ -378,7 +378,7 @@ public function company_info(){
     return $this->db->update(
         'attendance_history',
         [
-            'checkout_time' => '17:00:00',
+            'checkout_time' => '18:00:00',
             'checkout_type' => 'auto' // optional (recommended)
         ]
     );
