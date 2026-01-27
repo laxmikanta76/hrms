@@ -16,11 +16,8 @@
                     <label for="payment_period" class="col-sm-3 col-form-label"><?php echo display('salary_type_id') ?>
                         *</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="sal_type_name" id="sal_type_name" value="<?php if($EmpRate->rate_type==1){
-            echo 'Hourly';
-         }else{
-            echo 'Salary';
-         }?>">
+                        <input type="text" class="form-control" name="sal_type_name" id="sal_type_name"
+                            value="<?php if($EmpRate->rate_type==1){ echo 'Hourly'; }else{ echo 'Salary'; }?>">
                         <input type="hidden" class="form-control" name="sal_type" id="sal_type"
                             value="<?php echo $EmpRate->rate_type; ?>">
                     </div>
@@ -35,31 +32,38 @@
                                 <?php foreach($amo as $basic){}?>
                                 <tr>
                                     <th style="padding:10px">Basic</th>
-                                    <td><input type="text" id="basic" name="basic" class="form-control" disabled=""
-                                            value="<?php echo $EmpRate->rate; ?>"></td>
+                                    <td colspan="2"><input type="text" id="basic" name="basic" class="form-control"
+                                            disabled="" value="<?php echo $EmpRate->rate; ?>"></td>
                                 </tr>
-
-                                <!-- NEW: Fixed Amount Field -->
-                                <tr>
-                                    <th style="padding:10px">Fixed Amount</th>
-                                    <td><input type="number" step="0.01" name="fixed_amount" id="fixed_amount"
-                                            class="form-control" onkeyup="summary()" placeholder="Enter amount"
-                                            value="<?php echo isset($basic->fixed_amount) ? $basic->fixed_amount : '0'; ?>">
-                                    </td>
-                                </tr>
-
                                 <?php
             $x=0;
-            foreach($amo as $value){?>
+            foreach($amo as $value){
+            ?>
                                 <tr>
-                                    <th style="padding:10px"><?php echo $value->sal_name ;?> (%)</th>
+                                    <th style="padding:10px"><?php echo $value->sal_name;?></th>
+                                    <td>
+                                        <select name="calculation_type[<?php echo $value->salary_type_id; ?>]"
+                                            class="form-control calc-type" data-index="<?php echo $x;?>" data-side="add"
+                                            onchange="toggleInputType(this, 'add_<?php echo $x;?>')">
+                                            <option value="0"
+                                                <?php echo (isset($value->calculation_type) && $value->calculation_type == 0) ? 'selected' : ''; ?>>
+                                                Percentage (%)</option>
+                                            <option value="1"
+                                                <?php echo (isset($value->calculation_type) && $value->calculation_type == 1) ? 'selected' : ''; ?>>
+                                                Amount</option>
+                                        </select>
+                                    </td>
                                     <td>
                                         <input type="text" name="amount[<?php echo $value->salary_type_id; ?>]"
                                             class="form-control addamount" onkeyup="summary()"
-                                            value="<?php echo $value->amount; ?>" id="add_<?php echo $x;?>">
+                                            value="<?php echo $value->amount; ?>" id="add_<?php echo $x;?>"
+                                            placeholder="<?php echo (isset($value->calculation_type) && $value->calculation_type == 1) ? 'Enter Amount' : 'Enter %'; ?>">
                                     </td>
                                 </tr>
-                                <?php $x++;} ?>
+                                <?php 
+            $x++;
+            } 
+            ?>
                             </table>
                         </td>
 
@@ -71,10 +75,25 @@
             foreach ($samlft as $row){
             ?>
                                 <tr>
-                                    <th style="padding:10px"><?php echo $row->sal_name ;?> (%)</th>
-                                    <td><input type="text" name="amount[<?php echo $row->salary_type_id; ?>]"
+                                    <th style="padding:10px"><?php echo $row->sal_name;?></th>
+                                    <td>
+                                        <select name="calculation_type[<?php echo $row->salary_type_id; ?>]"
+                                            class="form-control calc-type" data-index="<?php echo $y;?>" data-side="dd"
+                                            onchange="toggleInputType(this, 'dd_<?php echo $y;?>')">
+                                            <option value="0"
+                                                <?php echo (isset($row->calculation_type) && $row->calculation_type == 0) ? 'selected' : ''; ?>>
+                                                Percentage (%)</option>
+                                            <option value="1"
+                                                <?php echo (isset($row->calculation_type) && $row->calculation_type == 1) ? 'selected' : ''; ?>>
+                                                Amount</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="amount[<?php echo $row->salary_type_id; ?>]"
                                             onkeyup="summary()" class="form-control deducamount"
-                                            value="<?php echo $row->amount ?>" id="dd_<?php echo $y;?>"></td>
+                                            value="<?php echo $row->amount ?>" id="dd_<?php echo $y;?>"
+                                            placeholder="<?php echo (isset($row->calculation_type) && $row->calculation_type == 1) ? 'Enter Amount' : 'Enter %'; ?>">
+                                    </td>
                                 </tr>
                                 <?php
             $y++; 
@@ -82,7 +101,7 @@
             ?>
                                 <tr>
                                     <th style="padding:10px">Tax (%)</th>
-                                    <td>
+                                    <td colspan="2">
                                         <input type="text" name="amount[]" onkeyup="summary()"
                                             class="form-control deducamount" id="taxinput"
                                             <?php if($EmpRate->rate_type==1){ echo 'readonly'; } ?>>
@@ -119,56 +138,75 @@
 </div>
 
 <script type="text/javascript">
-function summary() {
-    var addper = 0;
-    $(".addamount").each(function() {
-        isNaN(this.value) || 0 == this.value.length || (addper += parseFloat(this.value))
-    });
-
-    if (addper > 100) {
-        alert('You Can Not input more than 100%');
+function toggleInputType(selectElement, inputId) {
+    var inputField = document.getElementById(inputId);
+    if (selectElement.value == '1') {
+        inputField.placeholder = 'Enter Amount';
+    } else {
+        inputField.placeholder = 'Enter %';
     }
+    summary();
+}
 
+function summary() {
     var b = parseInt($('#basic').val()) || 0;
-    var fixedAmt = parseFloat($('#fixed_amount').val()) || 0;
     var add = 0;
     var deduct = 0;
 
     $(".addamount").each(function() {
-        var value = this.value;
+        var value = parseFloat(this.value) || 0;
         var basic = parseInt($('#basic').val()) || 0;
-        isNaN(value * basic / 100) || 0 == (value * basic / 100).length || (add += parseFloat(value * basic /
-            100))
+        var calcType = $(this).closest('tr').find('.calc-type').val();
+
+        if (calcType == '1') {
+            add += value;
+        } else {
+            add += (value * basic / 100);
+        }
     });
 
     $(".deducamount").each(function() {
-        var value = this.value;
+        var value = parseFloat(this.value) || 0;
         var basic = parseInt($('#basic').val()) || 0;
-        isNaN(value * basic / 100) || 0 == (value * basic / 100).length || (deduct += parseFloat(value * basic /
-            100))
+        var calcType = $(this).closest('tr').find('.calc-type').val();
+
+        if (calcType == '1') {
+            deduct += value;
+        } else {
+            deduct += (value * basic / 100);
+        }
     });
 
-    document.getElementById('grsalary').value = Math.round(add + b + fixedAmt - deduct);
+    document.getElementById('grsalary').value = Math.round(add + b - deduct);
 }
 
 function handletax(checkbox) {
     var deduct = 0;
     var add = 0;
     var b = parseInt($('#basic').val()) || 0;
-    var fixedAmt = parseFloat($('#fixed_amount').val()) || 0;
 
     $(".deducamount").each(function() {
-        var value = this.value;
+        var value = parseFloat(this.value) || 0;
         var basic = parseInt($('#basic').val()) || 0;
-        isNaN(value * basic / 100) || 0 == (value * basic / 100).length || (deduct += parseFloat(value * basic /
-            100))
+        var calcType = $(this).closest('tr').find('.calc-type').val();
+
+        if (calcType == '1') {
+            deduct += value;
+        } else {
+            deduct += (value * basic / 100);
+        }
     });
 
     $(".addamount").each(function() {
-        var value = this.value;
+        var value = parseFloat(this.value) || 0;
         var basic = parseInt($('#basic').val()) || 0;
-        isNaN(value * basic / 100) || 0 == (value * basic / 100).length || (add += parseFloat(value * basic /
-            100))
+        var calcType = $(this).closest('tr').find('.calc-type').val();
+
+        if (calcType == '1') {
+            add += value;
+        } else {
+            add += (value * basic / 100);
+        }
     });
 
     var amount = b - deduct;
@@ -182,7 +220,7 @@ function handletax(checkbox) {
                 'amount': amount,
             },
             success: function(data) {
-                document.getElementById('grsalary').value = add + b + fixedAmt - data - deduct;
+                document.getElementById('grsalary').value = add + b - data - deduct;
                 document.getElementById('taxinput').value = '';
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -207,7 +245,6 @@ function employechange(id) {
             document.getElementById('sal_type').value = data.rate_type;
             document.getElementById('sal_type_name').value = data.stype;
             document.getElementById('grsalary').value = '';
-            document.getElementById('fixed_amount').value = '';
 
             if (data.rate_type == 1) {
                 document.getElementById("taxinput").disabled = true;
@@ -236,9 +273,4 @@ function employechange(id) {
         }
     });
 }
-
-// Calculate on page load
-$(document).ready(function() {
-    summary();
-});
 </script>
