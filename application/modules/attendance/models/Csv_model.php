@@ -369,25 +369,23 @@ public function company_info(){
 
     public function auto_checkout_missing_users()
 {
-     $today = date('Y-m-d');
+      $this->db->where('checkin_time IS NOT NULL', null, false);
 
-    $this->db->where('attendance_date', $today);
-    $this->db->where('checkin_time IS NOT NULL', null, false);
-
-    // 🔥 HANDLE ALL FORGOT CHECKOUT CASES
     $this->db->group_start();
         $this->db->where('checkout_time IS NULL', null, false);
         $this->db->or_where('checkout_time', '00:00:00');
         $this->db->or_where('checkout_time = checkin_time', null, false);
     $this->db->group_end();
 
-    return $this->db->update(
-        'attendance_history',
-        [
-            'checkout_time' => '18:00:00',
-            'checkout_type' => 'auto'
-        ]
-    );
+    $this->db->update('attendance_history', [
+        'checkout_time'      => '17:00:00',
+        'checkout_latitude'  => '0.000000',
+        'checkout_longitude' => '0.000000',
+        'checkout_address'   => 'Auto checkout by system',
+        'checkout_type'      => 'auto'
+    ]);
+
+    return $this->db->affected_rows();
 }
     
 }
