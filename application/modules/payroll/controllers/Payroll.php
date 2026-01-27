@@ -20,7 +20,7 @@ class Payroll extends MX_Controller {
 	public function emp_salary_setup_view(){   
 		$this->permission->module('payroll','read')->redirect();
 		$data['title']    = display('view_salary_setup');  ;
-		$data['emp_sl'] = $this->Payroll_model->salary_setupindex(); // ✅ FIX HERE
+		$data['emp_sl']   = $this->Payroll_model->salary_setupView();
 		$data['module']   = "payroll";
 		$data['page']     = "emp_sal_setupview";   
 		echo Modules::run('template/layout', $data); 
@@ -60,22 +60,14 @@ class Payroll extends MX_Controller {
 	public function delete_emp_salarysetup($id = null){ 
 		$this->permission->module('payroll','delete')->redirect();
 
-	// Delete from salary_type table (not employee_salary_setup)
-	$this->db->where('salary_type_id', $id);
-	$this->db->delete('salary_type');
-
-	if ($this->db->affected_rows() > 0) {
-		// Also delete any employee salary setups using this salary type
-		$this->db->where('salary_type_id', $id);
-		$this->db->delete('employee_salary_setup');
-		
-		#set success message
-		$this->session->set_flashdata('message', display('delete_successfully'));
-	} else {
-		#set exception message
-		$this->session->set_flashdata('exception', display('please_try_again'));
-	}
-	redirect("payroll/Payroll/emp_salary_setup_view");
+		if ($this->Payroll_model->emp_salstup_delete($id)) {
+			#set success message
+			$this->session->set_flashdata('message',display('delete_successfully'));
+		} else {
+			#set exception message
+			$this->session->set_flashdata('exception',display('please_try_again'));
+		}
+		redirect("payroll/Payroll/emp_salary_setup_view");
 	}
 
 
@@ -134,8 +126,6 @@ class Payroll extends MX_Controller {
 		$this->form_validation->set_rules('absent_deduct',display('absent_deduct'));
 		$this->form_validation->set_rules('tax_manager',display('tax_manager'));
 		$amount=$this->input->post('amount');
-		$calculation_type=$this->input->post('calculation_type'); // NEW: Get calculation type
-
 		
 		#-------------------------------#
 		if ($this->form_validation->run() === true) {
@@ -532,7 +522,6 @@ $secs = floor($seconds % 60);
 			$this->form_validation->set_rules('absent_deduct',display('absent_deduct'));
 			$this->form_validation->set_rules('tax_manager',display('tax_manager'));
 			$amount=$this->input->post('amount');
-			$calculation_type=$this->input->post('calculation_type'); // NEW
 
 		#-------------------------------#
 			if ($this->form_validation->run() === true) {
@@ -545,7 +534,6 @@ $secs = floor($seconds % 60);
 						'employee_id'        => $this->input->post('employee_id',true),
 						'sal_type'           => $this->input->post('sal_type',true),
 						'salary_type_id' 	 => $key,
-						'calculation_type'   => (!empty($calculation_type[$key])?$calculation_type[$key]:0), // NEW
 						'amount' 	         => $value,
 						'gross_salary'          => $this->input->post('gross_salary',true),
 					);
