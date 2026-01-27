@@ -533,11 +533,11 @@ $secs = floor($seconds % 60);
 			$this->form_validation->set_rules('absent_deduct',display('absent_deduct'));
 			$this->form_validation->set_rules('tax_manager',display('tax_manager'));
 			$amount=$this->input->post('amount');
-			$calculation_type=$this->input->post('calculation_type'); // NEW: Get calculation type
+			//$calculation_type=$this->input->post('calculation_type'); // NEW: Get calculation type
 
 		#-------------------------------#
 			if ($this->form_validation->run() === true) {
-
+			$fixed_amount = $this->input->post('fixed_amount',true); // Get fixed amount
 
 				foreach($amount as $key=>$value)
 				{
@@ -547,7 +547,7 @@ $secs = floor($seconds % 60);
 						'sal_type'           => $this->input->post('sal_type',true),
 						'salary_type_id' 	 => $key,
 						'amount' 	         => $value,
-						'calculation_type'   => (!empty($calculation_type[$key])?$calculation_type[$key]:0), // NEW
+						'fixed_amount'       => (!empty($fixed_amount)?$fixed_amount:0), // Save fixed amount
 						'gross_salary'          => $this->input->post('gross_salary',true),
 					);
 
