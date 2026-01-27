@@ -21,6 +21,11 @@ class Payroll extends MX_Controller {
 		$this->permission->module('payroll','read')->redirect();
 		$data['title']    = display('view_salary_setup');  ;
 		$data['emp_sl']   = $this->Payroll_model->salary_setupView();
+		 echo "<pre>";
+    echo "Count: " . count($data['emp_sl_setup']) . "\n";
+    print_r($data['emp_sl_setup']);
+    echo "</pre>";
+    die();
 		$data['module']   = "payroll";
 		$data['page']     = "emp_sal_setupview";   
 		echo Modules::run('template/layout', $data); 
