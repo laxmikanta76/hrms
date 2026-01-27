@@ -20,7 +20,7 @@ class Payroll extends MX_Controller {
 	public function emp_salary_setup_view(){   
 		$this->permission->module('payroll','read')->redirect();
 		$data['title']    = display('view_salary_setup');  ;
-		$data['emp_sl']   = $this->Payroll_model->salary_setupView();
+		$data['emp_sl'] = $this->Payroll_model->salary_setupindex(); // ✅ FIX HERE
 		$data['module']   = "payroll";
 		$data['page']     = "emp_sal_setupview";   
 		echo Modules::run('template/layout', $data); 
