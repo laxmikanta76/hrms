@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Corn_daily extends CI_Controller {
+class Corn_daily extends Mx_Controller {
 
     public function __construct()
     {
