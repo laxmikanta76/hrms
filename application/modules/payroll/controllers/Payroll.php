@@ -516,76 +516,87 @@ $secs = floor($seconds % 60);
 
  		#-------------------------------#
 			$this->form_validation->set_rules('employee_id',display('employee_id'),'required|max_length[50]');
-	$this->form_validation->set_rules('sal_type',display('sal_type'));
-	$this->form_validation->set_rules('amount[]',display('amount'));
-	$this->form_validation->set_rules('salary_payable',display('salary_payable'));
-	$this->form_validation->set_rules('absent_deduct',display('absent_deduct'));
-	$this->form_validation->set_rules('tax_manager',display('tax_manager'));
-	$amount=$this->input->post('amount');
-	$calculation_type=$this->input->post('calculation_type'); // NEW
+			$this->form_validation->set_rules('sal_type',display('sal_type'));
+			$this->form_validation->set_rules('amount[]',display('amount'));
+			$this->form_validation->set_rules('salary_payable',display('salary_payable'));
+			$this->form_validation->set_rules('absent_deduct',display('absent_deduct'));
+			$this->form_validation->set_rules('tax_manager',display('tax_manager'));
+			$amount=$this->input->post('amount');
 
-	#-------------------------------#
-	if ($this->form_validation->run() === true) {
+		#-------------------------------#
+			if ($this->form_validation->run() === true) {
 
-		foreach($amount as $key=>$value)
-		{
-			$postData = array(
-				'employee_id'        => $this->input->post('employee_id',true),
-				'sal_type'           => $this->input->post('sal_type',true),
-				'salary_type_id' 	 => $key,
-				'amount' 	         => $value,
-				'calculation_type'   => (!empty($calculation_type[$key])?$calculation_type[$key]:0), // NEW
-				'gross_salary'       => $this->input->post('gross_salary',true),
-			);
 
-			$this->Payroll_model->update_sal_stup($postData);
+				foreach($amount as $key=>$value)
+				{
+
+					$postData = array(
+						'employee_id'        => $this->input->post('employee_id',true),
+						'sal_type'           => $this->input->post('sal_type',true),
+						'salary_type_id' 	 => $key,
+						'amount' 	         => $value,
+						'gross_salary'          => $this->input->post('gross_salary',true),
+					);
+
+					$this->Payroll_model->update_sal_stup($postData);
+
+				}
+
+
+				if($this->input->post('absent_deduct',true)==1)
+				{
+					$absent_deduct=1;	
+				}
+				else
+				{
+					$absent_deduct=0;
+				}
+
+
+				if($this->input->post('tax_manager',true)==1)
+				{
+					$tax_manager=1;	
+				}
+				else
+				{
+					$tax_manager=0;
+				}
+
+
+				$Data = [
+					'employee_id'                => $this->input->post('employee_id',true),
+					'salary_payable' 	         => $this->input->post('salary_payable',true),
+					'absent_deduct' 	         => $absent_deduct,
+					'tax_manager' 	             => $tax_manager,
+
+
+				];   
+
+
+				$this->Payroll_model->update_sal_head($Data);
+
+
+
+				$this->session->set_flashdata('message', display('successfully_saved_saletup'));
+				redirect("payroll/Payroll/updates_salstup_form/". $id);
+//
+			} else {
+
+			$data['title']       = display('update');//
+			$data['data']        = $this->Payroll_model->salary_s_updateForm($id);
+			$data['samlft']      = $this->Payroll_model->salary_amountlft($id);
+			$data['amo']         = $this->Payroll_model->salary_amount($id);
+			$data['bb']          = $this->Payroll_model->get_empid($id);
+			$data['gt']          = $this->Payroll_model->get_type($id);
+			$data['employee']    = $this->Payroll_model->empdropdown();
+			$data['type']        = $this->Payroll_model->type();
+			$data['payable']     = $this->Payroll_model->payable();
+			$data['gt_pay']      = $this->Payroll_model->get_payable($id);
+			$data['EmpRate']     = $this->Payroll_model->employee_informationId($id);
+			$data['module']      = "payroll";
+			$data['page']        = "update_sal_setup_form";   
+			echo Modules::run('template/layout', $data); 
 		}
-
-		if($this->input->post('absent_deduct',true)==1)
-		{
-			$absent_deduct=1;	
-		}
-		else
-		{
-			$absent_deduct=0;
-		}
-
-		if($this->input->post('tax_manager',true)==1)
-		{
-			$tax_manager=1;	
-		}
-		else
-		{
-			$tax_manager=0;
-		}
-
-		$Data = [
-			'employee_id'                => $this->input->post('employee_id',true),
-			'salary_payable' 	         => $this->input->post('salary_payable',true),
-			'absent_deduct' 	         => $absent_deduct,
-			'tax_manager' 	             => $tax_manager,
-		];   
-
-		$this->Payroll_model->update_sal_head($Data);
-
-		$this->session->set_flashdata('message', display('successfully_saved_saletup'));
-		redirect("payroll/Payroll/updates_salstup_form/". $id);
-	} else {
-		$data['title']       = display('update');
-		$data['data']        = $this->Payroll_model->salary_s_updateForm($id);
-		$data['samlft']      = $this->Payroll_model->salary_amountlft($id);
-		$data['amo']         = $this->Payroll_model->salary_amount($id);
-		$data['bb']          = $this->Payroll_model->get_empid($id);
-		$data['gt']          = $this->Payroll_model->get_type($id);
-		$data['employee']    = $this->Payroll_model->empdropdown();
-		$data['type']        = $this->Payroll_model->type();
-		$data['payable']     = $this->Payroll_model->payable();
-		$data['gt_pay']      = $this->Payroll_model->get_payable($id);
-		$data['EmpRate']     = $this->Payroll_model->employee_informationId($id);
-		$data['module']      = "payroll";
-		$data['page']        = "update_sal_setup_form";   
-		echo Modules::run('template/layout', $data); 
-	}
 
 	}
 // salary with tax calculation
