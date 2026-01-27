@@ -42,15 +42,15 @@ public function emp_salstup_delete($id = null)
      public function salary_setupindex()
 	{
 
-			 return $this->db->select('count(DISTINCT(sstp.e_s_s_id)) as e_s_s_id,sstp.*,p.employee_id,p.*,pos.position_name,dpt.department_name')   
-            ->from('employee_salary_setup sstp')
-            ->join('employee_history p', 'sstp.employee_id = p.employee_id', 'left')
-            ->join('position pos', 'pos.pos_id = p.pos_id', 'left')
-            ->join('department dpt', 'dpt.dept_id = p.dept_id', 'left')
-            ->group_by('sstp.employee_id')
-            ->order_by('sstp.salary_type_id', 'desc')
-            ->get()
-            ->result();
+		return $this->db->select('sstp.employee_id,MAX(sstp.gross_salary) as gross_salary,MAX(sstp.create_date) as create_date,p.first_name,p.last_name,pos.position_name,dpt.department_name')
+             ->from('employee_salary_setup sstp')
+             ->join('employee_history p', 'sstp.employee_id = p.employee_id', 'left')
+             ->join('position pos', 'pos.pos_id = p.pos_id', 'left')
+             ->join('department dpt', 'dpt.dept_id = p.dept_id', 'left')
+             ->group_by('sstp.employee_id')
+             ->order_by('create_date', 'desc')
+             ->get()
+             ->result();
 	}
 	public function salary_setup_create($data = array())
 	{
