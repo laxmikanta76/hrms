@@ -9,24 +9,29 @@ class Corn_daily extends CI_Controller {
         $this->load->model('attendance/Csv_model');
     }
 
-    public function auto_checkout()
-    {
-        // 🔐 Simple security token
-        $token = $this->input->get('token');
-        if ($token !== 'SECURE123') {
-            show_error('Unauthorized access', 403);
-        }
+    public function test()
+{
+    echo "cron controller working";
+}
 
-        $currentTime = date('H:i');
+    // public function auto_checkout()
+    // {
+    //     // 🔐 Simple security token
+    //     $token = $this->input->get('token');
+    //     if ($token !== 'SECURE123') {
+    //         show_error('Unauthorized access', 403);
+    //     }
 
-        // ⏰ Run only after 8 PM
-        if ($currentTime >= '21:00') {
+    //     $currentTime = date('H:i');
 
-            $this->Csv_model->auto_checkout_missing_users();
-            echo "Auto checkout completed at ".date('H:i:s');
+    //     // ⏰ Run only after 8 PM
+    //     if ($currentTime >= '21:00') {
 
-        } else {
-            echo "Cron triggered before 8 PM";
-        }
-    }
+    //         $this->Csv_model->auto_checkout_missing_users();
+    //         echo "Auto checkout completed at ".date('H:i:s');
+
+    //     } else {
+    //         echo "Cron triggered before 8 PM";
+    //     }
+    // }
 }
