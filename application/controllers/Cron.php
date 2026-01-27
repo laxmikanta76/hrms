@@ -11,6 +11,7 @@ class Cron extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('leave/Leave_model');
+        $this->load->model('attendance/Csv_model');
         
         // Security: Only allow CLI or specific IP/token
         if (!$this->input->is_cli_request()) {
@@ -90,6 +91,27 @@ class Cron extends CI_Controller {
             echo "Success!\n";
         } else {
             echo "Failed!\n";
+        }
+    }
+
+    public function auto_checkout()
+    {
+        // 🔐 Simple security token
+        $token = $this->input->get('token');
+        if ($token !== 'SECURE123') {
+            show_error('Unauthorized access', 403);
+        }
+
+        $currentTime = date('H:i');
+
+        // ⏰ Run only after 8 PM
+        if ($currentTime >= '21:00') {
+
+            $this->Csv_model->auto_checkout_missing_users();
+            echo "Auto checkout completed at ".date('H:i:s');
+
+        } else {
+            echo "Cron triggered before 8 PM";
         }
     }
 }
