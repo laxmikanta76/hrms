@@ -367,21 +367,6 @@ public function company_info(){
     } 
 
 
-    public function auto_checkout_missing_users()
-{
-    $today = date('Y-m-d');
-
-    $this->db->where('attendance_date', $today);
-    $this->db->where('checkout_time IS NULL', null, false);
-    $this->db->where('checkin_time IS NOT NULL', null, false);
-
-    return $this->db->update(
-        'attendance_history',
-        [
-            'checkout_time' => '17:00:00',
-            'checkout_type' => 'auto' // optional (recommended)
-        ]
-    );
-}
+    
     
 }
