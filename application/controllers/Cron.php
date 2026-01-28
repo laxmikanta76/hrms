@@ -11,6 +11,7 @@ class Cron extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('leave/Leave_model');
+        $this->load->model('attendance/Csv_model');
         
         
         // Security: Only allow CLI or specific IP/token
