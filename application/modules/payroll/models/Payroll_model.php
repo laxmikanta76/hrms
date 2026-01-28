@@ -42,7 +42,19 @@ public function emp_salstup_delete($id = null)
      public function salary_setupindex()
 	{
 
-			 return $this->db->select('count(DISTINCT(sstp.e_s_s_id)) as e_s_s_id,sstp.*,p.employee_id,p.*,pos.position_name,dpt.department_name')   
+			 return $this->db->select('
+            MIN(sstp.e_s_s_id) as e_s_s_id,
+            sstp.employee_id,
+            MIN(sstp.create_date) as create_date,
+            MIN(sstp.gross_salary) as gross_salary,
+            p.first_name,
+            p.last_name,
+            p.rate,
+            p.rate_type,
+            pos.position_name,
+            dpt.department_name,
+            COUNT(sstp.salary_type_id) as salary_components
+        ')   
             ->from('employee_salary_setup sstp')
             ->join('employee_history p', 'sstp.employee_id = p.employee_id', 'left')
             ->join('position pos', 'pos.pos_id = p.pos_id', 'left')
