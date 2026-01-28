@@ -41,32 +41,17 @@ public function emp_salstup_delete($id = null)
 
      public function salary_setupindex()
 	{
-		// FIXED: Properly aggregate data per employee
-		// Select only the fields we need from the first matching record
-		// and aggregate information correctly
-		return $this->db->select('
-				MIN(sstp.e_s_s_id) as e_s_s_id,
-				sstp.employee_id,
-				MIN(sstp.create_date) as create_date,
-				MIN(sstp.gross_salary) as gross_salary,
-				p.first_name,
-				p.last_name,
-				p.rate,
-				p.rate_type,
-				pos.position_name,
-				dpt.department_name,
-				COUNT(sstp.salary_type_id) as salary_components
-			')   
+
+			 return $this->db->select('count(DISTINCT(sstp.e_s_s_id)) as e_s_s_id,sstp.*,p.employee_id,p.*,pos.position_name,dpt.department_name')   
             ->from('employee_salary_setup sstp')
             ->join('employee_history p', 'sstp.employee_id = p.employee_id', 'left')
             ->join('position pos', 'pos.pos_id = p.pos_id', 'left')
             ->join('department dpt', 'dpt.dept_id = p.dept_id', 'left')
-            ->group_by('sstp.employee_id, p.first_name, p.last_name, p.rate, p.rate_type, pos.position_name, dpt.department_name')
-            ->order_by('sstp.employee_id', 'desc')
+            ->group_by('sstp.employee_id')
+            ->order_by('sstp.salary_type_id', 'desc')
             ->get()
             ->result();
 	}
-	
 	public function salary_setup_create($data = array())
 	{
 		return $this->db->insert('employee_salary_setup', $data);//
