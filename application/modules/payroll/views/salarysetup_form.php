@@ -58,6 +58,7 @@
                                                 </tr>
                                                 <?php
                     $x=0;
+                    if(!empty($slname)) {
                     foreach ($slname as $ab){
                     ?>
                                                 <tr>
@@ -82,6 +83,9 @@
                                                 <?php
                     $x++;
                     }
+                    } else {
+                        echo '<tr><td colspan="3" class="text-center">No addition salary types found. Please create salary types first.</td></tr>';
+                    }
                     ?>
                                             </table>
                                         </td>
@@ -92,6 +96,7 @@
                                             <table id="dduct">
                                                 <?php
                     $y=0;
+                    if(!empty($sldname)) {
                     foreach ($sldname as $row){
                     ?>
                                                 <tr>
@@ -115,6 +120,9 @@
                                                 </tr>
                                                 <?php
                     $y++;
+                    }
+                    } else {
+                        echo '<tr><td colspan="3" class="text-center">No deduction salary types found. Please create salary types first.</td></tr>';
                     }
                     ?>
                                                 <tr>
@@ -158,6 +166,48 @@
     </div>
 </div>
 
+<div class="row">
+    <!--  table area -->
+    <div class="col-sm-12">
+        <div class="panel panel-default thumbnail">
+            <div class="panel-body">
+                <table width="100%" class="datatable table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th><?php echo display('cid') ?></th>
+                            <th><?php echo display('employee_name') ?></th>
+                            <th><?php echo display('designation') ?></th>
+                            <th><?php echo display('division') ?></th>
+                            <th><?php echo display('sal_type') ?></th>
+                            <th><?php echo display('basic') ?></th>
+                            <th><?php echo display('gross_salary') ?></th>
+                            <th><?php echo display('date') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($emp_sl_setup)) { ?>
+                        <?php $sl = 1; ?>
+                        <?php foreach ($emp_sl_setup as $que) { ?>
+                        <tr class="<?php echo ($sl & 1)?"odd gradeX":"even gradeC" ?>">
+                            <td><?php echo $sl; ?></td>
+                            <td><?php echo $que->first_name.' '.$que->last_name; ?></td>
+                            <td><?php echo $que->position_name; ?></td>
+                            <td><?php echo $que->department_name; ?></td>
+                            <td><?php if($que->rate_type == 1){ echo 'Hourly'; }else{ echo 'Salary'; }?></td>
+                            <td><?php echo $que->rate; ?></td>
+                            <td><?php echo $que->gross_salary; ?></td>
+                            <td><?php echo $que->create_date; ?></td>
+                        </tr>
+                        <?php $sl++; ?>
+                        <?php } ?>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 // Toggle input placeholder based on calculation type
 function toggleInputType(selectElement, inputId) {
@@ -171,11 +221,6 @@ function toggleInputType(selectElement, inputId) {
 }
 
 function summary() {
-    var addper = 0;
-    $(".addamount").each(function() {
-        isNaN(this.value) || 0 == this.value.length || (addper += parseFloat(this.value))
-    });
-
     var b = parseInt($('#basic').val()) || 0;
     var add = 0;
     var deduct = 0;
@@ -199,9 +244,9 @@ function summary() {
     $(".deducamount").each(function() {
         var value = parseFloat(this.value) || 0;
         var basic = parseInt($('#basic').val()) || 0;
-        var calcType = $(this).closest('tr').find('.calc-type').val();
+        var calcType = $(this).closest('tr').find('.calc-type');
 
-        if (calcType == '1') {
+        if (calcType.length > 0 && calcType.val() == '1') {
             // Amount-based calculation
             deduct += value;
         } else {
@@ -221,9 +266,9 @@ function handletax(checkbox) {
     $(".deducamount").each(function() {
         var value = parseFloat(this.value) || 0;
         var basic = parseInt($('#basic').val()) || 0;
-        var calcType = $(this).closest('tr').find('.calc-type').val();
+        var calcType = $(this).closest('tr').find('.calc-type');
 
-        if (calcType == '1') {
+        if (calcType.length > 0 && calcType.val() == '1') {
             deduct += value;
         } else {
             deduct += (value * basic / 100);
