@@ -129,7 +129,7 @@ exit;
 	$this->form_validation->set_rules('absent_deduct',display('absent_deduct'));
 	$this->form_validation->set_rules('tax_manager',display('tax_manager'));
 	$amount=$this->input->post('amount');
-	$calculation_type=$this->input->post('calculation_type'); // NEW: Get calculation type
+	//$calculation_type=$this->input->post('calculation_type'); // NEW: Get calculation type
 	
 	#-------------------------------#
 	if ($this->form_validation->run() === true) {
@@ -142,7 +142,7 @@ exit;
 				'sal_type'              => $this->input->post('sal_type',true),
 				'salary_type_id' 	    => $key,
 				'amount' 	            => (!empty($value)?$value:0),
-				'calculation_type'      => (!empty($calculation_type[$key])?$calculation_type[$key]:0), // NEW
+				//'calculation_type'      => (!empty($calculation_type[$key])?$calculation_type[$key]:0), // NEW
 				'create_date'           => $date,
 				'gross_salary'          => $this->input->post('gross_salary',true),
 			]; 
