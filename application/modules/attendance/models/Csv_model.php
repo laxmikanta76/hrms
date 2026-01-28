@@ -1,391 +1,316 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Csv_model extends CI_Model {
-
-    
-    
-    function get_addressbook() { 
-    // $this->db->order_by('att_id', 'desc');  
-    //     $query = $this->db->get('emp_attendance');
-
-$query =$this->db->select("count(DISTINCT(e.att_id)) as att_id,e.*,p.employee_id,p.first_name,p.last_name")->join('employee_history p','e.employee_id = p.employee_id','left')->group_by('e.att_id')->order_by('e.att_id', 'desc')->get('emp_attendance e');
-
-
-        if ($query->num_rows() > 0) {
-            return $query->result_array();
-        } else {
-            return FALSE;
-        }
-    }
-    
-    function insert_csv($data) {
-        $this->db->insert('emp_attendance', $data);
-    }
-
-
-public function delete_attn($id = null)
-    {
-        $this->db->where('att_id',$id)
-            ->delete('emp_attendance');
-
-        if ($this->db->affected_rows()) {
-            return true;
-        } else {
-            return false;
-        }
-    } 
-
-    public function attendance_delete($id = null)
-    {
-        $this->db->where('atten_his_id',$id)
-            ->delete('attendance_history');
-
-        if ($this->db->affected_rows()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function atten_create($data = array())
-    {
-       // return $this->db->insert('emp_attendance', $data);
-        return $this->db->insert('attendance_history', $data);
-    }
-
-   
-    
-public function update_attn($data = array())
-    {
-        return $this->db->where('att_id', $data["att_id"])
-            ->update("emp_attendance", $data);
-    }
-    public function attn_updateForm($id){
-        $this->db->where('att_id',$id);
-        $query = $this->db->get('emp_attendance');
-        return $query->row();
-    }
-
-   public  function get_atn_dropdown($id)
-    {
-        $query=$this->db->get_where('emp_attendance',array('att_id'=>$id));
-        return $query->row_array();
-    }  
-
-
-    public function Employeename()
-    {
-        $this->db->select('*');
-        $this->db->from('employee_history');
-        $query=$this->db->get();
-        $data=$query->result();
-        
-       $list = array('' => 'Select One...');
-        if(!empty($data)){
-            foreach ($data as $value){
-                $list[$value->employee_id]=$value->first_name.$value->last_name."(".$value->employee_id.")";
-            }
-        }
-        return $list;
-    }
-
-
-    /********* Repor Start  #################% ********/
-     public function userReport($format_start_date,$format_end_date){
-      
-$this->db->select('e.*,count(DISTINCT(p.emp_his_id)) as emp_his_id,p.employee_id,p.first_name,p.last_name');
-
-$this->db->from('emp_attendance e');
-$this->db->join('employee_history p','e.employee_id = p.employee_id','left');
-$this->db->where('e.date >=', $format_start_date);
-$this->db->where('e.date <=', $format_end_date);
-$this->db->group_by('e.att_id');
-$query = $this->db->get();
-$result = $query->result();
-return $result;
-
-    }
-function search($id,$start_date,$end_date)
-    {
-        if (!empty($id)){
-        $this->db->from('emp_attendance');
-        $this->db->like('employee_id', $id);
-        $this->db->where('date >=', $start_date);
-        $this->db->where('date <=', $end_date); 
-        $query = $this->db->get();
-        return $query->result();
-        }
-        else {echo 'Sorry Enter Employee Id';}
-    }
-
-
-    function search_intime($date,$start_time,$end_time)
-    {
-        if (!empty($date)){
-        $this->db->select('count(DISTINCT(e.att_id)) as att_id,e.*,p.employee_id,p.first_name,p.last_name');
-
-$this->db->from('emp_attendance e');
-$this->db->join('employee_history p','e.employee_id = p.employee_id','left');
-        $this->db->like('e.date', $date);
-        $this->db->where('e.sign_in >=', $start_time);
-        $this->db->where('e.sign_in <=', $end_time); 
-        $query = $this->db->get();
-        return $query->result();
-        }
-        else {echo 'Sorry Enter Date';}
-    }
-
-    public function atnrp($id){
-        $this->db->select('*');
-        $this->db->from('employee_history');
-        $this->db->where('employee_id',$id);
-        $ab = $this->db->get();
-        return $ab->result();
-}
-
-// Attendance Log info
-public function att_log($limit = null, $start = null){
-     $this->db->select('*');
-        $this->db->from('attendance_history');
-        $this->db->order_by('atten_his_id', 'desc');
-        $this->db->limit($limit, $start);
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->result();    
-        }
-        return false;
-    } 
-    // attendance count
-    public function count_atn()
-    {
-        $this->db->select('*');
-        $this->db->from('attendance_history');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->num_rows();  
-        }
-        return false;
-    }
-   
-
-// Attendance log report
-public function att_report($limit = null, $start = null, $employee_id = null){
-
-    $this->db->select('DATE(time) as mydate');
-    $this->db->from('attendance_history');
-    
-    // Add employee filter if provided
-    if (!empty($employee_id)) {
-        $this->db->where('uid', $employee_id);
-    }
-    
-    $this->db->group_by('DATE(time)');
-    $this->db->order_by('DATE(time)', 'DESC');
-    $this->db->limit($limit, $start);
-    $query = $this->db->get();
-    
-    if ($query->num_rows() > 0) {
-        return $query->result();    
-    }
-    return false;
-    
-    // $this->db->select('
-    //     DATE(time) as mydate,
-    //     uid,
-    //     MIN(CASE WHEN state = 1 THEN time END) as intime,
-    //     MAX(CASE WHEN state = 0 THEN time END) as outtime
-    // ');
-    // $this->db->from('attendance_history');
-    
-    // // Add employee filter if provided
-    // if (!empty($employee_id)) {
-    //     $this->db->where('uid', $employee_id);
-    // }
-    
-    // $this->db->group_by('DATE(time), uid');
-    // $this->db->order_by('mydate', 'desc');
-    // $this->db->limit($limit, $start);
-    // $query = $this->db->get();
-    
-    // if ($query->num_rows() > 0) {
-    //     return $query->result();    
-    // }
-    // return false;
-}
-
-// count attendance log
- public function count_att_report($employee_id = null)
-    {
-
-         $this->db->select('DATE(time) as mydate');
-    $this->db->from('attendance_history');
-    
-    if (!empty($employee_id)) {
-        $this->db->where('uid', $employee_id);
-    }
-    
-    $this->db->group_by('DATE(time)');
-    $query = $this->db->get();
-    
-    if ($query->num_rows() > 0) {
-        return $query->num_rows();  
-    }
-    return false;
-    //     $this->db->select('*,DATE(time) as mydate');
-    //     $this->db->from('attendance_history');
-    //      if (!empty($employee_id)) {
-    //     $this->db->where('uid', $employee_id);
-    //    }
-    //     $this->db->group_by('mydate');
-    //     $this->db->order_by('time', 'desc');
-    //     $query = $this->db->get();
-    //     if ($query->num_rows() > 0) {
-    //         return $query->num_rows();  
-    //     }
-    //     return false;
-    }
-
-// Attendance log report user wise
-public function att_report_userwise($limit = null, $start = null,$id){
-// $att = "SELECT *, DATE(time) as mydate FROM `attendance_history` WHERE `uid`=$id GROUP BY mydate ORDER BY time desc";
-// $query = $this->db->limit($limit,$start)->query($att)->result();
-
-
-        $this->db->select('*,DATE(time) as mydate');
-        $this->db->from('attendance_history');
-        $this->db->where('uid',$id);
-        $this->db->group_by('mydate');
-        $this->db->order_by('time', 'desc');
-        $this->db->limit($limit, $start);
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->result();    
-        }
-        return false;
-    } 
-
-// count attendance log
- public function count_atn_log($id)
-    {
-        $this->db->select('*,DATE(time) as mydate');
-        $this->db->from('attendance_history');
-        $this->db->where('uid',$id);
-        $this->db->group_by('mydate');
-        $this->db->order_by('time', 'desc');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->num_rows();  
-        }
-        return false;
-    }
-// attendance log datebetween search
-public function att_log_datebetween($id,$from_date,$to_date){
-    $att = "SELECT *, DATE(time) as mydate FROM `attendance_history` WHERE `uid`=$id AND DATE(time) BETWEEN '" . $from_date . "' AND  '" . $to_date . "' GROUP BY mydate ORDER BY time desc";
-    $query = $this->db->query($att)->result();
-    $att_in = [];
-$i=1;
-// print_r($query);exit();
-//return $query;
-    foreach ($query as $attendance) {
-        $att_in[$i] = $this->db->select('a.time,MIN(a.time) as intime,MAX(a.time) as outtime,a.uid')
-->from('attendance_history a')
-->like('a.time',date( "Y-m-d", strtotime($attendance->mydate)),'after')
-->where('a.uid',$attendance->uid)
-->order_by('a.time','DESC')
-->get()
-->result();
-$i++;
-    }
-    // echo '<pre>';
-    // print_r($att_in);exit();
-    return $att_in;
-    
-}
-// User inforamtion
-public function deviceuser($id){
-        $this->db->select('*');
-        $this->db->from('employee_history');
-        $this->db->where('employee_id',$id);
-        $ab = $this->db->get();
-        return $ab->row();
-}
-
-public function userlist()
-    {
-        $this->db->select('*');
-        $this->db->from('employee_history');
-        $query=$this->db->get();
-        $data=$query->result();
-        
-       $list = array('' => 'Select One...');
-        if(!empty($data)){
-            foreach ($data as $value){
-                $list[$value->employee_id]=$value->first_name.' '.$value->last_name;
-            }
-        }
-        return $list;
-    }
-
-    // User inforamtion
-public function company_info(){
-        $this->db->select('*');
-        $this->db->from('setting');
-        $ab = $this->db->get();
-        return $ab->row();
-}
-//Device Ip info
-    public function create_device_ip($data = [])
-    {    
-        return $this->db->insert('deviceinfo',$data);
-    }
- public function devicinfoById($id = null)
-    {
-        return $this->db->select("*")
-            ->from('deviceinfo')
-            ->where('id',$id) 
-            ->get()
-            ->row();
-    } 
+class Payroll_model extends CI_Model {
  
-    public function update_device_ip($postData = [])
-    {
-        return $this->db->where('id',$postData['id'])
-            ->update('deviceinfo',$postData); 
-    } 
+    public function salary_setupView()
+	{
+		return $this->db->select('*')	
+			->from('salary_type')
+			->order_by('salary_type_id', 'desc')
+			->get()
+			->result();
+	}
+public function emp_salsetup_create($data = array())
+	{
+		return $this->db->insert('salary_type', $data);//
+	}
+public function emp_salstup_delete($id = null)
+	{
+		$this->db->where('employee_id',$id)
+			->delete('employee_salary_setup');
 
-   public function attendance_editdata($id){
-        $this->db->where('atten_his_id',$id);
-        $query = $this->db->get('attendance_history');
+		if ($this->db->affected_rows()) {
+			return true;
+		} else {
+			return false;
+		}
+	} 
+
+	public function update_em_salstup($data = array())//
+	{
+		return $this->db->where('salary_type_id', $data["salary_type_id"])
+			->update("salary_type", $data);
+	}
+	public function salarysetup_updateForm($id){
+        $this->db->where('salary_type_id',$id);
+        $query = $this->db->get('salary_type');
         return $query->row();
     }
+/* Salary Setup start ****/
 
-     public function atten_update($postData = [])
+     public function salary_setupindex()
+	{
+
+			 return $this->db->select('count(DISTINCT(sstp.e_s_s_id)) as e_s_s_id,sstp.*,p.employee_id,p.*,pos.position_name,dpt.department_name')   
+            ->from('employee_salary_setup sstp')
+            ->join('employee_history p', 'sstp.employee_id = p.employee_id', 'left')
+            ->join('position pos', 'pos.pos_id = p.pos_id', 'left')
+            ->join('department dpt', 'dpt.dept_id = p.dept_id', 'left')
+            ->group_by('sstp.employee_id')
+            ->order_by('sstp.salary_type_id', 'desc')
+            ->get()
+            ->result();
+	}
+	public function salary_setup_create($data = array())
+	{
+		return $this->db->insert('employee_salary_setup', $data);//
+	}
+
+	 public function salary_typeName()
+	{
+		return $this->db->select('*')	
+			->from('salary_type')
+	         ->where('emp_sal_type',1)
+			->get()
+			->result();
+	}
+	 public function salary_typedName()
+	{
+		return $this->db->select('*')	
+			->from('salary_type')
+	         ->where('emp_sal_type',0)
+			->get()
+			->result();
+	}
+
+	public function s_delete($id = null)
+	{
+		$this->db->where('employee_id',$id)
+			->delete('employee_salary_setup');
+
+		if ($this->db->affected_rows()) {
+			return true;
+		} else {
+			return false;
+		}
+	} 
+
+	public function empdropdown()
+	{
+		$this->db->select('*');
+        $this->db->from('employee_history');
+        $query = $this->db->get();
+        $data = $query->result();
+       
+        $list = array('' => 'Select One...');
+       	if (!empty($data) ) {
+       		foreach ($data as $value) {
+       			$list[$value->employee_id] = $value->first_name." ".$value->last_name;
+       		} 
+       	}
+       	return $list;
+	}
+
+	/* salary sheet generate  */
+	public function salary_genrate_create($data = array())
+	{
+		return $this->db->insert('salary_sheet_generate', $data);//
+	}
+	
+
+	public function salary_generateView($limit = null, $start = null)
+	{
+			 return $this->db->select('*')   
+            ->from('salary_sheet_generate')
+            ->group_by('ssg_id')
+            ->order_by('ssg_id', 'desc')
+            ->limit($limit, $start)
+            ->get()
+            ->result();
+	}
+
+	public function salary_gen_delete($id = null,$salname = null)
+	{
+		$this->db->where('ssg_id',$id)
+			->delete('salary_sheet_generate');
+		$this->db->where('salary_name',$salname)
+			->delete('employee_salary_payment');
+		$this->db->where('VNo',$salname)
+			->delete('acc_transaction');	
+
+		if ($this->db->affected_rows()) {
+			return true;
+		} else {
+			return false;
+		}
+	} 
+
+	public function update_sal_gen($data = array())//
+	{
+		return $this->db->where('ssg_id', $data["ssg_id"])
+			->update("salary_sheet_generate", $data);
+	}
+	public function salargen_updateForm($id){
+        $this->db->where('ssg_id',$id);
+        $query = $this->db->get('salary_sheet_generate');
+        return $query->row();
+    }
+    public function salary_head_create($data = array())
+	{
+		return $this->db->insert('salary_setup_header', $data);//
+	}
+
+/* salary setup Update ********************************************/
+
+public function update_sal_stup($data = array())//
+	{
+		$term = array('employee_id' => $data['employee_id'], 'salary_type_id' => $data['salary_type_id']);
+
+		return $this->db->where($term)
+			->update("employee_salary_setup", $data);
+	}
+
+	public function update_sal_head($data = array())
+	{
+		return $this->db->where('employee_id', $data["employee_id"])
+			->update("salary_setup_header", $data);
+	}
+
+	public function salary_s_updateForm($id){
+        $this->db->where('employee_id',$id);
+        $query = $this->db->get('employee_salary_setup','salary_setup_header');
+        return $query->row();
+    }
+/* salary setup Update ********************************************/
+
+
+
+    public function salary_amount($id)
+	{
+		return $result = $this->db->select('employee_salary_setup.*,salary_type.*')	
+			 ->from('employee_salary_setup')
+			 ->join('salary_type','salary_type.salary_type_id=employee_salary_setup.salary_type_id')
+	         ->where('employee_salary_setup.employee_id',$id)
+	         ->where('emp_sal_type',1)
+			 ->get()
+			 ->result();
+	}
+	 public function salary_amountlft($id)
+	{
+		return $result = $this->db->select('employee_salary_setup.*,salary_type.*')	
+			 ->from('employee_salary_setup')
+			 ->join('salary_type','salary_type.salary_type_id=employee_salary_setup.salary_type_id')
+	         ->where('employee_salary_setup.employee_id',$id)
+	         ->where('emp_sal_type',0)
+			 ->get()
+			 ->result();
+	}
+
+
+
+
+	public  function get_empid($id)
     {
-        return $this->db->where('atten_his_id',$postData['atten_his_id'])
-            ->update('attendance_history',$postData); 
+        $query=$this->db->get_where('employee_salary_setup',array('employee_id'=>$id));
+        return $query->row_array();
+    } 
+    public  function get_type($id)
+    {
+       
+        return $result = $this->db->select('sal_type')
+                       ->from('employee_salary_setup')
+                       ->where('employee_id',$id)
+                       ->get()
+                       ->row_array();
     } 
 
 
-    public function auto_checkout_missing_users()
-{
-      $this->db->where('checkin_time IS NOT NULL', null, false);
+    public function type()
+	{
+		$this->db->select('*');
+        $this->db->from('employee_salary_setup');
+        $query = $this->db->get();
+        $data = $query->result();
+       
+        $list = array('' => 'Select One...');
+       	if (!empty($data) ) {
+       		foreach ($data as $value) {
+       			$list[$value->sal_type] = $value->sal_type;
+       		} 
+       	}
+       	return $list;
+	}
 
-    $this->db->group_start();
-        $this->db->where('checkout_time IS NULL', null, false);
-        $this->db->or_where('checkout_time', '00:00:00');
-        $this->db->or_where('checkout_time = checkin_time', null, false);
-    $this->db->group_end();
+	public function payable()
+	{
+		$this->db->select('*');
+        $this->db->from('salary_setup_header');
+        $query = $this->db->get();
+        $data = $query->result();
+       
+         $list = array('' => 'Select One...');
+       	if (!empty($data) ) {
+       		foreach ($data as $value) {
+       			$list[$value->salary_payable] = $value->salary_payable;
+       		} 
+       	}
+       	return $list;
+	}
+	public  function get_payable($id)
+    {
+        
+        return $result = $this->db->select('salary_payable')
+                       ->from('salary_setup_header')
+                       ->where('employee_id',$id)
+                       ->get()
+                       ->row_array();
+    } 
 
-    $this->db->update('attendance_history', [
-        'checkout_time'      => '17:00:00',
-        'checkout_latitude'  => '0.000000',
-        'checkout_longitude' => '0.000000',
-        'checkout_address'   => 'Auto checkout by system',
-        'checkout_type'      => 'auto'
-    ]);
 
-    return $this->db->affected_rows();
-}
-    
+public function create_employee_payment($data = array())
+	{
+		return $this->db->insert('employee_salary_payment', $data);
+
+	}
+	// employee Information
+	public function employee_informationId($id)
+	{
+		return $result = $this->db->select('rate,rate_type')
+                       ->from('employee_history')
+                       ->where('employee_id',$id)
+                       ->get()
+                       ->row();
+
+	}
+
+
+	    public function salary_addition_fields($id)
+	{
+		return $result = $this->db->select('employee_salary_setup.*,salary_type.*')	
+			 ->from('employee_salary_setup')
+			 ->join('salary_type','salary_type.salary_type_id=employee_salary_setup.salary_type_id')
+	         ->where('employee_salary_setup.employee_id',$id)
+	         ->where('emp_sal_type',1)
+			 ->get()
+			 ->result();
+	}
+
+		 public function salary_deduction_fields($id)
+	{
+		return $result = $this->db->select('employee_salary_setup.*,salary_type.*')	
+			 ->from('employee_salary_setup')
+			 ->join('salary_type','salary_type.salary_type_id=employee_salary_setup.salary_type_id')
+	         ->where('employee_salary_setup.employee_id',$id)
+	         ->where('emp_sal_type',0)
+			 ->get()
+			 ->result();
+	}
+
+	public function salary_paymentinfo($id = null){
+			return $this->db->select('count(DISTINCT(pment.emp_sal_pay_id)) as emp_sal_pay_id,pment.*,p.employee_id,p.first_name,p.last_name,desig.position_name,p.rate as basic,p.rate_type as salarytype')   
+            ->from('employee_salary_payment pment')
+            ->join('employee_history p', 'pment.employee_id = p.employee_id', 'left')
+            ->join('position desig', 'desig.pos_id = p.pos_id', 'left')
+            ->where('pment.emp_sal_pay_id',$id)
+            ->group_by('pment.emp_sal_pay_id')
+            ->get()
+            ->result_array();
+
+	}
+public function setting()
+	{
+		return $this->db->get('setting')->row();
+	}
+
 }
