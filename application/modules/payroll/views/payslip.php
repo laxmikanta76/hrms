@@ -1,4 +1,5 @@
 <style>
+/* ... (keep all existing CSS styles) ... */
 #scope>.scope-entry {
     text-align: center;
     padding-bottom: 10px;
@@ -224,17 +225,17 @@ function printDiv(divName) {
     var printContents = document.getElementById(divName).innerHTML;
     var originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;
-    // document.body.style.marginTop="-45px";
     window.print();
     document.body.innerHTML = originalContents;
 }
 </script>
 <!-- Printable area end -->
 
-<div class="row">
-    <div class="col-sm-12">
-        <div class="panel panel-bd">
-            <div class="panel title text-right">
+<div class="content-wrapper">
+    <section class="content-header">
+
+        <div class="row">
+            <div class="col-sm-12 text-center">
                 <button class="btn btn-warning" onclick="printDiv('printableArea')"><span
                         class="fa fa-print"></span></button>
             </div>
@@ -313,13 +314,26 @@ function printDiv(divName) {
                                                 </tr>
                                                 <?php 
                                         $totalAddition = 0;
-                                        foreach($addition as $additions){?>
+                                        foreach($addition as $additions){
+                                            // NEW: Handle calculation type
+                                            if($additions->calculation_type == 1) {
+                                                // Fixed amount
+                                                $additionAmount = $additions->amount;
+                                            } else {
+                                                // Percentage
+                                                $additionAmount = $basicsal * ($additions->amount) / 100;
+                                            }
+                                        ?>
                                                 <tr class="entry">
-                                                    <td class="value"><?= $additions->sal_name;?></td>
                                                     <td class="value">
-                                                        <div><?php echo  $basicsal*($additions->amount)/100;
-                                            $totalAddition +=$basicsal*($additions->amount)/100;
-                                            ?></div>
+                                                        <?= $additions->sal_name;?>
+                                                        <?php if($additions->calculation_type == 0) echo '('.number_format($additions->amount, 2).'%)'; ?>
+                                                    </td>
+                                                    <td class="value">
+                                                        <div><?php 
+                                                            echo number_format($additionAmount, 2);
+                                                            $totalAddition += $additionAmount;
+                                                        ?></div>
                                                     </td>
 
                                                 </tr>
@@ -329,14 +343,11 @@ function printDiv(divName) {
                                                     <td class="value" style="float:left;font-weight: bold">
                                                         <?= display('total_addition')?></td>
                                                     <td class="value" style="font-weight: bold">
-                                                        <?php echo $totalAddition+$basicsal; ?></td>
+                                                        <?php echo number_format($totalAddition+$basicsal, 2); ?></td>
                                                 </tr>
 
 
                                             </tbody>
-                                            <!--                                    <tfoot>
-                                    
-                                    </tfoot>-->
                                         </table>
                                     </td>
                                     <td class="right-panel">
@@ -356,13 +367,26 @@ function printDiv(divName) {
                                             <tbody class="details">
                                                 <?php 
                                       $totalDeduction = 0;
-                                      foreach($deduction as $deductions){?>
+                                      foreach($deduction as $deductions){
+                                          // NEW: Handle calculation type
+                                          if($deductions->calculation_type == 1) {
+                                              // Fixed amount
+                                              $deductionAmount = $deductions->amount;
+                                          } else {
+                                              // Percentage
+                                              $deductionAmount = $basicsal * ($deductions->amount) / 100;
+                                          }
+                                      ?>
                                                 <tr class="entry">
-                                                    <td class="value"><?= $deductions->sal_name; ?></td>
                                                     <td class="value">
-                                                        <div><?php echo  $basicsal*($deductions->amount)/100;
-                                            $totalDeduction +=$basicsal*($deductions->amount)/100;
-                                            ?></div>
+                                                        <?= $deductions->sal_name; ?>
+                                                        <?php if($deductions->calculation_type == 0) echo '('.number_format($deductions->amount, 2).'%)'; ?>
+                                                    </td>
+                                                    <td class="value">
+                                                        <div><?php 
+                                                            echo number_format($deductionAmount, 2);
+                                                            $totalDeduction += $deductionAmount;
+                                                        ?></div>
                                                     </td>
 
                                                 </tr>
@@ -385,7 +409,7 @@ function printDiv(divName) {
                                                     <td class="value" style="float:left; font-weight: bold">
                                                         <?= display('total_deduction')?></td>
                                                     <td class="value" style="font-weight: bold">
-                                                        <?php echo $totalDeduction+(!empty($totaltax)?$totaltax:0); ?>
+                                                        <?php echo number_format($totalDeduction+(!empty($totaltax)?$totaltax:0), 2); ?>
                                                     </td>
                                                 </tr>
 
@@ -457,5 +481,5 @@ function printDiv(divName) {
 
 
         </div>
-    </div>
+</div>
 </div>
