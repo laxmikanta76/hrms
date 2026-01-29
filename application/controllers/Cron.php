@@ -1,6 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+$task = $argv[1] ?? null;
+
+$allowedTasks = [
+    'daily'   => 'auto_checkout()',
+    'monthly' => 'monthly_leave()',
+    'yearly' => 'yearly_reset()',
+];
+
+if (!isset($allowedTasks[$task])) {
+    die('Invalid cron task');
+}
+
+call_user_func($allowedTasks[$task]);
+
 /**
  * Cron Controller
  * Handle all automated tasks
