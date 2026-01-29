@@ -292,20 +292,37 @@ class Leave_model extends CI_Model {
         // Calculate opening balance
         $opening = 0;
 
-        if ($prev) {
-            // Previous month exists
-            if ($leaveType->carry_forward == 1) {
-                // Carry forward type (e.g., Casual Leave)
-                $opening = $prev->closing_balance;
-            } else {
-                // Non-carry forward type (e.g., Sick Leave)
-                // Reset to monthly allocation
-                $opening = $leaveType->leave_days;
-            }
-        } else {
-            // First month - use default allocation
-            $opening = $leaveType->leave_days;
-        }
+        // if ($prev) {
+        //     // Previous month exists
+        //     if ($leaveType->carry_forward == 1) {
+        //         // Carry forward type (e.g., Casual Leave)
+        //         $opening = $prev->closing_balance;
+        //     } else {
+        //         // Non-carry forward type (e.g., Sick Leave)
+        //         // Reset to monthly allocation
+        //         $opening = $leaveType->leave_days;
+        //     }
+        // } else {
+        //     // First month - use default allocation
+        //     $opening = $leaveType->leave_days;
+        // }
+        if ($leave_type_id == 7) {
+    if ($prev) {
+        $opening = $prev->closing_balance;
+    } else {
+        $opening = $leaveType->leave_days;
+    }
+}
+
+// ===== SL (Monthly Reset) =====
+elseif ($leave_type_id == 9) {
+    $opening = 1; // fixed every month
+}
+
+// ===== LOP (No Balance) =====
+elseif ($leave_type_id == 8) {
+    $opening = 0;
+}
 
         // Insert new monthly balance
         $this->db->insert('employee_leave_balance', [
@@ -327,6 +344,10 @@ class Leave_model extends CI_Model {
     {
         $employee_id = $leave_data['employee_id'];
         $leave_type_id = !empty($leave_data['leave_type_id']) ? $leave_data['leave_type_id'] : $leave_data['leave_type'];
+        // LOP → salary deduction only
+        if ($leave_type_id == 8) {
+           return;
+       }
         $approved_days = $leave_data['num_aprv_day'];
         
         // Get the start date of approved leave
@@ -356,6 +377,9 @@ class Leave_model extends CI_Model {
     {
         $employee_id = $leave_data->employee_id;
         $leave_type_id = !empty($leave_data->leave_type_id) ? $leave_data->leave_type_id : $leave_data->leave_type;
+        if ($leave_type_id == 8) {
+            return;
+        }
         $approved_days = $leave_data->num_aprv_day;
         
         // Get the start date of approved leave
@@ -418,7 +442,7 @@ class Leave_model extends CI_Model {
         
         $leaveTypes = $this->db->select('*')
             ->from('leave_type')
-            ->where('carry_forward', 0) // Only non-carry forward types
+            ->where('leave_type_id !=', 9) // exclude SL
             ->get()
             ->result();
 
