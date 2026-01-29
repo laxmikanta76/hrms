@@ -845,4 +845,7 @@ public function report_user(){
         ->get()
         ->row();
     }
+
+
+    
 }

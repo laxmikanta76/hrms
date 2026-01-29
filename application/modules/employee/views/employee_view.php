@@ -48,7 +48,7 @@
                             <th><?php echo display('hourly_rate2')?></th>
                             <th><?php echo display('hourly_rate3')?></th>
                             <th><?php echo display('home_department')?></th>
-                            <th><?php echo display('department_text')?></th>
+                            <th><?php echo display('gross_salary')?></th>
                             <th><?php echo display('super_visor_name')?></th>
                             <th><?php echo display('is_super_visor')?></th>
                             <th><?php echo display('supervisor_report')?></th>
@@ -107,7 +107,7 @@
                             <td><?php echo $row->hourly_rate2; ?></td>
                             <td><?php echo $row->hourly_rate3; ?></td>
                             <td><?php echo $row->home_department; ?></td>
-                            <td><?php echo $row->department_text; ?></td>
+                            <td>₹ <?php echo number_format($row->gross_salary, 2); ?></td>
                             <td><?php
  $supervisor = $this->db->select('first_name,last_name')->from('employee_history')->where('employee_id',$row->super_visor_id)->get()->row();
                           echo (!empty($supervisor)?$supervisor->first_name.' '.$supervisor->last_name:'Self');

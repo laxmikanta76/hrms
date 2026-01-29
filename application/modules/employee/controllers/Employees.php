@@ -516,7 +516,7 @@ public function cv()
 				'hourly_rate2'            => $this->input->post('h_rate2',true),
 				'hourly_rate3'            => $this->input->post('h_rate3',true),
 				'home_department'         => $this->input->post('h_department',true),
-				'department_text'         => $this->input->post('h_dep_text',true),
+				'gross_salary'            => $this->input->post('gross_salary', true),//newly added
 				'class_code'              => $this->input->post('c_code',true),
 				'class_code_desc'         => $this->input->post('c_code_d',true),
 				'class_acc_date'          => date("Y-m-d", strtotime(!empty($this->input->post('class_acc_date',true))?$this->input->post('class_acc_date',true):date('Y-m-d'))),

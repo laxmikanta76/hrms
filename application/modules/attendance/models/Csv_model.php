@@ -365,6 +365,8 @@ public function company_info(){
         return $this->db->where('atten_his_id',$postData['atten_his_id'])
             ->update('attendance_history',$postData); 
     } 
-    
 
+
+    
+    
 }
