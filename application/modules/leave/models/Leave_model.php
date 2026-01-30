@@ -306,11 +306,11 @@ class Leave_model extends CI_Model {
         //     // First month - use default allocation
         //     $opening = $leaveType->leave_days;
         // }
-        if ($leave_type_id == 7) {
+       if ($leave_type_id == 7) { // CL
     if ($prev) {
-        $opening = $prev->closing_balance;
+        $opening = $prev->closing_balance + 1; // monthly credit
     } else {
-        $opening = $leaveType->leave_days;
+        $opening = 1;
     }
 }
 
@@ -321,7 +321,11 @@ elseif ($leave_type_id == 9) {
 
 // ===== LOP (No Balance) =====
 elseif ($leave_type_id == 8) {
-    $opening = 0;
+    if ($prev) {
+        $opening = $prev->closing_balance; // carry forward remaining
+    } else {
+        $opening = 20; // first month / first record
+    }
 }
 
         // Insert new monthly balance
@@ -344,10 +348,7 @@ elseif ($leave_type_id == 8) {
     {
         $employee_id = $leave_data['employee_id'];
         $leave_type_id = !empty($leave_data['leave_type_id']) ? $leave_data['leave_type_id'] : $leave_data['leave_type'];
-        // LOP → salary deduction only
-        if ($leave_type_id == 8) {
-           return;
-       }
+        
         $approved_days = $leave_data['num_aprv_day'];
         
         // Get the start date of approved leave
@@ -357,12 +358,26 @@ elseif ($leave_type_id == 8) {
 
         // Ensure balance exists
         $this->ensure_monthly_balance($employee_id, $leave_type_id, $year, $month);
+        
+         // 🔹 FETCH CURRENT BALANCE (ADD THIS)
+    $row = $this->db->get_where('employee_leave_balance', [
+        'employee_id'   => $employee_id,
+        'leave_type_id' => $leave_type_id,
+        'year'          => $year,
+        'month'         => $month
+    ])->row();
+
+    //  ADD VALIDATION HERE (THIS LINE)
+    if ($leave_type_id == 9 && $approved_days > $row->opening_balance) {
+        // SL cannot go negative
+        return false;
+    }
 
         // Update the balance
         $this->db->query("
             UPDATE employee_leave_balance 
             SET used_leave = used_leave + ?,
-                closing_balance = closing_balance - ?
+                closing_balance = opening_balance - (used_leave + ?)
             WHERE employee_id = ? 
             AND leave_type_id = ? 
             AND year = ? 
@@ -391,7 +406,7 @@ elseif ($leave_type_id == 8) {
         $this->db->query("
             UPDATE employee_leave_balance 
             SET used_leave = used_leave - ?,
-                closing_balance = closing_balance + ?
+                closing_balance = opening_balance - (used_leave - ?)
             WHERE employee_id = ? 
             AND leave_type_id = ? 
             AND year = ? 
@@ -440,26 +455,37 @@ elseif ($leave_type_id == 8) {
         // For non-carry forward leaves, reset happens monthly
         // For carry forward leaves, reset to base allocation
         
-        $leaveTypes = $this->db->select('*')
-            ->from('leave_type')
-            ->where('leave_type_id !=', 9) // exclude SL
-            ->get()
-            ->result();
+        // $leaveTypes = $this->db->select('*')
+        //     ->from('leave_type')
+        //     ->where('leave_type_id !=', 9) // exclude SL
+        //     ->get()
+        //     ->result();
 
-        foreach ($leaveTypes as $lt) {
-            // Reset all balances for this leave type to monthly allocation
-            $this->db->query("
-                UPDATE employee_leave_balance 
-                SET opening_balance = ?,
-                    used_leave = 0,
-                    closing_balance = ?
-                WHERE leave_type_id = ? 
-                AND year = ? 
-                AND month = 1
-            ", [$lt->leave_days, $lt->leave_days, $lt->leave_type_id, $year]);
-        }
+        // foreach ($leaveTypes as $lt) {
+        //     // Reset all balances for this leave type to monthly allocation
+        //     $this->db->query("
+        //         UPDATE employee_leave_balance 
+        //         SET opening_balance = ?,
+        //             used_leave = 0,
+        //             closing_balance = ?
+        //         WHERE leave_type_id = ? 
+        //         AND year = ? 
+        //         AND month = 1
+        //     ", [$lt->leave_days, $lt->leave_days, $lt->leave_type_id, $year]);
+        // }
 
-        return true;
+        // return true;
+         $this->db->query("
+        UPDATE employee_leave_balance
+        SET opening_balance = 20,
+            used_leave = 0,
+            closing_balance = 20
+        WHERE leave_type_id = 8
+          AND year = ?
+          AND month = 1
+    ", [$year]);
+
+    return true;
     }
 
     /**
