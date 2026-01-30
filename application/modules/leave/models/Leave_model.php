@@ -306,11 +306,11 @@ class Leave_model extends CI_Model {
         //     // First month - use default allocation
         //     $opening = $leaveType->leave_days;
         // }
-        if ($leave_type_id == 7) {
+       if ($leave_type_id == 7) { // CL
     if ($prev) {
-        $opening = $prev->closing_balance;
+        $opening = $prev->closing_balance + 1; // monthly credit
     } else {
-        $opening = $leaveType->leave_days;
+        $opening = 1;
     }
 }
 
@@ -357,12 +357,26 @@ elseif ($leave_type_id == 8) {
 
         // Ensure balance exists
         $this->ensure_monthly_balance($employee_id, $leave_type_id, $year, $month);
+        
+         // 🔹 FETCH CURRENT BALANCE (ADD THIS)
+    $row = $this->db->get_where('employee_leave_balance', [
+        'employee_id'   => $employee_id,
+        'leave_type_id' => $leave_type_id,
+        'year'          => $year,
+        'month'         => $month
+    ])->row();
+
+    //  ADD VALIDATION HERE (THIS LINE)
+    if ($leave_type_id == 9 && $approved_days > $row->opening_balance) {
+        // SL cannot go negative
+        return false;
+    }
 
         // Update the balance
         $this->db->query("
             UPDATE employee_leave_balance 
             SET used_leave = used_leave + ?,
-                closing_balance = closing_balance - ?
+                closing_balance = opening_balance - (used_leave + ?)
             WHERE employee_id = ? 
             AND leave_type_id = ? 
             AND year = ? 
@@ -391,7 +405,7 @@ elseif ($leave_type_id == 8) {
         $this->db->query("
             UPDATE employee_leave_balance 
             SET used_leave = used_leave - ?,
-                closing_balance = closing_balance + ?
+                closing_balance = opening_balance - (used_leave + ?)
             WHERE employee_id = ? 
             AND leave_type_id = ? 
             AND year = ? 
