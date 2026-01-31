@@ -247,194 +247,195 @@
 
 
 <script language="javascript">
-console.log('WEEKEND FROM PHP:', "<?php echo $weekend ?>");
-$(function() {
-    $("#f").datepicker({
-        dateFormat: 'yy-mm-dd'
+$(document).on('shown.bs.modal', '#add', function() {
+
+    $('.datepicker').datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        onSelect: function() {
+            calculateApplyDay();
+        }
     });
-    $("#e").datepicker({
-        dateFormat: 'yy-mm-dd'
-    });
-    $("#a").datepicker({
-        dateFormat: 'yy-mm-dd'
-    });
-    $("#c").datepicker({
-        dateFormat: 'yy-mm-dd'
-    });
-    $("#d").datepicker({
-        dateFormat: 'yy-mm-dd'
-    });
-    $("#b").datepicker({
-        dateFormat: 'yy-mm-dd'
-    });
+
 });
+
 
 // Calculate approved days (excluding weekends)
 $(document).ready(function(e) {
-    function calculation() {
-        var date1 = new Date($('.leave_aprv_strt_date').val());
-        var date2 = new Date($('.leave_aprv_end_date').val());
-        var from = new Date($('.leave_aprv_strt_date').val());
-        var to = new Date($('.leave_aprv_end_date').val());
-        var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var d = from;
-        var count = 0;
-        var weekend = "<?php echo $weekend ?>";
-        var w = weekend.split(',');
+function calculation() {
+    var date1 = new Date($('.leave_aprv_strt_date').val());
+    var date2 = new Date($('.leave_aprv_end_date').val());
+    var from = new Date($('.leave_aprv_strt_date').val());
+    var to = new Date($('.leave_aprv_end_date').val());
+    var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var d = from;
+    var count = 0;
+    var weekend = "<?php echo $weekend ?>";
+    var w = weekend.split(',');
 
-        while (d <= to) {
-            d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
-            if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
-                count += 1;
-            }
-        }
-
-        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
-        $('.num_aprv_day').val(diffDays + 1);
-    }
-    $('.leave_aprv_strt_date,.leave_aprv_end_date').change(calculation);
-});
-
-// Calculate apply days (excluding weekends)
-$(document).ready(function(e) {
-    function applyday() {
-        var from = new Date($('.apply_start').val());
-        var to = new Date($('.apply_end').val());
-        var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var d = from;
-        var count = 0;
-        var weekend = "<?php echo $weekend ?>";
-        var w = weekend.split(',');
-
-        while (d <= to) {
-            d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
-            if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
-                count += 1;
-            }
-        }
-
-        var date1 = new Date($('.apply_start').val());
-        var date2 = new Date($('.apply_end').val());
-        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
-        $('.apply_day').val(diffDays + 1);
-    }
-    $('.apply_start,.apply_end').change(applyday);
-});
-
-// Date validation
-$(document).ready(function(e) {
-    function datecheck() {
-        var date = new Date($('#apply_start').val());
-        var date1 = new Date($('#leave_aprv_strt_date').val());
-        var date2 = new Date($('#leave_aprv_end_date').val());
-        if (date > date1 || date > date2) {
-            alert('Approved date cannot be less than apply date');
-            document.getElementById('leave_aprv_strt_date').value = '';
-            document.getElementById('leave_aprv_end_date').value = '';
+    while (d <= to) {
+        d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
+        if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] ||
+            DAYS[d.getDay()] == w[2]) {
+            count += 1;
         }
     }
-    $('.leave_aprv_strt_date,.leave_aprv_end_date').change(datecheck);
-});
-
-/**
- * Get Employee ID - works for both admin dropdown and user hidden field
- */
-function getEmployeeId() {
-    return $('#employee_id').val() ||
-        $('#employee_id_hidden').val() ||
-        $('input[name="employee_id"]').val() ||
-        '';
+    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    var
+        diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
+    $('.num_aprv_day').val(diffDays + 1);
 }
-
-/**
- * Fetch and display leave balance
- */
-function leavetypechange(leave_type_id) {
-    var employee_id = getEmployeeId();
-
-    // Clear previous messages
-    $('#enjoy').html('');
-    $('#checkleave').html('');
-
-    if (!employee_id) {
-        $('#enjoy').html('<span style="color: red;">Employee ID not found</span>');
-        return;
-    }
-
-    if (!leave_type_id) {
-        return;
-    }
-
-    // Show loading
-    $('#enjoy').html('Loading...');
-
-    $.ajax({
-        url: "<?php echo base_url('leave/Leave/free_leave'); ?>",
-        method: 'POST',
-        dataType: 'json',
-        data: {
-            'employee_id': employee_id,
-            'leave_type': leave_type_id
-        },
-        success: function(data) {
-            if (data.status === 'success' || data.status === 'warning') {
-                $('#enjoy').html('You Enjoyed: ' + data.enjoy + ' Days');
-                $('#checkleave').html('Available Leave: ' + data.due + ' Days');
-
-                // Color based on balance
-                if (data.due < 3) {
-                    $('#checkleave').css('color', 'orange');
-                } else {
-                    $('#checkleave').css('color', 'green');
+$('.leave_aprv_strt_date,.leave_aprv_end_date').change(calculation);
+}); // Calculate apply days (excluding
+weekends) $(document).ready(function(e) {
+            function applyday() {
+                var start = $('#apply_start').val();
+                var
+                    end = $('#apply_end').val();
+                if (!start || !end) {
+                    $('#apply_day').val('');
+                    return;
+                } // split yyyy-mm-dd safely var
+                s = start.split('-');
+                var e = end.split('-');
+                var startDate = new Date(s[0], s[1] - 1, s[2]);
+                var endDate = new Date(e[0],
+                    e[1] - 1, e[2]);
+                if (endDate < startDate) {
+                    $('#apply_day').val(0);
+                    return;
                 }
-            } else {
-                $('#enjoy').html('<span style="color: red;">' + (data.message || 'Error loading balance') +
-                    '</span>');
+                var weekend = "<?php echo $weekend ?>"
+                    .split(',').map(d => d.trim());
+                var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+                var count = 0;
+                var current = new Date(startDate);
+
+                while (current <= endDate) {
+                    var dayName = DAYS[current.getDay()]; // ONLY skip Sunday if (!weekend.includes(dayName))
+                    {
+                        count++;
+                    }
+                    current.setDate(current.getDate() + 1);
+                }
+                $('#apply_day').val(count);
+            }); // Date validation
+        $(document).ready(function(e) {
+            function datecheck() {
+                var date = new Date($('#apply_start').val());
+                var date1 = new
+                Date($('#leave_aprv_strt_date').val());
+                var date2 = new Date($('#leave_aprv_end_date').val());
+                if (date > date1 ||
+                    date > date2) {
+                    alert('Approved date cannot be less than apply date');
+                    document.getElementById('leave_aprv_strt_date').value = '';
+                    document.getElementById('leave_aprv_end_date').value = '';
+                }
             }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            var errorMsg = 'Error loading leave balance';
-
-            if (jqXHR.status === 404) {
-                errorMsg = 'Service not found';
-            } else if (jqXHR.status === 500) {
-                errorMsg = 'Server error';
-            }
-
-            $('#enjoy').html('<span style="color: red;">' + errorMsg + '</span>');
-        }
-    });
-}
-
-// Initialize on page load
-$(document).ready(function() {
-    var isAdmin = $('#employee_id').is('select');
-
-    if (isAdmin) {
-        // Admin: when employee changes
-        $('#employee_id').on('change', function() {
-            var leaveType = $('#leave_type_id').val();
-            if (leaveType) {
-                leavetypechange(leaveType);
-            }
+            $('.leave_aprv_strt_date,.leave_aprv_end_date').change(datecheck);
         });
-    } else {
-        // User: auto-load if leave type selected
-        var initialLeaveType = $('#leave_type_id').val();
-        var empId = getEmployeeId();
-        if (empId && initialLeaveType) {
-            leavetypechange(initialLeaveType);
-        }
-    }
 
-    // When leave type changes (both admin and user)
-    $('#leave_type_id').on('change', function() {
-        var leaveType = $(this).val();
-        if (leaveType) {
-            leavetypechange(leaveType);
+        /**
+         * Get Employee ID - works for both admin dropdown and user hidden field
+         */
+        function getEmployeeId() {
+            return $('#employee_id').val() ||
+                $('#employee_id_hidden').val() ||
+                $('input[name="employee_id"]').val() ||
+                '';
         }
-    });
-});
+
+        /**
+         * Fetch and display leave balance
+         */
+        function leavetypechange(leave_type_id) {
+            var employee_id = getEmployeeId();
+
+            // Clear previous messages
+            $('#enjoy').html('');
+            $('#checkleave').html('');
+
+            if (!employee_id) {
+                $('#enjoy').html('<span style="color: red;">Employee ID not found</span>');
+                return;
+            }
+
+            if (!leave_type_id) {
+                return;
+            }
+
+            // Show loading
+            $('#enjoy').html('Loading...');
+
+            $.ajax({
+                url: "<?php echo base_url('leave/Leave/free_leave'); ?>",
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    'employee_id': employee_id,
+                    'leave_type': leave_type_id
+                },
+                success: function(data) {
+                    if (data.status === 'success' || data.status === 'warning') {
+                        $('#enjoy').html('You Enjoyed: ' + data.enjoy + ' Days');
+                        $('#checkleave').html('Available Leave: ' + data.due + ' Days');
+
+                        // Color based on balance
+                        if (data.due < 3) {
+                            $('#checkleave').css('color', 'orange');
+                        } else {
+                            $('#checkleave').css('color', 'green');
+                        }
+                    } else {
+                        $('#enjoy').html('<span style="color: red;">' + (data.message ||
+                                'Error loading balance') +
+                            '</span>');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    var errorMsg = 'Error loading leave balance';
+
+                    if (jqXHR.status === 404) {
+                        errorMsg = 'Service not found';
+                    } else if (jqXHR.status === 500) {
+                        errorMsg = 'Server error';
+                    }
+
+                    $('#enjoy').html('<span style="color: red;">' + errorMsg + '</span>');
+                }
+            });
+        }
+
+        // Initialize on page load
+        $(document).ready(function() {
+            var isAdmin = $('#employee_id').is('select');
+
+            if (isAdmin) {
+                // Admin: when employee changes
+                $('#employee_id').on('change', function() {
+                    var leaveType = $('#leave_type_id').val();
+                    if (leaveType) {
+                        leavetypechange(leaveType);
+                    }
+                });
+            } else {
+                // User: auto-load if leave type selected
+                var initialLeaveType = $('#leave_type_id').val();
+                var empId = getEmployeeId();
+                if (empId && initialLeaveType) {
+                    leavetypechange(initialLeaveType);
+                }
+            }
+
+            // When leave type changes (both admin and user)
+            $('#leave_type_id').on('change', function() {
+                var leaveType = $(this).val();
+                if (leaveType) {
+                    leavetypechange(leaveType);
+                }
+            });
+        });
 </script>
