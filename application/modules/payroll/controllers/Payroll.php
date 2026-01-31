@@ -404,6 +404,8 @@ $secs = floor($seconds % 60);
 				'total_working_minutes' => $worhour,
 				'salary_name'           => $this->input->post('name',true),
 				'working_period'        => $workingper,
+				'lop_days'              => $lop_days, // NEW
+                'lop_deduction'         => $lop_deduction, // NEW
 			);
 
 			if(!empty($aAmount->employee_id)){
@@ -697,5 +699,75 @@ public function payslip($id = null){
 		$data['page']          = "payslip";   
 		echo Modules::run('template/layout', $data); 
 
+}
+
+// Get employee LOP days for current month
+public function get_employee_lop_days()
+{
+    $employee_id = $this->input->post('employee_id');
+    $month = $this->input->post('month'); // Format: "January 2026"
+    
+    if(empty($employee_id)) {
+        echo json_encode(['lop_days' => 0, 'message' => 'Employee ID required']);
+        return;
+    }
+    
+    if(empty($month)) {
+        // Get current month if not specified
+        $month = date('F Y');
+    }
+    
+    list($month_name, $year) = explode(' ', $month);
+    $month_number = date('n', strtotime($month_name));
+    
+    // LOP leave type ID is 8 according to your model
+    $lop_leave_type_id = 8;
+    
+    // Load the leave model
+    $this->load->model('leave/Leave_model');
+    
+    // Ensure balance exists for this month
+    $this->Leave_model->ensure_monthly_balance($employee_id, $lop_leave_type_id, $year, $month_number);
+    
+    // Get LOP balance for the month
+    $lop_balance = $this->db->get_where('employee_leave_balance', [
+        'employee_id'   => $employee_id,
+        'leave_type_id' => $lop_leave_type_id,
+        'year'          => $year,
+        'month'         => $month_number
+    ])->row();
+    
+    if(!$lop_balance) {
+        echo json_encode(['lop_days' => 0, 'message' => 'No LOP balance found']);
+        return;
+    }
+    
+    // LOP days used this month
+    $lop_days_used = $lop_balance->used_leave;
+    
+    // Also get approved LOP leaves for this month
+    $lop_leaves = $this->db->select('SUM(num_aprv_day) as total_lop')
+        ->from('leave_application')
+        ->where('employee_id', $employee_id)
+        ->where('leave_type_id', $lop_leave_type_id)
+        ->where('YEAR(leave_aprv_strt_date)', $year)
+        ->where('MONTH(leave_aprv_strt_date)', $month_number)
+        ->where('leave_aprv_status', 1) // Approved
+        ->get()
+        ->row();
+    
+    $total_lop_days = $lop_leaves && $lop_leaves->total_lop ? $lop_leaves->total_lop : 0;
+    
+    // Get opening balance (total LOP available)
+    $opening_balance = $lop_balance->opening_balance;
+    $closing_balance = $lop_balance->closing_balance;
+    
+    echo json_encode([
+        'lop_days' => $total_lop_days,
+        'used_leave' => $lop_days_used,
+        'opening_balance' => $opening_balance,
+        'closing_balance' => $closing_balance,
+        'message' => 'LOP days fetched successfully'
+    ]);
 }
 }

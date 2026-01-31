@@ -391,6 +391,25 @@ function printDiv(divName) {
 
                                                 </tr>
                                                 <?php }?>
+                                                <?php 
+// Display LOP deduction if exists
+if(!empty($paymentdata[0]['lop_days']) && $paymentdata[0]['lop_days'] > 0) {
+    $lopDeduction = !empty($paymentdata[0]['lop_deduction']) ? $paymentdata[0]['lop_deduction'] : 0;
+    $totalDeduction += $lopDeduction;
+?>
+                                                <tr class="entry" style="background-color: #fff3cd;">
+                                                    <td class="value">
+                                                        <strong>LOP - Loss of Pay</strong>
+                                                        <br><small>(<?php echo $paymentdata[0]['lop_days']; ?> days
+                                                            deducted)</small>
+                                                    </td>
+                                                    <td class="value">
+                                                        <div>
+                                                            <strong><?php echo number_format($lopDeduction, 2); ?></strong>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <?php } ?>
                                                 <?php $gross = $totalAddition+($basicsal-$totalDeduction);
                                      if($paymentdata[0]['total_salary'] < $gross){
                                     ?>
@@ -483,3 +502,42 @@ function printDiv(divName) {
         </div>
 </div>
 </div>
+<script>
+// Fetch employee LOP days from balance
+function fetchEmployeeLOPDays() {
+    var employeeId = document.getElementById('employee_id').value;
+
+    if (!employeeId) {
+        alert('Please select an employee first');
+        document.getElementById('lop_enabled').checked = false;
+        return;
+    }
+
+    $.ajax({
+        url: '<?php echo base_url('payroll/Payroll/get_employee_lop_days')?>',
+        method: 'post',
+        dataType: 'json',
+        data: {
+            'employee_id': employeeId,
+            'month': '<?php echo date('F Y'); ?>'
+        },
+        success: function(data) {
+            document.getElementById('lop_days').value = data.lop_days;
+
+            // Show balance info to user
+            if (data.lop_days > 0) {
+                alert('LOP Days Used: ' + data.lop_days + '\nOpening Balance: ' + data.opening_balance +
+                    '\nClosing Balance: ' + data.closing_balance);
+            } else {
+                alert('No LOP days used this month.\nOpening Balance: ' + data.opening_balance);
+            }
+
+            summary();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error fetching LOP days:', textStatus);
+            alert('Error fetching LOP days');
+        }
+    });
+}
+</script>
