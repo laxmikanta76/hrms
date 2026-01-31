@@ -316,7 +316,7 @@ $(document).ready(function(e) {
         var date1 = new Date($('.apply_start').val());
         var date2 = new Date($('.apply_end').val());
         var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
         $('.apply_day').val(diffDays + 1);
     }
     $('.apply_start,.apply_end').change(applyday);
