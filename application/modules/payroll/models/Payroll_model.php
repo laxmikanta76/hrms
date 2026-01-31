@@ -105,54 +105,8 @@ public function emp_salstup_delete($id = null)
 	/* salary sheet generate  */
 	public function salary_genrate_create($data = array())
 	{
-		//return $this->db->insert('salary_sheet_generate', $data);//
-		// Around line where you calculate $netAmount
-// Add this before calculating netAmount
-
-// Get LOP deduction for this employee
-$lop_deduction = 0;
-$lop_days = 0;
-
-// Check if LOP is enabled for this employee
-$lop_setup = $this->db->select('lop_enabled, lop_days')
-    ->from('employee_salary_setup')
-    ->where('employee_id', $value->employee_id)
-    ->get()
-    ->row();
-
-if($lop_setup && $lop_setup->lop_enabled == 1) {
-    // Load leave model
-    $this->load->model('leave/Leave_model');
-    
-    // Get LOP balance for current month
-    $current_month = date('n', strtotime($startd));
-    $current_year = date('Y', strtotime($startd));
-    
-    $lop_balance = $this->db->get_where('employee_leave_balance', [
-        'employee_id'   => $value->employee_id,
-        'leave_type_id' => 8, // LOP leave type ID
-        'year'          => $current_year,
-        'month'         => $current_month
-    ])->row();
-    
-    if($lop_balance && $lop_balance->used_leave > 0) {
-        $lop_days = $lop_balance->used_leave;
-        
-        // Calculate LOP deduction
-        // Per day salary = Monthly salary / 30
-        $per_day_salary = $Amount / 30;
-        $lop_deduction = $per_day_salary * $lop_days;
-    }
-}
-
-// Then update the netAmount calculation
-if($aAmount->sal_type == 1){
-    // ... existing hourly calculation
-    $netAmount = number_format(($totamount - $TaxAmount - $lop_deduction), 2);
-} else if($aAmount->sal_type == 2){
-    $netAmount = $Amount - $lop_deduction;
-	}
-}	
+		return $this->db->insert('salary_sheet_generate', $data);//
+	}	
 
 	public function salary_generateView($limit = null, $start = null)
 	{
