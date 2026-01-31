@@ -248,77 +248,49 @@
 
 <script language="javascript">
 $(function() {
-    var dateFormat = 'dd-mm-yy'; // Change to 'yy-mm-dd' if you want YYYY-MM-DD
-
-    $(".datepicker, .apply_start, .apply_end, .leave_aprv_strt_date, .leave_aprv_end_date").datepicker({
-        dateFormat: dateFormat,
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-1:+2",
-        minDate: 0, // Can't select past dates
-        beforeShowDay: function(date) {
-            // Optional: Disable weekends in the calendar picker itself
-            var weekend = "<?php echo $weekend ?>";
-            var w = weekend.split(',');
-            var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
-                'Saturday'];
-            var dayName = DAYS[date.getDay()];
-
-            // Return [true, ""] to enable, [false, ""] to disable
-            return [!w.includes(dayName), ""];
-        }
+    $("#f").datepicker({
+        dateFormat: 'yy-mm-dd'
     });
-
-    // Other datepickers (if any)
-    $("#f, #e, #a, #c, #d, #b").datepicker({
-        dateFormat: dateFormat
+    $("#e").datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+    $("#a").datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+    $("#c").datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+    $("#d").datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+    $("#b").datepicker({
+        dateFormat: 'yy-mm-dd'
     });
 });
 
 // Calculate approved days (excluding weekends)
 $(document).ready(function(e) {
     function calculation() {
+        var date1 = new Date($('.leave_aprv_strt_date').val());
+        var date2 = new Date($('.leave_aprv_end_date').val());
         var from = new Date($('.leave_aprv_strt_date').val());
         var to = new Date($('.leave_aprv_end_date').val());
-
-        // Validate dates
-        if (isNaN(from.getTime()) || isNaN(to.getTime())) {
-            $('.num_aprv_day').val('');
-            return;
-        }
-
-        if (from > to) {
-            alert('Approved end date must be greater than or equal to approved start date');
-            $('.num_aprv_day').val('');
-            return;
-        }
-
         var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var d = from;
+        var count = 0;
         var weekend = "<?php echo $weekend ?>";
         var w = weekend.split(',');
 
-        var count = 0;
-        var current = new Date(from);
-
-        // Loop through each day in the range (INCLUSIVE)
-        while (current <= to) {
-            var dayName = DAYS[current.getDay()];
-            // Check if current day is a weekend
-            if (w.includes(dayName)) {
-                count++;
+        while (d <= to) {
+            d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
+            if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
+                count += 1;
             }
-            // Move to next day
-            current.setDate(current.getDate() + 1);
         }
 
-        // Calculate total days including both start and end
-        var timeDiff = to.getTime() - from.getTime();
-        var totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
-
-        // Working days = total days - weekend days
-        var workingDays = totalDays - count;
-
-        $('.num_aprv_day').val(workingDays);
+        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
+        $('.num_aprv_day').val(diffDays + 1);
     }
     $('.leave_aprv_strt_date,.leave_aprv_end_date').change(calculation);
 });
@@ -328,45 +300,24 @@ $(document).ready(function(e) {
     function applyday() {
         var from = new Date($('.apply_start').val());
         var to = new Date($('.apply_end').val());
-
-        // Validate dates
-        if (isNaN(from.getTime()) || isNaN(to.getTime())) {
-            $('.apply_day').val('');
-            return;
-        }
-
-        if (from > to) {
-            alert('End date must be greater than or equal to start date');
-            $('.apply_day').val('');
-            return;
-        }
-
         var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var d = from;
+        var count = 0;
         var weekend = "<?php echo $weekend ?>";
         var w = weekend.split(',');
 
-        var count = 0;
-        var current = new Date(from);
-
-        // Loop through each day in the range (INCLUSIVE of both start and end)
-        while (current <= to) {
-            var dayName = DAYS[current.getDay()];
-            // Check if current day is a weekend
-            if (w.includes(dayName)) {
-                count++;
+        while (d <= to) {
+            d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
+            if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
+                count += 1;
             }
-            // Move to next day
-            current.setDate(current.getDate() + 1);
         }
 
-        // Calculate total days including both start and end
-        var timeDiff = to.getTime() - from.getTime();
-        var totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
-
-        // Working days = total days - weekend days
-        var workingDays = totalDays - count;
-
-        $('.apply_day').val(workingDays);
+        var date1 = new Date($('.apply_start').val());
+        var date2 = new Date($('.apply_end').val());
+        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
+        $('.apply_day').val(diffDays + 1);
     }
     $('.apply_start,.apply_end').change(applyday);
 });
@@ -374,25 +325,13 @@ $(document).ready(function(e) {
 // Date validation
 $(document).ready(function(e) {
     function datecheck() {
-        var applyStart = new Date($('#apply_start').val());
-        var approveStart = new Date($('#leave_aprv_strt_date').val());
-        var approveEnd = new Date($('#leave_aprv_end_date').val());
-
-        if (isNaN(applyStart.getTime()) || isNaN(approveStart.getTime())) {
-            return;
-        }
-
-        if (approveStart < applyStart) {
-            alert('Approved start date cannot be earlier than application start date');
+        var date = new Date($('#apply_start').val());
+        var date1 = new Date($('#leave_aprv_strt_date').val());
+        var date2 = new Date($('#leave_aprv_end_date').val());
+        if (date > date1 || date > date2) {
+            alert('Approved date cannot be less than apply date');
             document.getElementById('leave_aprv_strt_date').value = '';
             document.getElementById('leave_aprv_end_date').value = '';
-            return;
-        }
-
-        if (!isNaN(approveEnd.getTime()) && approveEnd < applyStart) {
-            alert('Approved end date cannot be earlier than application start date');
-            document.getElementById('leave_aprv_end_date').value = '';
-            return;
         }
     }
     $('.leave_aprv_strt_date,.leave_aprv_end_date').change(datecheck);
