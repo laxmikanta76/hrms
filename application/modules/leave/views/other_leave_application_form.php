@@ -289,7 +289,7 @@ $(document).ready(function(e) {
         }
 
         var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
         $('.num_aprv_day').val(diffDays + 1);
     }
     $('.leave_aprv_strt_date,.leave_aprv_end_date').change(calculation);
