@@ -133,14 +133,14 @@
                                     <div class="col-sm-4">
                                         <input type="text" name="apply_strt_date"
                                             class="datepicker form-control apply_start" id="apply_start"
-                                            placeholder="<?php echo display('apply_strt_date') ?>" required>
+                                            placeholder="<?php echo display('apply_strt_date') ?>" require>
                                     </div>
                                     <label for="apply_end_date" class="col-sm-2 col-form-label">
                                         <?php echo display('apply_end_date') ?></label>
                                     <div class="col-sm-4">
                                         <input type="text" name="apply_end_date"
                                             class="datepicker form-control apply_end" id="apply_end"
-                                            placeholder="<?php echo display('apply_end_date') ?>" required>
+                                            placeholder="<?php echo display('apply_end_date') ?>" require>
 
                                     </div>
                                 </div>
