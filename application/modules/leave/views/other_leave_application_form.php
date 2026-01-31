@@ -133,14 +133,14 @@
                                     <div class="col-sm-4">
                                         <input type="text" name="apply_strt_date"
                                             class="datepicker form-control apply_start" id="apply_start"
-                                            placeholder="<?php echo display('apply_strt_date') ?>">
+                                            placeholder="<?php echo display('apply_strt_date') ?>" required>
                                     </div>
                                     <label for="apply_end_date" class="col-sm-2 col-form-label">
                                         <?php echo display('apply_end_date') ?></label>
                                     <div class="col-sm-4">
                                         <input type="text" name="apply_end_date"
                                             class="datepicker form-control apply_end" id="apply_end"
-                                            placeholder="<?php echo display('apply_end_date') ?>">
+                                            placeholder="<?php echo display('apply_end_date') ?>" required>
 
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@
                                         <input type="text" name="leave_aprv_strt_date"
                                             class="datepicker form-control leave_aprv_strt_date"
                                             id="leave_aprv_strt_date"
-                                            placeholder="<?php echo display('leave_aprv_strt_date') ?>">
+                                            placeholder="<?php echo display('leave_aprv_strt_date') ?>" required>
 
                                     </div>
                                     <label for="leave_aprv_end_date" class="col-sm-2 col-form-label">
@@ -179,7 +179,7 @@
                                     <div class="col-sm-4">
                                         <input type="text" name="leave_aprv_end_date"
                                             class="datepicker form-control leave_aprv_end_date" id="leave_aprv_end_date"
-                                            placeholder="<?php echo display('leave_aprv_end_date') ?>">
+                                            placeholder="<?php echo display('leave_aprv_end_date') ?>" required>
 
                                     </div>
                                 </div>
@@ -212,7 +212,7 @@
                                         class="col-sm-2 col-form-label"><?php echo display('reason') ?></label>
                                     <div class="col-sm-10">
                                         <textarea name="reason" class="form-control"
-                                            placeholder="<?php echo display('reason') ?>"></textarea>
+                                            placeholder="<?php echo display('reason') ?>" required> </textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
