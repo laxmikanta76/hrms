@@ -271,72 +271,55 @@ $(function() {
 // Calculate approved days (excluding weekends)
 $(document).ready(function(e) {
     function calculation() {
-        var startVal = $('.leave_aprv_strt_date').val();
-        var endVal = $('.leave_aprv_end_date').val();
-
-        if (!startVal || !endVal) {
-            $('.num_aprv_day').val('');
-            return;
-        }
-
-        var from = parseDate(startVal);
-        var to = parseDate(endVal);
-
+        var date1 = new Date($('.leave_aprv_strt_date').val());
+        var date2 = new Date($('.leave_aprv_end_date').val());
+        var from = new Date($('.leave_aprv_strt_date').val());
+        var to = new Date($('.leave_aprv_end_date').val());
         var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var weekend = "<?php echo $weekend ?>".split(',');
-
-        var totalDays = 0;
-        var d = new Date(from);
+        var d = from;
+        var count = 0;
+        var weekend = "<?php echo $weekend ?>";
+        var w = weekend.split(',');
 
         while (d <= to) {
-            if (!weekend.includes(DAYS[d.getDay()])) {
-                totalDays++;
+            d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
+            if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
+                count += 1;
             }
-            d.setDate(d.getDate() + 1);
         }
 
-        $('.num_aprv_day').val(totalDays);
+        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
+        $('.num_aprv_day').val(diffDays + 1);
     }
-
-    $('.leave_aprv_strt_date, .leave_aprv_end_date').on('change', approvedDayCalc);
+    $('.leave_aprv_strt_date,.leave_aprv_end_date').change(calculation);
 });
 
 // Calculate apply days (excluding weekends)
 $(document).ready(function(e) {
     function applyday() {
-        var startVal = $('.apply_start').val();
-        var endVal = $('.apply_end').val();
-
-        if (!startVal || !endVal) {
-            $('#apply_day').val('');
-            return;
-        }
-
-        var from = parseDate(startVal);
-        var to = parseDate(endVal);
-
-        if (to < from) {
-            $('#apply_day').val(0);
-            return;
-        }
-
+        var from = new Date($('.apply_start').val());
+        var to = new Date($('.apply_end').val());
         var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var weekend = "<?php echo $weekend ?>".split(',');
-
-        var totalDays = 0;
-        var d = new Date(from);
+        var d = from;
+        var count = 0;
+        var weekend = "<?php echo $weekend ?>";
+        var w = weekend.split(',');
 
         while (d <= to) {
-            if (!weekend.includes(DAYS[d.getDay()])) {
-                totalDays++;
+            d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
+            if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
+                count += 1;
             }
-            d.setDate(d.getDate() + 1);
         }
 
-        $('#apply_day').val(totalDays);
+        var date1 = new Date($('.apply_start').val());
+        var date2 = new Date($('.apply_end').val());
+        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
+        $('.apply_day').val(diffDays + 1);
     }
-
-    $('.apply_start, .apply_end').on('change', applyday);
+    $('.apply_start,.apply_end').change(applyday);
 });
 
 // Date validation
