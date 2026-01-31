@@ -95,10 +95,10 @@
                                         <?php echo display('employee_name') ?></label>
                                     <div class="col-sm-4">
                                         <?php
-        $this->load->helper('employee');
-        $emp_id   = $this->session->userdata('employee_id');
-        $emp_name = $this->session->userdata('first_name').' '.$this->session->userdata('last_name');
-        ?>
+                                         $this->load->helper('employee');
+                                         $emp_id   = $this->session->userdata('employee_id');
+                                         $emp_name = $this->session->userdata('first_name').' '.$this->session->userdata('last_name');
+                                        ?>
 
                                         <?php if (can_select_employee()): ?>
                                         <!-- ADMIN / HR / SUPERVISOR -->
@@ -133,14 +133,14 @@
                                     <div class="col-sm-4">
                                         <input type="text" name="apply_strt_date"
                                             class="datepicker form-control apply_start" id="apply_start"
-                                            placeholder="<?php echo display('apply_strt_date') ?>">
+                                            placeholder="<?php echo display('apply_strt_date') ?>" required>
                                     </div>
                                     <label for="apply_end_date" class="col-sm-2 col-form-label">
                                         <?php echo display('apply_end_date') ?></label>
                                     <div class="col-sm-4">
                                         <input type="text" name="apply_end_date"
                                             class="datepicker form-control apply_end" id="apply_end"
-                                            placeholder="<?php echo display('apply_end_date') ?>">
+                                            placeholder="<?php echo display('apply_end_date') ?>" required>
 
                                     </div>
                                 </div>
