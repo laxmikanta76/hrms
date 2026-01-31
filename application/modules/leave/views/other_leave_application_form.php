@@ -247,6 +247,7 @@
 
 
 <script language="javascript">
+console.log('WEEKEND FROM PHP:', "<?php echo $weekend ?>");
 $(function() {
     $("#f").datepicker({
         dateFormat: 'yy-mm-dd'
@@ -271,7 +272,6 @@ $(function() {
 // Calculate approved days (excluding weekends)
 $(document).ready(function(e) {
     function calculation() {
-        console.log('WEEKEND FROM PHP:', "<?php echo $weekend ?>");
         var date1 = new Date($('.leave_aprv_strt_date').val());
         var date2 = new Date($('.leave_aprv_end_date').val());
         var from = new Date($('.leave_aprv_strt_date').val());
