@@ -34,7 +34,7 @@ class Cron extends CI_Controller {
         ];
 
         if (!isset($allowedTasks[$task])) {
-            echo "Invalid cron task\n";
+            log_message('error', "Invalid cron task: $task");
             exit;
         }
 
@@ -89,7 +89,7 @@ class Cron extends CI_Controller {
                     'remarks'   => 'Auto checkout by system'
                 ]);
 
-                echo "Auto checkout done for UID {$checkin->uid}\n";
+                log_message('info', "Auto checkout done for UID {$checkin->uid}");
             }
         }
     }
@@ -101,7 +101,7 @@ class Cron extends CI_Controller {
         $year  = date('Y');
         $month = date('n');
 
-        echo "Processing monthly leave: $year-$month\n";
+        log_message('info', "Processing monthly leave: $year-$month");
         $this->Leave_model->process_monthly_leave($year, $month);
     }
 
@@ -111,7 +111,7 @@ class Cron extends CI_Controller {
     {
         $year = date('Y');
 
-        echo "Resetting yearly leave for: $year\n";
+        log_message('info', "Resetting yearly leave for: $year");
         $this->Leave_model->reset_yearly_leave($year);
     }
 }
