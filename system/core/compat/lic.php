@@ -61,6 +61,9 @@ class Lic
         if(session_id() == '' || !isset($_SESSION)) {
             session_start();
         }
+        if (php_sapi_name() === 'cli') {
+        return;
+        }
 
         // set log_path
         $this->log_path = SYSDIR.'/core/compat/index.html'; 
@@ -253,5 +256,3 @@ class Lic
         }
     }
 }
-
-
