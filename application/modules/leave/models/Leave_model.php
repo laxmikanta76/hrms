@@ -319,7 +319,7 @@ elseif ($leave_type_id == 9) {
     $opening = 1; // fixed every month
 }
 
-// ===== LOP (No Balance) =====
+// ===== LOP (Remaining Balance carry forward) =====
 elseif ($leave_type_id == 8) {
     if ($prev) {
         $opening = $prev->closing_balance; // carry forward remaining

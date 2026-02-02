@@ -218,53 +218,45 @@
     color: #000;
     background: rgba(0, 0, 0, 0.04);
 }
-</style>
-<!-- Printable area start -->
-<script type="text/javascript">
-function printDiv(divName) {
-    var printContents = document.getElementById(divName).innerHTML;
-    var originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
+
+/* NEW: Style for LOP entry to make it stand out */
+.lop-entry {
+    background-color: #fff3cd !important;
+    border-left: 3px solid #ff9800;
+    padding-left: 7px !important;
 }
-</script>
-<!-- Printable area end -->
 
-<div class="content-wrapper">
-    <section class="content-header">
-
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <button class="btn btn-warning" onclick="printDiv('printableArea')"><span
-                        class="fa fa-print"></span></button>
-            </div>
-            <div id="printableArea">
-                <div class="panel-body" id="payslip">
-                    <div class="row" style="border-bottom:1px solid #ccc;">
+.lop-entry .value {
+    color: #d32f2f;
+    font-weight: 700;
+}
+</style>
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <div class="panel">
+            <div class="panel-body">
+                <div id="payslip">
+                    <link href="<?php echo base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet">
+                    <div class="row" id="header">
+                        <div class="col-sm-12 text-center">
+                            <h3 style="margin:0;text-align:center"><?php if($setting->logo){ ?>
+                                <img src="<?php echo base_url().$setting->logo?>" style="width:100%;max-width:300px">
+                                <?php }?>
+                            </h3>
+                            <p style="margin:0;padding:10px 0"><?= $setting->address?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 class="text-center"
+                                style="border-top:1px solid #e4e5e7;border-bottom:1px solid #e4e5e7;padding:15px 0">
+                                <?php echo display('salary_slip'); ?> -
+                                <?php echo date('F Y', strtotime($paymentdata[0]['payment_date'])); ?>
+                            </h4>
+                        </div>
 
                         <div class="col-sm-12">
-
-                            <table>
-                                <tr>
-
-                                    <td><img src="<?php echo base_url((!empty($setting->logo)?$setting->logo:'assets/img/icons/mini-logo.png')) ?>"
-                                            width="250px;" alt=""></td>
-                                    <td class="text-center">
-                                        <address style="margin-top:10px">
-                                            <strong
-                                                style="font-size: 30px; "><?php echo (!empty($setting->title)?$setting->title:'Bdtask Ltd')?></strong><br>
-                                            <?php echo (!empty($setting->address)?$setting->address:'Demo Address')?><br>
-                                            <span style="font-weight: bold;"> Salary Slip -
-                                                <?= $paymentdata[0]['salary_name']?></span>
-
-
-                                        </address>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </table>
-                            <table>
+                            <table width="100%">
                                 <div id="details">
                                     <div class="scope-entry">
                                         <div class="title"><?= display('employee_name')?>
@@ -315,7 +307,7 @@ function printDiv(divName) {
                                                 <?php 
                                         $totalAddition = 0;
                                         foreach($addition as $additions){
-                                            // NEW: Handle calculation type
+                                            // Handle calculation type
                                             if($additions->calculation_type == 1) {
                                                 // Fixed amount
                                                 $additionAmount = $additions->amount;
@@ -368,7 +360,7 @@ function printDiv(divName) {
                                                 <?php 
                                       $totalDeduction = 0;
                                       foreach($deduction as $deductions){
-                                          // NEW: Handle calculation type
+                                          // Handle calculation type
                                           if($deductions->calculation_type == 1) {
                                               // Fixed amount
                                               $deductionAmount = $deductions->amount;
@@ -391,6 +383,30 @@ function printDiv(divName) {
 
                                                 </tr>
                                                 <?php }?>
+
+                                                <?php 
+                                                // NEW: Calculate and display LOP deduction
+                                                $lop_details = $this->Payroll_model->get_lop_details_for_payslip(
+                                                    $paymentdata[0]['employee_id'], 
+                                                    $paymentdata[0]['payment_date']
+                                                );
+                                                
+                                                $lop_amount = $lop_details['lop_amount'];
+                                                $lop_days = $lop_details['lop_days'];
+                                                
+                                                if($lop_days > 0) {
+                                                    $totalDeduction += $lop_amount;
+                                                ?>
+                                                <tr class="entry lop-entry">
+                                                    <td class="value">
+                                                        Loss on Pay (<?= $lop_days ?> days)
+                                                    </td>
+                                                    <td class="value">
+                                                        <div><?php echo number_format($lop_amount, 2); ?></div>
+                                                    </td>
+                                                </tr>
+                                                <?php }?>
+
                                                 <?php $gross = $totalAddition+($basicsal-$totalDeduction);
                                      if($paymentdata[0]['total_salary'] < $gross){
                                     ?>
@@ -481,5 +497,5 @@ function printDiv(divName) {
 
 
         </div>
-</div>
+    </div>
 </div>

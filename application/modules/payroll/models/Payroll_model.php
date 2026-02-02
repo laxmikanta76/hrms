@@ -312,4 +312,79 @@ public function setting()
 		return $this->db->get('setting')->row();
 	}
 
+
+	/**
+	 * NEW METHOD: Calculate LOP (Loss on Pay) deduction for an employee
+	 * 
+	 * @param int $employee_id - Employee ID
+	 * @param string $start_date - Salary period start date (Y-m-d)
+	 * @param string $end_date - Salary period end date (Y-m-d)
+	 * @param float $basic_salary - Employee's basic salary
+	 * @return array - Contains lop_days, lop_amount, and per_day_salary
+	 */
+	public function calculate_lop_deduction($employee_id, $start_date, $end_date, $basic_salary)
+	{
+		// Get LOP leave type ID (assuming 8 as per your Leave_model.php)
+		$lop_leave_type_id = 8;
+		
+		// Get all approved LOP leaves for this employee in the salary period
+		$this->db->select('SUM(num_aprv_day) as total_lop_days');
+		$this->db->from('leave_apply');
+		$this->db->where('employee_id', $employee_id);
+		$this->db->where('leave_type_id', $lop_leave_type_id);
+		$this->db->where('leave_aprv_strt_date >=', $start_date);
+		$this->db->where('leave_aprv_strt_date <=', $end_date);
+		$this->db->where('num_aprv_day >', 0); // Only approved leaves
+		
+		$query = $this->db->get();
+		$result = $query->row();
+		
+		$lop_days = !empty($result->total_lop_days) ? $result->total_lop_days : 0;
+		
+		// Calculate working days in the month (approximately 30 days)
+		$working_days_in_month = 30;
+		
+		// Calculate per day salary
+		$per_day_salary = $basic_salary / $working_days_in_month;
+		
+		// Calculate LOP deduction amount
+		$lop_amount = $per_day_salary * $lop_days;
+		
+		return array(
+			'lop_days' => $lop_days,
+			'lop_amount' => round($lop_amount, 2),
+			'per_day_salary' => round($per_day_salary, 2)
+		);
+	}
+	
+	/**
+	 * NEW METHOD: Get LOP details for payslip display
+	 * 
+	 * @param int $employee_id - Employee ID
+	 * @param string $payment_date - Payment date from employee_salary_payment
+	 * @return array - LOP details
+	 */
+	public function get_lop_details_for_payslip($employee_id, $payment_date)
+	{
+		// Extract year and month from payment date
+		$year = date('Y', strtotime($payment_date));
+		$month = date('m', strtotime($payment_date));
+		
+		// Calculate salary period (1st to last day of month)
+		$start_date = $year . '-' . $month . '-01';
+		$end_date = date('Y-m-t', strtotime($start_date)); // Last day of month
+		
+		// Get employee basic salary
+		$emp_data = $this->db->select('rate')
+			->from('employee_history')
+			->where('employee_id', $employee_id)
+			->get()
+			->row();
+		
+		$basic_salary = !empty($emp_data->rate) ? $emp_data->rate : 0;
+		
+		// Calculate LOP deduction
+		return $this->calculate_lop_deduction($employee_id, $start_date, $end_date, $basic_salary);
+	}
+
 }
