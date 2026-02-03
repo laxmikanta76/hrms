@@ -133,16 +133,33 @@ class Payroll extends MX_Controller {
 			$date=date('Y-m-d');
 
 			foreach($amount as $key=>$value)
-			{	
+			{
+				$amt = (float) $value;
+
+               // 🚫 IMPORTANT: skip zero or empty
+                if ($amt <= 0) {
+                continue;	
+				}
 				$postData = [
 					'employee_id'           => $this->input->post('employee_id',true),
 					'sal_type'              => $this->input->post('sal_type',true),
 					'salary_type_id' 	    => $key,
-					'amount' 	            => (!empty($value)?$value:0),
+					'amount' 	            => $amt,
 					'calculation_type'      => (!empty($calculation_type[$key])?$calculation_type[$key]:0), // NEW: Save calculation type
 					'create_date'           => $date,
 					'gross_salary'          => $this->input->post('gross_salary',true),
 				]; 
+				 // 🔁 check existing
+         $exists = $this->db->get_where('employee_salary_setup', [
+                   'employee_id'    => $postData['employee_id'],
+                   'salary_type_id' => $key
+                ])->row();
+
+               if ($exists) {
+               $this->Payroll_model->update_sal_stup($postData);
+               } else {
+               $this->Payroll_model->salary_setup_create($postData);
+               }
 			
 					$this->Payroll_model->salary_setup_create($postData);
 				
@@ -531,12 +548,19 @@ $secs = floor($seconds % 60);
 
 				foreach($amount as $key=>$value)
 				{
+					    $amt = (float) $value;
+
+                        // 🚫 skip zero
+                        if ($amt <= 0) {
+                        continue;
+						}
+
 
 					$postData = array(
 						'employee_id'        => $this->input->post('employee_id',true),
 						'sal_type'           => $this->input->post('sal_type',true),
 						'salary_type_id' 	 => $key,
-						'amount' 	         => $value,
+						'amount' 	         => $amt,
 						'calculation_type'   => (!empty($calculation_type[$key])?$calculation_type[$key]:0), // NEW: Update calculation type
 						'gross_salary'          => $this->input->post('gross_salary',true),
 					);
