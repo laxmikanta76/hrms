@@ -312,5 +312,4 @@ public function setting()
 		return $this->db->get('setting')->row();
 	}
 
-
 }

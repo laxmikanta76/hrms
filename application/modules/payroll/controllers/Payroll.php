@@ -133,35 +133,16 @@ class Payroll extends MX_Controller {
 			$date=date('Y-m-d');
 
 			foreach($amount as $key=>$value)
-			{
-				$amt = (float) $value;
-
-               // 🚫 IMPORTANT: skip zero or empty
-                if ($amt <= 0) {
-                continue;	
-				}
+			{	
 				$postData = [
 					'employee_id'           => $this->input->post('employee_id',true),
 					'sal_type'              => $this->input->post('sal_type',true),
 					'salary_type_id' 	    => $key,
-					'amount' 	            => $amt,
+					'amount' 	            => (!empty($value)?$value:0),
 					'calculation_type'      => (!empty($calculation_type[$key])?$calculation_type[$key]:0), // NEW: Save calculation type
 					'create_date'           => $date,
 					'gross_salary'          => $this->input->post('gross_salary',true),
 				]; 
-				 // ✅ USE count_all_results (safer)
-                $exists = $this->db
-                ->where('employee_id', $postData['employee_id'])
-                ->where('salary_type_id', $key)
-                ->count_all_results('employee_salary_setup');
-
-                if ($exists > 0) {
-                // UPDATE
-                $this->Payroll_model->update_sal_stup($postData);
-                } else {
-                // INSERT
-                $this->Payroll_model->salary_setup_create($postData);
-             }
 			
 					$this->Payroll_model->salary_setup_create($postData);
 				
@@ -423,6 +404,7 @@ $secs = floor($seconds % 60);
 				'total_working_minutes' => $worhour,
 				'salary_name'           => $this->input->post('name',true),
 				'working_period'        => $workingper,
+				'payment_date'          => date('Y-m-d'),
 			);
 
 			if(!empty($aAmount->employee_id)){
@@ -550,19 +532,12 @@ $secs = floor($seconds % 60);
 
 				foreach($amount as $key=>$value)
 				{
-					    $amt = (float) $value;
-
-                        // 🚫 skip zero
-                        if ($amt <= 0) {
-                        continue;
-						}
-
 
 					$postData = array(
 						'employee_id'        => $this->input->post('employee_id',true),
 						'sal_type'           => $this->input->post('sal_type',true),
 						'salary_type_id' 	 => $key,
-						'amount' 	         => $amt,
+						'amount' 	         => $value,
 						'calculation_type'   => (!empty($calculation_type[$key])?$calculation_type[$key]:0), // NEW: Update calculation type
 						'gross_salary'          => $this->input->post('gross_salary',true),
 					);
@@ -724,4 +699,5 @@ public function payslip($id = null){
 		echo Modules::run('template/layout', $data); 
 
 }
+
 }
