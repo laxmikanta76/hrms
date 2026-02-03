@@ -149,17 +149,19 @@ class Payroll extends MX_Controller {
 					'create_date'           => $date,
 					'gross_salary'          => $this->input->post('gross_salary',true),
 				]; 
-				 // 🔁 check existing
-         $exists = $this->db->get_where('employee_salary_setup', [
-                   'employee_id'    => $postData['employee_id'],
-                   'salary_type_id' => $key
-                ])->row();
+				 // ✅ USE count_all_results (safer)
+                $exists = $this->db
+                ->where('employee_id', $postData['employee_id'])
+                ->where('salary_type_id', $key)
+                ->count_all_results('employee_salary_setup');
 
-               if ($exists) {
-               $this->Payroll_model->update_sal_stup($postData);
-               } else {
-               $this->Payroll_model->salary_setup_create($postData);
-               }
+                if ($exists > 0) {
+                // UPDATE
+                $this->Payroll_model->update_sal_stup($postData);
+                } else {
+                // INSERT
+                $this->Payroll_model->salary_setup_create($postData);
+             }
 			
 					$this->Payroll_model->salary_setup_create($postData);
 				
