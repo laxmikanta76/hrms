@@ -60,14 +60,21 @@ class Payroll extends MX_Controller {
 	public function delete_emp_salarysetup($id = null){ 
 		$this->permission->module('payroll','delete')->redirect();
 
-		if ($this->Payroll_model->emp_salstup_delete($id)) {
-			#set success message
-			$this->session->set_flashdata('message',display('delete_successfully'));
-		} else {
-			#set exception message
-			$this->session->set_flashdata('exception',display('please_try_again'));
-		}
-		redirect("payroll/Payroll/emp_salary_setup_view");
+		$this->db->where('salary_type_id', $id);
+	$this->db->delete('salary_type');
+
+	if ($this->db->affected_rows() > 0) {
+		// Also delete any employee salary setups using this salary type
+		$this->db->where('salary_type_id', $id);
+		$this->db->delete('employee_salary_setup');
+		
+		#set success message
+		$this->session->set_flashdata('message', display('delete_successfully'));
+	} else {
+		#set exception message
+		$this->session->set_flashdata('exception', display('please_try_again'));
+	}
+	redirect("payroll/Payroll/emp_salary_setup_view");
 	}
 
 
