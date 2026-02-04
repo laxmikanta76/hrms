@@ -1,20 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$task = $argv[1] ?? null;
-
-$allowedTasks = [
-    'daily'   => 'auto_checkout()',
-    'monthly' => 'monthly_leave()',
-    'yearly' => 'yearly_reset()',
-];
-
-if (!isset($allowedTasks[$task])) {
-    die('Invalid cron task');
-}
-
-call_user_func($allowedTasks[$task]);
-
 /**
  * Cron Controller
  * Handle all automated tasks
@@ -45,7 +31,7 @@ class Cron extends CI_Controller {
      * Run this on 1st of every month
      * 
      * Cron: 0 0 1 * * (Every 1st at midnight)
-     * URL: https://yourdomain.com/cron/monthly_leave?token=YOUR_TOKEN
+     * URL: https://yourdomain.com/cron/monthly_leave?token=SECURE123
      */
     public function monthly_leave()
     {
