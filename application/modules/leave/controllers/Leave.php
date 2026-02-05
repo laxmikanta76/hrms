@@ -339,6 +339,7 @@ public function application(){
             $data['module']  = "leave";//
             $data['type']    = $this->Leave_model->get_leave_type();
             $data['dropdown']= $this->Leave_model->dropdown();
+			$employee_id = $this->session->userdata('employee_id');
 			$is_admin = $this->session->userdata('is_admin');
             $role_id  = $this->session->userdata('role_id');
             if ($is_admin == 1 || in_array($role_id, [8, 9])) {
@@ -459,7 +460,8 @@ public function application(){
 	public function application_view(){   
         $this->permission->method('leave','read')->redirect();
 
-		$data['title']  = display('selection');  
+		$data['title']  = display('selection'); 
+		$employee_id = $this->session->userdata('employee_id'); 
 		$is_admin = $this->session->userdata('is_admin');
         $role_id  = $this->session->userdata('role_id');
 		if ($is_admin == 1 || in_array($role_id, [8, 9])) {
