@@ -290,8 +290,6 @@ public function application(){
     // others leave info
   public function others_leave(){ 
         $data['title'] = display('application');//agent_picture
-		$is_admin = $this->session->userdata('is_admin');
-           $role_id  = $this->session->userdata('role_id');
 		
     //  Load correct model
         $this->load->model('attendance/Csv_model');
@@ -341,6 +339,8 @@ public function application(){
             $data['module']  = "leave";//
             $data['type']    = $this->Leave_model->get_leave_type();
             $data['dropdown']= $this->Leave_model->dropdown();
+			$is_admin = $this->session->userdata('is_admin');
+            $role_id  = $this->session->userdata('role_id');
             if ($is_admin == 1 || in_array($role_id, [8, 9])) {
 			// Admin / HR / Supervisor
             $data['mang']    = $this->Leave_model->manageleave();
@@ -458,10 +458,10 @@ public function application(){
 	}
 	public function application_view(){   
         $this->permission->method('leave','read')->redirect();
-		$is_admin = $this->session->userdata('is_admin');
-           $role_id  = $this->session->userdata('role_id');
 
-		$data['title']  = display('selection');  ;
+		$data['title']  = display('selection');  
+		$is_admin = $this->session->userdata('is_admin');
+        $role_id  = $this->session->userdata('role_id');
 		if ($is_admin == 1 || in_array($role_id, [8, 9])) {
 			// Admin / HR / Supervisor
             $data['mang']    = $this->Leave_model->manageleave();
