@@ -98,17 +98,43 @@ class Leave_model extends CI_Model {
         return $list;
     }
 
-    public function manageleave()
-    {
-        return $this->db->select('count(DISTINCT(ap.leave_appl_id)) as leave_appl_id,ap.*,p.employee_id,p.first_name,p.last_name, type.leave_type')   
-            ->from('leave_apply ap')
-            ->join('employee_history p', 'ap.employee_id = p.employee_id', 'left')
-            ->join('leave_type as type', 'type.leave_type_id = ap.leave_type_id', 'left')
-            ->group_by('ap.leave_appl_id')
-            ->order_by('ap.leave_appl_id', 'desc')
-            ->get()
-            ->result();
+    // public function manageleave()
+    // {
+    //     return $this->db->select('count(DISTINCT(ap.leave_appl_id)) as leave_appl_id,ap.*,p.employee_id,p.first_name,p.last_name, type.leave_type')   
+    //         ->from('leave_apply ap')
+    //         ->join('employee_history p', 'ap.employee_id = p.employee_id', 'left')
+    //         ->join('leave_type as type', 'type.leave_type_id = ap.leave_type_id', 'left')
+    //         ->group_by('ap.leave_appl_id')
+    //         ->order_by('ap.leave_appl_id', 'desc')
+    //         ->get()
+    //         ->result();
+    // }
+    public function manageleave($employee_id = null)
+{
+    $this->db->select('
+            count(DISTINCT(ap.leave_appl_id)) as leave_appl_id,
+            ap.*,
+            p.employee_id,
+            p.first_name,
+            p.last_name,
+            type.leave_type
+        ')
+        ->from('leave_apply ap')
+        ->join('employee_history p', 'ap.employee_id = p.employee_id', 'left')
+        ->join('leave_type as type', 'type.leave_type_id = ap.leave_type_id', 'left');
+
+    // 🔐 Filter only for logged-in employee
+    if (!empty($employee_id)) {
+        $this->db->where('ap.employee_id', $employee_id);
     }
+
+    return $this->db
+        ->group_by('ap.leave_appl_id')
+        ->order_by('ap.leave_appl_id', 'desc')
+        ->get()
+        ->result();
+}
+
 
     public function application_delete($id = null)
     {
