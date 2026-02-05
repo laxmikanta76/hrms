@@ -339,6 +339,14 @@ elseif ($leave_type_id == 8) {
             'closing_balance' => $opening,
             'created_at'      => date('Y-m-d H:i:s')
         ]);
+        
+        // Return the newly created record
+        return $this->db->get_where('employee_leave_balance', [
+            'employee_id'   => $employee_id,
+            'leave_type_id' => $leave_type_id,
+            'year'          => $year,
+            'month'         => $month
+        ])->row();
     }
 
     /**

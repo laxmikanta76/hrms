@@ -290,6 +290,8 @@ public function application(){
     // others leave info
   public function others_leave(){ 
         $data['title'] = display('application');//agent_picture
+		$is_admin = $this->session->userdata('is_admin');
+           $role_id  = $this->session->userdata('role_id');
 		
     //  Load correct model
         $this->load->model('attendance/Csv_model');
@@ -339,7 +341,13 @@ public function application(){
             $data['module']  = "leave";//
             $data['type']    = $this->Leave_model->get_leave_type();
             $data['dropdown']= $this->Leave_model->dropdown();
+            if ($is_admin == 1 || in_array($role_id, [8, 9])) {
+			// Admin / HR / Supervisor
             $data['mang']    = $this->Leave_model->manageleave();
+			} else {
+            // Normal employee → ONLY own data
+            $data['mang'] = $this->Leave_model->manageleave_by_employee($employee_id);
+            }
             $data['supr']    = $this->Leave_model->supervisorList();
             $data['weekend'] = $this->db->select('dayname')->from('weekly_holiday')->get()->row()->dayname;
             $data['page']    = "other_leave_application_form";    
@@ -450,9 +458,17 @@ public function application(){
 	}
 	public function application_view(){   
         $this->permission->method('leave','read')->redirect();
+		$is_admin = $this->session->userdata('is_admin');
+           $role_id  = $this->session->userdata('role_id');
 
 		$data['title']  = display('selection');  ;
-		$data['mang']   = $this->Leave_model->manageleave();
+		if ($is_admin == 1 || in_array($role_id, [8, 9])) {
+			// Admin / HR / Supervisor
+            $data['mang']    = $this->Leave_model->manageleave();
+			} else {
+            // Normal employee → ONLY own data
+            $data['mang'] = $this->Leave_model->manageleave_by_employee($employee_id);
+            }
 		$data['module'] = "leave";
 		$data['page']   = "application_view";   
 		echo Modules::run('template/layout', $data); 

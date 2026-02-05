@@ -14,8 +14,13 @@
         <?php echo display('others_leave_application');?></button>
     <?php endif; ?>
     <?php if($this->permission->method('leave','read')->access()): ?>
+    <?php  $is_admin = $this->session->userdata('is_admin');
+           $role_id  = $this->session->userdata('role_id');
+           // 8 = HR, 9 = Supervisor
+        if ($is_admin == 1 || in_array($role_id, [8, 9])) {?>
     <a href="<?php echo base_url();?>/leave/Leave/application_view"
         class="btn btn-primary"><?php echo display('manage_application');?></a>
+    <?php } ?>
     <?php endif; ?>
 </div>
 <!--  -->
