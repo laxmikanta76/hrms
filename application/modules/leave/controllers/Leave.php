@@ -346,7 +346,7 @@ public function application(){
             $data['mang']    = $this->Leave_model->manageleave();
 			} else {
             // Normal employee → ONLY own data
-            $data['mang'] = $this->Leave_model->manageleave_by_employee($employee_id);
+            $data['mang'] = $this->Leave_model->manageleave($employee_id);
             }
             $data['supr']    = $this->Leave_model->supervisorList();
             $data['weekend'] = $this->db->select('dayname')->from('weekly_holiday')->get()->row()->dayname;
@@ -467,7 +467,7 @@ public function application(){
             $data['mang']    = $this->Leave_model->manageleave();
 			} else {
             // Normal employee → ONLY own data
-            $data['mang'] = $this->Leave_model->manageleave_by_employee($employee_id);
+            $data['mang'] = $this->Leave_model->manageleave($employee_id);
             }
 		$data['module'] = "leave";
 		$data['page']   = "application_view";   
