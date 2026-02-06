@@ -245,7 +245,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Cron extends CI_Controller {
 
-    private $cron_token = 'YOUR_SECURE_TOKEN_HERE_123456'; // Change this!
+    private $cron_token = 'SECURE123'; // Change this to a secure token
 
     public function __construct()
     {
