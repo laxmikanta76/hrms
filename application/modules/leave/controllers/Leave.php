@@ -297,6 +297,10 @@ public function application(){
     //  GET employee dropdown data
 		$data['dropdownatn'] = $this->Csv_model->Employeename();
         #-------------------------------#
+		// ✅ CHECK LEAVE BALANCE (inside admin approval section)
+		
+$year  = date('Y', strtotime($leave_aprv_strt_date));
+$month = date('n', strtotime($leave_aprv_strt_date));
         $this->form_validation->set_rules('employee_id',display('employee_id'));
 		$this->form_validation->set_rules('apply_strt_date',display('apply_strt_date'));
 		$this->form_validation->set_rules('apply_end_date',display('apply_end_date'),'max_length[50]');
@@ -339,7 +343,7 @@ public function application(){
             $data['module']  = "leave";//
             $data['type']    = $this->Leave_model->get_leave_type();
             $data['dropdown']= $this->Leave_model->dropdown();
-			$employee_id = $this->session->userdata('employee_id');
+			$employee_id = $this->session->userdata('employee_id'); 
 			$is_admin = $this->session->userdata('is_admin');
             $role_id  = $this->session->userdata('role_id');
             if ($is_admin == 1 || in_array($role_id, [8, 9])) {
@@ -354,6 +358,16 @@ public function application(){
             $data['page']    = "other_leave_application_form";    
           echo Modules::run('template/layout', $data); 
         }   
+		//Get current balance (will calculate if not exists)
+$balance = $this->Leave_model->get_employee_leave_balance($employee_id, $leave_type_id, $year, $month);
+
+if ($balance && $num_aprv_day > $balance->closing_balance) {
+    $this->session->set_flashdata('exception', 
+        'Insufficient leave balance. Available: ' . $balance->closing_balance . ' days, Requested: ' . $num_aprv_day . ' days'
+    );
+    redirect("leave/Leave/others_leave");
+    return;
+}
     }
 
     // add others leave type form
@@ -568,6 +582,31 @@ public function application(){
     $month = date('n');
 
     $this->load->model('Leave_model');
+	
+	// ✅ Get balance (will calculate if not exists)
+    $balance = $this->Leave_model->get_employee_leave_balance(
+        $employee_id,
+        $leave_type,
+        $year,
+        $month
+    );
+
+    if ($balance) {
+        echo json_encode([
+            'status' => 'success',
+            'enjoy' => (float)$balance->used_leave,
+            'due'   => (float)$balance->closing_balance,
+            'opening' => (float)$balance->opening_balance
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'error',
+            'enjoy' => 0,
+            'due'   => 0,
+            'message' => 'Unable to fetch balance'
+        ]);
+    }
+
 
     // Get leave type details
     $leaveTypeInfo = $this->db->get_where('leave_type', [
