@@ -190,50 +190,6 @@ class Leave_model extends CI_Model {
     return true;
     }
 
-    private function deduct_leave_on_approval($data)
-{
-    $employee_id   = $data['employee_id'];
-    $leave_type_id = !empty($data['leave_type_id'])
-        ? $data['leave_type_id']
-        : $data['leave_type'];
-
-    $days = (int)$data['num_aprv_day'];
-    if ($days <= 0) return;
-
-    // Skip LOP
-    if ($leave_type_id == 8) return;
-
-    $start_date = (!empty($data['leave_aprv_strt_date']) && $data['leave_aprv_strt_date'] != '0000-00-00')
-        ? $data['leave_aprv_strt_date']
-        : $data['apply_strt_date'];
-
-    $year  = date('Y', strtotime($start_date));
-    $month = date('n', strtotime($start_date));
-
-    // Ensure balance exists
-    $this->ensure_monthly_balance($employee_id, $leave_type_id, $year, $month);
-
-    $balance = $this->db->get_where('employee_leave_balance', [
-        'employee_id'   => $employee_id,
-        'leave_type_id' => $leave_type_id,
-        'year'          => $year,
-        'month'         => $month
-    ])->row();
-
-    if (!$balance) return;
-
-    // Block negative balance
-    if ($balance->closing_balance < $days) return;
-
-    $this->db->query("
-        UPDATE employee_leave_balance
-        SET used_leave = used_leave + ?,
-            closing_balance = closing_balance - ?
-        WHERE id = ?
-    ", [$days, $days, $balance->id]);
-}
-
-
     public function application_updateForm($id){
         $this->db->where('leave_appl_id',$id);
         $query = $this->db->get('leave_apply');
@@ -375,11 +331,11 @@ class Leave_model extends CI_Model {
         //     $opening = $leaveType->leave_days;
         // }
        if ($leave_type_id == 7) { // CL
-    // if ($prev) {
-    //     $opening = $prev->closing_balance + 1; // monthly credit
-    // } else {
+    if ($prev) {
+        $opening = $prev->closing_balance + 1; // monthly credit
+    } else {
         $opening = 1;
-    //
+    }
 }
 
 // ===== SL (Monthly Reset) =====
@@ -389,11 +345,11 @@ elseif ($leave_type_id == 9) {
 
 // ===== LOP (Remaining Balance carry forward) =====
 elseif ($leave_type_id == 8) {
-    // if ($prev) {
-    //     $opening = $prev->closing_balance; // carry forward remaining
-    // } else {
+    if ($prev) {
+        $opening = $prev->closing_balance; // carry forward remaining
+    } else {
         $opening = 20; // first month / first record
-   //
+    }
 }
 
         // Insert new monthly balance
