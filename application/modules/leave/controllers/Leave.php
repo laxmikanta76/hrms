@@ -289,151 +289,72 @@ public function application(){
 
     // others leave info
   public function others_leave(){ 
-        $data['title'] = display('application');
-    
-    $this->load->model('attendance/Csv_model');
-    $data['dropdownatn'] = $this->Csv_model->Employeename();
-    
-    #-------------------------------#
-    $this->form_validation->set_rules('employee_id',display('employee_id'), 'required');
-    $this->form_validation->set_rules('apply_strt_date',display('apply_strt_date'), 'required');
-    $this->form_validation->set_rules('apply_end_date',display('apply_end_date'),'required|max_length[50]');
-    $this->form_validation->set_rules('leave_type_id','Leave Type','required'); // ✅ Add this
-    
-    $this->load->library('Fileupload');
-    $img = $this->fileupload->do_upload(
-        './application/modules/leave/assets/images/', 
-        'apply_hard_copy'
-    ); 
-    
-    $this->form_validation->set_rules('apply_date',display('apply_date'),'max_length[100]');
-    $this->form_validation->set_rules('approve_date',display('approve_date'),'max_length[100]');
-    
-    #-------------------------------#
-    if ($this->form_validation->run() === true) {
-        
-        $is_admin = $this->session->userdata('is_admin');
-        $role_id  = $this->session->userdata('role_id');
-        
-        $employee_id = $this->input->post('employee_id', true);
-        $leave_type_id = $this->input->post('leave_type_id', true);
-        $apply_strt_date = $this->input->post('apply_strt_date', true);
-        
-        // ✅ Validate employee and leave type exist
-        if (empty($employee_id) || empty($leave_type_id)) {
-            $this->session->set_flashdata('exception', 'Please select employee and leave type');
+        $data['title'] = display('application');//agent_picture
+		
+    //  Load correct model
+        $this->load->model('attendance/Csv_model');
+
+    //  GET employee dropdown data
+		$data['dropdownatn'] = $this->Csv_model->Employeename();
+        #-------------------------------#
+        $this->form_validation->set_rules('employee_id',display('employee_id'));
+		$this->form_validation->set_rules('apply_strt_date',display('apply_strt_date'));
+		$this->form_validation->set_rules('apply_end_date',display('apply_end_date'),'max_length[50]');
+		    $this->load->library('Fileupload');
+          $img = $this->fileupload->do_upload(
+            './application/modules/leave/assets/images/', 
+            'apply_hard_copy'); 
+		$this->form_validation->set_rules('apply_date',display('apply_date')  ,'max_length[100]');
+		$this->form_validation->set_rules('approve_date',display('approve_date')  ,'max_length[100]');
+      
+        #-------------------------------#
+        if ($this->form_validation->run() === true) {
+				$postData = [
+			'employee_id'           => $this->input->post('employee_id',true),
+			'leave_type_id'         => $this->input->post('leave_type_id',true),
+			'apply_strt_date' 	    => $this->input->post('apply_strt_date',true),
+			'apply_end_date' 	    => $this->input->post('apply_end_date',true),
+			'leave_aprv_strt_date' 	=> (!empty($this->input->post('leave_aprv_strt_date',true))?$this->input->post('leave_aprv_strt_date',true):'0000-00-00'),
+			'leave_aprv_end_date' 	=> (!empty($this->input->post('leave_aprv_end_date',true))?$this->input->post('leave_aprv_end_date',true):'0000-00-00'),
+			'num_aprv_day' 	        => (!empty($this->input->post('num_aprv_day',true))?$this->input->post('num_aprv_day',true):0),
+			'reason' 	            => $this->input->post('reason',true),
+			'apply_date' 	        => $this->input->post('apply_date',true),
+			'approve_date' 	        => (!empty($this->input->post('approve_date',true))?$this->input->post('approve_date',true):'0000-00-00'),
+			'apply_day'             => $this->input->post('apply_day',true),
+			'approved_by' 	        => (!empty($this->input->post('approved_by',true))?$this->input->post('approved_by',true):0),
+            'apply_hard_copy'       => (!empty($img)?$img:null),
+                
+            ];   
+           // print_r($postData);exit();
+
+            if ($this->Leave_model->application_create($postData)) { 
+                $this->session->set_flashdata('message', display('successfully_created'));
+            } else {
+                $this->session->set_flashdata('exception',  display('please_try_again'));
+            }
             redirect("leave/Leave/others_leave");
-            return;
-        }
-        
-        // ✅ ADMIN/HR/SUPERVISOR - Can approve immediately
-        if ($is_admin == 1 || in_array($role_id, [8, 9])) {
-            
-            $num_aprv_day = $this->input->post('num_aprv_day', true);
-            $leave_aprv_strt_date = $this->input->post('leave_aprv_strt_date', true);
-            $leave_aprv_end_date = $this->input->post('leave_aprv_end_date', true);
-            
-            // ✅ Validation for approval
-            if (empty($num_aprv_day) || $num_aprv_day <= 0) {
-                $this->session->set_flashdata('exception', 'Please enter approved days');
-                redirect("leave/Leave/others_leave");
-                return;
-            }
-            
-            if (empty($leave_aprv_strt_date) || empty($leave_aprv_end_date)) {
-                $this->session->set_flashdata('exception', 'Please fill approval dates');
-                redirect("leave/Leave/others_leave");
-                return;
-            }
-            
-            // ✅ CHECK LEAVE BALANCE
-            try {
-                $year  = date('Y', strtotime($leave_aprv_strt_date));
-                $month = date('n', strtotime($leave_aprv_strt_date));
-                
-                $balance = $this->Leave_model->get_employee_leave_balance($employee_id, $leave_type_id, $year, $month);
-                
-                if ($balance && $num_aprv_day > $balance->closing_balance) {
-                    $this->session->set_flashdata('exception', 
-                        'Insufficient leave balance. Available: ' . $balance->closing_balance . ' days, Requested: ' . $num_aprv_day . ' days'
-                    );
-                    redirect("leave/Leave/others_leave");
-                    return;
-                }
-            } catch (Exception $e) {
-                log_message('error', 'Balance check error: ' . $e->getMessage());
-                $this->session->set_flashdata('exception', 'Error checking leave balance');
-                redirect("leave/Leave/others_leave");
-                return;
-            }
-            
-            // ✅ Insert with approval (balance will be updated)
-            $postData = [
-                'employee_id'           => $employee_id,
-                'leave_type_id'         => $leave_type_id,
-                'apply_strt_date'       => $apply_strt_date,
-                'apply_end_date'        => $this->input->post('apply_end_date', true),
-                'leave_aprv_strt_date'  => $leave_aprv_strt_date,
-                'leave_aprv_end_date'   => $leave_aprv_end_date,
-                'num_aprv_day'          => $num_aprv_day,
-                'reason'                => $this->input->post('reason', true),
-                'apply_date'            => $this->input->post('apply_date', true),
-                'approve_date'          => date('Y-m-d'),
-                'apply_day'             => $this->input->post('apply_day', true),
-                'approved_by'           => $this->input->post('approved_by', true),
-                'apply_hard_copy'       => (!empty($img) ? $img : null),
-            ];
-            
-        } else {
-            // ✅ REGULAR EMPLOYEE - Apply without approval (no balance update yet)
-            $postData = [
-                'employee_id'           => $employee_id,
-                'leave_type_id'         => $leave_type_id,
-                'apply_strt_date'       => $apply_strt_date,
-                'apply_end_date'        => $this->input->post('apply_end_date', true),
-                'leave_aprv_strt_date'  => '0000-00-00',
-                'leave_aprv_end_date'   => '0000-00-00',
-                'num_aprv_day'          => 0,
-                'reason'                => $this->input->post('reason', true),
-                'apply_date'            => $this->input->post('apply_date', true),
-                'approve_date'          => '0000-00-00',
-                'apply_day'             => $this->input->post('apply_day', true),
-                'approved_by'           => 0,
-                'apply_hard_copy'       => (!empty($img) ? $img : null),
-            ];
-        }
-        
-        if ($this->Leave_model->application_create($postData)) { 
-            $this->session->set_flashdata('message', display('successfully_created'));
-        } else {
-            $this->session->set_flashdata('exception', display('please_try_again'));
-        }
-        
-        redirect("leave/Leave/others_leave");
 
-    } else {
-        $data['title']   = display('leave');
-        $data['module']  = "leave";
-        $data['type']    = $this->Leave_model->get_leave_type();
-        $data['dropdown']= $this->Leave_model->dropdown();
-        
-        $employee_id = $this->session->userdata('employee_id');
-        $is_admin = $this->session->userdata('is_admin');
-        $role_id  = $this->session->userdata('role_id');
-        
-        if ($is_admin == 1 || in_array($role_id, [8, 9])) {
-            $data['mang'] = $this->Leave_model->manageleave();
         } else {
+            $data['title']   = display('leave');
+            $data['module']  = "leave";//
+            $data['type']    = $this->Leave_model->get_leave_type();
+            $data['dropdown']= $this->Leave_model->dropdown();
+			$employee_id = $this->session->userdata('employee_id');
+			$is_admin = $this->session->userdata('is_admin');
+            $role_id  = $this->session->userdata('role_id');
+            if ($is_admin == 1 || in_array($role_id, [8, 9])) {
+			// Admin / HR / Supervisor
+            $data['mang']    = $this->Leave_model->manageleave();
+			} else {
+            // Normal employee → ONLY own data
             $data['mang'] = $this->Leave_model->manageleave($employee_id);
-        }
-        
-        $data['supr']    = $this->Leave_model->supervisorList();
-        $data['weekend'] = $this->db->select('dayname')->from('weekly_holiday')->get()->row()->dayname;
-        $data['page']    = "other_leave_application_form";    
-        echo Modules::run('template/layout', $data); 
-    }   
-}
-
+            }
+            $data['supr']    = $this->Leave_model->supervisorList();
+            $data['weekend'] = $this->db->select('dayname')->from('weekly_holiday')->get()->row()->dayname;
+            $data['page']    = "other_leave_application_form";    
+          echo Modules::run('template/layout', $data); 
+        }   
+    }
 
     // add others leave type form
 	public function add_leave_type()
@@ -539,8 +460,8 @@ public function application(){
 	public function application_view(){   
         $this->permission->method('leave','read')->redirect();
 
-		$data['title']  = display('selection'); 
-		$employee_id = $this->session->userdata('employee_id'); 
+		$data['title']  = display('selection');  
+		$employee_id = $this->session->userdata('employee_id');
 		$is_admin = $this->session->userdata('is_admin');
         $role_id  = $this->session->userdata('role_id');
 		if ($is_admin == 1 || in_array($role_id, [8, 9])) {
@@ -648,39 +569,50 @@ public function application(){
 
     $this->load->model('Leave_model');
 
-    try {
-        // ✅ Get balance (will calculate if not exists)
-        $balance = $this->Leave_model->get_employee_leave_balance(
-            $employee_id,
-            $leave_type,
-            $year,
-            $month
-        );
+    // Get leave type details
+    $leaveTypeInfo = $this->db->get_where('leave_type', [
+        'leave_type_id' => $leave_type
+    ])->row();
 
-        if ($balance) {
-            echo json_encode([
-                'status' => 'success',
-                'enjoy' => (float)$balance->used_leave,
-                'due'   => (float)$balance->closing_balance,
-                'opening' => (float)$balance->opening_balance
-            ]);
-        } else {
-            echo json_encode([
-                'status' => 'error',
-                'enjoy' => 0,
-                'due'   => 0,
-                'message' => 'Unable to fetch balance'
-            ]);
-        }
-    } catch (Exception $e) {
-        // ✅ Log the error for debugging
-        log_message('error', 'Free leave error: ' . $e->getMessage());
-        
+    if (!$leaveTypeInfo) {
         echo json_encode([
             'status' => 'error',
             'enjoy' => 0,
             'due'   => 0,
-            'message' => 'Server error: ' . $e->getMessage()
+            'message' => 'Invalid leave type'
+        ]);
+        return;
+    }
+
+    // Ensure balance exists
+    $this->Leave_model->ensure_monthly_balance(
+        $employee_id,
+        $leave_type,
+        $year,
+        $month
+    );
+
+    // Fetch balance
+    $balance = $this->Leave_model->get_employee_leave_balance(
+        $employee_id,
+        $leave_type,
+        $year,
+        $month
+    );
+
+    if ($balance) {
+        echo json_encode([
+            'status' => 'success',
+            'enjoy' => (float)$balance->used_leave,
+            'due'   => (float)$balance->closing_balance,
+            'opening' => (float)$balance->opening_balance
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'warning',
+            'enjoy' => 0,
+            'due'   => (float)$leaveTypeInfo->leave_days,
+            'message' => 'Using default balance'
         ]);
     }
 		

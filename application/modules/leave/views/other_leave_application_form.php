@@ -383,18 +383,31 @@ function leavetypechange(leave_type_id) {
             'leave_type': leave_type_id
         },
         success: function(data) {
-            console.log('Response:', data); // ✅ Check browser console
             if (data.status === 'success' || data.status === 'warning') {
                 $('#enjoy').html('You Enjoyed: ' + data.enjoy + ' Days');
                 $('#checkleave').html('Available Leave: ' + data.due + ' Days');
+
+                // Color based on balance
+                if (data.due < 3) {
+                    $('#checkleave').css('color', 'orange');
+                } else {
+                    $('#checkleave').css('color', 'green');
+                }
             } else {
                 $('#enjoy').html('<span style="color: red;">' + (data.message || 'Error loading balance') +
                     '</span>');
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log('Error:', jqXHR.responseText); // ✅ Check actual error
-            $('#enjoy').html('<span style="color: red;">Server error. Check console.</span>');
+            var errorMsg = 'Error loading leave balance';
+
+            if (jqXHR.status === 404) {
+                errorMsg = 'Service not found';
+            } else if (jqXHR.status === 500) {
+                errorMsg = 'Server error';
+            }
+
+            $('#enjoy').html('<span style="color: red;">' + errorMsg + '</span>');
         }
     });
 }
