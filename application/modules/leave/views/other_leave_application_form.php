@@ -374,6 +374,7 @@ function leavetypechange(leave_type_id) {
     // Show loading
     $('#enjoy').html('Loading...');
 
+    // Dynamic AJAX call
     $.ajax({
         url: "<?php echo base_url('leave/Leave/free_leave'); ?>",
         method: 'POST',
@@ -383,31 +384,8 @@ function leavetypechange(leave_type_id) {
             'leave_type': leave_type_id
         },
         success: function(data) {
-            if (data.status === 'success' || data.status === 'warning') {
-                $('#enjoy').html('You Enjoyed: ' + data.enjoy + ' Days');
-                $('#checkleave').html('Available Leave: ' + data.due + ' Days');
-
-                // Color based on balance
-                if (data.due < 3) {
-                    $('#checkleave').css('color', 'orange');
-                } else {
-                    $('#checkleave').css('color', 'green');
-                }
-            } else {
-                $('#enjoy').html('<span style="color: red;">' + (data.message || 'Error loading balance') +
-                    '</span>');
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            var errorMsg = 'Error loading leave balance';
-
-            if (jqXHR.status === 404) {
-                errorMsg = 'Service not found';
-            } else if (jqXHR.status === 500) {
-                errorMsg = 'Server error';
-            }
-
-            $('#enjoy').html('<span style="color: red;">' + errorMsg + '</span>');
+            $('#enjoy').html('You Enjoyed: ' + data.enjoy + ' Days');
+            $('#checkleave').html('Available Leave: ' + data.due + ' Days');
         }
     });
 }
@@ -417,7 +395,7 @@ $(document).ready(function() {
     var isAdmin = $('#employee_id').is('select');
 
     if (isAdmin) {
-        // Admin: when employee changes
+        // Admin: reload on employee change
         $('#employee_id').on('change', function() {
             var leaveType = $('#leave_type_id').val();
             if (leaveType) {
@@ -433,7 +411,7 @@ $(document).ready(function() {
         }
     }
 
-    // When leave type changes (both admin and user)
+    // When leave type changes (both)
     $('#leave_type_id').on('change', function() {
         var leaveType = $(this).val();
         if (leaveType) {

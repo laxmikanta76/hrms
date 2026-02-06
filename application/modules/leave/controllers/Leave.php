@@ -223,7 +223,6 @@ public function application(){
         $data['title'] = display('application');//agent_picture
 
 		$this->load->model('leave/Leave_model');
-        $this->Leave_model->ensure_monthly_balance($employee_id,$leave_type,$year,$month);
 		
 		        #-------------------------------#
         $this->form_validation->set_rules('employee_id',display('employee_id'));
@@ -325,7 +324,6 @@ public function application(){
             'apply_hard_copy'       => (!empty($img)?$img:null),
                 
             ];   
-           // print_r($postData);exit();
 
             if ($this->Leave_model->application_create($postData)) { 
                 $this->session->set_flashdata('message', display('successfully_created'));
@@ -535,86 +533,74 @@ public function application(){
 		}
  
 	}
+	
 	// Leave free for employee
 	public function free_leave(){
-
-		
-		// $employee_id    = $this->input->post('employee_id');
-		// $type           = $this->input->post('leave_type');
-		// $employee_leave = $this->db->select('SUM(num_aprv_day) as lv')->from('leave_apply')->where('employee_id',$employee_id)->where('leave_type_id',$type)->get()->row();
-		// $totalleave = $this->db->select('leave_days')->from('leave_type')->where('leave_type_id',$type)->get()->row();
-		// $data = array(
-		// 	'enjoy' => (!empty($employee_leave->lv)?$employee_leave->lv:0),
-		// 	'due'   => (!empty($totalleave->leave_days)?$totalleave->leave_days:0),
-		// );
-		// echo json_encode($data);
-
 		 header('Content-Type: application/json');
     
-    $employee_id = $this->input->post('employee_id');
-    $leave_type  = $this->input->post('leave_type');
+	    $employee_id = $this->input->post('employee_id');
+	    $leave_type  = $this->input->post('leave_type');
 
-    if (empty($employee_id) || empty($leave_type)) {
-        echo json_encode([
-            'status' => 'error',
-            'enjoy' => 0,
-            'due'   => 0,
-            'message' => 'Invalid parameters'
-        ]);
-        return;
-    }
+	    if (empty($employee_id) || empty($leave_type)) {
+	        echo json_encode([
+	            'status' => 'error',
+	            'enjoy' => 0,
+	            'due'   => 0,
+	            'message' => 'Invalid parameters'
+	        ]);
+	        return;
+	    }
 
-    $year  = date('Y');
-    $month = date('n');
+	    $year  = date('Y');
+	    $month = date('n');
 
-    $this->load->model('Leave_model');
+	    $this->load->model('Leave_model');
 
-    // Get leave type details
-    $leaveTypeInfo = $this->db->get_where('leave_type', [
-        'leave_type_id' => $leave_type
-    ])->row();
+	    // Get leave type details
+	    $leaveTypeInfo = $this->db->get_where('leave_type', [
+	        'leave_type_id' => $leave_type
+	    ])->row();
 
-    if (!$leaveTypeInfo) {
-        echo json_encode([
-            'status' => 'error',
-            'enjoy' => 0,
-            'due'   => 0,
-            'message' => 'Invalid leave type'
-        ]);
-        return;
-    }
+	    if (!$leaveTypeInfo) {
+	        echo json_encode([
+	            'status' => 'error',
+	            'enjoy' => 0,
+	            'due'   => 0,
+	            'message' => 'Invalid leave type'
+	        ]);
+	        return;
+	    }
 
-    // Ensure balance exists
-    $this->Leave_model->ensure_monthly_balance(
-        $employee_id,
-        $leave_type,
-        $year,
-        $month
-    );
+	    // Ensure balance exists
+	    $this->Leave_model->ensure_monthly_balance(
+	        $employee_id,
+	        $leave_type,
+	        $year,
+	        $month
+	    );
 
-    // Fetch balance
-    $balance = $this->Leave_model->get_employee_leave_balance(
-        $employee_id,
-        $leave_type,
-        $year,
-        $month
-    );
+	    // Fetch balance
+	    $balance = $this->Leave_model->get_employee_leave_balance(
+	        $employee_id,
+	        $leave_type,
+	        $year,
+	        $month
+	    );
 
-    if ($balance) {
-        echo json_encode([
-            'status' => 'success',
-            'enjoy' => (float)$balance->used_leave,
-            'due'   => (float)$balance->closing_balance,
-            'opening' => (float)$balance->opening_balance
-        ]);
-    } else {
-        echo json_encode([
-            'status' => 'warning',
-            'enjoy' => 0,
-            'due'   => (float)$leaveTypeInfo->leave_days,
-            'message' => 'Using default balance'
-        ]);
-    }
-		
+	    if ($balance) {
+	        echo json_encode([
+	            'status' => 'success',
+	            'enjoy' => (float)$balance->used_leave,
+	            'due'   => (float)$balance->closing_balance,
+	            'opening' => (float)$balance->opening_balance
+	        ]);
+	    } else {
+	        echo json_encode([
+	            'status' => 'warning',
+	            'enjoy' => 0,
+	            'due'   => (float)$leaveTypeInfo->leave_days,
+	            'message' => 'Using default balance'
+	        ]);
+	    }
  }
 }

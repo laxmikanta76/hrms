@@ -76,8 +76,12 @@ class Leave_model extends CI_Model {
     {
         $result = $this->db->insert('leave_apply', $data);
         
-        // Update leave balance after successful leave application
+        // ONLY update balance if leave is APPROVED (num_aprv_day > 0)
         if ($result && !empty($data['num_aprv_day']) && $data['num_aprv_day'] > 0) {
+            // Backfill any previous approved leaves for this employee
+            $this->backfill_employee_balance($data['employee_id']);
+            
+            // Update balance for current leave
             $this->update_leave_balance_on_application($data);
         }
         
@@ -98,43 +102,31 @@ class Leave_model extends CI_Model {
         return $list;
     }
 
-    // public function manageleave()
-    // {
-    //     return $this->db->select('count(DISTINCT(ap.leave_appl_id)) as leave_appl_id,ap.*,p.employee_id,p.first_name,p.last_name, type.leave_type')   
-    //         ->from('leave_apply ap')
-    //         ->join('employee_history p', 'ap.employee_id = p.employee_id', 'left')
-    //         ->join('leave_type as type', 'type.leave_type_id = ap.leave_type_id', 'left')
-    //         ->group_by('ap.leave_appl_id')
-    //         ->order_by('ap.leave_appl_id', 'desc')
-    //         ->get()
-    //         ->result();
-    // }
-    
     public function manageleave($employee_id = null)
-{
-    $this->db->select('
-            count(DISTINCT(ap.leave_appl_id)) as leave_appl_id,
-            ap.*,
-            p.employee_id,
-            p.first_name,
-            p.last_name,
-            type.leave_type
-        ')
-        ->from('leave_apply ap')
-        ->join('employee_history p', 'ap.employee_id = p.employee_id', 'left')
-        ->join('leave_type as type', 'type.leave_type_id = ap.leave_type_id', 'left');
+    {
+        $this->db->select('
+                count(DISTINCT(ap.leave_appl_id)) as leave_appl_id,
+                ap.*,
+                p.employee_id,
+                p.first_name,
+                p.last_name,
+                type.leave_type
+            ')
+            ->from('leave_apply ap')
+            ->join('employee_history p', 'ap.employee_id = p.employee_id', 'left')
+            ->join('leave_type as type', 'type.leave_type_id = ap.leave_type_id', 'left');
 
-    // 🔐 Filter only for logged-in employee
-    if (!empty($employee_id)) {
-        $this->db->where('ap.employee_id', $employee_id);
+        // Filter only for logged-in employee if not admin
+        if (!empty($employee_id)) {
+            $this->db->where('ap.employee_id', $employee_id);
+        }
+
+        return $this->db
+            ->group_by('ap.leave_appl_id')
+            ->order_by('ap.leave_appl_id', 'desc')
+            ->get()
+            ->result();
     }
-
-    return $this->db
-        ->group_by('ap.leave_appl_id')
-        ->order_by('ap.leave_appl_id', 'desc')
-        ->get()
-        ->result();
-}
 
     public function application_delete($id = null)
     {
@@ -176,16 +168,28 @@ class Leave_model extends CI_Model {
         if ($result && $old_data) {
             $old_days = !empty($old_data->num_aprv_day) ? $old_data->num_aprv_day : 0;
             $new_days = !empty($data['num_aprv_day']) ? $data['num_aprv_day'] : 0;
+            
+            $old_leave_type = !empty($old_data->leave_type_id) ? $old_data->leave_type_id : $old_data->leave_type;
+            $new_leave_type = !empty($data['leave_type_id']) ? $data['leave_type_id'] : $data['leave_type'];
 
-            if ($old_days != $new_days) {
-                // Restore old balance
-                if ($old_days > 0) {
-                    $this->restore_leave_balance_on_deletion($old_data);
-                }
+            // Case 1: Changing from unapproved (0) to approved (>0)
+            if ($old_days == 0 && $new_days > 0) {
+                // Backfill previous leaves
+                $this->backfill_employee_balance($data['employee_id']);
                 // Deduct new balance
-                if ($new_days > 0) {
-                    $this->update_leave_balance_on_application($data);
-                }
+                $this->update_leave_balance_on_application($data);
+            }
+            // Case 2: Changing from approved to unapproved
+            elseif ($old_days > 0 && $new_days == 0) {
+                // Restore old balance
+                $this->restore_leave_balance_on_deletion($old_data);
+            }
+            // Case 3: Both approved but days or leave type changed
+            elseif ($old_days > 0 && $new_days > 0 && ($old_days != $new_days || $old_leave_type != $new_leave_type)) {
+                // Restore old balance
+                $this->restore_leave_balance_on_deletion($old_data);
+                // Deduct new balance
+                $this->update_leave_balance_on_application($data);
             }
         }
 
@@ -238,17 +242,15 @@ class Leave_model extends CI_Model {
     public function save_update_leave_type($data = array()){
         $this->db->where('leave_type_id', $data['leave_type_id']);
         $this->db->update('leave_type', [
-        'leave_type' => $data['leave_type'],
-        'leave_days' => $data['leave_days']
-    ]);
+            'leave_type' => $data['leave_type'],
+            'leave_days' => $data['leave_days']
+        ]);
 
-    // Check for DB error
-    if ($this->db->error()['code'] != 0) {
-        return false;
-    }
-    return true;
-        // $this->db->where('leave_type_id', $data["leave_type_id"])
-        //          ->update('leave_type', $data);
+        // Check for DB error
+        if ($this->db->error()['code'] != 0) {
+            return false;
+        }
+        return true;
     }
 
     public function delete_leave_type($id = null)
@@ -272,8 +274,67 @@ class Leave_model extends CI_Model {
     }
 
     /**
-     * Ensure monthly balance exists for employee
-     * This is the core function for managing monthly leave balance
+     * ========================================================================
+     * BACKFILL FUNCTION - Process all previous approved leaves for employee
+     * ========================================================================
+     */
+    public function backfill_employee_balance($employee_id)
+    {
+        // Get all approved leaves for this employee that haven't been processed
+        $approved_leaves = $this->db->select('*')
+            ->from('leave_apply')
+            ->where('employee_id', $employee_id)
+            ->where('num_aprv_day >', 0)
+            ->where('leave_aprv_strt_date !=', '0000-00-00')
+            ->order_by('leave_aprv_strt_date', 'ASC')
+            ->get()
+            ->result();
+
+        if (empty($approved_leaves)) {
+            return;
+        }
+
+        foreach ($approved_leaves as $leave) {
+            $leave_type_id = !empty($leave->leave_type_id) ? $leave->leave_type_id : $leave->leave_type;
+            $start_date = !empty($leave->leave_aprv_strt_date) ? $leave->leave_aprv_strt_date : $leave->apply_strt_date;
+            
+            $year = date('Y', strtotime($start_date));
+            $month = date('n', strtotime($start_date));
+
+            // Ensure balance record exists
+            $this->ensure_monthly_balance($employee_id, $leave_type_id, $year, $month);
+
+            // Check if this leave has already been processed
+            $existing = $this->db->select('id')
+                ->from('employee_leave_balance')
+                ->where('employee_id', $employee_id)
+                ->where('leave_type_id', $leave_type_id)
+                ->where('year', $year)
+                ->where('month', $month)
+                ->get()
+                ->row();
+
+            if ($existing) {
+                // Update balance (handle multiple leaves in same month)
+                $this->db->query("
+                    UPDATE employee_leave_balance 
+                    SET used_leave = used_leave + ?,
+                        closing_balance = opening_balance - (used_leave + ?)
+                    WHERE employee_id = ? 
+                    AND leave_type_id = ? 
+                    AND year = ? 
+                    AND month = ?
+                ", [$leave->num_aprv_day, $leave->num_aprv_day, $employee_id, $leave_type_id, $year, $month]);
+            }
+        }
+
+        log_message('info', "Backfilled leave balance for employee: $employee_id");
+    }
+
+    /**
+     * ========================================================================
+     * ENSURE MONTHLY BALANCE - Create monthly record if not exists
+     * ========================================================================
      */
     public function ensure_monthly_balance($employee_id, $leave_type_id, $year, $month)
     {
@@ -286,7 +347,7 @@ class Leave_model extends CI_Model {
         ])->row();
 
         if ($exists) {
-            return; // Already exists
+            return $exists; // Already exists
         }
 
         // Get leave type details
@@ -295,7 +356,7 @@ class Leave_model extends CI_Model {
         ])->row();
 
         if (!$leaveType) {
-            return; // Invalid leave type
+            return null; // Invalid leave type
         }
 
         // Calculate previous month
@@ -315,44 +376,33 @@ class Leave_model extends CI_Model {
             'month'         => $prevMonth
         ])->row();
 
-        // Calculate opening balance
+        // Calculate opening balance based on leave type
         $opening = 0;
 
-        // if ($prev) {
-        //     // Previous month exists
-        //     if ($leaveType->carry_forward == 1) {
-        //         // Carry forward type (e.g., Casual Leave)
-        //         $opening = $prev->closing_balance;
-        //     } else {
-        //         // Non-carry forward type (e.g., Sick Leave)
-        //         // Reset to monthly allocation
-        //         $opening = $leaveType->leave_days;
-        //     }
-        // } else {
-        //     // First month - use default allocation
-        //     $opening = $leaveType->leave_days;
-        // }
-       if ($leave_type_id == 7) { // CL
-    if ($prev) {
-        $opening = $prev->closing_balance + 1; // monthly credit
-    } else {
-        $opening = 1;
-    }
-}
-
-// ===== SL (Monthly Reset) =====
-elseif ($leave_type_id == 9) {
-    $opening = 1; // fixed every month
-}
-
-// ===== LOP (Remaining Balance carry forward) =====
-elseif ($leave_type_id == 8) {
-    if ($prev) {
-        $opening = $prev->closing_balance; // carry forward remaining
-    } else {
-        $opening = 20; // first month / first record
-    }
-}
+        // 7 = CL (Casual Leave) - Accumulate 1 per month
+        if ($leave_type_id == 7) {
+            if ($prev) {
+                $opening = $prev->closing_balance + 1; // Previous balance + 1
+            } else {
+                $opening = 1; // First month
+            }
+        }
+        // 9 = SL (Sick Leave) - Reset to 1 every month
+        elseif ($leave_type_id == 9) {
+            $opening = 1; // Always 1, no carry forward
+        }
+        // 8 = LOP (Loss of Pay) - Carry forward remaining balance
+        elseif ($leave_type_id == 8) {
+            if ($prev) {
+                $opening = $prev->closing_balance; // Carry forward
+            } else {
+                $opening = 20; // First record or year start
+            }
+        }
+        // Other leave types - use default from leave_type table
+        else {
+            $opening = $leaveType->leave_days;
+        }
 
         // Insert new monthly balance
         $this->db->insert('employee_leave_balance', [
@@ -382,7 +432,6 @@ elseif ($leave_type_id == 8) {
     {
         $employee_id = $leave_data['employee_id'];
         $leave_type_id = !empty($leave_data['leave_type_id']) ? $leave_data['leave_type_id'] : $leave_data['leave_type'];
-        
         $approved_days = $leave_data['num_aprv_day'];
         
         // Get the start date of approved leave
@@ -393,19 +442,19 @@ elseif ($leave_type_id == 8) {
         // Ensure balance exists
         $this->ensure_monthly_balance($employee_id, $leave_type_id, $year, $month);
         
-         // 🔹 FETCH CURRENT BALANCE (ADD THIS)
-    $row = $this->db->get_where('employee_leave_balance', [
-        'employee_id'   => $employee_id,
-        'leave_type_id' => $leave_type_id,
-        'year'          => $year,
-        'month'         => $month
-    ])->row();
+        // Fetch current balance
+        $row = $this->db->get_where('employee_leave_balance', [
+            'employee_id'   => $employee_id,
+            'leave_type_id' => $leave_type_id,
+            'year'          => $year,
+            'month'         => $month
+        ])->row();
 
-    //  ADD VALIDATION HERE (THIS LINE)
-    if ($leave_type_id == 9 && $approved_days > $row->opening_balance) {
-        // SL cannot go negative
-        return false;
-    }
+        // Validate: SL cannot go negative
+        if ($leave_type_id == 9 && $approved_days > $row->opening_balance) {
+            log_message('error', "SL balance insufficient for employee: $employee_id");
+            return false;
+        }
 
         // Update the balance
         $this->db->query("
@@ -417,6 +466,8 @@ elseif ($leave_type_id == 8) {
             AND year = ? 
             AND month = ?
         ", [$approved_days, $approved_days, $employee_id, $leave_type_id, $year, $month]);
+        
+        return true;
     }
 
     /**
@@ -426,9 +477,12 @@ elseif ($leave_type_id == 8) {
     {
         $employee_id = $leave_data->employee_id;
         $leave_type_id = !empty($leave_data->leave_type_id) ? $leave_data->leave_type_id : $leave_data->leave_type;
+        
+        // Don't restore LOP balance on deletion (it's already deducted)
         if ($leave_type_id == 8) {
             return;
         }
+        
         $approved_days = $leave_data->num_aprv_day;
         
         // Get the start date of approved leave
@@ -436,7 +490,7 @@ elseif ($leave_type_id == 8) {
         $year = date('Y', strtotime($start_date));
         $month = date('n', strtotime($start_date));
 
-        // Update the balance
+        // Update the balance (restore)
         $this->db->query("
             UPDATE employee_leave_balance 
             SET used_leave = used_leave - ?,
@@ -447,6 +501,12 @@ elseif ($leave_type_id == 8) {
             AND month = ?
         ", [$approved_days, $approved_days, $employee_id, $leave_type_id, $year, $month]);
     }
+
+    /**
+     * ========================================================================
+     * CRON JOB FUNCTIONS
+     * ========================================================================
+     */
 
     /**
      * Process monthly leave for all employees (CRON JOB)
@@ -486,40 +546,18 @@ elseif ($leave_type_id == 8) {
      */
     public function reset_yearly_leave($year)
     {
-        // For non-carry forward leaves, reset happens monthly
-        // For carry forward leaves, reset to base allocation
-        
-        // $leaveTypes = $this->db->select('*')
-        //     ->from('leave_type')
-        //     ->where('leave_type_id !=', 9) // exclude SL
-        //     ->get()
-        //     ->result();
+        // Reset LOP balance to 20 for all employees on January 1st
+        $this->db->query("
+            UPDATE employee_leave_balance
+            SET opening_balance = 20,
+                used_leave = 0,
+                closing_balance = 20
+            WHERE leave_type_id = 8
+              AND year = ?
+              AND month = 1
+        ", [$year]);
 
-        // foreach ($leaveTypes as $lt) {
-        //     // Reset all balances for this leave type to monthly allocation
-        //     $this->db->query("
-        //         UPDATE employee_leave_balance 
-        //         SET opening_balance = ?,
-        //             used_leave = 0,
-        //             closing_balance = ?
-        //         WHERE leave_type_id = ? 
-        //         AND year = ? 
-        //         AND month = 1
-        //     ", [$lt->leave_days, $lt->leave_days, $lt->leave_type_id, $year]);
-        // }
-
-        // return true;
-         $this->db->query("
-        UPDATE employee_leave_balance
-        SET opening_balance = 20,
-            used_leave = 0,
-            closing_balance = 20
-        WHERE leave_type_id = 8
-          AND year = ?
-          AND month = 1
-    ", [$year]);
-
-    return true;
+        return true;
     }
 
     /**
