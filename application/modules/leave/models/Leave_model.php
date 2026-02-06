@@ -381,7 +381,7 @@ class Leave_model extends CI_Model {
             if ($prev) {
                 $opening = $prev->closing_balance;
             } else {
-                $opening = $leaveType->leave_days;
+                $opening = !empty($leaveType->leave_days) ? $leaveType->leave_days : 0;
             }
         }
     }
@@ -544,6 +544,7 @@ class Leave_model extends CI_Model {
      */
     public function get_employee_leave_balance($employee_id, $leave_type_id, $year = null, $month = null)
 {
+    
     if ($year === null) {
         $year = date('Y');
     }
