@@ -617,15 +617,4 @@ public function application(){
     }
 		
  }
- 
- public function approve_leave($leave_appl_id)
-{
-    if ($this->Leave_model->approve_leave($leave_appl_id)) {
-        $this->session->set_flashdata('message', 'Leave approved successfully');
-    } else {
-        $this->session->set_flashdata('exception', 'Leave approval failed');
-    }
-    redirect('leave/Leave/application_view');
-}
-
 }
