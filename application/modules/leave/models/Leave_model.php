@@ -375,11 +375,11 @@ class Leave_model extends CI_Model {
         //     $opening = $leaveType->leave_days;
         // }
        if ($leave_type_id == 7) { // CL
-    if ($prev) {
-        $opening = $prev->closing_balance + 1; // monthly credit
-    } else {
+    // if ($prev) {
+    //     $opening = $prev->closing_balance + 1; // monthly credit
+    // } else {
         $opening = 1;
-    }
+    //
 }
 
 // ===== SL (Monthly Reset) =====
@@ -389,11 +389,11 @@ elseif ($leave_type_id == 9) {
 
 // ===== LOP (Remaining Balance carry forward) =====
 elseif ($leave_type_id == 8) {
-    if ($prev) {
-        $opening = $prev->closing_balance; // carry forward remaining
-    } else {
+    // if ($prev) {
+    //     $opening = $prev->closing_balance; // carry forward remaining
+    // } else {
         $opening = 20; // first month / first record
-    }
+   //
 }
 
         // Insert new monthly balance
