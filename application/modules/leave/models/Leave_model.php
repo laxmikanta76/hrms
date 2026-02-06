@@ -74,14 +74,16 @@ class Leave_model extends CI_Model {
 
     public function application_create($data = array())
     {
-        $result = $this->db->insert('leave_apply', $data);
+
+        return $this->db->insert('leave_apply', $data);
+        //esult = $this->db->insert('leave_apply', $data);
         
-        // Update leave balance after successful leave application
-        if ($result && !empty($data['num_aprv_day']) && $data['num_aprv_day'] > 0) {
-            $this->update_leave_balance_on_application($data);
-        }
+        // // Update leave balance after successful leave application
+        // if ($result && !empty($data['num_aprv_day']) && $data['num_aprv_day'] > 0) {
+        //     $this->update_leave_balance_on_application($data);
+        // }
         
-        return $result;
+        // return $result;
     }
 
     public function dropdown(){
@@ -163,34 +165,8 @@ class Leave_model extends CI_Model {
 
     public function update_application($data = array())
     {
-        // Get old leave application data
-        $old_data = $this->db->select('*')
-            ->from('leave_apply')
-            ->where('leave_appl_id', $data['leave_appl_id'])
-            ->get()
-            ->row();
-
-        $result = $this->db->where('leave_appl_id', $data["leave_appl_id"])
-            ->update("leave_apply", $data);
-
-        // Update leave balance if approved days changed
-        if ($result && $old_data) {
-            $old_days = !empty($old_data->num_aprv_day) ? $old_data->num_aprv_day : 0;
-            $new_days = !empty($data['num_aprv_day']) ? $data['num_aprv_day'] : 0;
-
-            if ($old_days != $new_days) {
-                // Restore old balance
-                if ($old_days > 0) {
-                    $this->restore_leave_balance_on_deletion($old_data);
-                }
-                // Deduct new balance
-                if ($new_days > 0) {
-                    $this->update_leave_balance_on_application($data);
-                }
-            }
-        }
-
-        return $result;
+         return $this->db->where('leave_appl_id', $data['leave_appl_id'])
+                    ->update('leave_apply', $data);
     }
 
     public function application_updateForm($id){
@@ -546,4 +522,65 @@ elseif ($leave_type_id == 8) {
             'month'         => $month
         ])->row();
     }
+
+   public function approve_leave($leave_appl_id)
+{
+    // Get leave application
+    $leave = $this->db->get_where('leave_apply', [
+        'leave_appl_id' => $leave_appl_id
+    ])->row();
+
+    if (!$leave || $leave->num_aprv_day <= 0) {
+        return false;
+    }
+
+    // Prevent double approval
+    if (!empty($leave->approve_date) && $leave->approve_date != '0000-00-00') {
+        return false;
+    }
+
+    $employee_id   = $leave->employee_id;
+    $leave_type_id = $leave->leave_type_id;
+    $days          = $leave->num_aprv_day;
+
+    $start_date = $leave->leave_aprv_strt_date != '0000-00-00'
+        ? $leave->leave_aprv_strt_date
+        : $leave->apply_strt_date;
+
+    $year  = date('Y', strtotime($start_date));
+    $month = date('n', strtotime($start_date));
+
+    // Ensure balance exists
+    $this->ensure_monthly_balance($employee_id, $leave_type_id, $year, $month);
+
+    // Fetch balance
+    $balance = $this->db->get_where('employee_leave_balance', [
+        'employee_id'   => $employee_id,
+        'leave_type_id' => $leave_type_id,
+        'year'          => $year,
+        'month'         => $month
+    ])->row();
+
+    // LOP should not deduct balance
+    if ($leave_type_id != 8) {
+        if ($balance->closing_balance < $days) {
+            return false; // insufficient balance
+        }
+
+        $this->db->query("
+            UPDATE employee_leave_balance
+            SET used_leave = used_leave + ?,
+                closing_balance = closing_balance - ?
+            WHERE id = ?
+        ", [$days, $days, $balance->id]);
+    }
+
+    // Mark leave as approved
+    return $this->db->where('leave_appl_id', $leave_appl_id)
+        ->update('leave_apply', [
+            'approve_date' => date('Y-m-d'),
+            'approved_by'  => $this->session->userdata('user_id')
+        ]);
+}
+
 }
