@@ -165,9 +165,74 @@ class Leave_model extends CI_Model {
 
     public function update_application($data = array())
     {
-         return $this->db->where('leave_appl_id', $data['leave_appl_id'])
-                    ->update('leave_apply', $data);
+        // Fetch old record
+    $old = $this->db->get_where('leave_apply', [
+        'leave_appl_id' => $data['leave_appl_id']
+    ])->row();
+
+    // Update leave application
+    $result = $this->db->where('leave_appl_id', $data['leave_appl_id'])
+                       ->update('leave_apply', $data);
+
+    if (!$result || !$old) {
+        return false;
     }
+
+    // 🔑 Detect FIRST-TIME APPROVAL
+    $was_not_approved = empty($old->approve_date) || $old->approve_date == '0000-00-00';
+    $is_now_approved  = !empty($data['approve_date']) && $data['approve_date'] != '0000-00-00';
+
+    // 👉 Deduct ONLY when moving from NOT approved → approved
+    if ($was_not_approved && $is_now_approved) {
+        $this->deduct_leave_on_approval($data);
+    }
+
+    return true;
+    }
+
+    private function deduct_leave_on_approval($data)
+{
+    $employee_id   = $data['employee_id'];
+    $leave_type_id = !empty($data['leave_type_id'])
+        ? $data['leave_type_id']
+        : $data['leave_type'];
+
+    $days = (int)$data['num_aprv_day'];
+    if ($days <= 0) return;
+
+    // Skip LOP
+    if ($leave_type_id == 8) return;
+
+    $start_date = (!empty($data['leave_aprv_strt_date']) && $data['leave_aprv_strt_date'] != '0000-00-00')
+        ? $data['leave_aprv_strt_date']
+        : $data['apply_strt_date'];
+
+    $year  = date('Y', strtotime($start_date));
+    $month = date('n', strtotime($start_date));
+
+    // Ensure balance exists
+    $this->ensure_monthly_balance($employee_id, $leave_type_id, $year, $month);
+
+    $balance = $this->db->get_where('employee_leave_balance', [
+        'employee_id'   => $employee_id,
+        'leave_type_id' => $leave_type_id,
+        'year'          => $year,
+        'month'         => $month
+    ])->row();
+
+    if (!$balance) return;
+
+    // Block negative balance
+    if ($balance->closing_balance < $days) return;
+
+    $this->db->query("
+        UPDATE employee_leave_balance
+        SET used_leave = used_leave + ?,
+            closing_balance = closing_balance - ?
+        WHERE id = ?
+    ", [$days, $days, $balance->id]);
+}
+
 
     public function application_updateForm($id){
         $this->db->where('leave_appl_id',$id);
