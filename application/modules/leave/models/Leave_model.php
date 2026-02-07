@@ -79,7 +79,7 @@ class Leave_model extends CI_Model {
         // ONLY update balance if leave is APPROVED (num_aprv_day > 0)
         if ($result && !empty($data['num_aprv_day']) && $data['num_aprv_day'] > 0) {
             // Backfill any previous approved leaves for this employee
-            $this->backfill_employee_balance($data['employee_id']);
+           //this->backfill_employee_balance($data['employee_id']);
             
             // Update balance for current leave
             $this->update_leave_balance_on_application($data);
