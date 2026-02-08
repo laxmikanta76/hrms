@@ -175,7 +175,7 @@ class Leave_model extends CI_Model {
             // Case 1: Changing from unapproved (0) to approved (>0)
             if ($old_days == 0 && $new_days > 0) {
                 // Backfill previous leaves
-                $this->backfill_employee_balance($data['employee_id']);
+                //$this->backfill_employee_balance($data['employee_id']);
                 // Deduct new balance
                 $this->update_leave_balance_on_application($data);
             }
