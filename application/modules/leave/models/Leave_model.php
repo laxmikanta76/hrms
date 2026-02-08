@@ -384,7 +384,7 @@ class Leave_model extends CI_Model {
             if ($prev) {
                 $opening = $prev->closing_balance + 1; // Previous balance + 1
             } else {
-                $opening = 0; // First month
+                $opening = 1; // First month
             }
         }
         // 9 = SL (Sick Leave) - Reset to 1 every month
