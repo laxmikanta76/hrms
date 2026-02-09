@@ -281,38 +281,26 @@ class Cron extends CI_Controller {
      */
     public function monthly_leave()
     {
-        $year  = date('Y');
-        $month = date('n');
-        
-        echo "========================================\n";
-        echo "MONTHLY LEAVE PROCESSING\n";
-        echo "========================================\n";
-        echo "Date: $year-$month\n";
-        echo "Time: " . date('Y-m-d H:i:s') . "\n\n";
-        
-        try {
-            $result = $this->Leave_model->process_monthly_leave($year, $month);
-            
-            if ($result) {
-                echo "✓ Monthly leave processed successfully!\n";
-                log_message('info', "[CRON] Monthly leave processed for $year-$month");
-                
-                // Log statistics
-                $stats = $this->get_monthly_stats($year, $month);
-                echo "\nStatistics:\n";
-                echo "- Total employees: " . $stats['employees'] . "\n";
-                echo "- Total leave types: " . $stats['leave_types'] . "\n";
-                echo "- Records created: " . $stats['records'] . "\n";
-            } else {
-                echo "✗ Failed to process monthly leave\n";
-                log_message('error', "[CRON] Failed to process monthly leave for $year-$month");
-            }
-        } catch (Exception $e) {
-            echo "✗ ERROR: " . $e->getMessage() . "\n";
-            log_message('error', "[CRON] Error in monthly_leave: " . $e->getMessage());
+         // Use passed parameters if available
+    $year  = $this->input->get('year') ? intval($this->input->get('year')) : date('Y');
+    $month = $this->input->get('month') ? intval($this->input->get('month')) : date('n');
+
+    echo "Running monthly leave for: $year-$month\n";
+
+    try {
+        $result = $this->Leave_model->process_monthly_leave($year, $month);
+
+        if ($result) {
+            echo "✔ Monthly leave processed successfully for $year-$month\n";
+            log_message('info', "[CRON] Monthly leave processed for $year-$month");
+        } else {
+            echo "✖ Failed to process monthly leave for $year-$month\n";
+            log_message('error', "[CRON] Failed to process monthly leave for $year-$month");
         }
-        
-        echo "\n========================================\n";
+    } catch (Exception $e) {
+        echo "✖ ERROR: " . $e->getMessage() . "\n";
+        log_message('error', "[CRON] Error in monthly_leave($year-$month): " . $e->getMessage());
+    }
     }
 
     /**
