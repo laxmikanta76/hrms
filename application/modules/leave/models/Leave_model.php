@@ -467,31 +467,74 @@ class Leave_model extends CI_Model {
 
     /**
      * Process monthly leave for all employees (CRON JOB)
+     * This creates monthly balance records AND processes existing approved leaves
      */
     public function process_monthly_leave($year, $month)
     {
-        $employees = $this->db->select('employee_id')
-            ->from('employee_history')
-            ->get()
-            ->result();
+       // Get all employees
+    $employees = $this->db
+        ->select('employee_id')
+        ->from('employee_history')
+        ->get()
+        ->result();
 
-        $leaveTypes = $this->db->select('*')
-            ->from('leave_type')
-            ->get()
-            ->result();
+    // Get all leave types
+    $leaveTypes = $this->db
+        ->select('leave_type_id')
+        ->from('leave_type')
+        ->get()
+        ->result();
 
-        foreach ($employees as $emp) {
-            foreach ($leaveTypes as $lt) {
-                $this->ensure_monthly_balance(
-                    $emp->employee_id,
-                    $lt->leave_type_id,
-                    $year,
-                    $month
+    foreach ($employees as $emp) {
+        foreach ($leaveTypes as $lt) {
+
+            /**
+             * STEP 1: Ensure monthly balance exists
+             * (opening balance handled inside ensure_monthly_balance)
+             */
+            $this->ensure_monthly_balance(
+                $emp->employee_id,
+                $lt->leave_type_id,
+                $year,
+                $month
+            );
+
+            /**
+             * STEP 2: Get total approved leave days for this month
+             */
+            $approved = $this->db
+                ->select_sum('num_aprv_day', 'used_days')
+                ->from('leave_apply')
+                ->where('employee_id', $emp->employee_id)
+                ->where('leave_type_id', $lt->leave_type_id)
+                ->where('num_aprv_day >', 0)
+                ->where('YEAR(leave_aprv_strt_date)', $year)
+                ->where('MONTH(leave_aprv_strt_date)', $month)
+                ->get()
+                ->row();
+
+            $used_days = (float) ($approved->used_days ?? 0);
+
+            /**
+             * STEP 3: Update balance ONLY if leaves exist
+             */
+            if ($used_days > 0) {
+                $this->db->set('used_leave', $used_days);
+                $this->db->set(
+                    'closing_balance',
+                    'opening_balance - ' . $used_days,
+                    false
                 );
+                $this->db->where('employee_id', $emp->employee_id);
+                $this->db->where('leave_type_id', $lt->leave_type_id);
+                $this->db->where('year', $year);
+                $this->db->where('month', $month);
+                $this->db->update('employee_leave_balance');
             }
         }
+    }
 
-        return true;
+    return true;
     }
 
     /**
