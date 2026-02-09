@@ -571,23 +571,17 @@ public function application(){
 	        return;
 	    }
 
-	    // Ensure balance exists
-	    $this->Leave_model->ensure_monthly_balance(
-	        $employee_id,
-	        $leave_type,
-	        $year,
-	        $month
-	    );
-
-	    // Fetch balance
-	    $balance = $this->Leave_model->get_employee_leave_balance(
-	        $employee_id,
-	        $leave_type,
-	        $year,
-	        $month
-	    );
+	    // ✅ FIXED: Only READ existing balance, do NOT create
+	    // Balance will be created by monthly cron on 1st of month
+	    $balance = $this->db->get_where('employee_leave_balance', [
+	        'employee_id'   => $employee_id,
+	        'leave_type_id' => $leave_type,
+	        'year'          => $year,
+	        'month'         => $month
+	    ])->row();
 
 	    if ($balance) {
+	        // Balance record exists - return actual balance
 	        echo json_encode([
 	            'status' => 'success',
 	            'enjoy' => (float)$balance->used_leave,
@@ -595,12 +589,14 @@ public function application(){
 	            'opening' => (float)$balance->opening_balance
 	        ]);
 	    } else {
+	        // Balance doesn't exist yet - return default from leave_type
+	        // This will be created by cron job on 1st of month
 	        echo json_encode([
-	            'status' => 'warning',
+	            'status' => 'success',
 	            'enjoy' => 0,
-	            'due'   => (float)$leaveTypeInfo->leave_days,
-	            'message' => 'Using default balance'
+	            'due'   => (float)$leaveTypeInfo->leave_days
 	        ]);
 	    }
+ 
  }
 }
