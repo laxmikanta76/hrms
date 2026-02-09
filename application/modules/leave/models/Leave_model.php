@@ -354,7 +354,7 @@ class Leave_model extends CI_Model {
             if ($prev) {
                 $opening = $prev->closing_balance;
             } else {
-                $opening = 20;
+                $opening = 24;
             }
         }
         // Other leave types
