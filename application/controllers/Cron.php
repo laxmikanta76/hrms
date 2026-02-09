@@ -747,4 +747,61 @@ class Cron extends CI_Controller {
         echo "Status: OK\n";
         echo "========================================\n";
     }
+
+
+
+
+    /**
+ * ========================================================================
+ * JANUARY 1ST PROCESSING - COMBINED
+ * ========================================================================
+ * Run this on January 1st at 12:05 AM
+ * This ensures yearly reset happens BEFORE monthly processing
+ * 
+ * CRON Schedule: 5 0 1 1 *
+ * (Runs at 00:05 on January 1st every year)
+ * 
+ * Manual URL: https://yourdomain.com/cron/january_reset?token=YOUR_TOKEN
+ */
+public function january_reset()
+{
+    $year = date('Y');
+    
+    echo "========================================\n";
+    echo "JANUARY 1ST - NEW YEAR RESET\n";
+    echo "========================================\n";
+    echo "Year: $year\n";
+    echo "Time: " . date('Y-m-d H:i:s') . "\n\n";
+    
+    try {
+        // Step 1: Process monthly leave (this will create fresh January records)
+        echo "Step 1: Creating January balance records...\n";
+        $monthly_result = $this->Leave_model->process_monthly_leave($year, 1);
+        
+        if ($monthly_result) {
+            echo "✓ January balances created\n";
+            echo "  - CL: Opening = 1\n";
+            echo "  - SL: Opening = 1\n";
+            echo "  - LOP: Opening = 24\n\n";
+        } else {
+            throw new Exception("Failed to create monthly balances");
+        }
+        
+        // Get statistics
+        $stats = $this->get_monthly_stats($year, 1);
+        echo "Statistics:\n";
+        echo "- Total employees: " . $stats['employees'] . "\n";
+        echo "- Total leave types: " . $stats['leave_types'] . "\n";
+        echo "- Records created: " . $stats['records'] . "\n\n";
+        
+        echo "✓ New Year reset completed successfully!\n";
+        log_message('info', "[CRON] New Year reset completed for $year");
+        
+    } catch (Exception $e) {
+        echo "✗ ERROR: " . $e->getMessage() . "\n";
+        log_message('error', "[CRON] Error in january_reset: " . $e->getMessage());
+    }
+    
+    echo "\n========================================\n";
+}
 }
