@@ -205,15 +205,10 @@
 </div>
 
 <script type="text/javascript">
-function Payment(salpayid, employee_id, TotalSalary, WorkHour, Period, salary_month, lop_days_initial,
-    lop_deduction_initial) {
-
-        var sal_id = salpayid;
-    var employee_id = employee_id;
-    
-    // NEW: Fetch LOP data from database
+function fetchLOPData(employee_id, salary_month, TotalSalary, WorkHour, Period) {
+    // Try to fetch LOP data
     $.ajax({
-        url: "<?php echo base_url('payroll/Payroll/get_lop_data/')?>",
+        url: "<?php echo base_url('payroll/Payroll/get_lop_data')?>",
         method: 'post',
         dataType: 'json',
         data: {
@@ -221,52 +216,47 @@ function Payment(salpayid, employee_id, TotalSalary, WorkHour, Period, salary_mo
             'salary_month': salary_month
         },
         success: function(lopData) {
-            // Get employee data
-            $.ajax({
-                url: "<?php echo base_url('employee/Employees/EmployeePayment/')?>",
-                method: 'post',
-                dataType: 'json',
-                data: {
-                    'sal_id': sal_id,
-                    'employee_id': employee_id,
-                    'totalamount': TotalSalary,
-                },
-                success: function(data) {
-                    document.getElementById('employee_name').value = data.Ename;
-                    document.getElementById('employee_id').value = data.employee_id;
-                    document.getElementById('salType').value = salpayid;
-                    document.getElementById('salary_month').value = salary_month;
-                    
-                    // Set gross salary
-                    var grossSalary = parseFloat(lopData.gross_salary) || 0;
-                    document.getElementById('gross_salary').value = grossSalary.toFixed(2);
-                    
-                    // Set LOP data
-                    var lopDays = parseInt(lopData.lop_days) || 0;
-                    var lopDeduction = parseFloat(lopData.lop_deduction) || 0;
-                    
-                    document.getElementById('lop_days').value = lopDays;
-                    document.getElementById('lop_deduction').value = lopDeduction.toFixed(2);
-                    
-                    // Calculate final salary (Gross - LOP Deduction)
-                    var finalSalary = grossSalary - lopDeduction;
-                    document.getElementById('total_salary').value = finalSalary.toFixed(2);
-                    
-                    document.getElementById('total_working_minutes').value = WorkHour;
-                    document.getElementById('working_period').value = Period;
-                    
-                    $("#PaymentMOdal").modal('show');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert('Error getting employee data');
-                }
-            });
+            console.log('LOP Data received:', lopData);
+
+            // Set gross salary
+            var grossSalary = parseFloat(lopData.gross_salary) || parseFloat(TotalSalary) || 0;
+            document.getElementById('gross_salary').value = grossSalary.toFixed(2);
+
+            // Set LOP data
+            var lopDays = parseInt(lopData.lop_days) || 0;
+            var lopDeduction = parseFloat(lopData.lop_deduction) || 0;
+
+            document.getElementById('lop_days').value = lopDays;
+            document.getElementById('lop_deduction').value = lopDeduction.toFixed(2);
+
+            // Calculate final salary
+            var finalSalary = grossSalary - lopDeduction;
+            document.getElementById('total_salary').value = finalSalary.toFixed(2);
+
+            document.getElementById('total_working_minutes').value = WorkHour;
+            document.getElementById('working_period').value = Period;
+
+            $("#PaymentMOdal").modal('show');
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            alert('Error getting LOP data');
+            console.error('LOP fetch failed:', textStatus, errorThrown);
+            console.error('Response:', jqXHR.responseText);
+
+            // Continue without LOP data - use defaults
+            document.getElementById('gross_salary').value = parseFloat(TotalSalary).toFixed(2);
+            document.getElementById('lop_days').value = '0';
+            document.getElementById('lop_deduction').value = '0.00';
+            document.getElementById('total_salary').value = parseFloat(TotalSalary).toFixed(2);
+            document.getElementById('total_working_minutes').value = WorkHour;
+            document.getElementById('working_period').value = Period;
+
+            // Show modal anyway
+            $("#PaymentMOdal").modal('show');
+
+            // Show warning message
+            alert('Note: LOP data could not be fetched. Showing salary without LOP calculation.');
         }
     });
-
 }
 </script>
 <script type="text/javascript">
