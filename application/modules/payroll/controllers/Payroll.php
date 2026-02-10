@@ -653,6 +653,45 @@ $secs = floor($seconds % 60);
 		);
 		echo json_encode($sent);
 	}
+
+	// NEW: AJAX method to get LOP data
+	public function get_lop_data() {
+		$employee_id = $this->input->post('employee_id');
+		$salary_month = $this->input->post('salary_month'); // Format: "January 2026"
+		
+		list($month_name, $year) = explode(' ', $salary_month);
+		
+		$month_num = date('m', strtotime($month_name));
+		
+		$lop_days = $this->Payroll_model->get_lop_days($employee_id, $month_num, $year);
+		
+		// Get gross salary
+		$gross_salary = $this->db->select('gross_salary')
+			->from('employee_salary_setup')
+			->where('employee_id', $employee_id)
+			->get()
+			->row();
+		
+		$gross = $gross_salary ? $gross_salary->gross_salary : 0;
+		
+		// Calculate total days in month
+		$total_days = cal_days_in_month(CAL_GREGORIAN, $month_num, $year);
+		
+		// Calculate LOP deduction
+		$lop_deduction = 0;
+		if($lop_days > 0 && $gross > 0) {
+			$lop_deduction = ($gross / $total_days) * $lop_days;
+		}
+		
+		$response = array(
+			'lop_days' => $lop_days,
+			'lop_deduction' => number_format($lop_deduction, 2),
+			'gross_salary' => $gross,
+			'total_days' => $total_days
+		);
+		
+		echo json_encode($response);
+	}
 	
 	public function emp_payment_view()
 {   
