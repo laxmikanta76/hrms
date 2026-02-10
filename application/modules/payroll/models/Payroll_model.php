@@ -312,30 +312,4 @@ public function setting()
 		return $this->db->get('setting')->row();
 	}
 
-	// NEW: Function to get LOP days from employee_leave_balance table
-	public function get_lop_days($employee_id, $month, $year) {
-		// Get the leave_type_id for LOP from leave_type table
-		$lop_type = $this->db->select('leave_type_id')
-			->from('leave_type')
-			->where('leave_type', 'Loss Of Pay(LOP)')
-			->get()
-			->row();
-		
-		if(!$lop_type) {
-			return 0;
-		}
-		
-		// Get LOP days used from employee_leave_balance
-		$result = $this->db->select('used_leave')
-			->from('employee_leave_balance')
-			->where('employee_id', $employee_id)
-			->where('leave_type_id', $lop_type->leave_type_id)
-			->where('month', $month)
-			->where('year', $year)
-			->get()
-			->row();
-		
-		return $result ? $result->used_leave : 0;
-	}
-
 }
