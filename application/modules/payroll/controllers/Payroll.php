@@ -387,22 +387,30 @@ class Payroll extends MX_Controller {
 					}
 					
 					$workingper   = count($totalday);
-					
-					// NEW: Get LOP days for this employee for the current month
-					$lop_days = $this->Payroll_model->get_lop_days($value->employee_id, $month, $year);
-					
-					// NEW: Calculate LOP deduction
-					$lop_deduction = 0;
-					if($lop_days > 0) {
-						$dStart = new DateTime($startd);
-						$dEnd  = new DateTime($end);
-						$dDiff = $dStart->diff($dEnd);
-						$total_days_in_month = $dDiff->days + 1;
-						$lop_deduction = ($Amount / $total_days_in_month) * $lop_days;
-					}
-					
-					// NEW: Subtract LOP from net amount
-					$final_amount = $netAmount - $lop_deduction;
+
+// Get LOP days for this employee for the current month
+$lop_days = $this->Payroll_model->get_lop_days($value->employee_id, $month, $year);
+
+// Calculate LOP deduction
+$lop_deduction = 0;
+if($lop_days > 0) {
+    $dStart = new DateTime($startd);
+    $dEnd  = new DateTime($end);
+    $dDiff = $dStart->diff($dEnd);
+    $total_days_in_month = $dDiff->days + 1;
+    
+    // Calculate per-day salary and LOP deduction
+    $per_day_salary = $Amount / $total_days_in_month;
+    $lop_deduction = $per_day_salary * $lop_days;
+    
+    // Round LOP deduction to 2 decimal places
+    $lop_deduction = round($lop_deduction, 2);
+}
+
+// IMPORTANT FIX: Round final amount to 2 decimal places
+// Remove commas from $netAmount if it's formatted, then calculate and round
+$netAmount_clean = floatval(str_replace(',', '', $netAmount));
+$final_amount = round($netAmount_clean - $lop_deduction, 2);
 					
 					$paymentData = array(
 						'employee_id'           => $value->employee_id,
