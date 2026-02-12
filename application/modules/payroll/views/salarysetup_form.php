@@ -114,20 +114,20 @@
                $y++; }
                 ?>
                                                 <tr>
-                                                    <th style="padding:10px"><?php echo display('tax')?></th>
+                                                    <th style="padding:10px"><?php echo display('LOP')?></th>
                                                     <td><input type="text" name="amount[]" onkeyup="summary()"
                                                             class="form-control deducamount" id="taxinput"></td>
                                                     <td style="padding:10px">
                                                         <input type="checkbox" name="tax_manager" id="taxmanager"
                                                             onchange='handletax(this);' value="1">Tax
                                                         Manager
-                                                        <select name="calculation_type[]" class="form-control calc-type"
+                                                        <!-- <select name="calculation_type[]" class="form-control calc-type"
                                                             id="calc_type_tax"
                                                             onchange="handleCalculationType(this, 'taxinput')"
                                                             style="display:inline-block; width:80px; margin-left:10px;">
                                                             <option value="0">%</option>
                                                             <option value="1">Amount</option>
-                                                        </select>
+                                                        </select> -->
                                                     </td>
                                                 </tr>
 
