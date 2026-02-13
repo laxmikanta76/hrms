@@ -417,7 +417,7 @@ class Leave_model extends CI_Model {
         $this->db->query("
             UPDATE employee_leave_balance 
             SET used_leave = used_leave + ?,
-                closing_balance = opening_balance - (used_leave + ?)
+                closing_balance = closing_balance - ?
             WHERE employee_id = ? 
             AND leave_type_id = ? 
             AND year = ? 
@@ -451,7 +451,7 @@ class Leave_model extends CI_Model {
         $this->db->query("
             UPDATE employee_leave_balance 
             SET used_leave = used_leave - ?,
-                closing_balance = opening_balance - (used_leave - ?)
+                closing_balance = closing_balance - ?
             WHERE employee_id = ? 
             AND leave_type_id = ? 
             AND year = ? 
