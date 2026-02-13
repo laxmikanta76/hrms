@@ -11,7 +11,6 @@ class Accounts extends MX_Controller {
 			'accounts_model'
 		));
     $this->load->library('parser');
-    $this->load->library('template');
     if (! $this->session->userdata('isLogIn'))
       redirect('login');	
 	}
@@ -445,7 +444,7 @@ public function update_debit_voucher(){
     $data['acc']        = $this->accounts_model->Transacc();
     $data['voucher_no'] = $this->accounts_model->journal();
     $content            = $this->parser->parse('accounts/journal_voucher', $data, true);
-    echo Modules::run('template/layout', $data); 
+    $this->template->full_admin_html_view($content); 
   }
 
 //    //Create Journal Voucher
@@ -520,7 +519,7 @@ public function update_debit_voucher(){
     $data['crcc']           = $this->accounts_model->Cracc();
     $data['acc']            = $this->accounts_model->Transacc();
      $content = $this->parser->parse($page, $data, true);
-    echo Modules::run('template/layout', $data); 
+    $this->template->full_admin_html_view($content); 
   }
   // update credit voucher 
   public function update_credit_voucher(){
@@ -614,7 +613,7 @@ public function update_debit_voucher(){
 
     $data['title'] = display('accounts_form');
      $content = $this->parser->parse('newaccount/vouchar_cash', $data, true);
-    echo Modules::run('template/layout', $data);
+    $this->template->full_admin_html_view($content);
     }
 // // working
     public function general_ledger(){
@@ -711,7 +710,7 @@ public function update_debit_voucher(){
       $data['software_info'] = $this->Accounts_model->software_setting_info();
       $data['title'] = display('Inventory_ledger');
       $content = $this->parser->parse('newaccount/inventory_ledger', $data, true);
-    echo Modules::run('template/layout', $data);
+    $this->template->full_admin_html_view($content);
     }
      public function voucher_report(){
         // $this->permission->method('accounts','read')->redirect();
