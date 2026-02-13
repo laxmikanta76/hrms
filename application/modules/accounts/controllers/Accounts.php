@@ -11,7 +11,6 @@ class Accounts extends MX_Controller {
 			'accounts_model'
 		));
     $this->load->library('parser');
-    $this->load->library('template');
     if (! $this->session->userdata('isLogIn'))
       redirect('login');	
 	}
