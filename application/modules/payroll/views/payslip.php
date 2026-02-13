@@ -391,26 +391,6 @@ function printDiv(divName) {
 
                                                 </tr>
                                                 <?php }?>
-                                                <?php 
-                                                // NEW: Separate LOP Row
-                                                if(isset($paymentdata[0]['lop_days']) && $paymentdata[0]['lop_days'] > 0) { 
-                                                    $lop_deduction = $paymentdata[0]['lop_deduction'];
-                                                    $totalDeduction += $lop_deduction;
-                                                ?>
-                                                <tr class="entry lop-row">
-                                                    <td class="value">
-                                                        <strong>Loss Of Pay (LOP)</strong><br>
-                                                        <small
-                                                            style="font-size: 11px;">(<?= $paymentdata[0]['lop_days']; ?>
-                                                            days)</small>
-                                                    </td>
-                                                    <td class="value">
-                                                        <div>
-                                                            <strong><?php echo number_format($lop_deduction, 2); ?></strong>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <?php } ?>
                                                 <?php $gross = $totalAddition+($basicsal-$totalDeduction);
                                      if($paymentdata[0]['total_salary'] < $gross){
                                     ?>

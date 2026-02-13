@@ -113,27 +113,6 @@
                                                 </tr><?php
                $y++; }
                 ?>
-                                                <!-- NEW: Separate LOP Field -->
-                                                <tr style="background-color: #fff3cd;">
-                                                    <th style="padding:10px">
-                                                        <strong>Loss Of Pay (LOP)</strong>
-                                                    </th>
-                                                    <td>
-                                                        <input type="text" name="lop_amount" onkeyup="summary()"
-                                                            class="form-control deducamount" id="lopinput"
-                                                            placeholder="">
-                                                    </td>
-                                                    <td style="padding:10px">
-                                                        <select name="lop_calculation_type"
-                                                            class="form-control calc-type" id="calc_type_lop"
-                                                            onchange="handleCalculationType(this, 'lopinput')"
-                                                            style="display:inline-block; width:80px;">
-                                                            <option value="0">%</option>
-                                                            <option value="1">Amount</option>
-                                                        </select>
-                                                    </td>
-                                                </tr>
-
                                                 <tr>
                                                     <th style="padding:10px"><?php echo display('tax')?></th>
                                                     <td><input type="text" name="amount[]" onkeyup="summary()"
@@ -357,9 +336,6 @@ function employechange(id) {
             document.getElementById('sal_type').value = data.rate_type;
             document.getElementById('sal_type_name').value = data.stype;
             document.getElementById('grsalary').value = '';
-            // NEW: Clear LOP field
-            document.getElementById('lopinput').value = '';
-            document.getElementById('calc_type_lop').value = '0';
 
             if (data.rate_type == 1) {
                 document.getElementById("taxinput").disabled = true;
