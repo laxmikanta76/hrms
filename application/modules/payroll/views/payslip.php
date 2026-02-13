@@ -391,6 +391,26 @@ function printDiv(divName) {
 
                                                 </tr>
                                                 <?php }?>
+                                                <?php 
+                                                // NEW: Check if LOP exists and display it BEFORE Tax
+                                                $lop_exists = false;
+                                                $lop_amount = 0;
+                                                if(isset($paymentdata[0]['lop_days']) && $paymentdata[0]['lop_days'] > 0) { 
+                                                    $lop_exists = true;
+                                                    $lop_amount = $paymentdata[0]['lop_deduction'];
+                                                    $totalDeduction += $lop_amount;
+                                                ?>
+                                                <tr class="entry lop-entry">
+                                                    <td class="value">
+                                                        <strong>LOP (<?= $paymentdata[0]['lop_days']; ?> days)</strong>
+                                                    </td>
+                                                    <td class="value">
+                                                        <div>
+                                                            <strong><?php echo number_format($lop_amount, 2); ?></strong>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <?php } ?>
                                                 <?php $gross = $totalAddition+($basicsal-$totalDeduction);
                                      if($paymentdata[0]['total_salary'] < $gross){
                                     ?>
