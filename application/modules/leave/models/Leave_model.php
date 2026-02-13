@@ -538,9 +538,9 @@ class Leave_model extends CI_Model {
     {
         $this->db->query("
             UPDATE employee_leave_balance
-            SET opening_balance = 20,
+            SET opening_balance = 24,
                 used_leave = 0,
-                closing_balance = 20
+                closing_balance = 24
             WHERE leave_type_id = 8
               AND year = ?
               AND month = 1
