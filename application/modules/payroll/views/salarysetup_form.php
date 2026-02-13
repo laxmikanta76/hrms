@@ -121,7 +121,7 @@
                                                     <td>
                                                         <input type="text" name="lop_amount" onkeyup="summary()"
                                                             class="form-control deducamount" id="lopinput"
-                                                            placeholder="Enter LOP amount">
+                                                            placeholder="">
                                                     </td>
                                                     <td style="padding:10px">
                                                         <select name="lop_calculation_type"
