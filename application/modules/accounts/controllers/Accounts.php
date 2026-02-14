@@ -438,12 +438,12 @@ public function update_debit_voucher(){
 }
 // // Journal voucher
  public function journal_voucher(){
-    // $this->permission->method('accounts','create')->redirect();
-    $this->load->library('parser');
+     // $this->permission->method('accounts','create')->redirect();
     $data['title']      = display('journal_voucher');
     $data['acc']        = $this->accounts_model->Transacc();
     $data['voucher_no'] = $this->accounts_model->journal();
-    $content            = $this->parser->parse('accounts/journal_voucher', $data, true);
+    $data['module']     = "accounts";
+    $data['page']       = "journal_voucher";   
     echo Modules::run('template/layout', $data); 
   }
 
