@@ -11,7 +11,6 @@ class Accounts extends MX_Controller {
 			'accounts_model'
 		));
     $this->load->library('parser');
-     $this->load->library('template'); 
     if (! $this->session->userdata('isLogIn'))
       redirect('login');	
 	}
@@ -22,7 +21,7 @@ class Accounts extends MX_Controller {
     $data['title']  = display('accounts_form');
     $data['module'] = "accounts";
     $data['page']   = "coa";   
-    $this->template->full_admin_html_view($content);  
+    echo Modules::run('template/layout', $data); 
 	}
 
 // payment type add
@@ -31,7 +30,7 @@ class Accounts extends MX_Controller {
     $data['paytype']= $this->accounts_model->paytype();
     $data['module'] = "accounts";
     $data['page']   = "payment_type";   
-    $this->template->full_admin_html_view($content); 
+    echo Modules::run('template/layout', $data);
   }
 
 
@@ -90,7 +89,7 @@ public function add_paymenttype(){
         );
     $data['module'] = "accounts";
     $data['page']   = "treeview";   
-    $this->template->full_admin_html_view($content);  
+    echo Modules::run('template/layout', $data); 
     }
   
 
@@ -255,7 +254,7 @@ $updata = array(
     $data['crcc']       = $this->accounts_model->Cracc();
     $data['module']     = "accounts";
     $data['page']       = "debit_voucher";   
-    $this->template->full_admin_html_view($content); 
+    echo Modules::run('template/layout', $data);
   }
 
   // cash adjustment
@@ -264,7 +263,7 @@ $updata = array(
     $data['voucher_no'] = $this->accounts_model->Cashvoucher();
     $data['module']     = "accounts";
     $data['page']       = "cash_adjustment";   
-    $this->template->full_admin_html_view($content);  
+    echo Modules::run('template/layout', $data); 
   }
 
   //Bank Adjustment
@@ -274,7 +273,7 @@ $updata = array(
     $data['banks']      = $this->accounts_model->banklist();
     $data['module']     = "accounts";
     $data['page']       = "bank_adjustment";   
-    $this->template->full_admin_html_view($content);  
+    echo Modules::run('template/layout', $data); 
   }
 
     //Create Cash Adjustment
@@ -387,7 +386,7 @@ public function update_debit_voucher(){
     $data['crcc']       = $this->accounts_model->Cracc();
     $data['module']     = "accounts";
     $data['page']       = "credit_voucher";   
-    $this->template->full_admin_html_view($content);   
+    echo Modules::run('template/layout', $data);  
   }
 
 //   //Create Credit Voucher
@@ -416,7 +415,7 @@ public function update_debit_voucher(){
     $data['voucher_no'] = $this->accounts_model->contra();
     $data['module']     = "accounts";
     $data['page']       = "contra_voucher";   
-    $this->template->full_admin_html_view($content);  
+    echo Modules::run('template/layout', $data); 
   }
 
 //   //Create Contra Voucher
@@ -445,7 +444,7 @@ public function update_debit_voucher(){
     $data['acc']        = $this->accounts_model->Transacc();
     $data['voucher_no'] = $this->accounts_model->journal();
     $content            = $this->parser->parse('accounts/journal_voucher', $data, true);
-    $this->template->full_admin_html_view($content); 
+    echo Modules::run('template/layout', $data); 
   }
 
 //    //Create Journal Voucher
@@ -473,7 +472,7 @@ public function update_debit_voucher(){
     $data['aprrove'] = $this->accounts_model->approve_voucher();  
     $data['module']  = "accounts";
     $data['page']    = "voucher_approve";   
-    $this->template->full_admin_html_view($content); 
+    echo Modules::run('template/layout', $data);
 }
 // // isApprove
  public function isactive($id = null, $action = null)
@@ -504,21 +503,22 @@ public function update_debit_voucher(){
                     ->get()
                     ->row();
                    
-    if($vtype->Vtype =="DV"){
-        $data['title']          = display('update_debit_voucher');
-        $data['dbvoucher_info'] = $this->accounts_model->dbvoucher_updata($id);
-        $data['credit_info']    = $this->accounts_model->crvoucher_updata($id);
-        $data['page']           = 'update_dbt_crtvoucher';    
+                    if($vtype->Vtype =="DV"){
+    $data['title']          = display('update_debit_voucher');
+    $data['dbvoucher_info'] = $this->accounts_model->dbvoucher_updata($id);
+    $data['credit_info']    = $this->accounts_model->crvoucher_updata($id);
+    $page                   =  'newaccount/update_dbt_crtvoucher';    
     } 
     if($vtype->Vtype =="CV"){
-        $data['title']          = display('update_credit_voucher');
-        $data['crvoucher_info'] = $this->accounts_model->crdtvoucher_updata($id);
-        $data['debit_info']     = $this->accounts_model->debitvoucher_updata($id);
-        $data['page']           = 'update_credit_bdtvoucher';  
+       //print_r($vtype);exit;
+    $data['title']          = display('update_credit_voucher');
+    $data['crvoucher_info'] = $this->accounts_model->crdtvoucher_updata($id);
+    $data['debit_info']     = $this->accounts_model->debitvoucher_updata($id);
+    $page                   =  'newaccount/update_credit_bdtvoucher';  
     }
-    $data['crcc']   = $this->accounts_model->Cracc();
-    $data['acc']    = $this->accounts_model->Transacc();
-    $data['module'] = "accounts";
+    $data['crcc']           = $this->accounts_model->Cracc();
+    $data['acc']            = $this->accounts_model->Transacc();
+     $content = $this->parser->parse($page, $data, true);
     echo Modules::run('template/layout', $data); 
   }
   // update credit voucher 
@@ -545,7 +545,7 @@ public function update_debit_voucher(){
         $data['title']  = display('trial_balance');
         $data['module'] = "accounts";
         $data['page']   = "trial_balance";
-        $this->template->full_admin_html_view($content);  
+        echo Modules::run('template/layout', $data); 
         }
 //     //Trial Balance Report
     public function trial_balance_report(){
@@ -578,7 +578,7 @@ public function update_debit_voucher(){
             $data['title']  = display('trial_balance_report');
             $data['module'] = "accounts";
             $data['page']   = "trial_balance_with_opening";
-            $this->template->full_admin_html_view($content); 
+            echo Modules::run('template/layout', $data);
        }else{
 
             $data['oResultTr']    = $results['oResultTr'];
@@ -599,20 +599,20 @@ public function update_debit_voucher(){
             $data['title']  = display('trial_balance_report');
             $data['module'] = "accounts";
             $data['page']   = "trial_balance_without_opening";
-            $this->template->full_admin_html_view($content); 
+            echo Modules::run('template/layout', $data);
        }
 
     }
 
 //      //al hassan working
     public function vouchar_cash($date){
-         $vouchar_view = $this->accounts_model->get_vouchar_view($date);
-    $data = array(
-        'vouchar_view' => $vouchar_view,
-    );
-    $data['title']  = display('accounts_form');
-    $data['module'] = "accounts";
-    $data['page']   = "vouchar_cash";
+        $vouchar_view = $this->accounts_model->get_vouchar_view($date);
+        $data = array(
+            'vouchar_view' => $vouchar_view,
+        );
+
+    $data['title'] = display('accounts_form');
+     $content = $this->parser->parse('newaccount/vouchar_cash', $data, true);
     echo Modules::run('template/layout', $data);
     }
 // // working
@@ -626,7 +626,7 @@ public function update_debit_voucher(){
         $data['title']  = display('general_ledger');
         $data['module'] = "accounts";
         $data['page']   = "general_ledger";
-        $this->template->full_admin_html_view($content); 
+        echo Modules::run('template/layout', $data);
     }
 //     // working
     public function general_led($Headid = NULL){
@@ -685,7 +685,7 @@ public function update_debit_voucher(){
         $data['title']  = display('general_ledger_report');
         $data['module'] = "accounts";
         $data['page']   = "general_ledger_report";
-        $this->template->full_admin_html_view($content); 
+        echo Modules::run('template/layout', $data);
 
     }
 
@@ -696,21 +696,20 @@ public function update_debit_voucher(){
         $data['company'] = '';
         $data['setting'] = $this->accounts_model->setting();
         $data['page']    = "cash_book";
-        $this->template->full_admin_html_view($content); 
+        echo Modules::run('template/layout', $data);
     }
     public function bank_book(){
        $data['title']    = display('cash_book');
         $data['module']  = "accounts";
         $data['setting'] = $this->accounts_model->setting();
         $data['page']    = "bank_book";
-        $this->template->full_admin_html_view($content); 
+        echo Modules::run('template/layout', $data);
     }
     // Inventory Report
      public function inventory_ledger(){
-      $data['software_info'] = $this->accounts_model->software_setting_info();
-    $data['title']  = display('Inventory_ledger');
-    $data['module'] = "accounts";
-    $data['page']   = "inventory_ledger";
+      $data['software_info'] = $this->Accounts_model->software_setting_info();
+      $data['title'] = display('Inventory_ledger');
+      $content = $this->parser->parse('newaccount/inventory_ledger', $data, true);
     echo Modules::run('template/layout', $data);
     }
      public function voucher_report(){
@@ -725,21 +724,21 @@ public function update_debit_voucher(){
         $data['title']  = display('voucher_report');
         $data['module'] = "accounts";
         $data['page']   = "coa";   
-    $this->template->full_admin_html_view($content); 
+    echo Modules::run('template/layout', $data);
   }
    public function coa_print(){
      
         $data['title'] = display('accounts_form');
         $data['module'] = "accounts";
         $data['page']   = "coa_print";
-        $this->template->full_admin_html_view($content); 
+        echo Modules::run('template/layout', $data);
     }
 //      //Profit loss report page
     public function profit_loss_report(){
        $data['title']   = display('general_ledger_report');
         $data['module'] = "accounts";
         $data['page']   = "profit_loss_report";
-        $this->template->full_admin_html_view($content); 
+        echo Modules::run('template/layout', $data);
     }
 //     //Profit loss serch result
     public function profit_loss_report_search(){
@@ -756,14 +755,14 @@ public function update_debit_voucher(){
         $data['title']  = display('general_ledger_report');
         $data['module'] = "accounts";
         $data['page']   = "profit_loss_report_search";
-        $this->template->full_admin_html_view($content); 
+        echo Modules::run('template/layout', $data);
     }
 //     //Cash flow page
     public function cash_flow_report(){
         $data['title']  = display('cash_flow_report');
         $data['module'] = "accounts";
         $data['page']   = "cash_flow_report";
-        $this->template->full_admin_html_view($content); 
+        echo Modules::run('template/layout', $data);
     }
 //     //Cash flow report search
     public function cash_flow_report_search(){
@@ -787,7 +786,7 @@ public function update_debit_voucher(){
         $data['title']  = display('general_ledger_report');
         $data['module'] = "accounts";
         $data['page']   = "cash_flow_report_search";
-        $this->template->full_admin_html_view($content); ;
+        echo Modules::run('template/layout', $data);;
     }
 
 public function balance_adjustment(){
@@ -796,7 +795,7 @@ public function balance_adjustment(){
     $data['paytype']    = $this->accounts_model->paytype();
     $data['module']     = "accounts";
     $data['page']       = "balance_adjustment";   
-    $this->template->full_admin_html_view($content);  
+    echo Modules::run('template/layout', $data); 
 
 }
 
