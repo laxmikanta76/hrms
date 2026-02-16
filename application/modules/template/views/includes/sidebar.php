@@ -4,8 +4,8 @@
     <div class="user-panel text-center">
         <div class="image">
             <?php $image = $this->session->userdata('image') ?>
-            <img src="<?php echo base_url((!empty($image)?$image:'assets/img/icons/default.jpg')) ?>" class="img-circle"
-                alt="User Image">
+            <img src="<?php echo base_url((!empty($image)?$image:'assets/img/icons/mini-logo.png')) ?>"
+                class="img-circle" alt="User Image">
         </div>
         <div class="info">
             <p><?php echo $this->session->userdata('fullname') ?></p>
