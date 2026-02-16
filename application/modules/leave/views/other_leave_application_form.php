@@ -1,8 +1,4 @@
-<?php
-$CI =& get_instance();
-echo $CI->session->userdata('role_id');
-exit;
-?><style type="text/css">
+<style type="text/css">
 .close {
     color: red;
 }
@@ -20,8 +16,9 @@ exit;
     <?php if($this->permission->method('leave','read')->access()): ?>
     <?php  $is_admin = $this->session->userdata('is_admin');
            $role_id  = $this->session->userdata('role_id');
+           $supervisor=$this->session->userdata('supervisor');
            // 8 = HR, 9 = Supervisor
-        if ($is_admin == 1 || in_array($role_id, [8, 9])) {?>
+        if ($is_admin == 1 || $supervisor==1 || in_array($role_id, [8, 9])) {?>
     <a href="<?php echo base_url();?>/leave/Leave/application_view"
         class="btn btn-primary"><?php echo display('manage_application');?></a>
     <?php } ?>
