@@ -340,7 +340,8 @@ public function application(){
 			$employee_id = $this->session->userdata('employee_id');
 			$is_admin = $this->session->userdata('is_admin');
             $role_id  = $this->session->userdata('role_id');
-            if ($is_admin == 1 || in_array($role_id, [8, 9])) {
+			$supervisor=$this->session->userdata('supervisor');
+            if ($is_admin == 1 || $supervisor == 1 || in_array($role_id, [8, 9])) {
 			// Admin / HR / Supervisor
             $data['mang']    = $this->Leave_model->manageleave();
 			} else {
@@ -462,7 +463,8 @@ public function application(){
 		$employee_id = $this->session->userdata('employee_id');
 		$is_admin = $this->session->userdata('is_admin');
         $role_id  = $this->session->userdata('role_id');
-		if ($is_admin == 1 || in_array($role_id, [8, 9])) {
+		$supervisor=$this->session->userdata('supervisor');
+		if ($is_admin == 1 || $supervisor == 1 || in_array($role_id, [8, 9])) {
 			// Admin / HR / Supervisor
             $data['mang']    = $this->Leave_model->manageleave();
 			} else {
