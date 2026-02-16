@@ -7,7 +7,7 @@ function can_select_employee()
 
     $is_admin = $CI->session->userdata('is_admin');
     $role_id  = $CI->session->userdata('role_id');
-    $supervisor=$this->session->userdata('supervisor');
+    $supervisor=$CI->session->userdata('supervisor');
 
     // Roles that can select employee
     $allowed_roles = [7, 8, 9];

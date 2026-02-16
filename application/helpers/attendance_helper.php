@@ -7,7 +7,7 @@ function can_manage_attendance()
 
     $is_admin = $CI->session->userdata('is_admin');
     $role_id  = $CI->session->userdata('role_id');
-    $supervisor=$this->session->userdata('supervisor');
+    $supervisor=$CI->session->userdata('supervisor');
     
 
     // Roles allowed to edit/delete attendance
