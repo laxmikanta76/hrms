@@ -169,8 +169,7 @@ $(function() {
         dateFormat: 'yy-mm-dd'
     });
 });
- </script>
- <script language="javascript">
+
 $(document).ready(function(e) {
     function calculation() {
         var date1 = new Date($('.leave_aprv_strt_date').val());
@@ -183,7 +182,7 @@ $(document).ready(function(e) {
         var count = 0;
         var weekend = "<?php echo $weekend ?>";
         var w = weekend.split(',')
-        //alert(w[0]);
+
         while (d <= to) {
             d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
             if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
@@ -197,9 +196,9 @@ $(document).ready(function(e) {
     }
     $('.leave_aprv_strt_date,.leave_aprv_end_date').change(calculation);
 });
+
 $(document).ready(function(e) {
     function applyday() {
-
         var from = new Date($('.apply_start').val());
         var to = new Date($('.apply_end').val());
         var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -208,7 +207,7 @@ $(document).ready(function(e) {
         var count = 0;
         var weekend = "<?php echo $weekend ?>";
         var w = weekend.split(',')
-        //alert(w[0]);
+
         while (d <= to) {
             d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
             if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
@@ -226,26 +225,48 @@ $(document).ready(function(e) {
 
 function leavetypechange(id) {
     var leave_type = id;
+    // Get employee_id from either dropdown or hidden input
     var employee_id = $('#employee_id').val();
+    if (!employee_id) {
+        employee_id = $('input[name="employee_id"]').val();
+    }
+
+    if (!employee_id || !leave_type) {
+        console.log('Missing employee_id or leave_type');
+        return;
+    }
+
     $.ajax({
         url: "<?php echo base_url('leave/Leave/free_leave')?>",
         method: 'post',
         dataType: 'json',
         data: {
             'employee_id': employee_id,
-            'leave_type': id
+            'leave_type': leave_type
         },
         success: function(data) {
-            document.getElementById('enjoy').innerHTML = 'You Enjoyed : ' + data.enjoy + ' Ds';
-            document.getElementById('checkleave').innerHTML = 'Total Leave : ' + data.due + ' Ds';
+            if (data.status == 'success') {
+                document.getElementById('enjoy').innerHTML = 'You Enjoyed : ' + data.enjoy + ' Ds';
+                document.getElementById('checkleave').innerHTML = 'Total Leave : ' + data.due + ' Ds';
+            } else {
+                console.log('Error:', data.message);
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            console.log('AJAX Error:', textStatus, errorThrown);
+            console.log('Response:', jqXHR.responseText);
             alert('Error get data from ajax');
         }
     });
 }
 
-$(document).ready(function(e) {
+$(document).ready(function() {
+    // Load leave balance on page load with pre-selected values
+    var initialLeaveType = $('select[name="leave_type_id"]').val();
+    if (initialLeaveType) {
+        leavetypechange(initialLeaveType);
+    }
+
     function datecheck() {
         var date = new Date($('#apply_start').val());
         var date1 = new Date($('#leave_aprv_strt_date').val());
