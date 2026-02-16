@@ -1,4 +1,7 @@
-<style type="text/css">
+<?php
+echo $this->session->userdata('role_id');
+exit;
+?><style type="text/css">
 .close {
     color: red;
 }
