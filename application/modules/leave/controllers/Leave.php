@@ -288,6 +288,8 @@ public function application(){
 
     // others leave info
   public function others_leave(){ 
+	echo $this->session->userdata('role_id');
+exit;
         $data['title'] = display('application');//agent_picture
 		
     //  Load correct model
