@@ -288,9 +288,6 @@ public function application(){
 
     // others leave info
   public function others_leave(){ 
-	$CI =& get_instance();
-echo $CI->session->userdata('role_id');
-exit;
         $data['title'] = display('application');//agent_picture
 		
     //  Load correct model

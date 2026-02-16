@@ -1,4 +1,8 @@
-<style type="text/css">
+<?php
+$CI =& get_instance();
+echo $CI->session->userdata('role_id');
+exit;
+?><style type="text/css">
 .close {
     color: red;
 }
