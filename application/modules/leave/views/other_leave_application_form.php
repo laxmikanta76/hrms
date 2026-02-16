@@ -1,7 +1,4 @@
-<?php
-echo $this->session->userdata('role_id');
-exit;
-?><style type="text/css">
+<style type="text/css">
 .close {
     color: red;
 }
@@ -10,6 +7,10 @@ exit;
     color: red;
 }
 </style>
+<?php
+echo $this->session->userdata('role_id');
+exit;
+?>
 <div class="form-group text-right">
     <?php if($this->permission->method('leave','create')->access()): ?>
     <button type="button" class="btn btn-primary btn-md" data-target="#add" data-toggle="modal"><i
