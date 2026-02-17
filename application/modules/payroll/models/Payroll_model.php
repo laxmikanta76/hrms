@@ -337,5 +337,8 @@ public function setting()
 		
 		return $result ? $result->used_leave : 0;
 	}
+	public function new(){
+		
+	}
 
 }
