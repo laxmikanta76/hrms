@@ -80,6 +80,9 @@ body {
 }
 
 @media (max-width: 767px) {
+    .background-color{
+        background-color: #020f85;
+    }
     .content-wrapper,
     .right-side,
     .main-footer {
@@ -96,6 +99,7 @@ body {
 }
 
 @media (max-width: 767px) {
+    background-color: ;
     .sidebar-open .content-wrapper,
     .sidebar-open .right-side,
     .sidebar-open .main-footer {
