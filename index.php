@@ -70,7 +70,7 @@
 switch (ENVIRONMENT)
 {
 	case 'development':
-		error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
+		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 	break;
 
