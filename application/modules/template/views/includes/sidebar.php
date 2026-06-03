@@ -33,10 +33,7 @@
         <!-- *************************************
         **********STATS OF CUSTOM MODULES*********
         ************************************* -->
-        <?php
-        echo "<pre>";
-print_r(array_keys($HmvcMenu));
-exit;  
+        <?php  
         $path = 'application/modules/';
         $map  = directory_map($path);
        
@@ -49,7 +46,10 @@ exit;
             if (file_exists($menu)) {
                 @include($menu);
             }  
-        }   
+        }
+        echo "<pre>";
+print_r(array_keys($HmvcMenu));
+exit;   
 
  
         if(isset($HmvcMenu) && $HmvcMenu!=null && sizeof($HmvcMenu) > 0)
