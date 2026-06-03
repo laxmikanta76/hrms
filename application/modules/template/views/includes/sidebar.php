@@ -33,7 +33,10 @@
         <!-- *************************************
         **********STATS OF CUSTOM MODULES*********
         ************************************* -->
-        <?php  
+        <?php
+        echo "<pre>";
+print_r(array_keys($HmvcMenu));
+exit;  
         $path = 'application/modules/';
         $map  = directory_map($path);
        
