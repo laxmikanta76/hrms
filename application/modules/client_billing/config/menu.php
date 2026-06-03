@@ -1,103 +1,78 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
-/*
-|--------------------------------------------------------------------------
-| Client Billing Module — Sidebar Menu Config
-|--------------------------------------------------------------------------
-| Paste this into your HRMS main menu config file,
-| or include it as a separate module menu.
-|--------------------------------------------------------------------------
-*/
-
-
-$HmvcMenu["client_billing"] = [
-    "icon" => "<i class='ti-receipt'></i>",
+// module name
+$HmvcMenu["client_billing"] = array(
+    // set icon
+    "icon" => "<i class='fa fa-file-text-o'></i>",
 
     // Dashboard
-    "dashboard" => [
-        "controller" => "client_billing",
+    "cb_dashboard" => array(
+        "controller" => "Client_billing",
         "method"     => "dashboard",
-        "permission" => "read",
-    ],
+        "permission" => "read"
+    ),
 
-    // Invoices group
-    "invoices" => [
-        "create_invoice" => [
-            "controller" => "client_billing",
-            "method"     => "create_invoice",
-            "permission" => "create",
-        ],
-        "invoice_list" => [
-            "controller" => "client_billing",
-            "method"     => "invoices",
-            "permission" => "read",
-        ],
-    ],
+    // Invoices
+    "cb_invoices" => array(
+        "controller" => "Client_billing",
+        "method"     => "invoices",
+        "permission" => "read"
+    ),
+
+    // Create Invoice
+    "cb_create_invoice" => array(
+        "controller" => "Client_billing",
+        "method"     => "create_invoice",
+        "permission" => "create"
+    ),
 
     // Clients
-    "clients" => [
-        "client_list" => [
-            "controller" => "client_billing",
-            "method"     => "clients",
-            "permission" => "read",
-        ],
-        "add_client" => [
-            "controller" => "client_billing",
-            "method"     => "add_client",
-            "permission" => "create",
-        ],
-    ],
+    "cb_clients" => array(
+        "controller" => "Client_billing",
+        "method"     => "clients",
+        "permission" => "read"
+    ),
 
     // Service Catalog
-    "services" => [
-        "controller" => "client_billing",
+    "cb_services" => array(
+        "controller" => "Client_billing",
         "method"     => "services",
-        "permission" => "read",
-    ],
+        "permission" => "read"
+    ),
 
     // Payments
-    "payments" => [
-        "payment_list" => [
-            "controller" => "client_billing",
-            "method"     => "payments",
-            "permission" => "read",
-        ],
-        "record_payment" => [
-            "controller" => "client_billing",
-            "method"     => "record_payment",
-            "permission" => "create",
-        ],
-    ],
+    "cb_payments" => array(
+        "controller" => "Client_billing",
+        "method"     => "payments",
+        "permission" => "read"
+    ),
 
-    // Reports
-    "reports" => [
-        "gst_report" => [
-            "controller" => "client_billing",
-            "method"     => "gst_report",
-            "permission" => "read",
-        ],
-        "revenue_report" => [
-            "controller" => "client_billing",
-            "method"     => "revenue_report",
-            "permission" => "read",
-        ],
-        "outstanding_report" => [
-            "controller" => "client_billing",
-            "method"     => "outstanding_report",
-            "permission" => "read",
-        ],
-        "service_report" => [
-            "controller" => "client_billing",
-            "method"     => "service_report",
-            "permission" => "read",
-        ],
-    ],
+    // GST Report
+    "cb_gst_report" => array(
+        "controller" => "Client_billing",
+        "method"     => "gst_report",
+        "permission" => "read"
+    ),
+
+    // Revenue Report
+    "cb_revenue_report" => array(
+        "controller" => "Client_billing",
+        "method"     => "revenue_report",
+        "permission" => "read"
+    ),
+
+    // Outstanding
+    "cb_outstanding" => array(
+        "controller" => "Client_billing",
+        "method"     => "outstanding_report",
+        "permission" => "read"
+    ),
 
     // Settings
-    "billing_settings" => [
-        "controller" => "client_billing",
+    "cb_settings" => array(
+        "controller" => "Client_billing",
         "method"     => "settings",
-        "permission" => "create",
-    ],
-];
+        "permission" => "read"
+    ),
+
+);
