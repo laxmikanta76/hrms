@@ -47,10 +47,6 @@
                 @include($menu);
             }  
         }
-        echo "<pre>";
-var_dump(isset($HmvcMenu));
-print_r($HmvcMenu);
-die;
 
  
         if(isset($HmvcMenu) && $HmvcMenu!=null && sizeof($HmvcMenu) > 0)
