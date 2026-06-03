@@ -10,6 +10,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |--------------------------------------------------------------------------
 */
 
+echo "MENU LOADED";
+exit;
+
 $HmvcMenu["client_billing"] = [
     "icon" => "<i class='ti-receipt'></i>",
 
