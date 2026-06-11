@@ -3,7 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Client_billing Controller
- * URL pattern: client_billing/Client_billing/method
+ * FIXED: All page paths are flat (no subfolders)
+ * HMVC CI3 cannot load subfolder views via template/layout
+ * All views must be directly in: modules/client_billing/views/cb_*.php
  */
 class Client_billing extends MX_Controller {
 
@@ -14,21 +16,20 @@ class Client_billing extends MX_Controller {
         $this->load->helper(array('url', 'form'));
         if (!$this->session->userdata('isLogIn'))
             redirect('login');
-        // Auto-mark overdue invoices
         $this->Client_billing_model->mark_overdue();
     }
 
-    // ── Dashboard ─────────────────────────────────────────────
+    // ── Dashboard ──────────────────────────────────────────────
     public function dashboard() {
         $this->permission->module('client_billing', 'read')->redirect();
-        $data['title']   = display('cb_dashboard');
-        $data['module']  = 'client_billing';
-        $data['page']    = 'dashboard/index';
-        $data['stats']   = $this->Client_billing_model->dashboard_stats();
+        $data['title']  = display('cb_dashboard');
+        $data['module'] = 'client_billing';
+        $data['page']   = 'cb_dashboard';           // ← FLAT: views/cb_dashboard.php
+        $data['stats']  = $this->Client_billing_model->dashboard_stats();
         echo Modules::run('template/layout', $data);
     }
 
-    // ── Invoice List ──────────────────────────────────────────
+    // ── Invoice List ───────────────────────────────────────────
     public function invoices() {
         $this->permission->module('client_billing', 'read')->redirect();
         $f = [
@@ -42,7 +43,7 @@ class Client_billing extends MX_Controller {
         $per_page = 20;
         $data['title']        = display('cb_invoices');
         $data['module']       = 'client_billing';
-        $data['page']         = 'invoice/list';
+        $data['page']         = 'cb_invoice_list';  // ← FLAT: views/cb_invoice_list.php
         $data['invoices']     = $this->Client_billing_model->get_invoices($f, $per_page, ($page - 1) * $per_page);
         $data['total']        = $this->Client_billing_model->count_invoices($f);
         $data['filters']      = $f;
@@ -52,23 +53,23 @@ class Client_billing extends MX_Controller {
         echo Modules::run('template/layout', $data);
     }
 
-    // ── Create Invoice ────────────────────────────────────────
+    // ── Create Invoice ─────────────────────────────────────────
     public function create_invoice() {
         $this->permission->module('client_billing', 'create')->redirect();
-        $data['title']       = display('cb_create_invoice');
-        $data['module']      = 'client_billing';
-        $data['page']        = 'invoice/form';
-        $data['invoice']     = null;
-        $data['items']       = [];
-        $data['clients']     = $this->Client_billing_model->get_clients(true);
-        $data['services']    = $this->Client_billing_model->get_services();
-        $data['banks']       = $this->Client_billing_model->get_banks();
-        $data['next_number'] = $this->Client_billing_model->next_invoice_number();
+        $data['title']          = display('cb_create_invoice');
+        $data['module']         = 'client_billing';
+        $data['page']           = 'cb_invoice_form'; // ← FLAT: views/cb_invoice_form.php
+        $data['invoice']        = null;
+        $data['items']          = array();
+        $data['clients']        = $this->Client_billing_model->get_clients(true);
+        $data['services']       = $this->Client_billing_model->get_services();
+        $data['banks']          = $this->Client_billing_model->get_banks();
+        $data['next_number']    = $this->Client_billing_model->next_invoice_number();
         $data['preload_client'] = $this->input->get('client_id');
         echo Modules::run('template/layout', $data);
     }
 
-    // ── Edit Invoice ──────────────────────────────────────────
+    // ── Edit Invoice ───────────────────────────────────────────
     public function edit_invoice($id = 0) {
         $this->permission->module('client_billing', 'read')->redirect();
         $inv = $this->Client_billing_model->get_invoice_full($id);
@@ -76,26 +77,26 @@ class Client_billing extends MX_Controller {
             $this->session->set_flashdata('error', 'Invoice not found.');
             redirect('client_billing/Client_billing/invoices');
         }
-        $data['title']       = 'Edit Invoice #' . $inv->invoice_number;
-        $data['module']      = 'client_billing';
-        $data['page']        = 'invoice/form';
-        $data['invoice']     = $inv;
-        $data['items']       = $inv->items;
-        $data['clients']     = $this->Client_billing_model->get_clients(true);
-        $data['services']    = $this->Client_billing_model->get_services();
-        $data['banks']       = $this->Client_billing_model->get_banks();
-        $data['next_number'] = $inv->invoice_number;
+        $data['title']          = 'Edit Invoice #' . $inv->invoice_number;
+        $data['module']         = 'client_billing';
+        $data['page']           = 'cb_invoice_form'; // ← FLAT
+        $data['invoice']        = $inv;
+        $data['items']          = $inv->items;
+        $data['clients']        = $this->Client_billing_model->get_clients(true);
+        $data['services']       = $this->Client_billing_model->get_services();
+        $data['banks']          = $this->Client_billing_model->get_banks();
+        $data['next_number']    = $inv->invoice_number;
         $data['preload_client'] = null;
         echo Modules::run('template/layout', $data);
     }
 
-    // ── Save Invoice (POST) ───────────────────────────────────
+    // ── Save Invoice (POST) ────────────────────────────────────
     public function save_invoice() {
         if ($this->input->method() !== 'post')
             redirect('client_billing/Client_billing/invoices');
 
         $id = (int)$this->input->post('invoice_id');
-        $d  = [
+        $d  = array(
             'invoice_number'   => $this->input->post('invoice_number'),
             'client_id'        => (int)$this->input->post('client_id'),
             'bank_account_id'  => $this->input->post('bank_account_id') ?: null,
@@ -127,31 +128,30 @@ class Client_billing extends MX_Controller {
             'internal_notes'   => $this->input->post('internal_notes'),
             'created_by'       => $this->session->userdata('fullname'),
             'updated_at'       => date('Y-m-d H:i:s'),
-        ];
+        );
         $d['amount_in_words'] = $this->Client_billing_model->amount_in_words($d['grand_total']);
         if (!$id) $d['created_at'] = date('Y-m-d H:i:s');
 
-        // Build items
-        $descs = $this->input->post('item_description') ?: [];
-        $items = [];
+        $descs = $this->input->post('item_description') ?: array();
+        $items = array();
         foreach ($descs as $i => $desc) {
             if (empty(trim($desc))) continue;
-            $qty     = (float)($this->input->post('quantity')[$i]      ?? 1);
-            $rate    = (float)($this->input->post('rate')[$i]          ?? 0);
-            $disc    = (float)($this->input->post('discount')[$i]      ?? 0);
-            $dtype   = $this->input->post('discount_type')[$i]         ?? 'flat';
+            $qty     = (float)(isset($this->input->post('quantity')[$i])     ? $this->input->post('quantity')[$i]     : 1);
+            $rate    = (float)(isset($this->input->post('rate')[$i])         ? $this->input->post('rate')[$i]         : 0);
+            $disc    = (float)(isset($this->input->post('discount')[$i])     ? $this->input->post('discount')[$i]     : 0);
+            $dtype   = isset($this->input->post('discount_type')[$i])        ? $this->input->post('discount_type')[$i]: 'flat';
             $discAmt = $dtype === 'percent' ? ($qty * $rate * $disc / 100) : $disc;
             $taxable = ($qty * $rate) - $discAmt;
-            $cr      = (float)($this->input->post('cgst_rate')[$i]     ?? 0);
-            $sr      = (float)($this->input->post('sgst_rate')[$i]     ?? 0);
-            $ir      = (float)($this->input->post('igst_rate')[$i]     ?? 0);
-            $items[] = [
-                'service_id'       => $this->input->post('service_id')[$i] ?? null ?: null,
+            $cr      = (float)(isset($this->input->post('cgst_rate')[$i])    ? $this->input->post('cgst_rate')[$i]    : 0);
+            $sr      = (float)(isset($this->input->post('sgst_rate')[$i])    ? $this->input->post('sgst_rate')[$i]    : 0);
+            $ir      = (float)(isset($this->input->post('igst_rate')[$i])    ? $this->input->post('igst_rate')[$i]    : 0);
+            $items[] = array(
+                'service_id'       => ($this->input->post('service_id') && isset($this->input->post('service_id')[$i])) ? $this->input->post('service_id')[$i] : null,
                 'sl_no'            => $i + 1,
                 'item_description' => $desc,
-                'hsn_sac_code'     => $this->input->post('hsn_sac_code')[$i] ?? '',
+                'hsn_sac_code'     => isset($this->input->post('hsn_sac_code')[$i]) ? $this->input->post('hsn_sac_code')[$i] : '',
                 'quantity'         => $qty,
-                'unit'             => $this->input->post('unit')[$i]         ?? 'Nos',
+                'unit'             => isset($this->input->post('unit')[$i]) ? $this->input->post('unit')[$i] : 'Nos',
                 'rate'             => $rate,
                 'discount_type'    => $dtype,
                 'discount'         => $disc,
@@ -161,7 +161,7 @@ class Client_billing extends MX_Controller {
                 'sgst_rate'        => $sr, 'sgst_amount' => round($taxable * $sr / 100, 2),
                 'igst_rate'        => $ir, 'igst_amount' => round($taxable * $ir / 100, 2),
                 'total_amount'     => round($taxable * (1 + ($cr + $sr + $ir) / 100), 2),
-            ];
+            );
         }
 
         if ($id) {
@@ -173,14 +173,14 @@ class Client_billing extends MX_Controller {
         }
 
         if ($this->input->is_ajax_request()) {
-            echo json_encode(['success' => $ok, 'invoice_id' => $id]);
+            echo json_encode(array('success' => $ok, 'invoice_id' => $id));
             return;
         }
         $this->session->set_flashdata($ok ? 'message' : 'error', $ok ? 'Invoice saved successfully.' : 'Save failed.');
         redirect('client_billing/Client_billing/view_invoice/' . $id);
     }
 
-    // ── View Invoice ──────────────────────────────────────────
+    // ── View Invoice ───────────────────────────────────────────
     public function view_invoice($id = 0) {
         $this->permission->module('client_billing', 'read')->redirect();
         $inv = $this->Client_billing_model->get_invoice_full($id);
@@ -190,12 +190,34 @@ class Client_billing extends MX_Controller {
         }
         $data['title']   = 'Invoice #' . $inv->invoice_number;
         $data['module']  = 'client_billing';
-        $data['page']    = 'invoice/view';
+        $data['page']    = 'cb_invoice_view';        // ← FLAT
         $data['invoice'] = $inv;
         echo Modules::run('template/layout', $data);
     }
 
-    // ── Delete Invoice ────────────────────────────────────────
+    // ── Print Invoice ──────────────────────────────────────────
+    public function print_invoice($id = 0) {
+        $inv = $this->Client_billing_model->get_invoice_full($id);
+        if (!$inv) show_404();
+        // Load directly (bypasses template) — flat view name
+        $this->load->view('cb_invoice_print', array('invoice' => $inv));
+    }
+
+    // ── Download PDF ───────────────────────────────────────────
+    public function download_pdf($id = 0) {
+        $inv = $this->Client_billing_model->get_invoice_full($id);
+        if (!$inv) show_404();
+        if (class_exists('Mpdf\Mpdf')) {
+            $mpdf = new \Mpdf\Mpdf(array('format' => 'A4', 'margin_left' => 8, 'margin_right' => 8, 'margin_top' => 8, 'margin_bottom' => 8));
+            $html = $this->load->view('cb_invoice_print', array('invoice' => $inv), true);
+            $mpdf->WriteHTML($html);
+            $mpdf->Output('Invoice_' . $inv->invoice_number . '.pdf', 'D');
+        } else {
+            $this->load->view('cb_invoice_print', array('invoice' => $inv));
+        }
+    }
+
+    // ── Delete Invoice ─────────────────────────────────────────
     public function delete_invoice($id = 0) {
         $this->permission->module('client_billing', 'delete')->redirect();
         $this->Client_billing_model->delete_invoice($id);
@@ -203,42 +225,21 @@ class Client_billing extends MX_Controller {
         redirect('client_billing/Client_billing/invoices');
     }
 
-    // ── Duplicate Invoice ─────────────────────────────────────
+    // ── Duplicate Invoice ──────────────────────────────────────
     public function duplicate_invoice($id = 0) {
         $new_id = $this->Client_billing_model->duplicate_invoice($id, $this->session->userdata('fullname'));
-        $this->session->set_flashdata($new_id ? 'message' : 'error', $new_id ? 'Invoice duplicated as draft.' : 'Duplication failed.');
+        $this->session->set_flashdata($new_id ? 'message' : 'error', $new_id ? 'Duplicated as draft.' : 'Failed.');
         if ($new_id) redirect('client_billing/Client_billing/edit_invoice/' . $new_id);
-        else         redirect('client_billing/Client_billing/invoices');
+        else redirect('client_billing/Client_billing/invoices');
     }
 
-    // ── Update Status ─────────────────────────────────────────
+    // ── Update Status ──────────────────────────────────────────
     public function update_status($id = 0) {
         $status = $this->input->post('status');
-        $ok     = $this->Client_billing_model->update_status($id, $status, $this->session->userdata('fullname'));
-        if ($this->input->is_ajax_request()) { echo json_encode(['success' => $ok]); return; }
+        $ok = $this->Client_billing_model->update_status($id, $status, $this->session->userdata('fullname'));
+        if ($this->input->is_ajax_request()) { echo json_encode(array('success' => $ok)); return; }
         $this->session->set_flashdata($ok ? 'message' : 'error', $ok ? 'Status updated.' : 'Failed.');
         redirect('client_billing/Client_billing/view_invoice/' . $id);
-    }
-
-    // ── Print Invoice (A4 HTML) ───────────────────────────────
-    public function print_invoice($id = 0) {
-        $inv = $this->Client_billing_model->get_invoice_full($id);
-        if (!$inv) show_404();
-        $this->load->view('client_billing/pdf/invoice_print', ['invoice' => $inv]);
-    }
-
-    // ── Download PDF ──────────────────────────────────────────
-    public function download_pdf($id = 0) {
-        $inv = $this->Client_billing_model->get_invoice_full($id);
-        if (!$inv) show_404();
-        if (class_exists('Mpdf\Mpdf')) {
-            $mpdf = new \Mpdf\Mpdf(['format' => 'A4', 'margin_left' => 8, 'margin_right' => 8, 'margin_top' => 8, 'margin_bottom' => 8]);
-            $html = $this->load->view('client_billing/pdf/invoice_print', ['invoice' => $inv], true);
-            $mpdf->WriteHTML($html);
-            $mpdf->Output('Invoice_' . $inv->invoice_number . '.pdf', 'D');
-        } else {
-            $this->load->view('client_billing/pdf/invoice_print', ['invoice' => $inv]);
-        }
     }
 
     // ── Clients ────────────────────────────────────────────────
@@ -246,7 +247,7 @@ class Client_billing extends MX_Controller {
         $this->permission->module('client_billing', 'read')->redirect();
         $data['title']   = display('cb_clients');
         $data['module']  = 'client_billing';
-        $data['page']    = 'client/list';
+        $data['page']    = 'cb_client_list';         // ← FLAT
         $data['clients'] = $this->Client_billing_model->get_clients();
         echo Modules::run('template/layout', $data);
     }
@@ -255,7 +256,7 @@ class Client_billing extends MX_Controller {
         $this->permission->module('client_billing', 'create')->redirect();
         $data['title']  = 'Add Client';
         $data['module'] = 'client_billing';
-        $data['page']   = 'client/form';
+        $data['page']   = 'cb_client_form';          // ← FLAT
         $data['client'] = null;
         echo Modules::run('template/layout', $data);
     }
@@ -263,14 +264,14 @@ class Client_billing extends MX_Controller {
     public function edit_client($id = 0) {
         $data['title']  = 'Edit Client';
         $data['module'] = 'client_billing';
-        $data['page']   = 'client/form';
+        $data['page']   = 'cb_client_form';          // ← FLAT
         $data['client'] = $this->Client_billing_model->get_client($id);
         echo Modules::run('template/layout', $data);
     }
 
     public function save_client() {
         $id = (int)$this->input->post('client_id');
-        $d  = [
+        $d  = array(
             'client_code'      => $this->input->post('client_code'),
             'company_name'     => $this->input->post('company_name'),
             'contact_person'   => $this->input->post('contact_person'),
@@ -291,9 +292,9 @@ class Client_billing extends MX_Controller {
             'credit_limit'     => (float)$this->input->post('credit_limit'),
             'notes'            => $this->input->post('notes'),
             'created_by'       => $this->session->userdata('fullname'),
-        ];
+        );
         $cid = $this->Client_billing_model->save_client($d, $id ?: null);
-        if ($this->input->is_ajax_request()) { echo json_encode(['success' => true, 'client_id' => $cid]); return; }
+        if ($this->input->is_ajax_request()) { echo json_encode(array('success' => true, 'client_id' => $cid)); return; }
         $this->session->set_flashdata('message', 'Client saved.');
         redirect('client_billing/Client_billing/clients');
     }
@@ -307,27 +308,27 @@ class Client_billing extends MX_Controller {
     public function client_detail($id = 0) {
         $data['title']    = 'Client Profile';
         $data['module']   = 'client_billing';
-        $data['page']     = 'client/detail';
+        $data['page']     = 'cb_client_detail';      // ← FLAT
         $data['client']   = $this->Client_billing_model->get_client($id);
         $data['stats']    = $this->Client_billing_model->client_stats($id);
-        $data['invoices'] = $this->Client_billing_model->get_invoices(['client_id' => $id], 20, 0);
-        $data['payments'] = $this->Client_billing_model->get_payments(['client_id' => $id], 20, 0);
+        $data['invoices'] = $this->Client_billing_model->get_invoices(array('client_id' => $id), 20, 0);
+        $data['payments'] = $this->Client_billing_model->get_payments(array('client_id' => $id), 20, 0);
         echo Modules::run('template/layout', $data);
     }
 
-    // ── Services ────────────────────────────────────────────────
+    // ── Services ───────────────────────────────────────────────
     public function services() {
         $this->permission->module('client_billing', 'read')->redirect();
         $data['title']    = display('cb_services');
         $data['module']   = 'client_billing';
-        $data['page']     = 'service/list';
+        $data['page']     = 'cb_service_list';       // ← FLAT
         $data['services'] = $this->Client_billing_model->get_services(false);
         echo Modules::run('template/layout', $data);
     }
 
     public function save_service() {
         $id = (int)$this->input->post('service_id');
-        $d  = [
+        $d  = array(
             'name'         => $this->input->post('name'),
             'description'  => $this->input->post('description'),
             'hsn_sac'      => $this->input->post('hsn_sac'),
@@ -338,7 +339,7 @@ class Client_billing extends MX_Controller {
             'igst_rate'    => (float)$this->input->post('igst_rate'),
             'category'     => $this->input->post('category'),
             'is_active'    => 1,
-        ];
+        );
         $this->Client_billing_model->save_service($d, $id ?: null);
         $this->session->set_flashdata('message', 'Service saved.');
         redirect('client_billing/Client_billing/services');
@@ -350,17 +351,17 @@ class Client_billing extends MX_Controller {
         redirect('client_billing/Client_billing/services');
     }
 
-    // ── Payments ────────────────────────────────────────────────
+    // ── Payments ───────────────────────────────────────────────
     public function payments() {
         $this->permission->module('client_billing', 'read')->redirect();
-        $f = [
+        $f = array(
             'client_id' => $this->input->get('client_id'),
             'date_from' => $this->input->get('date_from'),
             'date_to'   => $this->input->get('date_to'),
-        ];
+        );
         $data['title']    = display('cb_payments');
         $data['module']   = 'client_billing';
-        $data['page']     = 'payment/list';
+        $data['page']     = 'cb_payment_list';       // ← FLAT
         $data['payments'] = $this->Client_billing_model->get_payments($f);
         $data['clients']  = $this->Client_billing_model->get_clients(true);
         $data['filters']  = $f;
@@ -372,15 +373,15 @@ class Client_billing extends MX_Controller {
         $inv = $invoice_id ? $this->Client_billing_model->get_invoice($invoice_id) : null;
         $data['title']    = 'Record Payment';
         $data['module']   = 'client_billing';
-        $data['page']     = 'payment/form';
+        $data['page']     = 'cb_payment_form';       // ← FLAT
         $data['invoice']  = $inv;
-        $data['invoices'] = $this->Client_billing_model->get_invoices(['status' => 'unpaid'], 100, 0);
+        $data['invoices'] = $this->Client_billing_model->get_invoices(array('status' => 'unpaid'), 100, 0);
         $data['banks']    = $this->Client_billing_model->get_banks();
         echo Modules::run('template/layout', $data);
     }
 
     public function save_payment() {
-        $d = [
+        $d = array(
             'invoice_id'      => (int)$this->input->post('invoice_id'),
             'client_id'       => (int)$this->input->post('client_id'),
             'amount'          => (float)$this->input->post('amount'),
@@ -391,20 +392,20 @@ class Client_billing extends MX_Controller {
             'notes'           => $this->input->post('notes'),
             'status'          => 'success',
             'created_by'      => $this->session->userdata('fullname'),
-        ];
+        );
         $pid = $this->Client_billing_model->record_payment($d);
-        if ($this->input->is_ajax_request()) { echo json_encode(['success' => $pid !== false, 'id' => $pid]); return; }
+        if ($this->input->is_ajax_request()) { echo json_encode(array('success' => $pid !== false, 'id' => $pid)); return; }
         $this->session->set_flashdata($pid ? 'message' : 'error', $pid ? 'Payment recorded.' : 'Failed.');
         redirect('client_billing/Client_billing/payments');
     }
 
-    // ── Reports ─────────────────────────────────────────────────
+    // ── Reports ────────────────────────────────────────────────
     public function gst_report() {
         $this->permission->module('client_billing', 'read')->redirect();
         $year = $this->input->get('year') ?: date('Y');
         $data['title']    = display('cb_gst_report');
         $data['module']   = 'client_billing';
-        $data['page']     = 'reports/gst';
+        $data['page']     = 'cb_report_gst';         // ← FLAT
         $data['gst_data'] = $this->Client_billing_model->gst_report($year);
         $data['year']     = $year;
         echo Modules::run('template/layout', $data);
@@ -414,7 +415,7 @@ class Client_billing extends MX_Controller {
         $this->permission->module('client_billing', 'read')->redirect();
         $data['title']   = display('cb_revenue_report');
         $data['module']  = 'client_billing';
-        $data['page']    = 'reports/revenue';
+        $data['page']    = 'cb_report_revenue';      // ← FLAT
         $data['monthly'] = $this->Client_billing_model->monthly_revenue(12);
         echo Modules::run('template/layout', $data);
     }
@@ -423,9 +424,9 @@ class Client_billing extends MX_Controller {
         $this->permission->module('client_billing', 'read')->redirect();
         $data['title']    = display('cb_outstanding');
         $data['module']   = 'client_billing';
-        $data['page']     = 'reports/outstanding';
-        $data['invoices'] = $this->Client_billing_model->get_invoices(['status' => 'unpaid'],  100, 0);
-        $data['overdue']  = $this->Client_billing_model->get_invoices(['status' => 'overdue'], 100, 0);
+        $data['page']     = 'cb_report_outstanding'; // ← FLAT
+        $data['invoices'] = $this->Client_billing_model->get_invoices(array('status' => 'unpaid'), 100, 0);
+        $data['overdue']  = $this->Client_billing_model->get_invoices(array('status' => 'overdue'), 100, 0);
         echo Modules::run('template/layout', $data);
     }
 
@@ -433,18 +434,18 @@ class Client_billing extends MX_Controller {
         $year = $this->input->get('year') ?: date('Y');
         $data['title']  = 'Service Revenue';
         $data['module'] = 'client_billing';
-        $data['page']   = 'reports/services';
+        $data['page']   = 'cb_report_services';      // ← FLAT
         $data['data']   = $this->Client_billing_model->service_wise_report($year);
         $data['year']   = $year;
         echo Modules::run('template/layout', $data);
     }
 
-    // ── Settings ─────────────────────────────────────────────────
+    // ── Settings ───────────────────────────────────────────────
     public function settings() {
         $this->permission->module('client_billing', 'read')->redirect();
         $data['title']    = display('cb_settings');
         $data['module']   = 'client_billing';
-        $data['page']     = 'dashboard/settings';
+        $data['page']     = 'cb_settings';           // ← FLAT
         $data['company']  = $this->Client_billing_model->get_company();
         $data['banks']    = $this->Client_billing_model->get_banks();
         $data['services'] = $this->Client_billing_model->get_services(false);
@@ -452,7 +453,7 @@ class Client_billing extends MX_Controller {
     }
 
     public function save_settings() {
-        $d = [
+        $d = array(
             'name'           => $this->input->post('name'),
             'address'        => $this->input->post('address'),
             'city'           => $this->input->post('city'),
@@ -467,13 +468,13 @@ class Client_billing extends MX_Controller {
             'upi_id'         => $this->input->post('upi_id'),
             'terms'          => $this->input->post('terms'),
             'footer_note'    => $this->input->post('footer_note'),
-        ];
+        );
         $this->Client_billing_model->update_company($d);
         $this->session->set_flashdata('message', 'Settings saved.');
         redirect('client_billing/Client_billing/settings');
     }
 
-    // ── AJAX ────────────────────────────────────────────────────
+    // ── AJAX ───────────────────────────────────────────────────
     public function ajax_client($id = 0) {
         echo json_encode($this->Client_billing_model->get_client($id));
     }
