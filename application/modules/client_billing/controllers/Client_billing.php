@@ -54,6 +54,8 @@ class Client_billing extends MX_Controller {
 
     // ── Create Invoice ────────────────────────────────────────
     public function create_invoice() {
+         echo "Controller Working";
+    exit;
         $this->permission->module('client_billing', 'create')->redirect();
         $data['title']       = display('cb_create_invoice');
         $data['module']      = 'client_billing';
