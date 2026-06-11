@@ -1,4 +1,15 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+echo "<h1>LAYOUT LOADED</h1>";
+echo "<pre>";
+print_r($page);
+print_r($module);
+echo "</pre>";
+exit;
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>

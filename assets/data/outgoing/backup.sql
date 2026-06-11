@@ -80480,3 +80480,8 @@ WHERE `status` IN('unpaid', 'sent')
 AND `due_date` < '2026-06-11'
 AND `deleted_at` IS NULL;
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
