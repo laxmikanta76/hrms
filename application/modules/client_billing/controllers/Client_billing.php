@@ -54,22 +54,17 @@ class Client_billing extends MX_Controller {
 
     // ── Create Invoice ────────────────────────────────────────
     public function create_invoice() {
-          echo "Step 1<br>";
         $this->permission->module('client_billing', 'create')->redirect();
         $data['title']       = display('cb_create_invoice');
-         echo "Step 2<br>";
         $data['module']      = 'client_billing';
-        $data['page']        = 'invoice/form';
+        $data['page']        = 'views/invoice/form';
         $data['invoice']     = null;
         $data['items']       = [];
         $data['clients']     = $this->Client_billing_model->get_clients(true);
-         echo "Step 3<br>";
         $data['services']    = $this->Client_billing_model->get_services();
-        echo "Step 4<br>";
         $data['banks']       = $this->Client_billing_model->get_banks();
         $data['next_number'] = $this->Client_billing_model->next_invoice_number();
         $data['preload_client'] = $this->input->get('client_id');
-         echo "Step 5<br>";
         echo Modules::run('template/layout', $data);
     }
 
