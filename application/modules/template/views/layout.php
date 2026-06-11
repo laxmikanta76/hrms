@@ -1,7 +1,4 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-<?php
-die('LAYOUT FILE LOADED');
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,7 +41,16 @@ die('LAYOUT FILE LOADED');
                 <?php $this->load->view('includes/messages') ?>
                 <div class="se-pre-con"></div>
                 <!-- load custom page -->
-                <?php echo $this->load->view($module.'/'.$page) ?>
+
+                <?php
+echo "<h2>BEFORE VIEW</h2>";
+echo "Module: ".$module."<br>";
+echo "Page: ".$page."<br>";
+
+$this->load->view($module.'/'.$page);
+
+echo "<h2>AFTER VIEW</h2>";
+?>
             </div> <!-- /.content -->
 
 
