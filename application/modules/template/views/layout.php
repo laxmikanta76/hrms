@@ -41,16 +41,7 @@
                 <?php $this->load->view('includes/messages') ?>
                 <div class="se-pre-con"></div>
                 <!-- load custom page -->
-
-                <?php
-echo "<h2>BEFORE VIEW</h2>";
-echo "Module: ".$module."<br>";
-echo "Page: ".$page."<br>";
-
-$this->load->view($module.'/'.$page, $this->load->get_vars());
-
-echo "<h2>AFTER VIEW</h2>";
-?>
+                <?php echo $this->load->view($module.'/'.$page) ?>
             </div> <!-- /.content -->
 
 
