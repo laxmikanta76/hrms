@@ -65,10 +65,7 @@ class Client_billing extends MX_Controller {
         $data['banks']       = $this->Client_billing_model->get_banks();
         $data['next_number'] = $this->Client_billing_model->next_invoice_number();
         $data['preload_client'] = $this->input->get('client_id');
-        // echo Modules::run('template/layout', $data);
-        echo "<h1>Before Layout</h1>";
-print_r($data);
-exit;
+        echo Modules::run('template/layout', $data);
     }
 
     // ── Edit Invoice ──────────────────────────────────────────
