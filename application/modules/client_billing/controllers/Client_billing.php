@@ -57,7 +57,7 @@ class Client_billing extends MX_Controller {
         $this->permission->module('client_billing', 'create')->redirect();
         $data['title']       = display('cb_create_invoice');
         $data['module']      = 'client_billing';
-        $data['page']        = 'views/invoice/form';
+        $data['page']        = 'invoice/form';
         $data['invoice']     = null;
         $data['items']       = [];
         $data['clients']     = $this->Client_billing_model->get_clients(true);

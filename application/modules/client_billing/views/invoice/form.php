@@ -1,6 +1,16 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 $c=$client; $ie=!empty($c);
 ?>
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+echo "<pre>";
+echo "FORM LOADED\n";
+print_r(get_defined_vars());
+echo "</pre>";
+exit;
+?>
 <style>
 :root {
     --p: #0b0895;
