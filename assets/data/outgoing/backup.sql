@@ -80283,3 +80283,12 @@ SET SESSION sql_mode = "";
 INSERT INTO `sec_menu_item` (`menu_title`, `page_url`, `module`, `parent_menu`, `is_report`, `createdate`, `createby`) VALUES ('Billing', 'client_billing', 'client_billing', '', 0, '2026-06-10', '1');
 SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-11 12:42:57', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
