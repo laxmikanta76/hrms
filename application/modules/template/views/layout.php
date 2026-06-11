@@ -47,7 +47,7 @@ echo "<h2>BEFORE VIEW</h2>";
 echo "Module: ".$module."<br>";
 echo "Page: ".$page."<br>";
 
-$this->load->view($module.'/'.$page);
+$this->load->view($module.'/'.$page, $this->load->get_vars());
 
 echo "<h2>AFTER VIEW</h2>";
 ?>
