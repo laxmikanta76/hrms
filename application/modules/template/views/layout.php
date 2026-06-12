@@ -1,4 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php echo $module.'/'.$page;
+exit; ?>
 <!DOCTYPE html>
 <html lang="en">
 
