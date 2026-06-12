@@ -5,6 +5,11 @@ $svc_json = json_encode(array_map(function($s){
     return array('id'=>$s->id,'name'=>$s->name,'hsn_sac'=>$s->hsn_sac,'unit'=>$s->unit,'rate'=>(float)$s->default_rate,'cgst_rate'=>(float)$s->cgst_rate,'sgst_rate'=>(float)$s->sgst_rate,'igst_rate'=>(float)$s->igst_rate);
 }, (array)$services));
 ?>
+<?php
+echo "<h2>BEFORE VIEW</h2>";
+$this->load->view($module.'/'.$page);
+echo "<h2>AFTER VIEW</h2>";
+?>
 <style>
 :root {
     --p: #0b0895;
