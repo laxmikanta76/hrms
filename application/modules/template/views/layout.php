@@ -1,6 +1,4 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-<?php echo $module.'/'.$page;
-exit; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +41,7 @@ exit; ?>
                 <?php $this->load->view('includes/messages') ?>
                 <div class="se-pre-con"></div>
                 <!-- load custom page -->
-                <?php echo $this->load->view($module.'/'.$page) ?>
+                <?php $this->load->view($module.'/'.$page); ?>
             </div> <!-- /.content -->
 
 
