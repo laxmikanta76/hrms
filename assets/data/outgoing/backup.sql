@@ -80670,3 +80670,95 @@ WHERE `status` IN('unpaid', 'sent')
 AND `due_date` < '2026-06-11'
 AND `deleted_at` IS NULL;
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-12 10:38:39', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
