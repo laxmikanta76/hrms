@@ -158,7 +158,7 @@ $sc=$bmap[$inv->status]??['#f1f5f9','#64748b'];
             <li>
                 <form method="post" action="<?= site_url('client_billing/Client_billing/update_status/'.$inv->id) ?>"
                     style="display:inline">
-                    <?= csrf_field() ?><input type="hidden" name="status" value="<?=$v?>">
+                    <input type="hidden" name="status" value="<?=$v?>">
                     <button type="submit"
                         style="background:none;border:none;width:100%;text-align:left;padding:4px 18px;cursor:pointer"><?=$l?></button>
                 </form>

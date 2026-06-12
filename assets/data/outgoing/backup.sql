@@ -80927,3 +80927,29 @@ WHERE `status` IN('unpaid', 'sent')
 AND `due_date` < '2026-06-12'
 AND `deleted_at` IS NULL;
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+INSERT INTO `cb_invoices` (`invoice_number`, `client_id`, `bank_account_id`, `invoice_type`, `invoice_date`, `due_date`, `payment_terms`, `status`, `mode_of_payment`, `reference_number`, `po_number`, `dispatch_through`, `destination`, `delivery_note`, `place_of_supply`, `is_igst`, `subtotal`, `total_discount`, `taxable_amount`, `cgst_amount`, `sgst_amount`, `igst_amount`, `total_tax`, `round_off`, `grand_total`, `balance_due`, `notes`, `terms_conditions`, `internal_notes`, `created_by`, `updated_at`, `amount_in_words`, `created_at`) VALUES ('INV-2026-2026001', 3, '1', 'tax_invoice', '2026-06-12', NULL, 'Net 30 Days', 'sent', 'Bank Transfer', '', '', '', '', '', 'Delhi', 0, 17500, 0, 17500, 1575, 1575, 0, 3150, 0, 20650, 20650, '', '', '', 'Accrosian ', '2026-06-12 18:07:56', 'Twenty Thousand Six Hundred Fifty Rupees Only', '2026-06-12 18:07:56');
+INSERT INTO `cb_invoice_items` (`cgst_amount`, `cgst_rate`, `discount`, `discount_amount`, `discount_type`, `hsn_sac_code`, `igst_amount`, `igst_rate`, `invoice_id`, `item_description`, `quantity`, `rate`, `service_id`, `sgst_amount`, `sgst_rate`, `sl_no`, `taxable_amount`, `total_amount`, `unit`) VALUES (225,9,0,0,'flat','998316',0,0,1,'Website Maintenance Services',1,2500,'',225,9,1,2500,2950,'Month'), (1350,9,0,0,'flat','998314',0,0,1,'CRM Software License',1,15000,'',1350,9,2,15000,17700,'Year');
+INSERT INTO `cb_invoice_logs` (`invoice_id`, `old_status`, `new_status`, `remarks`, `by_user`, `logged_at`) VALUES (1, NULL, 'sent', 'Invoice created', 'Accrosian ', '2026-06-12 18:07:56');
+UPDATE `cb_company` SET invoice_counter = invoice_counter + 1;
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
