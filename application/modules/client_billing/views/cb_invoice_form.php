@@ -5,6 +5,8 @@ $svc_json = json_encode(array_map(function($s){
     return array('id'=>$s->id,'name'=>$s->name,'hsn_sac'=>$s->hsn_sac,'unit'=>$s->unit,'rate'=>(float)$s->default_rate,'cgst_rate'=>(float)$s->cgst_rate,'sgst_rate'=>(float)$s->sgst_rate,'igst_rate'=>(float)$s->igst_rate);
 }, (array)$services));
 ?>
+<?php
+die('INVOICE FORM LOADED');?>
 <style>
 :root {
     --p: #0b0895;
@@ -504,7 +506,7 @@ window.CB = {
             '<input type="hidden" name="service_id[]" value="' + (d.service_id || '') + '">' +
             '</td>' +
             '<td><input type="text" name="hsn_sac_code[]" class="ii ii-hsn" value="' + _e(d.hsn_sac_code ||
-            '') + '" placeholder="998314" style="width:72px"></td>' +
+                '') + '" placeholder="998314" style="width:72px"></td>' +
             '<td><input type="number" name="quantity[]" class="ii ii-qty" value="' + (d.quantity || 1) +
             '" min="0" step="0.001" style="width:58px"></td>' +
             '<td><select name="unit[]" class="ii ii-unit" style="width:52px">' + uOpts + '</select></td>' +
