@@ -5,8 +5,6 @@ $svc_json = json_encode(array_map(function($s){
     return array('id'=>$s->id,'name'=>$s->name,'hsn_sac'=>$s->hsn_sac,'unit'=>$s->unit,'rate'=>(float)$s->default_rate,'cgst_rate'=>(float)$s->cgst_rate,'sgst_rate'=>(float)$s->sgst_rate,'igst_rate'=>(float)$s->igst_rate);
 }, (array)$services));
 ?>
-<?php
-die('INVOICE FORM LOADED');?>
 <style>
 :root {
     --p: #0b0895;
