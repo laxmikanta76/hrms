@@ -189,7 +189,7 @@ ini_set('display_errors', 1);
 </div>
 
 <form id="cbForm" action="<?= site_url('client_billing/Client_billing/save_invoice') ?>" method="post">
-    <?= csrf_field() ?>
+
     <input type="hidden" name="invoice_id" value="<?= $inv->id ?? '' ?>">
 
     <div class="row">
