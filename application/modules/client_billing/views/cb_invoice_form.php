@@ -6,9 +6,7 @@ $svc_json = json_encode(array_map(function($s){
 }, (array)$services));
 ?>
 <?php
-echo "<h2>BEFORE VIEW</h2>";
-$this->load->view($module.'/'.$page);
-echo "<h2>AFTER VIEW</h2>";
+die('INVOICE FORM LOADED');
 ?>
 <style>
 :root {
