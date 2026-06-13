@@ -183,7 +183,6 @@
 <!-- Company Settings -->
 <form action="<?= site_url('client_billing/Client_billing/save_settings') ?>" method="post"
     enctype="multipart/form-data">
-    <?= csrf_field() ?>
     <div class="bil-card">
         <div class="bil-head"><i class="fa fa-building-o"></i> Company Information</div>
         <div class="bil-body">
@@ -285,7 +284,6 @@
             <div style="font-size:13px;font-weight:700;color:var(--p);margin-bottom:12px"><i
                     class="fa fa-plus-circle"></i> Add New Bank Account</div>
             <form action="<?= site_url('client_billing/Client_billing/save_settings') ?>" method="post">
-                <?= csrf_field() ?>
                 <input type="hidden" name="add_bank" value="1">
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
                     <div><label class="lbl">Bank Name</label><input type="text" name="bank_name" class="inp" required>

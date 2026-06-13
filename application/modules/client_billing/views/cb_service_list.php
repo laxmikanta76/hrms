@@ -107,7 +107,7 @@
         <div class="bil-head"><i class="fa fa-plus-circle"></i> Add / Edit Service</div>
         <div style="padding:20px">
             <form action="<?= site_url('client_billing/Client_billing/save_service') ?>" method="post">
-                <?= csrf_field() ?>
+
                 <input type="hidden" name="service_id" id="editSvcId" value="">
                 <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
                     <div><label class="lbl">Service Name *</label><input type="text" name="name" id="svcName"
