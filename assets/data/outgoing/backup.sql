@@ -81098,3 +81098,81 @@ UPDATE `user` SET `last_login` = '2026-06-20 10:59:42', `ip_address` = '::1'
 WHERE `id` = '1';
 SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+DELETE FROM `salary_sheet_generate`
+WHERE `ssg_id` = '33';
+DELETE FROM `employee_salary_payment`
+WHERE `salary_name` = 'May 2026';
+DELETE FROM `acc_transaction`
+WHERE `VNo` = 'May 2026';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `salary_sheet_generate` (`name`, `gdate`, `start_date`, `end_date`, `generate_by`) VALUES ('June 2026', '2026-06-20', '2026-6-1', '2026-6-30', 'Accrosian ');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 1, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 3, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 4, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 5, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 6, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 7, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 8, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 9, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 14, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 15, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 16, '200', '1', '2026-06-20', '9800.00');
+INSERT INTO `salary_setup_header` (`employee_id`, `salary_payable`, `absent_deduct`, `tax_manager`) VALUES ('2', NULL, 0, 0);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+DELETE FROM `salary_sheet_generate`
+WHERE `ssg_id` = '34';
+DELETE FROM `employee_salary_payment`
+WHERE `salary_name` = 'June 2026';
+DELETE FROM `acc_transaction`
+WHERE `VNo` = 'June 2026';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `salary_sheet_generate` (`name`, `gdate`, `start_date`, `end_date`, `generate_by`) VALUES ('June 2026', '2026-06-20', '2026-6-1', '2026-6-30', 'Accrosian ');
+INSERT INTO `employee_salary_payment` (`employee_id`, `total_salary`, `total_working_minutes`, `salary_name`, `working_period`, `payment_date`, `lop_days`, `lop_deduction`) VALUES ('2', 9800, '0.00', 'June 2026', 5, '2026-06-20', '0', 0);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('June 2026', 'Generated Salary', '2026-06-20', '502020000004', 'Salary For Employee Id2', 0, 9800, 1, '1', '2026-06-20 11:51:10', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `employee_salary_payment` SET `emp_sal_pay_id` = '82', `payment_due` = 'paid', `payment_date` = '2026-06-20', `payment_type` = '2', `bank_name` = 'State Bank Of India', `paid_by` = 'Accrosian '
+WHERE `emp_sal_pay_id` = '82';
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('82', 'Salary', '2026-06-20', '502020000004', 'Salary For Employee Id2', 9800, 0, 1, '1', '2026-06-20 11:51:40', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('82', 'Salary', '2026-06-20', 401, 'salary payment for 2', 9800, 0, 1, '1', '2026-06-20 11:51:40', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('82', 'Salary', '2026-06-20', '10201020001', 'Employee Salary Payment', 0, 9800, 1, '1', '2026-06-20 11:51:40', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
