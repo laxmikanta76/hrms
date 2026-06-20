@@ -80978,3 +80978,123 @@ WHERE `status` IN('unpaid', 'sent')
 AND `due_date` < '2026-06-13'
 AND `deleted_at` IS NULL;
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+UPDATE `cb_invoices` SET `status` = 'paid', `updated_at` = '2026-06-13 13:28:32'
+WHERE `id` = '1';
+INSERT INTO `cb_invoice_logs` (`invoice_id`, `old_status`, `new_status`, `remarks`, `by_user`, `logged_at`) VALUES ('1', 'sent', 'paid', 'Status updated', 'Accrosian ', '2026-06-13 13:28:32');
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-19 13:00:24', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_logout` = '2026-06-19 13:04:26'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-19 18:16:30', `ip_address` = '::1'
+WHERE `id` = '18';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_logout` = '2026-06-19 18:17:07'
+WHERE `id` = '18';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-19 18:17:25', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-20 10:59:42', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
