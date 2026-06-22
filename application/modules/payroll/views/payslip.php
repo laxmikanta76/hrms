@@ -249,7 +249,7 @@ function printDiv(divName) {
                                 <tr>
 
                                     <td><img src="<?php echo base_url('assets/img/icons/mini-logo.png'); ?>"
-                                            width="250px;" alt=""></td>
+                                            style="width:80px;height:auto;" alt=""></td>
                                     <td class="text-center">
                                         <address style="margin-top:10px">
                                             <strong
