@@ -130,7 +130,6 @@ ul li a {
                                         <div class="form-group">
                                             <label>PAN Number</label>
                                             <input type="text" class="form-control" name="pan_number"
-                                                value="<?php echo isset($data->pan_number)?$data->pan_number:''; ?>"
                                                 placeholder="PAN Number">
                                         </div>
                                     </div>
@@ -753,7 +752,6 @@ ul li a {
                                         <div class="form-group">
                                             <label>Bank Name</label>
                                             <input type="text" class="form-control" name="bank_name"
-                                                value="<?php echo isset($data->bank_name)?$data->bank_name:''; ?>"
                                                 placeholder="Bank Name">
                                         </div>
                                     </div>
@@ -762,7 +760,6 @@ ul li a {
                                         <div class="form-group">
                                             <label>Bank Account Number</label>
                                             <input type="text" class="form-control" name="bank_account_no"
-                                                value="<?php echo isset($data->bank_account_no)?$data->bank_account_no:''; ?>"
                                                 placeholder="Bank Account Number">
                                         </div>
                                     </div>
@@ -771,7 +768,6 @@ ul li a {
                                         <div class="form-group">
                                             <label>PF Number</label>
                                             <input type="text" class="form-control" name="pf_number"
-                                                value="<?php echo isset($data->pf_number)?$data->pf_number:''; ?>"
                                                 placeholder="PF Number">
                                         </div>
                                     </div>
@@ -780,7 +776,6 @@ ul li a {
                                         <div class="form-group">
                                             <label>UAN Number</label>
                                             <input type="text" class="form-control" name="uan_number"
-                                                value="<?php echo isset($data->uan_number)?$data->uan_number:''; ?>"
                                                 placeholder="UAN Number">
                                         </div>
                                     </div>
