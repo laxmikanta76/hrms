@@ -81200,3 +81200,75 @@ SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+DELETE FROM `salary_sheet_generate`
+WHERE `ssg_id` = '35';
+DELETE FROM `employee_salary_payment`
+WHERE `salary_name` = 'June 2026';
+DELETE FROM `acc_transaction`
+WHERE `VNo` = 'June 2026';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `salary_sheet_generate` (`name`, `gdate`, `start_date`, `end_date`, `generate_by`) VALUES ('June 2026', '2026-06-22', '2026-6-1', '2026-6-30', 'Accrosian ');
+INSERT INTO `employee_salary_payment` (`employee_id`, `total_salary`, `total_working_minutes`, `salary_name`, `working_period`, `payment_date`, `lop_days`, `lop_deduction`) VALUES ('2', 9800, '0.00', 'June 2026', 5, '2026-06-22', '0', 0);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('June 2026', 'Generated Salary', '2026-06-22', '502020000004', 'Salary For Employee Id2', 0, 9800, 1, '1', '2026-06-22 12:32:34', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `employee_salary_payment` SET `emp_sal_pay_id` = '83', `payment_due` = 'paid', `payment_date` = '2026-06-22', `payment_type` = '2', `bank_name` = 'Bank Of Baroda', `paid_by` = 'Accrosian '
+WHERE `emp_sal_pay_id` = '83';
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('83', 'Salary', '2026-06-22', '502020000004', 'Salary For Employee Id2', 9800, 0, 1, '1', '2026-06-22 12:35:39', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('83', 'Salary', '2026-06-22', 401, 'salary payment for 2', 9800, 0, 1, '1', '2026-06-22 12:35:39', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('83', 'Salary', '2026-06-22', '10201020002', 'Employee Salary Payment', 0, 9800, 1, '1', '2026-06-22 12:35:39', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+DELETE FROM `salary_sheet_generate`
+WHERE `ssg_id` = '36';
+DELETE FROM `employee_salary_payment`
+WHERE `salary_name` = 'June 2026';
+DELETE FROM `acc_transaction`
+WHERE `VNo` = 'June 2026';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `salary_sheet_generate` (`name`, `gdate`, `start_date`, `end_date`, `generate_by`) VALUES ('June 2026', '2026-06-22', '2026-6-1', '2026-6-30', 'Accrosian ');
+INSERT INTO `employee_salary_payment` (`employee_id`, `total_salary`, `total_working_minutes`, `salary_name`, `working_period`, `payment_date`, `lop_days`, `lop_deduction`) VALUES ('2', 9800, '0.00', 'June 2026', 5, '2026-06-22', '0', 0);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('June 2026', 'Generated Salary', '2026-06-22', '502020000004', 'Salary For Employee Id2', 0, 9800, 1, '1', '2026-06-22 12:39:23', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
