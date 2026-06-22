@@ -248,7 +248,7 @@ function printDiv(divName) {
                             <table>
                                 <tr>
 
-                                    <td><img src="<?php echo base_url((!empty($setting->logo)?$setting->logo:'assets/img/icons/mini-logo.png')) ?>"
+                                    <td><img src="<?php echo base_url('assets/img/icons/mini-logo.png'); ?>"
                                             width="250px;" alt=""></td>
                                     <td class="text-center">
                                         <address style="margin-top:10px">

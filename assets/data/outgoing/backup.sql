@@ -81176,3 +81176,5 @@ INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `D
 INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('82', 'Salary', '2026-06-20', '10201020001', 'Employee Salary Payment', 0, 9800, 1, '1', '2026-06-20 11:51:40', 1);
 SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
