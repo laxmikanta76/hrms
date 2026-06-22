@@ -248,7 +248,7 @@ function printDiv(divName) {
                             <table>
                                 <tr>
 
-                                    <td><img src="<?php echo base_url('assets/img/icons/mini-logo.png'); ?>"
+                                    <td><img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
                                             style="width:80px;height:auto;" alt=""></td>
                                     <td class="text-center">
                                         <address style="margin-top:10px">
