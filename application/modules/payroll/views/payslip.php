@@ -245,7 +245,8 @@ function printDiv(divName) {
 
                         <div class="col-sm-12">
 
-                            <table width="100%" style="border-bottom:2px solid #000;padding-bottom:10px;">
+                            <table width="100%"
+                                style="border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:10px;">
                                 <tr>
                                     <td width="15%">
                                         <img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
