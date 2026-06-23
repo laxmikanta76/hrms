@@ -265,19 +265,44 @@ function printDiv(divName) {
                             <h3 align="center" style="margin-top:20px;">
                                 Payslip for the Month of <?= $paymentdata[0]['salary_name']; ?>
                             </h3>
-                            <table>
-                                <div id="details">
-                                    <div class="scope-entry">
-                                        <div class="title"><?= display('employee_name')?>
-                                            :<?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name']?></div>
-                                        <div class="title"><?= display('designation')?> :
-                                            <?= $paymentdata[0]['position_name']?></div>
-                                        <div class="title"><?= display('salary_date')?> :
-                                            <?= $paymentdata[0]['payment_date']?></div>
+                            <table width="100%" border="1" cellspacing="0" cellpadding="6"
+                                style="margin-bottom:15px;font-size:12px;">
+                                <tr>
+                                    <td><b>Employee Name</b></td>
+                                    <td><?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name']?></td>
 
-                                    </div>
+                                    <td><b>Employee ID</b></td>
+                                    <td><?= $paymentdata[0]['employee_id']?></td>
+                                </tr>
 
-                                </div>
+                                <tr>
+                                    <td><b>Designation</b></td>
+                                    <td><?= $paymentdata[0]['position_name']?></td>
+
+                                    <td><b>Bank Name</b></td>
+                                    <td><?= !empty($paymentdata[0]['bank_name']) ? $paymentdata[0]['bank_name'] : '-' ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>Account No</b></td>
+                                    <td><?= !empty($paymentdata[0]['bank_account_no']) ? $paymentdata[0]['bank_account_no'] : '-' ?>
+                                    </td>
+
+                                    <td><b>PAN Number</b></td>
+                                    <td><?= !empty($paymentdata[0]['pan_number']) ? $paymentdata[0]['pan_number'] : '-' ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>PF Number</b></td>
+                                    <td><?= !empty($paymentdata[0]['pf_number']) ? $paymentdata[0]['pf_number'] : '-' ?>
+                                    </td>
+
+                                    <td><b>UAN Number</b></td>
+                                    <td><?= !empty($paymentdata[0]['uan_number']) ? $paymentdata[0]['uan_number'] : '-' ?>
+                                    </td>
+                                </tr>
                             </table>
 
                         </div>
