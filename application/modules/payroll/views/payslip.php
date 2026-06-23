@@ -280,7 +280,7 @@ function printDiv(divName) {
                                     <td><?= $paymentdata[0]['position_name']?></td>
 
                                     <td><b>Bank Name</b></td>
-                                    <td><?= !empty($paymentdata[0]['bank_name']) ? $paymentdata[0]['bank_name'] : '-' ?>
+                                    <?= !empty($paymentdata[0]['bank_name']) ? $paymentdata[0]['bank_name'] : '-' ?>
                                     </td>
                                 </tr>
 
