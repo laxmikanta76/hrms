@@ -81317,3 +81317,34 @@ SET SESSION sql_mode = "";
 INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `pan_number`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (16, '8', 'Laxmikanta', '', 'Barik', '', 'laxmikantabarik76@gmail.com', '07205235195', '', NULL, NULL, NULL, '3', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-09', '2026-06-09', '2026-06-23', '', '', '2026-06-23', '2', '9999', '4', '', '', '', '', '9800.00', '', '', '2026-06-23', '1', '1', '', '', '1996-06-07', '1', '1', '', '', '2332', '1', '1', '12345678', '', '', '', '', '', '', '', '', '', '', '', '');
 SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `pan_number`, `bank_name`, `bank_account_no`, `pf_number`, `uan_number`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (15, '12', 'Laxmikanta', '', 'Barik', '', 'laxmikantabarik76@gmail.com', '07205235195', '', NULL, NULL, NULL, '4', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-08', '2026-06-08', '2026-06-23', '', '', '2026-06-23', '2', '10000', '4', '', '', '', '', '9800.00', '', '', '2026-06-23', '1', '1', '', '', '1996-06-01', '1', '1', '', '', '1234', '1', '1', '332244455', 'SBI', '1234567890123', '23540PF03', '012AE02', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `acc_coa` (`HeadCode`, `HeadName`, `PHeadName`, `HeadLevel`, `IsActive`, `IsTransaction`, `IsGL`, `HeadType`, `IsBudget`, `IsDepreciation`, `DepreciationRate`, `CreateBy`, `CreateDate`) VALUES (502020000021, '15-LaxmikantaBarik', 'Account Payable', '2', '1', '1', '0', 'L', '0', '0', '0', 'Accrosian ', '2026-06-23 11:33:43');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `employee_history` SET `employee_id` = '2', `first_name` = 'Pankajini', `middle_name` = '', `last_name` = 'Jena', `email` = 'pjpankajinijena@gmail.com', `phone` = '8327738808', `alter_phone` = '8144362850', `picture` = './application/modules/employee/assets/images/2025-12-12/Fur.png', `dept_id` = '23', `pos_id` = '18', `dob` = '2002-09-23', `gender` = '2', `marital_status` = '1', `pan_number` = 'CPOPB4128M', `bank_name` = 'DCB', `bank_account_no` = '1122334455', `pf_number` = '23540PF06', `uan_number` = '012AE05', `home_email` = '', `business_email` = '', `home_phone` = '', `business_phone` = '', `cell_phone` = '', `is_super_visor` = '0', `super_visor_id` = '1', `supervisor_report` = ''
+WHERE `employee_id` = '2';
+DELETE FROM `custom_table`
+WHERE `employee_id` = '2';
+DELETE FROM `employee_benifit`
+WHERE `employee_id` = '2';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `pan_number`, `bank_name`, `bank_account_no`, `pf_number`, `uan_number`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (15, '12', 'John', '', 'Deo', '', 'john@gmail.com', '07205235195', '', NULL, NULL, NULL, '4', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-01', '2026-06-01', '2026-06-23', '', '', '2026-06-23', '2', '10000', '4', '', '', '', '', '', '', '', '2026-06-23', '1', '1', '', '', '1996-06-17', '1', '1', '', '', '1235', '1', '1', 'CPC12UI23', 'DCB', '9988776655', '23540PF00', '012AE09', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `acc_coa` (`HeadCode`, `HeadName`, `PHeadName`, `HeadLevel`, `IsActive`, `IsTransaction`, `IsGL`, `HeadType`, `IsBudget`, `IsDepreciation`, `DepreciationRate`, `CreateBy`, `CreateDate`) VALUES (502020000021, '15-JohnDeo', 'Account Payable', '2', '1', '1', '0', 'L', '0', '0', '0', 'Accrosian ', '2026-06-23 11:40:24');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
