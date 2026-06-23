@@ -480,8 +480,17 @@ function printDiv(divName) {
 
                                 <tr class="details">
                                     <tbody class="nti">
-                                        <th class="value"><?php echo display('net_salary'); ?> :
-                                            <?php echo display('in_word').':'.$amountinword; ?></th>
+                                        <td style="font-weight:bold;">
+                                            Amount In Words:
+                                            <br>
+                                            <?= $amountinword; ?>
+                                        </td>
+
+                                        <td style="text-align:right;font-weight:bold;">
+                                            Net Pay
+                                            <br>
+                                            ₹ <?= number_format($paymentdata[0]['total_salary'],2); ?>
+                                        </td>
                                         <td class="value" style="float: right;font-weight: bold">
                                             <?= $paymentdata[0]['total_salary']?> </td>
                                     </tbody>
@@ -506,26 +515,39 @@ function printDiv(divName) {
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div
-                                style="float:left;width:40%;text-align:center;border-top:1px solid #e4e5e7;font-weight: bold;">
-                                <?php echo display('employee_signature'); ?>
-                            </div>
-                        </div>
+                    <table width="100%">
+                        <tr>
 
-                        <div class="col-sm-6">
-                            <div
-                                style="float:right;width:40%;text-align:center;border-top:1px solid #e4e5e7;font-weight: bold;">
-                                <?php echo display('paid_by'); ?>
-                            </div>
-                        </div>
-                    </div>
+                            <td></td>
+
+                            <td align="right">
+
+                                For Accrosian Soft Solution Pvt. Ltd.
+
+                                <br><br><br>
+
+                                _________________________
+
+                                <br>
+
+                                Authorized Signatory
+
+                            </td>
+
+                        </tr>
+                    </table>
 
                 </div>
             </div>
 
 
         </div>
+</div>
+<div style="border:1px solid #ccc;padding:8px;margin-top:20px;">
+
+    Note:
+    This is a Computer Generated Payslip.
+    Signature is not required.
+
 </div>
 </div>
