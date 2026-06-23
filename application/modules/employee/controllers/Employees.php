@@ -532,7 +532,7 @@ public function cv()
 				'ssn'                     => $this->input->post('ssn',true),
 				'work_in_state'           => $this->input->post('w_s',true),
 				'live_in_state'           => $this->input->post('l_in_s',true),
-				// 'pan_number'              => $this->input->post('pan_number'),
+				'pan_number'              => $this->input->post('pan_number'),
                 // 'bank_name'               => $this->input->post('bank_name'),
                 // 'bank_account_no'         => $this->input->post('bank_account_no'),
                 // 'pf_number'               => $this->input->post('pf_number'),
