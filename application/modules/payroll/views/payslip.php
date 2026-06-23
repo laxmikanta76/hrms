@@ -265,57 +265,42 @@ function printDiv(divName) {
                             <h3 align="center" style="margin-top:20px;">
                                 Payslip for the Month of <?= $paymentdata[0]['salary_name']; ?>
                             </h3>
-                            <pre>
-<?php print_r($paymentdata[0]); ?>
-</pre>
-                            <?php exit; ?>
-                            <table width="100%" style="margin-top:20px;font-size:14px;">
+                            <table width="100%" border="1" cellspacing="0" cellpadding="6"
+                                style="margin-bottom:15px;font-size:12px;">
                                 <tr>
-                                    <td width="50%" valign="top">
+                                    <td><b>Employee Name</b></td>
+                                    <td><?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name']?></td>
 
-                                        <b>Employee Name</b> :
-                                        <?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name'] ?><br><br>
+                                    <td><b>Employee ID</b></td>
+                                    <td><?= $paymentdata[0]['employee_id']?></td>
+                                </tr>
 
-                                        <b>Joining Date</b> :
-                                        <?= !empty($paymentdata[0]['hire_date']) ? $paymentdata[0]['hire_date'] : '-' ?><br><br>
+                                <tr>
+                                    <td><b>Designation</b></td>
+                                    <td><?= $paymentdata[0]['position_name']?></td>
 
-                                        <b>Designation</b> :
-                                        <?= $paymentdata[0]['position_name'] ?><br><br>
+                                    <td><b>Bank Name</b></td>
+                                    <td><?= !empty($paymentdata[0]['bank_name']) ? $paymentdata[0]['bank_name'] : '-' ?>
+                                    </td>
+                                </tr>
 
-                                        <b>Department</b> :
-                                        <?= !empty($paymentdata[0]['department_name']) ? $paymentdata[0]['department_name'] : '-' ?><br><br>
-
-                                        <b>Location</b> :
-                                        Bhubaneswar<br><br>
-
-                                        <b>Effective Work Days</b> :
-                                        <?= !empty($paymentdata[0]['working_period']) ? $paymentdata[0]['working_period'] : '24' ?><br><br>
-
-                                        <b>LOP (Days)</b> :
-                                        <?= !empty($paymentdata[0]['lop_days']) ? $paymentdata[0]['lop_days'] : '0' ?>
-
+                                <tr>
+                                    <td><b>Account No</b></td>
+                                    <td><?= !empty($paymentdata[0]['bank_account_no']) ? $paymentdata[0]['bank_account_no'] : '-' ?>
                                     </td>
 
-                                    <td width="50%" valign="top">
+                                    <td><b>PAN Number</b></td>
+                                    <td><?= !empty($paymentdata[0]['pan_number']) ? $paymentdata[0]['pan_number'] : '-' ?>
+                                    </td>
+                                </tr>
 
-                                        <b>Employee ID</b> :
-                                        <?= $paymentdata[0]['employee_id'] ?><br><br>
+                                <tr>
+                                    <td><b>PF Number</b></td>
+                                    <td><?= !empty($paymentdata[0]['pf_number']) ? $paymentdata[0]['pf_number'] : '-' ?>
+                                    </td>
 
-                                        <b>Bank Name</b> :
-                                        <?= !empty($paymentdata[0]['bank_name']) ? $paymentdata[0]['bank_name'] : '-' ?><br><br>
-
-                                        <b>Bank Account No</b> :
-                                        <?= !empty($paymentdata[0]['bank_account_no']) ? $paymentdata[0]['bank_account_no'] : '-' ?><br><br>
-
-                                        <b>PAN Number</b> :
-                                        <?= !empty($paymentdata[0]['pan_number']) ? $paymentdata[0]['pan_number'] : '-' ?><br><br>
-
-                                        <b>PF Number</b> :
-                                        <?= !empty($paymentdata[0]['pf_number']) ? $paymentdata[0]['pf_number'] : '-' ?><br><br>
-
-                                        <b>UAN Number</b> :
-                                        <?= !empty($paymentdata[0]['uan_number']) ? $paymentdata[0]['uan_number'] : '-' ?>
-
+                                    <td><b>UAN Number</b></td>
+                                    <td><?= !empty($paymentdata[0]['uan_number']) ? $paymentdata[0]['uan_number'] : '-' ?>
                                     </td>
                                 </tr>
                             </table>
