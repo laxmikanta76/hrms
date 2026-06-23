@@ -277,7 +277,7 @@ function printDiv(divName) {
                                         <?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name'] ?><br><br>
 
                                         <b>Joining Date</b> :
-                                        <?= !empty($paymentdata[0]['joining_date']) ? $paymentdata[0]['joining_date'] : '-' ?><br><br>
+                                        <?= !empty($paymentdata[0]['hire_date']) ? $paymentdata[0]['hire_date'] : '-' ?><br><br>
 
                                         <b>Designation</b> :
                                         <?= $paymentdata[0]['position_name'] ?><br><br>
@@ -289,7 +289,7 @@ function printDiv(divName) {
                                         Bhubaneswar<br><br>
 
                                         <b>Effective Work Days</b> :
-                                        <?= !empty($paymentdata[0]['working_days']) ? $paymentdata[0]['working_days'] : '30' ?><br><br>
+                                        <?= !empty($paymentdata[0]['working_period']) ? $paymentdata[0]['working_period'] : '24' ?><br><br>
 
                                         <b>LOP (Days)</b> :
                                         <?= !empty($paymentdata[0]['lop_days']) ? $paymentdata[0]['lop_days'] : '0' ?>
