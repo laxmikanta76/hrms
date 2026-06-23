@@ -322,7 +322,7 @@ p.rate_type as salarytype
             ->from('employee_salary_payment pment')
 ->join('employee_history p', 'pment.employee_id = p.employee_id', 'left')
 ->join('position desig', 'desig.pos_id = p.pos_id', 'left')
-->join('department dept', 'dept.dept_id = p.dept_id', 'left')
+// ->join('department dept', 'dept.dept_id = p.dept_id', 'left')
             ->where('pment.emp_sal_pay_id',$id)
             ->group_by('pment.emp_sal_pay_id')
             ->get()
