@@ -252,11 +252,10 @@ function printDiv(divName) {
                                             style="width:90px;">
                                     </td>
 
-                                    <td width="70%" align="center">
+                                    <td width="70%" align="left">
                                         <h2 style="margin:0;">Accrosian Soft Solution Pvt. Ltd.</h2>
-                                        <div>Turning ideas into reality</div>
-                                        <div>www.accrosian.com</div>
-                                        <div>info@accrosian.com</div>
+                                        <div style="font-size:14px; font-style:italic;">Turning ideas into reality</div>
+                                        <div>www.accrosian.com | info@accrosian.com</div>
                                     </td>
 
                                     <td width="15%"></td>
