@@ -81303,3 +81303,17 @@ INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_n
 INSERT INTO `acc_coa` (`HeadCode`, `HeadName`, `PHeadName`, `HeadLevel`, `IsActive`, `IsTransaction`, `IsGL`, `HeadType`, `IsBudget`, `IsDepreciation`, `DepreciationRate`, `CreateBy`, `CreateDate`) VALUES (502020000020, '15-LaxmikantaBarik', 'Account Payable', '2', '1', '1', '0', 'L', '0', '0', '0', 'Accrosian ', '2026-06-22 18:25:58');
 SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-23 11:01:03', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `pan_number`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (16, '8', 'Laxmikanta', '', 'Barik', '', 'laxmikantabarik76@gmail.com', '07205235195', '', NULL, NULL, NULL, '3', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-09', '2026-06-09', '2026-06-23', '', '', '2026-06-23', '2', '9999', '4', '', '', '', '', '9800.00', '', '', '2026-06-23', '1', '1', '', '', '1996-06-07', '1', '1', '', '', '2332', '1', '1', '12345678', '', '', '', '', '', '', '', '', '', '', '', '');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
