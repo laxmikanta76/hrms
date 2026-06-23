@@ -1,276 +1,221 @@
 <style>
-@page {
-    size: A4;
-    margin: 15mm 14mm 15mm 14mm;
-}
-
-* {
-    box-sizing: border-box;
+#scope>.scope-entry {
+    text-align: center;
+    padding-bottom: 10px;
 }
 
 #payslip {
     background: #fff;
     color: #000;
-    padding: 10px 20px;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-size: 12px;
-    line-height: 1.4;
-    max-width: 760px;
-    margin: 0 auto;
+    padding: 30px 40px;
 }
 
-/* ---------------- HEADER ---------------- */
-#payslip .header-table {
+#title {
+    margin-bottom: 0px;
+    font-size: 38px;
+    font-weight: 600;
+}
+
+#scope {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 7px 0 4px 0;
+    display: flex;
+
+}
+
+#scope>.scope-entry {
+    text-align: center;
+}
+
+.scope-entry>.title {
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
+}
+
+#scope>.scope-entry>.value {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.content {
+    display: flex;
+    height: 100%;
+}
+
+.content .left-panel {
+    border-right: 1px solid #ccc;
+    width: 50%;
+    padding: 9px 16px 0 0;
+}
+
+#payslip #panel-footer {
     width: 100%;
-    border-collapse: collapse;
+    padding: 9px 16px 0 0;
+}
+
+.content .right-panel {
+    width: 50%;
+    padding: 10px 0 0 16px;
+}
+
+.employee {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.employee .name {
+    font-size: 15px;
+    font-weight: 700;
+    border-bottom: 1px solid #ccc;
+}
+
+#employee #email {
+    font-size: 11px;
+    font-weight: 300;
+}
+
+.details,
+.contributions,
+.ytd,
+.gross {
+    margin-bottom: 20px;
+}
+
+.details .entry,
+.contributions .entry,
+.ytd .entry {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 6px;
 }
 
-#payslip .header-table td {
-    vertical-align: middle;
-    border: none;
-    padding: 0;
-}
-
-#payslip .logo-cell {
-    width: 70px;
-}
-
-#payslip .logo-cell img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-}
-
-#payslip .company-name {
-    font-size: 22px;
+.details .entry .value,
+.contributions .entry .value,
+.ytd .entry .value {
     font-weight: 700;
-    color: #000;
-    margin: 0;
-    text-align: center;
-}
-
-#payslip .company-tagline {
-    font-size: 12px;
-    font-style: italic;
-    margin: 2px 0;
-    text-align: center;
-    color: #222;
-}
-
-#payslip .company-contact {
-    font-size: 11px;
-    margin: 2px 0;
-    text-align: center;
-    color: #222;
-}
-
-#payslip .company-contact a {
-    color: #222;
-    text-decoration: none;
-}
-
-#payslip .header-rule {
-    border: none;
-    border-top: 2px solid #000;
-    margin: 8px 0 6px 0;
-}
-
-/* ---------------- ADDRESS SECTION ---------------- */
-#payslip .address-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 8px;
-    font-size: 10.5px;
-}
-
-#payslip .address-table td {
-    vertical-align: top;
-    padding: 2px 6px;
-    border: none;
-    width: 50%;
-}
-
-#payslip .address-table td.divider {
-    border-left: 1px solid #888;
-}
-
-/* ---------------- PAYSLIP TITLE ---------------- */
-#payslip .payslip-title {
-    text-align: center;
-    font-size: 15px;
-    font-weight: 700;
-    margin: 14px 0 12px 0;
-}
-
-/* ---------------- EMPLOYEE INFO ---------------- */
-#payslip table.emp-info {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 14px;
-    border: 1px solid #000;
-}
-
-#payslip table.emp-info td {
-    border: 1px solid #000;
-    padding: 5px 8px;
-    font-size: 11.5px;
-    vertical-align: top;
-}
-
-#payslip table.emp-info td.label {
-    font-weight: 700;
-    width: 18%;
-    background: #f5f5f5;
-}
-
-#payslip table.emp-info td.value {
-    width: 32%;
-}
-
-/* ---------------- SALARY TABLE ---------------- */
-#payslip table.salary-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 0;
-    border: 1px solid #000;
-}
-
-#payslip table.salary-table th {
-    border: 1px solid #000;
-    background: #f0f0f0;
-    padding: 6px 8px;
-    font-size: 12px;
-    text-align: left;
-    font-weight: 700;
-}
-
-#payslip table.salary-table td {
-    border: 1px solid #000;
-    padding: 5px 8px;
-    font-size: 11.5px;
-}
-
-#payslip table.salary-table td.amt {
+    max-width: 130px;
     text-align: right;
+}
+
+.gross .entry .value {
+    font-weight: 700;
+    text-align: right;
+    font-size: 16px;
+}
+
+.contributions .title,
+.ytd .title,
+.gross .title {
+    font-size: 20px;
+    font-weight: 700;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+}
+
+.content .right-panel .details {
+    width: 100%;
+}
+
+.content .right-panel .details .entry {
+    display: flex;
+    padding: 0 10px;
+    margin: 6px 0;
+}
+
+.content .right-panel .details .label {
+    font-weight: 700;
+    width: 120px;
+}
+
+.content .right-panel .details .detail {
+    font-weight: 600;
+    width: 130px;
+}
+
+.content .right-panel .details .rate {
+    font-weight: 400;
+    width: 80px;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+.content .right-panel .details .amount {
+    text-align: right;
+    font-weight: 700;
     width: 90px;
 }
 
-#payslip table.salary-table tr.total-row td {
-    font-weight: 700;
-    background: #f5f5f5;
-}
-
-/* ---------------- NET PAY SECTION ---------------- */
-#payslip table.netpay-table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #000;
-    border-top: none;
-    margin-bottom: 16px;
-}
-
-#payslip table.netpay-table td {
-    border: none;
-    padding: 6px 8px;
+.content .right-panel .details .net_pay div,
+.content .right-panel .details .nti div {
+    font-weight: 600;
     font-size: 12px;
 }
 
-#payslip table.netpay-table td.np-label {
-    font-weight: 700;
-    width: 55%;
-}
-
-#payslip table.netpay-table td.np-value {
-    font-weight: 700;
-    text-align: left;
-}
-
-#payslip .amount-words-row td {
-    border-top: 1px solid #000;
-    font-weight: 700;
-    font-size: 11.5px;
-}
-
-/* ---------------- BANK / REFERENCE ROW ---------------- */
-#payslip .bank-ref-table {
-    width: 100%;
-    border-collapse: collapse;
+.content .right-panel .details .net_pay,
+.content .right-panel .details .nti {
+    padding: 3px 0 2px 0;
     margin-bottom: 10px;
-    font-size: 11.5px;
+    color: #000;
+    background: rgba(0, 0, 0, 0.04);
 }
 
-#payslip .bank-ref-table td {
-    border: none;
-    padding: 2px 8px;
-    font-weight: 700;
+.content .left-panel .details .net_pay,
+.content .left-panel .details .nti {
+    padding: 3px 0 2px 0;
+    margin-bottom: 10px;
+    color: #000;
+    background: rgba(0, 0, 0, 0.04);
 }
 
-#payslip .bank-ref-table td.right {
-    text-align: right;
+.content .right-panel .details .label {
+    font-weight: 600;
+    width: 130px;
+    color: #000;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* ---------------- SIGNATURE SECTION ---------------- */
-#payslip .signature-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 50px;
+#payslip .footer {
+    padding: 3px 0 2px 0;
+    margin-bottom: 10px;
+    color: #000;
+    background: rgba(0, 0, 0, 0.04);
 }
 
-#payslip .signature-table td {
-    border: none;
-    font-size: 11.5px;
-    vertical-align: top;
-    padding: 0 4px;
-    width: 50%;
+
+.footertext {
+    font-weight: 600;
+    color: #000;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
 }
 
-#payslip .signature-table td.left {
-    text-align: center;
+
+.left-panel .details .nti {
+    padding: 3px 0 2px 0;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: #000;
+    background: rgba(0, 0, 0, 0.04);
 }
 
-#payslip .signature-table td.right {
-    text-align: right;
+.right-panel .details .nti {
+    padding: 3px 0 2px 0;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: #000;
+    background: rgba(0, 0, 0, 0.04);
 }
 
-#payslip .sign-company {
-    font-weight: 700;
-    margin-bottom: 40px;
-}
-
-#payslip .sign-line {
-    font-weight: 700;
-    margin-top: 4px;
-    border-top: 1px solid #000;
-    padding-top: 4px;
-    display: inline-block;
-    min-width: 160px;
-    text-align: center;
-}
-
-/* ---------------- FOOTER NOTE ---------------- */
-#payslip .footer-note {
-    margin-top: 30px;
-    border: 1px solid #000;
-    padding: 6px 10px;
-    font-size: 10.5px;
-    font-weight: 700;
-    text-align: left;
-}
-
-#payslip .print-btn-row {
-    text-align: right;
-    margin-bottom: 8px;
-}
-
-@media print {
-    body {
-        -webkit-print-color-adjust: exact;
-    }
-
-    .print-btn-row {
-        display: none;
-    }
+.details .nti {
+    padding: 3px 0 2px 0;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: #000;
+    background: rgba(0, 0, 0, 0.04);
 }
 </style>
 <!-- Printable area start -->
@@ -279,6 +224,7 @@ function printDiv(divName) {
     var printContents = document.getElementById(divName).innerHTML;
     var originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;
+    // document.body.style.marginTop="-45px";
     window.print();
     document.body.innerHTML = originalContents;
 }
@@ -288,131 +234,204 @@ function printDiv(divName) {
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-bd">
-            <div class="panel title text-right print-btn-row">
+            <div class="panel title text-right">
                 <button class="btn btn-warning" onclick="printDiv('printableArea')"><span
                         class="fa fa-print"></span></button>
             </div>
             <div id="printableArea">
                 <div class="panel-body" id="payslip">
+                    <div class="row" style="border-bottom:1px solid #ccc;">
 
-                    <!-- ================= HEADER ================= -->
-                    <table class="header-table">
-                        <tr>
-                            <td class="logo-cell">
-                                <img src="http://newhrm.bdtask.com/hrm_demo/assets/img/icons/2017-07-22/HRM.png"
-                                    alt="Logo">
-                            </td>
-                            <td>
-                                <p class="company-name">Bdtask Ltd</p>
-                                <p class="company-tagline"><?php echo 'Salary Slip - November 2019'; ?></p>
-                            </td>
-                            <td style="width:70px;"></td>
-                        </tr>
-                    </table>
-                    <hr class="header-rule">
+                        <div class="col-sm-12">
 
-                    <!-- ================= ADDRESS SECTION ================= -->
-                    <table class="address-table">
-                        <tr>
-                            <td colspan="2" style="text-align:center;">
-                                4th Floor Mannan Plaza, Khilkhet, Dhaka-1229
-                            </td>
-                        </tr>
-                    </table>
+                            <table>
+                                <tr>
+                                    <td><img src="http://newhrm.bdtask.com/hrm_demo/assets/img/icons/2017-07-22/HRM.png"
+                                            width="250px;" alt=""></td>
+                                    <td class="text-center">
+                                        <address style="margin-top:10px">
+                                            <strong style="font-size: 30px; ">Bdtask Ltd</strong><br>
+                                            4th Floor Mannan Plaza,Khilkhet dhaka-1229<br>
+                                            <span style="font-weight: bold;"> Salary Slip - November 2019</span>
 
-                    <!-- ================= EMPLOYEE INFORMATION ================= -->
-                    <table class="emp-info">
-                        <tr>
-                            <td class="label">Employee Name:</td>
-                            <td class="value" colspan="3"><?php echo 'Mohammad Abul Kalam'; ?></td>
-                        </tr>
-                        <tr>
-                            <td class="label">Designation:</td>
-                            <td class="value" colspan="3"><?php echo 'Web Developer'; ?></td>
-                        </tr>
-                        <tr>
-                            <td class="label">Salary Date:</td>
-                            <td class="value" colspan="3"><?php echo '6 November 2019'; ?></td>
-                        </tr>
-                    </table>
 
-                    <!-- ================= SALARY TABLE ================= -->
-                    <table class="salary-table">
-                        <tr>
-                            <th style="width:60%;">Earnings</th>
-                            <th style="width:15%;">Amount</th>
-                            <th style="width:60%;">Deduction</th>
-                            <th style="width:15%;">Amount</th>
-                        </tr>
-                        <tr>
-                            <td>Basic</td>
-                            <td class="amt"><?php echo 40000; ?></td>
-                            <td>Provident Fund</td>
-                            <td class="amt"><?php echo 5000; ?></td>
-                        </tr>
-                        <tr>
-                            <td>House Rent</td>
-                            <td class="amt"><?php echo 10000; ?></td>
-                            <td>Tax</td>
-                            <td class="amt"><?php echo 2000; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Health</td>
-                            <td class="amt"><?php echo 5000; ?></td>
-                            <td></td>
-                            <td class="amt"></td>
-                        </tr>
-                        <tr class="total-row">
-                            <td>Total Addition</td>
-                            <td class="amt"><?php echo 55000; ?></td>
-                            <td>Total Deduction</td>
-                            <td class="amt"><?php echo 7000; ?></td>
-                        </tr>
-                    </table>
+                                        </address>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <table>
+                                <div id="details">
+                                    <div class="scope-entry">
+                                        <div class="title">Employee Name : Mohammad Abul Kalam</div>
+                                        <div class="title">Designation : Web Developer</div>
+                                        <div class="title">Salary Date : 6 November 2019</div>
 
-                    <!-- ================= NET PAY SECTION ================= -->
-                    <table class="netpay-table">
-                        <tr>
-                            <td class="np-label">Net Salary:</td>
-                            <td class="np-value">&#8377; <?php echo 48000; ?></td>
-                        </tr>
-                        <tr class="amount-words-row">
-                            <td colspan="2">
-                                In Word: <strong><?php echo 'Forty Eight Thousands Only'; ?></strong>
-                            </td>
-                        </tr>
-                    </table>
+                                    </div>
 
-                    <!-- ================= BANK / REFERENCE ================= -->
-                    <table class="bank-ref-table">
-                        <tr>
-                            <td>Check No: <?php echo '234252342'; ?></td>
-                            <td class="right">Name of Bank: <?php echo 'Bangladesh Bank'; ?></td>
-                        </tr>
-                    </table>
+                                </div>
+                            </table>
 
-                    <!-- ================= SIGNATURE SECTION ================= -->
-                    <table class="signature-table">
-                        <tr>
-                            <td class="left">
-                                <span class="sign-line"><?php echo 'Employee Signature'; ?></span>
-                            </td>
-                            <td class="right">
-                                <div class="sign-company">For Bdtask Ltd</div>
-                                <span class="sign-line"><?php echo 'Paid By'; ?></span>
-                            </td>
-                        </tr>
-                    </table>
+                        </div>
 
-                    <!-- ================= FOOTER NOTE ================= -->
-                    <div class="footer-note">
-                        Note: This is a Computer-Generated Payslip. Signature Not Required.
+
+
+
+                        <div class="col-sm-12">
+                            <table class="table">
+                                <tr>
+                                    <td class="left-panel" style="border-right: 1px solid #ccc;">
+                                        <table class="" width="100%">
+
+                                            <thead>
+                                                <tr class="employee">
+                                                    <th class="name text-center" colspan="2"
+                                                        style="border-bottom: 1px solid #ccc;"><?php echo 'Earnings'; ?>
+                                                    </th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody class="details">
+
+                                                <tr class="entry">
+                                                    <td class="value">Basic</td>
+                                                    <td class="value">
+                                                        <div>40000</div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr class="entry">
+                                                    <td class="value">House Rent</td>
+                                                    <td class="value">
+                                                        <div>10000</div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr class="entry">
+                                                    <td class="value">Health</td>
+                                                    <td class="value">
+                                                        <div>5000</div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr class="entry nti">
+                                                    <td class="value" style="float:left;font-weight: bold">Total
+                                                        Addition</td>
+                                                    <td class="value" style="font-weight: bold"><?php echo 55000; ?>
+                                                    </td>
+                                                </tr>
+
+
+                                            </tbody>
+                                            <!--                                    <tfoot>
+                                    
+                                    </tfoot>-->
+                                        </table>
+                                    </td>
+                                    <td class="right-panel">
+                                        <table class="" width="100%">
+
+
+
+                                            <thead>
+                                                <tr class="employee">
+                                                    <th class="name text-center" colspan="2"
+                                                        style="border-bottom: 1px solid #ccc;">
+                                                        <?php echo 'Deduction'; ?></th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody class="details">
+
+                                                <tr class="entry">
+                                                    <td class="value">Provident Fund</td>
+                                                    <td class="value">
+                                                        <div>5000</div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr class="entry">
+                                                    <td class="value">Tax</td>
+                                                    <td class="value">
+                                                        <div>2000</div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr class="entry nti">
+                                                    <td class="value" style="float:left; font-weight: bold">Total
+                                                        Deduction</td>
+                                                    <td class="value" style="font-weight: bold"><?php echo 7000; ?></td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+
+                        <div class="col-sm-12">
+
+                            <table class="table">
+
+
+                                <tr class="details">
+                                    <tbody class="nti">
+                                        <th class="value"><?php echo 'Net Salary'; ?> :
+                                            <?php echo 'In Word: Forty Eight Thousands Only'; ?></th>
+                                        <td class="value" style="float: right;font-weight: bold"><?php echo 48000; ?>
+                                        </td>
+                                    </tbody>
+                                </tr>
+
+
+                            </table>
+
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" style="padding-bottom: 50px;">
+
+                            <div class="col-sm-6" style="float:left;font-weight: bold;">Check No: 234252342</div>
+                            <div class="col-sm-6" style="float:right;font-weight: bold;">Name of Bank: Bangladesh Bank
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div
+                                style="float:left;width:40%;text-align:center;border-top:1px solid #e4e5e7;font-weight: bold;">
+                                <?php echo 'Employee Signature' ?>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div
+                                style="float:right;width:40%;text-align:center;border-top:1px solid #e4e5e7;font-weight: bold;">
+                                <?php echo 'Paid By' ?>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>
 <script type="text/javascript">
+
 </script>
