@@ -265,6 +265,10 @@ function printDiv(divName) {
                             <h3 align="center" style="margin-top:20px;">
                                 Payslip for the Month of <?= $paymentdata[0]['salary_name']; ?>
                             </h3>
+                            <pre>
+<?php print_r($paymentdata[0]); ?>
+</pre>
+                            <?php exit; ?>
                             <table width="100%" style="margin-top:20px;font-size:14px;">
                                 <tr>
                                     <td width="50%" valign="top">
