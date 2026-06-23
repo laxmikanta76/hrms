@@ -245,23 +245,21 @@ function printDiv(divName) {
 
                         <div class="col-sm-12">
 
-                            <table>
+                            <table width="100%" style="border-bottom:2px solid #000;padding-bottom:10px;">
                                 <tr>
-
-                                    <td><img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
-                                            style="width:80px;height:auto;" alt=""></td>
-                                    <td class="text-center">
-                                        <address style="margin-top:10px">
-                                            <strong
-                                                style="font-size: 30px; "><?php echo (!empty($setting->title)?$setting->title:'Bdtask Ltd')?></strong><br>
-                                            <?php echo (!empty($setting->address)?$setting->address:'Demo Address')?><br>
-                                            <span style="font-weight: bold;"> Salary Slip -
-                                                <?= $paymentdata[0]['salary_name']?></span>
-
-
-                                        </address>
+                                    <td width="15%">
+                                        <img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
+                                            style="width:90px;">
                                     </td>
-                                    <td></td>
+
+                                    <td width="70%" align="center">
+                                        <h2 style="margin:0;">Accrosian Soft Solution Pvt. Ltd.</h2>
+                                        <div>Turning ideas into reality</div>
+                                        <div>www.accrosian.com</div>
+                                        <div>info@accrosian.com</div>
+                                    </td>
+
+                                    <td width="15%"></td>
                                 </tr>
                             </table>
                             <table>
