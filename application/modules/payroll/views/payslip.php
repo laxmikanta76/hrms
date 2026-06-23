@@ -323,158 +323,160 @@ function printDiv(divName) {
 
                         <div class="col-sm-12">
                             <table class="table">
-                                <div class="col-sm-12">
+                                <tr>
+                                    <td class="left-panel" style="border-right: 1px solid #ccc;">
+                                        <table class="" width="100%">
 
-                                    <table width="100%" border="1" cellspacing="0" cellpadding="5"
-                                        style="border-collapse:collapse;margin-top:15px;">
+                                            <thead>
+                                                <tr class="employee">
+                                                    <th class="name text-center" colspan="2"
+                                                        style="border-bottom: 1px solid #ccc;">
+                                                        <?php echo display('earnings'); ?></th>
 
-                                        <tr style="font-weight:bold;background:#f5f5f5;">
-                                            <td width="35%">EARNINGS</td>
-                                            <td width="15%" align="right">AMOUNT</td>
-                                            <td width="35%">DEDUCTIONS</td>
-                                            <td width="15%" align="right">AMOUNT</td>
-                                        </tr>
 
-                                        <?php
-$totalAddition = 0;
-$totalDeduction = 0;
+                                                </tr>
+                                            </thead>
+                                            <tbody class="details">
 
-$maxRows = max(count($addition), count($deduction));
-?>
+                                                <tr class="entry">
+                                                    <td class="value">
+                                                        <?php if($paymentdata[0]['salarytype'] == 1){ echo display('basic_salary');}else{echo display('basic_salary');}?>
+                                                    </td>
+                                                    <td class="value">
+                                                        <div>
+                                                            <?php if($paymentdata[0]['salarytype'] == 1){ echo $basicsal = $paymentdata[0]['basic']*$paymentdata[0]['total_working_minutes'];}else{echo $basicsal = $paymentdata[0]['basic'];}?>
+                                                        </div>
+                                                    </td>
 
-                                        <tr>
-                                            <td valign="top">
+                                                </tr>
+                                                <?php 
+                                        $totalAddition = 0;
+                                        foreach($addition as $additions){
+                                            // NEW: Handle calculation type
+                                            if($additions->calculation_type == 1) {
+                                                // Fixed amount
+                                                $additionAmount = $additions->amount;
+                                            } else {
+                                                // Percentage
+                                                $additionAmount = $basicsal * ($additions->amount) / 100;
+                                            }
+                                        ?>
+                                                <tr class="entry">
+                                                    <td class="value">
+                                                        <?= $additions->sal_name;?>
+                                                        <?php if($additions->calculation_type == 0) echo '('.number_format($additions->amount, 2).'%)'; ?>
+                                                    </td>
+                                                    <td class="value">
+                                                        <div><?php 
+                                                            echo number_format($additionAmount, 2);
+                                                            $totalAddition += $additionAmount;
+                                                        ?></div>
+                                                    </td>
 
-                                                <table width="100%">
-                                                    <tr>
-                                                        <td><strong>Basic Salary</strong></td>
-                                                        <td align="right">
-                                                            <?php
-if($paymentdata[0]['salarytype'] == 1){
-    echo number_format($basicsal = $paymentdata[0]['basic'] * $paymentdata[0]['total_working_minutes'],2);
-}else{
-    echo number_format($basicsal = $paymentdata[0]['basic'],2);
-}
-?>
-                                                        </td>
-                                                    </tr>
+                                                </tr>
+                                                <?php }?>
 
-                                                    <?php foreach($addition as $additions){ ?>
+                                                <tr class="entry nti">
+                                                    <td class="value" style="float:left;font-weight: bold">
+                                                        <?= display('total_addition')?></td>
+                                                    <td class="value" style="font-weight: bold">
+                                                        <?php echo number_format($totalAddition+$basicsal, 2); ?></td>
+                                                </tr>
 
-                                                    <tr>
-                                                        <td>
-                                                            <?= $additions->sal_name; ?>
-                                                            <?php
-if($additions->calculation_type == 0){
-    echo ' ('.number_format($additions->amount,2).'%)';
-}
-?>
-                                                        </td>
 
-                                                        <td align="right">
-                                                            <?php
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td class="right-panel">
+                                        <table class="" width="100%">
 
-if($additions->calculation_type == 1){
-    $additionAmount = $additions->amount;
-}else{
-    $additionAmount = $basicsal * $additions->amount / 100;
-}
 
-echo number_format($additionAmount,2);
 
-$totalAddition += $additionAmount;
+                                            <thead>
+                                                <tr class="employee">
+                                                    <th class="name text-center" colspan="2"
+                                                        style="border-bottom: 1px solid #ccc;">
+                                                        <?php echo display('deduction'); ?></th>
 
-?>
-                                                        </td>
-                                                    </tr>
 
-                                                    <?php } ?>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="details">
+                                                <?php 
+                                      $totalDeduction = 0;
+                                      foreach($deduction as $deductions){
+                                          // NEW: Handle calculation type
+                                          if($deductions->calculation_type == 1) {
+                                              // Fixed amount
+                                              $deductionAmount = $deductions->amount;
+                                          } else {
+                                              // Percentage
+                                              $deductionAmount = $basicsal * ($deductions->amount) / 100;
+                                          }
+                                      ?>
+                                                <tr class="entry">
+                                                    <td class="value">
+                                                        <?= $deductions->sal_name; ?>
+                                                        <?php if($deductions->calculation_type == 0) echo '('.number_format($deductions->amount, 2).'%)'; ?>
+                                                    </td>
+                                                    <td class="value">
+                                                        <div><?php 
+                                                            echo number_format($deductionAmount, 2);
+                                                            $totalDeduction += $deductionAmount;
+                                                        ?></div>
+                                                    </td>
 
-                                                </table>
+                                                </tr>
+                                                <?php }?>
+                                                <?php 
+                                                // NEW: Check if LOP exists and display it BEFORE Tax
+                                                $lop_exists = false;
+                                                $lop_amount = 0;
+                                                if(isset($paymentdata[0]['lop_days']) && $paymentdata[0]['lop_days'] > 0) { 
+                                                    $lop_exists = true;
+                                                    $lop_amount = $paymentdata[0]['lop_deduction'];
+                                                    $totalDeduction += $lop_amount;
+                                                ?>
+                                                <tr class="entry lop-entry">
+                                                    <td class="value">
+                                                        <strong>LOP (<?= $paymentdata[0]['lop_days']; ?> days)</strong>
+                                                    </td>
+                                                    <td class="value">
+                                                        <div>
+                                                            <strong><?php echo number_format($lop_amount, 2); ?></strong>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <?php } ?>
+                                                <?php $gross = $totalAddition+($basicsal-$totalDeduction);
+                                     if($paymentdata[0]['total_salary'] < $gross){
+                                    ?>
+                                                <tr class="entry">
+                                                    <td class="value"><?= display('tax')?></td>
+                                                    <td class="value">
+                                                        <div><?php  $tax = $gross - intval(str_replace(',', '', $paymentdata[0]['total_salary']));
+                                            echo $totaltax = number_format($tax,2);
+                                            ?></div>
+                                                    </td>
 
-                                            </td>
+                                                </tr>
+                                                <?php }?>
 
-                                            <td valign="top"></td>
+                                                <tr class="entry nti">
+                                                    <td class="value" style="float:left; font-weight: bold">
+                                                        <?= display('total_deduction')?></td>
+                                                    <td class="value" style="font-weight: bold">
+                                                        <?php echo number_format($totalDeduction+(!empty($totaltax)?$totaltax:0), 2); ?>
+                                                    </td>
+                                                </tr>
 
-                                            <td valign="top">
+                                            </tbody>
 
-                                                <table width="100%">
+                                        </table>
+                                    </td>
+                                </tr>
 
-                                                    <?php foreach($deduction as $deductions){ ?>
-
-                                                    <tr>
-                                                        <td>
-                                                            <?= $deductions->sal_name; ?>
-
-                                                            <?php
-if($deductions->calculation_type == 0){
-    echo ' ('.number_format($deductions->amount,2).'%)';
-}
-?>
-                                                        </td>
-
-                                                        <td align="right">
-
-                                                            <?php
-
-if($deductions->calculation_type == 1){
-    $deductionAmount = $deductions->amount;
-}else{
-    $deductionAmount = $basicsal * $deductions->amount / 100;
-}
-
-echo number_format($deductionAmount,2);
-
-$totalDeduction += $deductionAmount;
-
-?>
-
-                                                        </td>
-                                                    </tr>
-
-                                                    <?php } ?>
-
-                                                    <?php if(isset($paymentdata[0]['lop_days']) && $paymentdata[0]['lop_days'] > 0){ ?>
-
-                                                    <tr>
-                                                        <td>
-                                                            LOP (<?= $paymentdata[0]['lop_days']; ?> Days)
-                                                        </td>
-
-                                                        <td align="right">
-                                                            <?= number_format($paymentdata[0]['lop_deduction'],2); ?>
-                                                        </td>
-                                                    </tr>
-
-                                                    <?php
-$totalDeduction += $paymentdata[0]['lop_deduction'];
-} ?>
-
-                                                </table>
-
-                                            </td>
-
-                                            <td valign="top"></td>
-
-                                        </tr>
-
-                                        <tr style="font-weight:bold;background:#f5f5f5;">
-                                            <td>GROSS EARNINGS</td>
-
-                                            <td align="right">
-                                                <?= number_format($totalAddition + $basicsal,2); ?>
-                                            </td>
-
-                                            <td>GROSS DEDUCTION</td>
-
-                                            <td align="right">
-                                                <?= number_format($totalDeduction + (!empty($totaltax)?$totaltax:0),2); ?>
-                                            </td>
-                                        </tr>
-
-                                    </table>
-
-                                </div>
+                            </table>
                         </div>
                     </div>
 
