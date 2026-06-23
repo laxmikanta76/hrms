@@ -262,6 +262,33 @@ function printDiv(divName) {
                                     <td width="15%"></td>
                                 </tr>
                             </table>
+                            </table>
+
+                            <br>
+
+                            <table width="100%" style="font-size:12px;">
+                                <tr>
+                                    <td width="50%">
+                                        <b>Registered Office</b><br>
+                                        6-3-542, Panjagutta, Somajiguda,<br>
+                                        Hyderabad, Telangana, India - 500082<br>
+                                        +91 97772 79222
+                                    </td>
+
+                                    <td width="50%">
+                                        <b>Corporate Office</b><br>
+                                        Mallick Commercial Complex,<br>
+                                        A-69, 2nd Floor,<br>
+                                        Kharavel Nagar, Unit-3,<br>
+                                        Bhubaneswar, Odisha - 751001<br>
+                                        0674-2533300
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <h3 align="center" style="margin-top:15px;">
+                                Payslip for the Month of <?= $paymentdata[0]['salary_name']; ?>
+                            </h3>
                             <table>
                                 <div id="details">
                                     <div class="scope-entry">
