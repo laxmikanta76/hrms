@@ -121,7 +121,7 @@ function printDiv(divName) {
                         </tr>
                         <tr>
                             <td><b>Location</b></td>
-                            <td><?= !empty($paymentdata[0]['location']) ? $paymentdata[0]['location'] : '-' ?></td>
+                            <td>Bhubaneswar</td>
                             <td><b>PF Number</b></td>
                             <td><?= !empty($paymentdata[0]['pf_number']) ? $paymentdata[0]['pf_number'] : '-' ?></td>
                         </tr>
@@ -144,9 +144,9 @@ function printDiv(divName) {
                     <table width="100%" border="1" cellspacing="0" cellpadding="6" style="font-size:12px;">
                         <tr>
                             <th width="35%" align="left">Earnings</th>
-                            <th width="15%" align="center"">Amount</th>
-                            <th width=" 35%" align="left">Deductions</th>
-                            <th width="15%" align="center">Amount</th>
+                            <th width="15%" align="right" style="padding-right:14px !important;">Amount</th>
+                            <th width=" 35%" align="left" style="padding-left:14px !important;">Deductions</th>
+                            <th width="15%" align="right">Amount</th>
                         </tr>
                         <tr>
                             <td>
