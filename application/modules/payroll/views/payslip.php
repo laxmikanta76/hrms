@@ -84,7 +84,7 @@ function printDiv(divName) {
                     </table>
 
                     <!-- ================= PAYSLIP TITLE ================= -->
-                    <h3 class="payslip-title">
+                    <h3 class="payslip-title" align="center" style="text-align:center;">
                         Payslip for the Month of <?= $paymentdata[0]['salary_name']; ?>
                     </h3>
 
@@ -143,8 +143,8 @@ function printDiv(divName) {
                     <table width="100%" border="1" cellspacing="0" cellpadding="6" style="font-size:12px;">
                         <tr>
                             <th width="35%" align="left">Earnings</th>
-                            <th width="15%" align="right">Amount</th>
-                            <th width="35%" align="left">Deductions</th>
+                            <th width="15%" align="right" style="padding-right:14px;">Amount</th>
+                            <th width="35%" align="left" style="padding-left:14px;">Deductions</th>
                             <th width="15%" align="right">Amount</th>
                         </tr>
                         <tr>
@@ -306,7 +306,7 @@ function printDiv(divName) {
                     </table>
 
                     <!-- ================= FOOTER NOTE ================= -->
-                    <div class="footer-note-box">
+                    <div class="footer-note-box" style="margin-top:20px;">
                         Note: This is a Computer-Generated Payslip. Signature Not Required.
                     </div>
 
