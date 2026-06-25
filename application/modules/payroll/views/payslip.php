@@ -293,7 +293,7 @@ function printDiv(divName) {
 
 
                     <!-- ================= FOOTER NOTE ================= -->
-                    <div class="footer-note-box" style="margin-top:150px;">
+                    <div class="footer-note-box" style="margin-top:25px;">
                         Note: This is a Computer-Generated Payslip. Signature Not Required.
                     </div>
 
