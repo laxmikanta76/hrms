@@ -102,7 +102,8 @@ function printDiv(divName) {
                             <td><?= !empty($paymentdata[0]['joining_date']) ? date('d F Y', strtotime($paymentdata[0]['joining_date'])) : '-' ?>
                             </td>
                             <td><b>Bank Name</b></td>
-                            <td><?= !empty($paymentdata[0]['bank_name']) ? $paymentdata[0]['bank_name'] : '-' ?></td>
+                            <td><?= !empty($paymentdata[0]['employee_bank_name']) ? $paymentdata[0]['employee_bank_name'] : '-' ?>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Designation</b></td>

@@ -297,7 +297,7 @@ public function create_employee_payment($data = array())
 	}
 
 	public function salary_paymentinfo($id = null){
-			return $this->db->select('count(DISTINCT(pment.emp_sal_pay_id)) as emp_sal_pay_id,pment.*,p.employee_id,p.first_name,p.last_name,p.hire_date as joining_date,p.bank_name,p.bank_account_no,p.pan_number,p.pf_number,p.uan_number,desig.position_name,dept.department_name,p.rate as basic,p.rate_type as salarytype')   
+			return $this->db->select('count(DISTINCT(pment.emp_sal_pay_id)) as emp_sal_pay_id,pment.*,p.employee_id,p.first_name,p.last_name,p.hire_date as joining_date,p.bank_name AS employee_bank_name,p.bank_account_no,p.pan_number,p.pf_number,p.uan_number,desig.position_name,dept.department_name,p.rate as basic,p.rate_type as salarytype')   
             ->from('employee_salary_payment pment')
             ->join('employee_history p', 'pment.employee_id = p.employee_id', 'left')
 			->join('department dept', 'dept.dept_id = p.dept_id', 'left')
