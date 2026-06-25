@@ -104,8 +104,8 @@ function printDiv(divName) {
                             <td width="15%"></td>
                         </tr>
                     </table>
-
-                    <!-- ================= PAYSLIP TITLE ================= -->
+                    <div width="100%" style="border-bottom:4px solid #F57C00;padding-bottom:10px;"></div>
+                    <!--=================PAYSLIP TITLE=================-->
                     <h3 class=" payslip-title" align="center" style="text-align:center; margin-bottom:25px;">
                         Payslip for the Month of <?= $paymentdata[0]['salary_name']; ?>
                     </h3>
