@@ -144,8 +144,8 @@ function printDiv(divName) {
                     <table width="100%" border="1" cellspacing="0" cellpadding="6" style="font-size:12px;">
                         <tr>
                             <th width="35%" align="left">Earnings</th>
-                            <th width="15%" align="right" style="padding-right:14px !important;">Amount</th>
-                            <th width=" 35%" align="left" style="padding-left:14px !important;">Deductions</th>
+                            <th width="15%" align="right">Amount</th>
+                            <th width=" 35%" align="left">Deductions</th>
                             <th width="15%" align="right">Amount</th>
                         </tr>
                         <tr>
