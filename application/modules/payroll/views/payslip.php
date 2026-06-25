@@ -94,19 +94,19 @@ function printDiv(divName) {
                         <tr>
                             <td width="15%">
                                 <img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
-                                    style="width:80px; height:80px;">
+                                    style="width:90px;">
                             </td>
                             <td width="70%" align="left">
                                 <h2 style="margin:0;">Accrosian Soft Solution Pvt. Ltd.</h2>
                                 <div style="font-size:14px; font-style:italic;">Turning ideas into reality</div>
                                 <div>www.accrosian.com | info@accrosian.com</div>
                             </td>
-                            <td width="15%"></td>
+                            <td width="15%" style="margin-top:10px;"></td>
                         </tr>
                     </table>
 
                     <!-- ================= PAYSLIP TITLE ================= -->
-                    <h3 class="payslip-title" align="center" style="text-align:center; margin-bottom:25px;">
+                    <h3 class=" payslip-title" align="center" style="text-align:center; margin-bottom:25px;">
                         Payslip for the Month of <?= $paymentdata[0]['salary_name']; ?>
                     </h3>
 
@@ -115,7 +115,8 @@ function printDiv(divName) {
                         style="margin-bottom:15px;font-size:12px;">
                         <tr>
                             <td width="18%"><b>Name</b></td>
-                            <td width="32%"><?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name']?></td>
+                            <td width="32%">
+                                <?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name']?></td>
                             <td width="18%"><b>Employee Id</b></td>
                             <td width="32%"><?= $paymentdata[0]['employee_id']?></td>
                         </tr>
@@ -139,24 +140,28 @@ function printDiv(divName) {
                             <td><?= !empty($paymentdata[0]['department_name']) ? $paymentdata[0]['department_name'] : '-' ?>
                             </td>
                             <td><b>PAN Number</b></td>
-                            <td><?= !empty($paymentdata[0]['pan_number']) ? $paymentdata[0]['pan_number'] : '-' ?></td>
+                            <td><?= !empty($paymentdata[0]['pan_number']) ? $paymentdata[0]['pan_number'] : '-' ?>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Location</b></td>
                             <td>Bhubaneswar</td>
                             <td><b>PF Number</b></td>
-                            <td><?= !empty($paymentdata[0]['pf_number']) ? $paymentdata[0]['pf_number'] : '-' ?></td>
+                            <td><?= !empty($paymentdata[0]['pf_number']) ? $paymentdata[0]['pf_number'] : '-' ?>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Effective Work Days</b></td>
                             <td><?= !empty($paymentdata[0]['working_period']) ? $paymentdata[0]['working_period'] : '-' ?>
                             </td>
                             <td><b>UAN Number</b></td>
-                            <td><?= !empty($paymentdata[0]['uan_number']) ? $paymentdata[0]['uan_number'] : '-' ?></td>
+                            <td><?= !empty($paymentdata[0]['uan_number']) ? $paymentdata[0]['uan_number'] : '-' ?>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>LOP</b></td>
-                            <td><?= isset($paymentdata[0]['lop_days']) ? $paymentdata[0]['lop_days'] : '0' ?></td>
+                            <td><?= isset($paymentdata[0]['lop_days']) ? $paymentdata[0]['lop_days'] : '0' ?>
+                            </td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                         </tr>
@@ -195,7 +200,8 @@ function printDiv(divName) {
                             ?>
                             <td><?= $first_deduction ? $first_deduction['label'] : '' ?></td>
                             <td align="right">
-                                <?= $first_deduction ? number_format($first_deduction['amount'], 2) : '' ?></td>
+                                <?= $first_deduction ? number_format($first_deduction['amount'], 2) : '' ?>
+                            </td>
                         </tr>
                         <?php
                             $totalAddition = 0;
@@ -238,7 +244,8 @@ function printDiv(divName) {
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td><strong>LOP (<?= $paymentdata[0]['lop_days']; ?> days)</strong></td>
-                            <td align="right"><strong><?php echo number_format($lop_amount, 2); ?></strong></td>
+                            <td align="right"><strong><?php echo number_format($lop_amount, 2); ?></strong>
+                            </td>
                         </tr>
                         <?php endif; ?>
 
@@ -264,7 +271,8 @@ function printDiv(divName) {
                             <td align="right"><?php echo number_format($totalAddition+$basicsal, 2); ?></td>
                             <td><?= display('total_deduction')?></td>
                             <td align="right">
-                                <?php echo number_format($totalDeduction+(!empty($totaltax)?$totaltax:0), 2); ?></td>
+                                <?php echo number_format($totalDeduction+(!empty($totaltax)?$totaltax:0), 2); ?>
+                            </td>
                         </tr>
                     </table>
 
