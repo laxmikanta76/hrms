@@ -353,9 +353,8 @@ function printDiv(divName) {
                     </div>
                 </div>
             </div>
-        </div>
 
-</div>
+        </div>
 </div>
 
 </div>
