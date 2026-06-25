@@ -94,103 +94,96 @@ function printDiv(divName) {
             </div>
             <div id="printableArea">
                 <div class="panel-body" id="payslip">
-                    <div class="watermark"></div>
-                    <div class="payslip-inner">
 
-                        <!-- ================= HEADER ================= -->
-                        <table width="100%"
-                            style="border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:10px;">
-                            <tr>
-                                <td width="15%">
-                                    <img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
-                                        style="width:90px;">
-                                </td>
-                                <td width="70%" align="left">
-                                    <h2 style="margin:0;">Accrosian Soft Solution Pvt. Ltd.</h2>
-                                    <div style="font-size:14px; font-style:italic;">Turning ideas into reality</div>
-                                    <div>www.accrosian.com | info@accrosian.com</div>
-                                </td>
-                                <td width="15%"></td>
-                            </tr>
-                        </table>
+                    <!-- ================= HEADER ================= -->
+                    <table width="100%" style="border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:10px;">
+                        <tr>
+                            <td width="15%">
+                                <img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
+                                    style="width:90px;">
+                            </td>
+                            <td width="70%" align="left">
+                                <h2 style="margin:0;">Accrosian Soft Solution Pvt. Ltd.</h2>
+                                <div style="font-size:14px; font-style:italic;">Turning ideas into reality</div>
+                                <div>www.accrosian.com | info@accrosian.com</div>
+                            </td>
+                            <td width="15%"></td>
+                        </tr>
+                    </table>
 
-                        <!-- ================= PAYSLIP TITLE ================= -->
-                        <h3 class="payslip-title" align="center" style="text-align:center; margin-bottom:25px;">
-                            Payslip for the Month of <?= $paymentdata[0]['salary_name']; ?>
-                        </h3>
+                    <!-- ================= PAYSLIP TITLE ================= -->
+                    <h3 class="payslip-title" align="center" style="text-align:center; margin-bottom:25px;">
+                        Payslip for the Month of <?= $paymentdata[0]['salary_name']; ?>
+                    </h3>
 
-                        <!-- ================= EMPLOYEE INFORMATION ================= -->
-                        <table width="100%" border="1" cellspacing="0" cellpadding="6"
-                            style="margin-bottom:15px;font-size:12px;">
-                            <tr>
-                                <td width="18%"><b>Name</b></td>
-                                <td width="32%"><?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name']?>
-                                </td>
-                                <td width="18%"><b>Employee Id</b></td>
-                                <td width="32%"><?= $paymentdata[0]['employee_id']?></td>
-                            </tr>
-                            <tr>
-                                <td><b>Joining Date</b></td>
-                                <td><?= !empty($paymentdata[0]['joining_date']) ? date('d F Y', strtotime($paymentdata[0]['joining_date'])) : '-' ?>
-                                </td>
-                                <td><b>Bank Name</b></td>
-                                <td><?= !empty($paymentdata[0]['employee_bank_name']) ? $paymentdata[0]['employee_bank_name'] : '-' ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Designation</b></td>
-                                <td><?= $paymentdata[0]['position_name']?></td>
-                                <td><b>Bank Account No</b></td>
-                                <td><?= !empty($paymentdata[0]['bank_account_no']) ? $paymentdata[0]['bank_account_no'] : '-' ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Department</b></td>
-                                <td><?= !empty($paymentdata[0]['department_name']) ? $paymentdata[0]['department_name'] : '-' ?>
-                                </td>
-                                <td><b>PAN Number</b></td>
-                                <td><?= !empty($paymentdata[0]['pan_number']) ? $paymentdata[0]['pan_number'] : '-' ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Location</b></td>
-                                <td>Bhubaneswar</td>
-                                <td><b>PF Number</b></td>
-                                <td><?= !empty($paymentdata[0]['pf_number']) ? $paymentdata[0]['pf_number'] : '-' ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Effective Work Days</b></td>
-                                <td><?= !empty($paymentdata[0]['working_period']) ? $paymentdata[0]['working_period'] : '-' ?>
-                                </td>
-                                <td><b>UAN Number</b></td>
-                                <td><?= !empty($paymentdata[0]['uan_number']) ? $paymentdata[0]['uan_number'] : '-' ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>LOP</b></td>
-                                <td><?= isset($paymentdata[0]['lop_days']) ? $paymentdata[0]['lop_days'] : '0' ?></td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                        </table>
+                    <!-- ================= EMPLOYEE INFORMATION ================= -->
+                    <table width="100%" border="1" cellspacing="0" cellpadding="6"
+                        style="margin-bottom:15px;font-size:12px;">
+                        <tr>
+                            <td width="18%"><b>Name</b></td>
+                            <td width="32%"><?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name']?></td>
+                            <td width="18%"><b>Employee Id</b></td>
+                            <td width="32%"><?= $paymentdata[0]['employee_id']?></td>
+                        </tr>
+                        <tr>
+                            <td><b>Joining Date</b></td>
+                            <td><?= !empty($paymentdata[0]['joining_date']) ? date('d F Y', strtotime($paymentdata[0]['joining_date'])) : '-' ?>
+                            </td>
+                            <td><b>Bank Name</b></td>
+                            <td><?= !empty($paymentdata[0]['employee_bank_name']) ? $paymentdata[0]['employee_bank_name'] : '-' ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Designation</b></td>
+                            <td><?= $paymentdata[0]['position_name']?></td>
+                            <td><b>Bank Account No</b></td>
+                            <td><?= !empty($paymentdata[0]['bank_account_no']) ? $paymentdata[0]['bank_account_no'] : '-' ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Department</b></td>
+                            <td><?= !empty($paymentdata[0]['department_name']) ? $paymentdata[0]['department_name'] : '-' ?>
+                            </td>
+                            <td><b>PAN Number</b></td>
+                            <td><?= !empty($paymentdata[0]['pan_number']) ? $paymentdata[0]['pan_number'] : '-' ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>Location</b></td>
+                            <td>Bhubaneswar</td>
+                            <td><b>PF Number</b></td>
+                            <td><?= !empty($paymentdata[0]['pf_number']) ? $paymentdata[0]['pf_number'] : '-' ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>Effective Work Days</b></td>
+                            <td><?= !empty($paymentdata[0]['working_period']) ? $paymentdata[0]['working_period'] : '-' ?>
+                            </td>
+                            <td><b>UAN Number</b></td>
+                            <td><?= !empty($paymentdata[0]['uan_number']) ? $paymentdata[0]['uan_number'] : '-' ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>LOP</b></td>
+                            <td><?= isset($paymentdata[0]['lop_days']) ? $paymentdata[0]['lop_days'] : '0' ?></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
 
-                        <!-- ================= SALARY TABLE (LOGIC UNCHANGED) ================= -->
-                        <table width="100%" border="1" cellspacing="0" cellpadding="6" style="font-size:12px;">
-                            <tr>
-                                <th width="35%" align="left">Earnings</th>
-                                <th width="15%" align="right">Amount</th>
-                                <th width=" 35%" align="left">Deductions</th>
-                                <th width="15%" align="right">Amount</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <?php if($paymentdata[0]['salarytype'] == 1){ echo display('basic_salary');}else{echo display('basic_salary');}?>
-                                </td>
-                                <td align="right">
-                                    <?php if($paymentdata[0]['salarytype'] == 1){ echo $basicsal = $paymentdata[0]['basic']*$paymentdata[0]['total_working_minutes'];}else{echo $basicsal = $paymentdata[0]['basic'];}?>
-                                </td>
-                                <?php
+                    <!-- ================= SALARY TABLE (LOGIC UNCHANGED) ================= -->
+                    <table width="100%" border="1" cellspacing="0" cellpadding="6" style="font-size:12px;">
+                        <tr>
+                            <th width="35%" align="left">Earnings</th>
+                            <th width="15%" align="right">Amount</th>
+                            <th width=" 35%" align="left">Deductions</th>
+                            <th width="15%" align="right">Amount</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <?php if($paymentdata[0]['salarytype'] == 1){ echo display('basic_salary');}else{echo display('basic_salary');}?>
+                            </td>
+                            <td align="right">
+                                <?php if($paymentdata[0]['salarytype'] == 1){ echo $basicsal = $paymentdata[0]['basic']*$paymentdata[0]['total_working_minutes'];}else{echo $basicsal = $paymentdata[0]['basic'];}?>
+                            </td>
+                            <?php
                                 $totalDeduction = 0;
                                 $deduction_rows = array();
                                 foreach($deduction as $deductions){
@@ -206,11 +199,11 @@ function printDiv(divName) {
                                 }
                                 $first_deduction = !empty($deduction_rows) ? array_shift($deduction_rows) : null;
                             ?>
-                                <td><?= $first_deduction ? $first_deduction['label'] : '' ?></td>
-                                <td align="right">
-                                    <?= $first_deduction ? number_format($first_deduction['amount'], 2) : '' ?></td>
-                            </tr>
-                            <?php
+                            <td><?= $first_deduction ? $first_deduction['label'] : '' ?></td>
+                            <td align="right">
+                                <?= $first_deduction ? number_format($first_deduction['amount'], 2) : '' ?></td>
+                        </tr>
+                        <?php
                             $totalAddition = 0;
                             $addition_rows = array();
                             foreach($addition as $additions){
@@ -229,15 +222,15 @@ function printDiv(divName) {
                                 $e_row = isset($addition_rows[$i]) ? $addition_rows[$i] : null;
                                 $d_row = isset($deduction_rows[$i]) ? $deduction_rows[$i] : null;
                         ?>
-                            <tr>
-                                <td><?= $e_row ? $e_row['label'] : '' ?></td>
-                                <td align="right"><?= $e_row ? number_format($e_row['amount'], 2) : '' ?></td>
-                                <td><?= $d_row ? $d_row['label'] : '' ?></td>
-                                <td align="right"><?= $d_row ? number_format($d_row['amount'], 2) : '' ?></td>
-                            </tr>
-                            <?php endfor; ?>
+                        <tr>
+                            <td><?= $e_row ? $e_row['label'] : '' ?></td>
+                            <td align="right"><?= $e_row ? number_format($e_row['amount'], 2) : '' ?></td>
+                            <td><?= $d_row ? $d_row['label'] : '' ?></td>
+                            <td align="right"><?= $d_row ? number_format($d_row['amount'], 2) : '' ?></td>
+                        </tr>
+                        <?php endfor; ?>
 
-                            <?php
+                        <?php
                             $lop_exists = false;
                             $lop_amount = 0;
                             if(isset($paymentdata[0]['lop_days']) && $paymentdata[0]['lop_days'] > 0) {
@@ -246,16 +239,16 @@ function printDiv(divName) {
                                 $totalDeduction += $lop_amount;
                             }
                         ?>
-                            <?php if($lop_exists): ?>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td><strong>LOP (<?= $paymentdata[0]['lop_days']; ?> days)</strong></td>
-                                <td align="right"><strong><?php echo number_format($lop_amount, 2); ?></strong></td>
-                            </tr>
-                            <?php endif; ?>
+                        <?php if($lop_exists): ?>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td><strong>LOP (<?= $paymentdata[0]['lop_days']; ?> days)</strong></td>
+                            <td align="right"><strong><?php echo number_format($lop_amount, 2); ?></strong></td>
+                        </tr>
+                        <?php endif; ?>
 
-                            <?php
+                        <?php
                             $gross = $totalAddition+($basicsal-$totalDeduction);
                             $totaltax = 0;
                             if($paymentdata[0]['total_salary'] < $gross){
@@ -263,94 +256,92 @@ function printDiv(divName) {
                                 $totaltax = number_format($tax,2);
                             }
                         ?>
-                            <?php if(!empty($totaltax)): ?>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td><?= display('tax')?></td>
-                                <td align="right"><?= $totaltax ?></td>
-                            </tr>
-                            <?php endif; ?>
+                        <?php if(!empty($totaltax)): ?>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td><?= display('tax')?></td>
+                            <td align="right"><?= $totaltax ?></td>
+                        </tr>
+                        <?php endif; ?>
 
-                            <tr style="background:#f5f5f5;font-weight:bold;">
-                                <td><?= display('total_addition')?></td>
-                                <td align="right"><?php echo number_format($totalAddition+$basicsal, 2); ?></td>
-                                <td><?= display('total_deduction')?></td>
-                                <td align="right">
-                                    <?php echo number_format($totalDeduction+(!empty($totaltax)?$totaltax:0), 2); ?>
-                                </td>
-                            </tr>
-                        </table>
+                        <tr style="background:#f5f5f5;font-weight:bold;">
+                            <td><?= display('total_addition')?></td>
+                            <td align="right"><?php echo number_format($totalAddition+$basicsal, 2); ?></td>
+                            <td><?= display('total_deduction')?></td>
+                            <td align="right">
+                                <?php echo number_format($totalDeduction+(!empty($totaltax)?$totaltax:0), 2); ?></td>
+                        </tr>
+                    </table>
 
-                        <!-- ================= NET PAY SECTION ================= -->
-                        <table width="100%" border="1" cellspacing="0" cellpadding="6"
-                            style="border-top:none;font-size:12px;margin-bottom:15px;">
-                            <tr>
-                                <td style="font-weight:bold;width:60%;">Net Pay for the month:</td>
-                                <td style="font-weight:bold;">&#8377;
-                                    <?= number_format($paymentdata[0]['total_salary'],2); ?></td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight:bold;">Amount Paid:</td>
-                                <td style="font-weight:bold;">&#8377;
-                                    <?= number_format($paymentdata[0]['total_salary'],2); ?></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" style="font-weight:bold;border-top:1px solid #000;">
-                                    Amount Paid in Words: <strong><?= $amountinword; ?> Only</strong>
-                                </td>
-                            </tr>
-                        </table>
+                    <!-- ================= NET PAY SECTION ================= -->
+                    <table width="100%" border="1" cellspacing="0" cellpadding="6"
+                        style="border-top:none;font-size:12px;margin-bottom:15px;">
+                        <tr>
+                            <td style="font-weight:bold;width:60%;">Net Pay for the month:</td>
+                            <td style="font-weight:bold;">&#8377;
+                                <?= number_format($paymentdata[0]['total_salary'],2); ?></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">Amount Paid:</td>
+                            <td style="font-weight:bold;">&#8377;
+                                <?= number_format($paymentdata[0]['total_salary'],2); ?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="font-weight:bold;border-top:1px solid #000;">
+                                Amount Paid in Words: <strong><?= $amountinword; ?> Only</strong>
+                            </td>
+                        </tr>
+                    </table>
 
-                        <!-- ================= SIGNATURE SECTION ================= -->
-                        <table width="100%">
-                            <tr>
-                                <td></td>
-                                <td align="right">
-                                    For Accrosian Soft Solution Pvt. Ltd.
-                                    <br><br><br>
-                                    _________________________
-                                    <br>
-                                    Authorized Signatory
-                                </td>
-                            </tr>
-                        </table>
+                    <!-- ================= SIGNATURE SECTION ================= -->
+                    <table width="100%">
+                        <tr>
+                            <td></td>
+                            <td align="right">
+                                For Accrosian Soft Solution Pvt. Ltd.
+                                <br><br><br>
+                                _________________________
+                                <br>
+                                Authorized Signatory
+                            </td>
+                        </tr>
+                    </table>
 
-                        <!-- ================= FOOTER: REFERENCE / BANK ================= -->
-                        <table width="100%" style="margin-top:10px;font-weight:bold;font-size:11.5px;">
-                            <tr>
-                                <td><?= display('ref_number')?>: .........</td>
-                                <td align="right"><?= display('name_of_bank')?>:
-                                    <?php echo (!empty($paymentdata[0]['bank_name'])?$paymentdata[0]['bank_name']:'..........')?>
-                                </td>
-                            </tr>
-                        </table>
-
+                    <!-- ================= FOOTER: REFERENCE / BANK ================= -->
+                    <table width="100%" style="margin-top:10px;font-weight:bold;font-size:11.5px;">
+                        <tr>
+                            <td><?= display('ref_number')?>: .........</td>
+                            <td align="right"><?= display('name_of_bank')?>:
+                                <?php echo (!empty($paymentdata[0]['bank_name'])?$paymentdata[0]['bank_name']:'..........')?>
+                            </td>
+                        </tr>
+                    </table>
 
 
-                        <!-- ================= FOOTER NOTE ================= -->
-                        <div class="footer-note-box" style="margin-top:25px;">
-                            Note: This is a Computer-Generated Payslip. Signature Not Required.
-                        </div>
 
-                        <!-- ================= FOOTER: COMPANY ADDRESS ================= -->
-                        <table width="100%" class="footer-address-table"
-                            style="border-top:1px solid #000;margin-top:180px;">
-                            <tr>
-                                <td width="50%">
-                                    <strong>Regd. Office:</strong> 6-3-542, Panjagutta, Somajiguda,
-                                    Hyderabad, Telangana, India - 500082<br>
-                                    &#9742; +91 97772 79222
-                                </td>
-                                <td width="50%" style="border-left:1px solid #888; margin-left:5px;">
-                                    <strong>Corporate Office:</strong> A-69, Kharavel Nagar, Bhubaneswar,
-                                    Odisha, India - 751001<br>
-                                    &#9742; 0674-2533300
-                                </td>
-                            </tr>
-                        </table>
-
+                    <!-- ================= FOOTER NOTE ================= -->
+                    <div class="footer-note-box" style="margin-top:25px;">
+                        Note: This is a Computer-Generated Payslip. Signature Not Required.
                     </div>
+
+                    <!-- ================= FOOTER: COMPANY ADDRESS ================= -->
+                    <table width="100%" class="footer-address-table"
+                        style="border-top:1px solid #000;margin-top:180px;">
+                        <tr>
+                            <td width="50%">
+                                <strong>Regd. Office:</strong> 6-3-542, Panjagutta, Somajiguda,
+                                Hyderabad, Telangana, India - 500082<br>
+                                &#9742; +91 97772 79222
+                            </td>
+                            <td width="50%" style="border-left:1px solid #888; margin-left:5px;">
+                                <strong>Corporate Office:</strong> A-69, Kharavel Nagar, Bhubaneswar,
+                                Odisha, India - 751001<br>
+                                &#9742; 0674-2533300
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
             </div>
 
