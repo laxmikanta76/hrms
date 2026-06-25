@@ -290,6 +290,13 @@ function printDiv(divName) {
                         </tr>
                     </table>
 
+
+
+                    <!-- ================= FOOTER NOTE ================= -->
+                    <div class="footer-note-box" style="margin-top:150px;">
+                        Note: This is a Computer-Generated Payslip. Signature Not Required.
+                    </div>
+
                     <!-- ================= FOOTER: COMPANY ADDRESS ================= -->
                     <table width="100%" class="footer-address-table" style="border-top:1px solid #000;margin-top:14px;">
                         <tr>
@@ -298,18 +305,13 @@ function printDiv(divName) {
                                 Hyderabad, Telangana, India - 500082<br>
                                 &#9742; +91 97772 79222
                             </td>
-                            <td width="50%" style="border-left:1px solid #888;">
-                                <strong>Corporate Office:</strong> Mallick Commercial Complex, A-69,
-                                2nd Floor, Kharavel Nagar, Unit-3, Bhubaneswar, Odisha - 751001<br>
+                            <td width="50%" style="border-left:5px solid #888;">
+                                <strong>Corporate Office:</strong> A-69, Kharavel Nagar, Bhubaneswar,
+                                Odisha, India - 751001<br>
                                 &#9742; 0674-2533300
                             </td>
                         </tr>
                     </table>
-
-                    <!-- ================= FOOTER NOTE ================= -->
-                    <div class="footer-note-box" style="margin-top:150px;">
-                        Note: This is a Computer-Generated Payslip. Signature Not Required.
-                    </div>
 
                 </div>
             </div>
