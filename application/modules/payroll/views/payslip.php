@@ -38,6 +38,19 @@
     margin-bottom: 8px;
 }
 
+.watermark {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('<?php echo base_url('assets/img/icons/accroWatermark.png'); ?>');
+    background-size: 60%;
+    opacity: 0.08;
+    z-index: 0;
+    pointer-events: none;
+}
+
 @media print {
     .print-btn-row {
         display: none;
@@ -65,6 +78,7 @@ function printDiv(divName) {
                         class="fa fa-print"></span></button>
             </div>
             <div id="printableArea">
+                <div class="watermark"></div>
                 <div class="panel-body" id="payslip">
 
                     <!-- ================= HEADER ================= -->
