@@ -38,32 +38,25 @@
     margin-bottom: 8px;
 }
 
-#payslip {
-    position: relative;
-}
-
-#payslip .watermark {
+.watermark {
     display: none;
 }
 
-#payslip .payslip-inner {
-    position: relative;
-    z-index: 1;
-}
-
 @media print {
-    #payslip .watermark {
+
+    .watermark {
         display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        position: fixed;
+        top: 15%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
         background: url('<?php echo base_url("assets/img/icons/accroWatermark.png"); ?>') no-repeat center center;
-        background-size: 55%;
+        background-size: 60%;
         opacity: 0.08;
-        z-index: 0;
+        z-index: -1;
     }
+
 }
 
 @media print {
@@ -93,6 +86,7 @@ function printDiv(divName) {
                         class="fa fa-print"></span></button>
             </div>
             <div id="printableArea">
+                <div class="watermark"></div>
                 <div class="panel-body" id="payslip">
 
                     <!-- ================= HEADER ================= -->
