@@ -90,7 +90,7 @@ function printDiv(divName) {
                 <div class="panel-body" id="payslip">
 
                     <!-- ================= HEADER ================= -->
-                    <table width="100%" style="padding-bottom:10px;margin-bottom:10px;">
+                    <table width="100%" style="padding-bottom:10px;margin-bottom:5px;">
                         <tr>
                             <td width="15%">
                                 <img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
