@@ -90,7 +90,7 @@ function printDiv(divName) {
                 <div class="panel-body" id="payslip">
 
                     <!-- ================= HEADER ================= -->
-                    <table width="100%" style="border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:10px;">
+                    <table width="100%" style="padding-bottom:10px;margin-bottom:10px;">
                         <tr>
                             <td width="15%">
                                 <img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
@@ -101,7 +101,7 @@ function printDiv(divName) {
                                 <div style="font-size:14px; font-style:italic;">Turning ideas into reality</div>
                                 <div>www.accrosian.com | info@accrosian.com</div>
                             </td>
-                            <td width="15%" style="margin-top:10px;"></td>
+                            <td width="15%"></td>
                         </tr>
                     </table>
 
