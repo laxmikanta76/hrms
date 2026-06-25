@@ -94,7 +94,7 @@ function printDiv(divName) {
                         <tr>
                             <td width="15%">
                                 <img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
-                                    style="width:90px;">
+                                    style="width:80px; height:80px;">
                             </td>
                             <td width="70%" align="left">
                                 <h2 style="margin:0;">Accrosian Soft Solution Pvt. Ltd.</h2>
