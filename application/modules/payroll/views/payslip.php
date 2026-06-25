@@ -144,8 +144,8 @@ function printDiv(divName) {
                     <table width="100%" border="1" cellspacing="0" cellpadding="6" style="font-size:12px;">
                         <tr>
                             <th width="35%" align="left">Earnings</th>
-                            <th width="15%" align="right">Amount</th>
-                            <th width="35%" align="left">Deductions</th>
+                            <th width="15%" align="right" style="margin-right: 8px;">Amount</th>
+                            <th width=" 35%" align="left">Deductions</th>
                             <th width="15%" align="right">Amount</th>
                         </tr>
                         <tr>
@@ -298,14 +298,15 @@ function printDiv(divName) {
                     </div>
 
                     <!-- ================= FOOTER: COMPANY ADDRESS ================= -->
-                    <table width="100%" class="footer-address-table" style="border-top:1px solid #000;margin-top:14px;">
+                    <table width="100%" class="footer-address-table"
+                        style="border-top:1px solid #000;margin-top:180px;">
                         <tr>
                             <td width="50%">
                                 <strong>Regd. Office:</strong> 6-3-542, Panjagutta, Somajiguda,
                                 Hyderabad, Telangana, India - 500082<br>
                                 &#9742; +91 97772 79222
                             </td>
-                            <td width="50%" style="border-left:5px solid #888;">
+                            <td width="50%" style="border-left:1px solid #888; margin-left:5px;">
                                 <strong>Corporate Office:</strong> A-69, Kharavel Nagar, Bhubaneswar,
                                 Odisha, India - 751001<br>
                                 &#9742; 0674-2533300
