@@ -39,16 +39,24 @@
 }
 
 .watermark {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-image: url('<?php echo base_url('assets/img/icons/accroWatermark.png'); ?>');
-    background-size: 60%;
-    opacity: 0.08;
-    z-index: 0;
-    pointer-events: none;
+    display: none;
+}
+
+@media print {
+
+    .watermark {
+        display: block;
+        position: fixed;
+        top: 15%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
+        background: url('<?php echo base_url("assets/img/icons/accroWatermark.png"); ?>') no-repeat center center;
+        background-size: 60%;
+        opacity: 0.08;
+        z-index: -1;
+    }
+
 }
 
 @media print {
