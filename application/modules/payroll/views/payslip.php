@@ -86,8 +86,9 @@ function printDiv(divName) {
                         class="fa fa-print"></span></button>
             </div>
             <div id="printableArea">
-                <div class="watermark"></div>
+
                 <div class="panel-body" id="payslip">
+                    <div class="watermark"></div>
 
                     <!-- ================= HEADER ================= -->
                     <table width="100%" style="border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:10px;">
