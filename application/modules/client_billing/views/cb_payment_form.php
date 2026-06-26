@@ -120,7 +120,7 @@
         <div class="bil-head"><i class="fa fa-credit-card"></i> Record Payment</div>
         <div class="bil-body">
             <form action="<?= site_url('client_billing/Client_billing/save_payment') ?>" method="post">
-                <?= csrf_field() ?>
+
 
                 <!-- Invoice Selector -->
                 <div class="fg">
