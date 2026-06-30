@@ -80241,3 +80241,1412 @@ SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
 SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-10 18:10:43', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `sec_menu_item` (`menu_title`, `page_url`, `module`, `parent_menu`, `is_report`, `createdate`, `createby`) VALUES ('Billing', 'client_billing', 'client_billing', '', 0, '2026-06-10', '1');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-11 12:42:57', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-11'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-12 10:38:39', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-12 15:38:59', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+INSERT INTO `cb_invoices` (`invoice_number`, `client_id`, `bank_account_id`, `invoice_type`, `invoice_date`, `due_date`, `payment_terms`, `status`, `mode_of_payment`, `reference_number`, `po_number`, `dispatch_through`, `destination`, `delivery_note`, `place_of_supply`, `is_igst`, `subtotal`, `total_discount`, `taxable_amount`, `cgst_amount`, `sgst_amount`, `igst_amount`, `total_tax`, `round_off`, `grand_total`, `balance_due`, `notes`, `terms_conditions`, `internal_notes`, `created_by`, `updated_at`, `amount_in_words`, `created_at`) VALUES ('INV-2026-2026001', 3, '1', 'tax_invoice', '2026-06-12', NULL, 'Net 30 Days', 'sent', 'Bank Transfer', '', '', '', '', '', 'Delhi', 0, 17500, 0, 17500, 1575, 1575, 0, 3150, 0, 20650, 20650, '', '', '', 'Accrosian ', '2026-06-12 18:07:56', 'Twenty Thousand Six Hundred Fifty Rupees Only', '2026-06-12 18:07:56');
+INSERT INTO `cb_invoice_items` (`cgst_amount`, `cgst_rate`, `discount`, `discount_amount`, `discount_type`, `hsn_sac_code`, `igst_amount`, `igst_rate`, `invoice_id`, `item_description`, `quantity`, `rate`, `service_id`, `sgst_amount`, `sgst_rate`, `sl_no`, `taxable_amount`, `total_amount`, `unit`) VALUES (225,9,0,0,'flat','998316',0,0,1,'Website Maintenance Services',1,2500,'',225,9,1,2500,2950,'Month'), (1350,9,0,0,'flat','998314',0,0,1,'CRM Software License',1,15000,'',1350,9,2,15000,17700,'Year');
+INSERT INTO `cb_invoice_logs` (`invoice_id`, `old_status`, `new_status`, `remarks`, `by_user`, `logged_at`) VALUES (1, NULL, 'sent', 'Invoice created', 'Accrosian ', '2026-06-12 18:07:56');
+UPDATE `cb_company` SET invoice_counter = invoice_counter + 1;
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-12'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-13 11:28:37', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+UPDATE `cb_invoices` SET `status` = 'paid', `updated_at` = '2026-06-13 13:28:32'
+WHERE `id` = '1';
+INSERT INTO `cb_invoice_logs` (`invoice_id`, `old_status`, `new_status`, `remarks`, `by_user`, `logged_at`) VALUES ('1', 'sent', 'paid', 'Status updated', 'Accrosian ', '2026-06-13 13:28:32');
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-13'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-19 13:00:24', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_logout` = '2026-06-19 13:04:26'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-19 18:16:30', `ip_address` = '::1'
+WHERE `id` = '18';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_logout` = '2026-06-19 18:17:07'
+WHERE `id` = '18';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-19 18:17:25', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-20 10:59:42', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+DELETE FROM `salary_sheet_generate`
+WHERE `ssg_id` = '33';
+DELETE FROM `employee_salary_payment`
+WHERE `salary_name` = 'May 2026';
+DELETE FROM `acc_transaction`
+WHERE `VNo` = 'May 2026';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `salary_sheet_generate` (`name`, `gdate`, `start_date`, `end_date`, `generate_by`) VALUES ('June 2026', '2026-06-20', '2026-6-1', '2026-6-30', 'Accrosian ');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 1, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 3, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 4, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 5, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 6, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 7, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 8, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 9, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 14, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 15, 0, 0, '2026-06-20', '9800.00');
+INSERT INTO `employee_salary_setup` (`employee_id`, `sal_type`, `salary_type_id`, `amount`, `calculation_type`, `create_date`, `gross_salary`) VALUES ('2', '2', 16, '200', '1', '2026-06-20', '9800.00');
+INSERT INTO `salary_setup_header` (`employee_id`, `salary_payable`, `absent_deduct`, `tax_manager`) VALUES ('2', NULL, 0, 0);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+DELETE FROM `salary_sheet_generate`
+WHERE `ssg_id` = '34';
+DELETE FROM `employee_salary_payment`
+WHERE `salary_name` = 'June 2026';
+DELETE FROM `acc_transaction`
+WHERE `VNo` = 'June 2026';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `salary_sheet_generate` (`name`, `gdate`, `start_date`, `end_date`, `generate_by`) VALUES ('June 2026', '2026-06-20', '2026-6-1', '2026-6-30', 'Accrosian ');
+INSERT INTO `employee_salary_payment` (`employee_id`, `total_salary`, `total_working_minutes`, `salary_name`, `working_period`, `payment_date`, `lop_days`, `lop_deduction`) VALUES ('2', 9800, '0.00', 'June 2026', 5, '2026-06-20', '0', 0);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('June 2026', 'Generated Salary', '2026-06-20', '502020000004', 'Salary For Employee Id2', 0, 9800, 1, '1', '2026-06-20 11:51:10', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `employee_salary_payment` SET `emp_sal_pay_id` = '82', `payment_due` = 'paid', `payment_date` = '2026-06-20', `payment_type` = '2', `bank_name` = 'State Bank Of India', `paid_by` = 'Accrosian '
+WHERE `emp_sal_pay_id` = '82';
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('82', 'Salary', '2026-06-20', '502020000004', 'Salary For Employee Id2', 9800, 0, 1, '1', '2026-06-20 11:51:40', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('82', 'Salary', '2026-06-20', 401, 'salary payment for 2', 9800, 0, 1, '1', '2026-06-20 11:51:40', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('82', 'Salary', '2026-06-20', '10201020001', 'Employee Salary Payment', 0, 9800, 1, '1', '2026-06-20 11:51:40', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-22 11:07:06', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+DELETE FROM `salary_sheet_generate`
+WHERE `ssg_id` = '35';
+DELETE FROM `employee_salary_payment`
+WHERE `salary_name` = 'June 2026';
+DELETE FROM `acc_transaction`
+WHERE `VNo` = 'June 2026';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `salary_sheet_generate` (`name`, `gdate`, `start_date`, `end_date`, `generate_by`) VALUES ('June 2026', '2026-06-22', '2026-6-1', '2026-6-30', 'Accrosian ');
+INSERT INTO `employee_salary_payment` (`employee_id`, `total_salary`, `total_working_minutes`, `salary_name`, `working_period`, `payment_date`, `lop_days`, `lop_deduction`) VALUES ('2', 9800, '0.00', 'June 2026', 5, '2026-06-22', '0', 0);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('June 2026', 'Generated Salary', '2026-06-22', '502020000004', 'Salary For Employee Id2', 0, 9800, 1, '1', '2026-06-22 12:32:34', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `employee_salary_payment` SET `emp_sal_pay_id` = '83', `payment_due` = 'paid', `payment_date` = '2026-06-22', `payment_type` = '2', `bank_name` = 'Bank Of Baroda', `paid_by` = 'Accrosian '
+WHERE `emp_sal_pay_id` = '83';
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('83', 'Salary', '2026-06-22', '502020000004', 'Salary For Employee Id2', 9800, 0, 1, '1', '2026-06-22 12:35:39', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('83', 'Salary', '2026-06-22', 401, 'salary payment for 2', 9800, 0, 1, '1', '2026-06-22 12:35:39', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('83', 'Salary', '2026-06-22', '10201020002', 'Employee Salary Payment', 0, 9800, 1, '1', '2026-06-22 12:35:39', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+DELETE FROM `salary_sheet_generate`
+WHERE `ssg_id` = '36';
+DELETE FROM `employee_salary_payment`
+WHERE `salary_name` = 'June 2026';
+DELETE FROM `acc_transaction`
+WHERE `VNo` = 'June 2026';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `salary_sheet_generate` (`name`, `gdate`, `start_date`, `end_date`, `generate_by`) VALUES ('June 2026', '2026-06-22', '2026-6-1', '2026-6-30', 'Accrosian ');
+INSERT INTO `employee_salary_payment` (`employee_id`, `total_salary`, `total_working_minutes`, `salary_name`, `working_period`, `payment_date`, `lop_days`, `lop_deduction`) VALUES ('2', 9800, '0.00', 'June 2026', 5, '2026-06-22', '0', 0);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('June 2026', 'Generated Salary', '2026-06-22', '502020000004', 'Salary For Employee Id2', 0, 9800, 1, '1', '2026-06-22 12:39:23', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-22 16:42:48', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `pan_number`, `bank_name`, `bank_account_no`, `pf_number`, `uan_number`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (15, '8', 'Laxmikanta', '', 'Barik', '', 'laxmikantabarik76@gmail.com', '07205235195', '', NULL, NULL, NULL, '4', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-09', '2026-06-09', '2026-06-22', '', '', '2026-06-22', '2', '10000', '4', '', '', '', '', '9800.00', '', '', '2026-06-22', '1', '1', '', '', '2026-06-15', '1', '1', '', '', '2332', '1', '1', '', 'SBI', '1234567890123', '23540PF03', '012AE02', '', '', '', '', '', '', '', '', '', '', '', '');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `pan_number`, `bank_name`, `bank_account_no`, `pf_number`, `uan_number`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (15, '9', 'Laxmikanta', '', 'Barik', '', 'laxmikantabarik76@gmail.com', '07205235195', '', NULL, NULL, NULL, '3', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-08', '2026-06-09', '2026-06-22', '', '', '2026-06-22', '2', '10000', '4', '', '', '', '', '9800.00', '', '', '2026-06-22', '1', '1', '', '', '1996-06-01', '1', '1', '01234', '', '98745', '1', '1', 'CPOPB4128M', 'SBI', '1234567890123', '23540PF03', '012AE02', '', '', '', '', '', '', '', '', '', '', '', '');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `pan_number`, `bank_name`, `bank_account_no`, `pf_number`, `uan_number`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (15, '12', 'Laxmikanta', '', 'Barik', '', 'laxmikantabarik76@gmail.com', '07205235195', '', NULL, NULL, NULL, '4', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-08', '2026-06-09', '2026-06-22', '', '', '2026-06-22', '2', '10000', '4', '', '', '', '', '9800.00', '', '', '2026-06-22', '1', '1', '', '', '1996-06-01', '1', '1', '', '', '1234', '1', '1', 'CPOPB4128M', 'SBI', '1234567890123', '23540PF03', '012AE02', '', '', '', '', '', '', '', '', '', '', '', '');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (15, '11', 'Laxmikanta', '', 'Barik', '', 'laxmikantabarik76@gmail.com', '07205235195', '', NULL, NULL, NULL, '20', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-08', '2026-06-08', '2026-06-22', '', '', '2026-06-22', '2', '10000', '4', '', '', '', '', '9800.00', '', '', '2026-06-22', '1', '1', '', '', '1996-06-01', '1', '1', '01234', '', '98745', '1', '1', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `acc_coa` (`HeadCode`, `HeadName`, `PHeadName`, `HeadLevel`, `IsActive`, `IsTransaction`, `IsGL`, `HeadType`, `IsBudget`, `IsDepreciation`, `DepreciationRate`, `CreateBy`, `CreateDate`) VALUES (502020000020, '15-LaxmikantaBarik', 'Account Payable', '2', '1', '1', '0', 'L', '0', '0', '0', 'Accrosian ', '2026-06-22 18:25:58');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-23 11:01:03', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `pan_number`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (16, '8', 'Laxmikanta', '', 'Barik', '', 'laxmikantabarik76@gmail.com', '07205235195', '', NULL, NULL, NULL, '3', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-09', '2026-06-09', '2026-06-23', '', '', '2026-06-23', '2', '9999', '4', '', '', '', '', '9800.00', '', '', '2026-06-23', '1', '1', '', '', '1996-06-07', '1', '1', '', '', '2332', '1', '1', '12345678', '', '', '', '', '', '', '', '', '', '', '', '');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `pan_number`, `bank_name`, `bank_account_no`, `pf_number`, `uan_number`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (15, '12', 'Laxmikanta', '', 'Barik', '', 'laxmikantabarik76@gmail.com', '07205235195', '', NULL, NULL, NULL, '4', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-08', '2026-06-08', '2026-06-23', '', '', '2026-06-23', '2', '10000', '4', '', '', '', '', '9800.00', '', '', '2026-06-23', '1', '1', '', '', '1996-06-01', '1', '1', '', '', '1234', '1', '1', '332244455', 'SBI', '1234567890123', '23540PF03', '012AE02', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `acc_coa` (`HeadCode`, `HeadName`, `PHeadName`, `HeadLevel`, `IsActive`, `IsTransaction`, `IsGL`, `HeadType`, `IsBudget`, `IsDepreciation`, `DepreciationRate`, `CreateBy`, `CreateDate`) VALUES (502020000021, '15-LaxmikantaBarik', 'Account Payable', '2', '1', '1', '0', 'L', '0', '0', '0', 'Accrosian ', '2026-06-23 11:33:43');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `employee_history` SET `employee_id` = '2', `first_name` = 'Pankajini', `middle_name` = '', `last_name` = 'Jena', `email` = 'pjpankajinijena@gmail.com', `phone` = '8327738808', `alter_phone` = '8144362850', `picture` = './application/modules/employee/assets/images/2025-12-12/Fur.png', `dept_id` = '23', `pos_id` = '18', `dob` = '2002-09-23', `gender` = '2', `marital_status` = '1', `pan_number` = 'CPOPB4128M', `bank_name` = 'DCB', `bank_account_no` = '1122334455', `pf_number` = '23540PF06', `uan_number` = '012AE05', `home_email` = '', `business_email` = '', `home_phone` = '', `business_phone` = '', `cell_phone` = '', `is_super_visor` = '0', `super_visor_id` = '1', `supervisor_report` = ''
+WHERE `employee_id` = '2';
+DELETE FROM `custom_table`
+WHERE `employee_id` = '2';
+DELETE FROM `employee_benifit`
+WHERE `employee_id` = '2';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `employee_history` (`employee_id`, `pos_id`, `first_name`, `middle_name`, `last_name`, `maiden_name`, `email`, `phone`, `alter_phone`, `present_address`, `parmanent_address`, `picture`, `dept_id`, `state`, `city`, `zip`, `citizenship`, `duty_type`, `hire_date`, `original_hire_date`, `termination_date`, `termination_reason`, `voluntary_termination`, `rehire_date`, `rate_type`, `rate`, `pay_frequency`, `pay_frequency_txt`, `hourly_rate2`, `hourly_rate3`, `home_department`, `gross_salary`, `class_code`, `class_code_desc`, `class_acc_date`, `class_status`, `is_super_visor`, `super_visor_id`, `supervisor_report`, `dob`, `gender`, `marital_status`, `ethnic_group`, `eeo_class_gp`, `ssn`, `work_in_state`, `live_in_state`, `pan_number`, `bank_name`, `bank_account_no`, `pf_number`, `uan_number`, `home_email`, `business_email`, `home_phone`, `business_phone`, `cell_phone`, `emerg_contct`, `emrg_h_phone`, `emrg_w_phone`, `emgr_contct_relation`, `alt_em_contct`, `alt_emg_h_phone`, `alt_emg_w_phone`) VALUES (15, '12', 'John', '', 'Deo', '', 'john@gmail.com', '07205235195', '', NULL, NULL, NULL, '4', 'India', 'Kendrapara', '754214', '1', '1', '2026-06-01', '2026-06-01', '2026-06-23', '', '', '2026-06-23', '2', '10000', '4', '', '', '', '', '', '', '', '2026-06-23', '1', '1', '', '', '1996-06-17', '1', '1', '', '', '1235', '1', '1', 'CPC12UI23', 'DCB', '9988776655', '23540PF00', '012AE09', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `acc_coa` (`HeadCode`, `HeadName`, `PHeadName`, `HeadLevel`, `IsActive`, `IsTransaction`, `IsGL`, `HeadType`, `IsBudget`, `IsDepreciation`, `DepreciationRate`, `CreateBy`, `CreateDate`) VALUES (502020000021, '15-JohnDeo', 'Account Payable', '2', '1', '1', '0', 'L', '0', '0', '0', 'Accrosian ', '2026-06-23 11:40:24');
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `employee_salary_payment` SET `emp_sal_pay_id` = '84', `payment_due` = 'paid', `payment_date` = '2026-06-23', `payment_type` = '2', `bank_name` = 'Bank Of Baroda', `paid_by` = 'Accrosian '
+WHERE `emp_sal_pay_id` = '84';
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('84', 'Salary', '2026-06-23', '502020000004', 'Salary For Employee Id2', 9800, 0, 1, '1', '2026-06-23 12:30:11', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('84', 'Salary', '2026-06-23', 401, 'salary payment for 2', 9800, 0, 1, '1', '2026-06-23 12:30:11', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('84', 'Salary', '2026-06-23', '10201020002', 'Employee Salary Payment', 0, 9800, 1, '1', '2026-06-23 12:30:11', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+DELETE FROM `salary_sheet_generate`
+WHERE `ssg_id` = '37';
+DELETE FROM `employee_salary_payment`
+WHERE `salary_name` = 'June 2026';
+DELETE FROM `acc_transaction`
+WHERE `VNo` = 'June 2026';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+INSERT INTO `salary_sheet_generate` (`name`, `gdate`, `start_date`, `end_date`, `generate_by`) VALUES ('June 2026', '2026-06-23', '2026-6-1', '2026-6-30', 'Accrosian ');
+INSERT INTO `employee_salary_payment` (`employee_id`, `total_salary`, `total_working_minutes`, `salary_name`, `working_period`, `payment_date`, `lop_days`, `lop_deduction`) VALUES ('2', 9800, '0.00', 'June 2026', 5, '2026-06-23', '0', 0);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('June 2026', 'Generated Salary', '2026-06-23', '502020000004', 'Salary For Employee Id2', 0, 9800, 1, '1', '2026-06-23 13:01:57', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `employee_salary_payment` SET `emp_sal_pay_id` = '85', `payment_due` = 'paid', `payment_date` = '2026-06-23', `payment_type` = '2', `bank_name` = 'Bank Of Baroda', `paid_by` = 'Accrosian '
+WHERE `emp_sal_pay_id` = '85';
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('85', 'Salary', '2026-06-23', '502020000004', 'Salary For Employee Id2', 9800, 0, 1, '1', '2026-06-23 13:02:15', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('85', 'Salary', '2026-06-23', 401, 'salary payment for 2', 9800, 0, 1, '1', '2026-06-23 13:02:15', 1);
+INSERT INTO `acc_transaction` (`VNo`, `Vtype`, `VDate`, `COAID`, `Narration`, `Debit`, `Credit`, `IsPosted`, `CreateBy`, `CreateDate`, `IsAppove`) VALUES ('85', 'Salary', '2026-06-23', '10201020002', 'Employee Salary Payment', 0, 9800, 1, '1', '2026-06-23 13:02:15', 1);
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-25 10:53:54', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-25 15:21:00', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `user` SET `last_login` = '2026-06-26 12:29:18', `ip_address` = '::1'
+WHERE `id` = '1';
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+UPDATE `cb_clients` SET `deleted_at` = '2026-06-26 12:53:21', `is_active` = 0
+WHERE `id` = '4';
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";
+SET SESSION sql_mode = "";
+UPDATE `cb_invoices` SET `status` = 'overdue'
+WHERE `status` IN('unpaid', 'sent')
+AND `due_date` < '2026-06-26'
+AND `deleted_at` IS NULL;
+SET SESSION sql_mode = "";

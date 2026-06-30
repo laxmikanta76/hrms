@@ -46,7 +46,7 @@
             if (file_exists($menu)) {
                 @include($menu);
             }  
-        }   
+        }
 
  
         if(isset($HmvcMenu) && $HmvcMenu!=null && sizeof($HmvcMenu) > 0)
