@@ -51,10 +51,7 @@
  
         if(isset($HmvcMenu) && $HmvcMenu!=null && sizeof($HmvcMenu) > 0)
      ksort($HmvcMenu);
-    echo "<pre>";
-print_r(array_keys($HmvcMenu));
-echo "</pre>";
-exit;
+    
         foreach ($HmvcMenu as $moduleName => $moduleData) {
 
             // check module permission 
