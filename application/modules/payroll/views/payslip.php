@@ -96,11 +96,22 @@ function printDiv(divName) {
                                 <img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
                                     style="width:90px;">
                             </td>
-                            <td width="70%" align="left">
+                            <td width="58%" valign="top" style="padding-left:10px;text-align:left;">
+                                <h2 style="margin:0;">Accrosian Soft Solution Pvt. Ltd.</h2>
+
+                                <div style="font-style:italic;margin-top:5px;">
+                                    Turning ideas into reality
+                                </div>
+
+                                <div style="margin-top:5px;">
+                                    www.accrosian.com | info@accrosian.com
+                                </div>
+                            </td>
+                            <!-- <td width="70%" align="left">
                                 <h2 style="margin:0;">Accrosian Soft Solution Pvt. Ltd.</h2>
                                 <div style="font-size:14px; font-style:italic;">Turning ideas into reality</div>
                                 <div>www.accrosian.com | info@accrosian.com</div>
-                            </td>
+                            </td> -->
                             <td width="15%"></td>
                         </tr>
                     </table>
@@ -313,10 +324,7 @@ function printDiv(divName) {
                     <!-- ================= FOOTER: REFERENCE / BANK ================= -->
                     <table width="100%" style="margin-top:10px;font-weight:bold;font-size:11.5px;">
                         <tr>
-                            <td><?= display('ref_number')?>: .........</td>
-                            <td align="right"><?= display('name_of_bank')?>:
-                                <?php echo (!empty($paymentdata[0]['bank_name'])?$paymentdata[0]['bank_name']:'..........')?>
-                            </td>
+
                         </tr>
                     </table>
 
