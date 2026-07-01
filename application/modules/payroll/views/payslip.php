@@ -99,7 +99,7 @@ function printDiv(divName) {
                             </td>
 
                             <!-- Empty Space -->
-                            <td width="210">
+                            <td width="240">
                                 &nbsp;
                             </td>
 
