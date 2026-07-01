@@ -131,7 +131,7 @@ function printDiv(divName) {
 
                     <!-- ================= EMPLOYEE INFORMATION ================= -->
                     <table width="100%" border="1" cellspacing="0" cellpadding="6"
-                        style="margin-bottom:15px;font-size:12px; border:1px solid #444;border-collapse:collapse;">
+                        style="margin-bottom:15px;font-size:12px; border:0.5px solid #444;border-collapse:collapse;">
                         <tr>
                             <td width="18%" style="padding-left:5px;"><b>Name</b></td>
                             <td width="32%" style="padding-left:5px;">
