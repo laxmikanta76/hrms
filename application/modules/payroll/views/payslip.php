@@ -90,33 +90,40 @@ function printDiv(divName) {
                 <div class="panel-body" id="payslip">
 
                     <!-- ================= HEADER ================= -->
-                    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:8px;">
+                    <table width="100%" cellpadding="0" cellspacing="0">
                         <tr>
+
                             <!-- Logo -->
-                            <td width="90" valign="top">
+                            <td width="120" valign="top">
                                 <img src="<?= base_url('assets/img/icons/accroLogo.png'); ?>" style="width:70px;">
                             </td>
 
+                            <!-- Empty Space -->
+                            <td width="180">
+                                &nbsp;
+                            </td>
+
                             <!-- Company Details -->
-                            <td valign="top" style="padding-left:15px;">
+                            <td valign="top">
 
                                 <div style="font-size:20px;font-weight:bold;">
                                     Accrosian Soft Solution Pvt. Ltd.
                                 </div>
 
-                                <div style="font-size:14px;font-style:italic;color:#555;margin-top:3px;">
+                                <div style="font-size:15px;font-style:italic;color:#555;">
                                     Turning ideas into reality
                                 </div>
 
-                                <div style="font-size:13px;margin-top:3px;">
+                                <div style="font-size:14px;">
                                     www.accrosian.com | info@accrosian.com
                                 </div>
 
                             </td>
+
                         </tr>
                     </table>
 
-                    <div style="border-bottom:2px solid #F57C00;margin-bottom:20px;"></div>
+                    <div style="border-bottom:2px solid #f57c00;margin-top:8px;"></div>
                     <!--=================PAYSLIP TITLE=================-->
                     <h3 class=" payslip-title" align="center" style="text-align:center; margin-bottom:25px;">
                         Payslip for the Month of <?= $paymentdata[0]['salary_name']; ?>
