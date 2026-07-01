@@ -133,7 +133,7 @@ function printDiv(divName) {
                     <table width="100%" border="1" cellspacing="0" cellpadding="6"
                         style="margin-bottom:15px;font-size:12px; border:1px solid #444;border-collapse:collapse;">
                         <tr>
-                            <td width="18%" style="margin-right:5px;"><b>Name</b></td>
+                            <td width="18%" style="padding-right:5px;"><b>Name</b></td>
                             <td width="32%">
                                 <?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name']?></td>
                             <td width="18%"><b>Employee Id</b></td>
