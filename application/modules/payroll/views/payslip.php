@@ -96,14 +96,30 @@ function printDiv(divName) {
                                 <img src="<?php echo base_url('assets/img/icons/accroLogo.png'); ?>"
                                     style="width:70px;">
                             </td>
-                            <td width="58%" valign="top" style="text-align:left;">
-                                <h2 style="margin:0;">Accrosian Soft Solution Pvt. Ltd.</h2>
+                            <td width="58%" align="left" style="padding-left:12px;">
+                                <h1 style="
+        margin:0;
+        font-size:20px;
+        font-weight:bold;
+        text-align:left;
+        color:#000;">
+                                    Accrosian Soft Solution Pvt. Ltd.
+                                </h1>
 
-                                <div style="font-style:italic;margin-top:5px;">
+                                <div style="
+        margin-top:4px;
+        font-size:14px;
+        font-style:italic;
+        color:#555;
+        text-align:left;">
                                     Turning ideas into reality
                                 </div>
 
-                                <div style="margin-top:5px;">
+                                <div style="
+        margin-top:4px;
+        font-size:13px;
+        color:#333;
+        text-align:left;">
                                     www.accrosian.com | info@accrosian.com
                                 </div>
                             </td>
