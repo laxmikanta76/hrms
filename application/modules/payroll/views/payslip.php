@@ -201,10 +201,10 @@ function printDiv(divName) {
                     <table width="100%" cellspacing="0" cellpadding="6"
                         style="font-size:12px; border:1px ridge #afa9a9;">
                         <tr>
-                            <th width="35%" align="left">Earnings</th>
-                            <th width="15%" align="right">Amount</th>
-                            <th width=" 35%" align="left">Deductions</th>
-                            <th width="15%" align="right">Amount</th>
+                            <th width="35%" align="left" style="border:1px ridge #afa9a9;">Earnings</th>
+                            <th width="15%" align="right" style="border:1px ridge #afa9a9;">Amount</th>
+                            <th width=" 35%" align="left" style="border:1px ridge #afa9a9;">Deductions</th>
+                            <th width="15%" align="right" style="border:1px ridge #afa9a9;">Amount</th>
                         </tr>
                         <tr>
                             <td>
@@ -229,7 +229,8 @@ function printDiv(divName) {
                                 }
                                 $first_deduction = !empty($deduction_rows) ? array_shift($deduction_rows) : null;
                             ?>
-                            <td><?= $first_deduction ? $first_deduction['label'] : '' ?></td>
+                            <td style="padding-left:5px;">
+                                <?= $first_deduction ? $first_deduction['label'] : '' ?></td>
                             <td align="right">
                                 <?= $first_deduction ? number_format($first_deduction['amount'], 2) : '' ?>
                             </td>
