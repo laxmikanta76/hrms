@@ -198,7 +198,8 @@ function printDiv(divName) {
                     </table>
 
                     <!-- ================= SALARY TABLE (LOGIC UNCHANGED) ================= -->
-                    <table width="100%" border="1" cellspacing="0" cellpadding="6" style="font-size:12px;">
+                    <table width="100%" cellspacing="0" cellpadding="6"
+                        style="font-size:12px; border:1px ridge #afa9a9;">
                         <tr>
                             <th width="35%" align="left">Earnings</th>
                             <th width="15%" align="right">Amount</th>
