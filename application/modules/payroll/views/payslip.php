@@ -133,11 +133,12 @@ function printDiv(divName) {
                     <table width="100%" cellspacing="0" cellpadding="6"
                         style="margin-bottom:15px;font-size:12px; border:1px ridge #afa9a9; border-collapse:collapse;">
                         <tr>
-                            <td width="21%" style="padding-left:5px;"><b>Name</b></td>
-                            <td width="32%" style="padding-left:5px;">
+                            <td width="21%" style="padding-left:5px; border:1px ridge #afa9a9;"><b>Name</b></td>
+                            <td width="32%" style="padding-left:5px; border:1px ridge #afa9a9;">
                                 <?= $paymentdata[0]['first_name'].' '.$paymentdata[0]['last_name']?></td>
-                            <td width="20%" style="padding-left:5px;"><b>Employee Id</b></td>
-                            <td width="32%" style="padding-left:5px;"><?= $paymentdata[0]['employee_id']?></td>
+                            <td width="20%" style="padding-left:5px; border:1px ridge #afa9a9;"><b>Employee Id</b></td>
+                            <td width="32%" style="padding-left:5px; border:1px ridge #afa9a9;">
+                                <?= $paymentdata[0]['employee_id']?></td>
                         </tr>
                         <tr>
                             <td style="padding-left:5px;"><b>Joining Date</b></td>
