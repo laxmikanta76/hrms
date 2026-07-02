@@ -210,7 +210,7 @@ function printDiv(divName) {
                             <td>
                                 <?php if($paymentdata[0]['salarytype'] == 1){ echo display('basic_salary');}else{echo display('basic_salary');}?>
                             </td>
-                            <td align="right">
+                            <td align="right" style="padding-right:5px;">
                                 <?php if($paymentdata[0]['salarytype'] == 1){ echo $basicsal = $paymentdata[0]['basic']*$paymentdata[0]['total_working_minutes'];}else{echo $basicsal = $paymentdata[0]['basic'];}?>
                             </td>
                             <?php
@@ -273,9 +273,11 @@ function printDiv(divName) {
                         ?>
                         <?php if($lop_exists): ?>
                         <tr>
+                            <td style="padding-left:5px;">&nbsp;</td>
                             <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td><strong>LOP (<?= $paymentdata[0]['lop_days']; ?> days)</strong></td>
+                            <td style="padding-left:5px;"><strong>LOP (<?= $paymentdata[0]['lop_days']; ?>
+                                    days)</strong>
+                            </td>
                             <td align="right"><strong><?php echo number_format($lop_amount, 2); ?></strong>
                             </td>
                         </tr>
@@ -291,17 +293,18 @@ function printDiv(divName) {
                         ?>
                         <?php if(!empty($totaltax)): ?>
                         <tr>
+                            <td style="padding-left:5px;">&nbsp;</td>
                             <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td><?= display('tax')?></td>
+                            <td style="padding-left:5px;"><?= display('tax')?></td>
                             <td align="right"><?= $totaltax ?></td>
                         </tr>
                         <?php endif; ?>
 
                         <tr style="background:#f5f5f5;font-weight:bold;">
                             <td><?= display('total_addition')?></td>
-                            <td align="right"><?php echo number_format($totalAddition+$basicsal, 2); ?></td>
-                            <td><?= display('total_deduction')?></td>
+                            <td align="right" style="padding-right:5px;">
+                                <?php echo number_format($totalAddition+$basicsal, 2); ?></td>
+                            <td style="padding-left:5px;"><?= display('total_deduction')?></td>
                             <td align="right">
                                 <?php echo number_format($totalDeduction+(!empty($totaltax)?$totaltax:0), 2); ?>
                             </td>
