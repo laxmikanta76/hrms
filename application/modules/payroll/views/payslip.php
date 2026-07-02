@@ -201,9 +201,10 @@ function printDiv(divName) {
                     <table width="100%" cellspacing="0" cellpadding="6"
                         style="font-size:12px; border:1px ridge #afa9a9;">
                         <tr>
-                            <th width="35%" align="left">Earnings</th>
+                            <th width="35%" align="left" style="padding-left:5px;">Earnings
+                            </th>
                             <th width="15%" align="right">Amount</th>
-                            <th width=" 35%" align="left" style="margin-left:5px;">Deductions</th>
+                            <th width=" 35%" align="left">Deductions</th>
                             <th width="15%" align="right">Amount</th>
                         </tr>
                         <tr>
