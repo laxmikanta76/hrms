@@ -206,7 +206,7 @@ function printDiv(divName) {
                             <th width=" 35%" align="left" style="border:1px ridge #afa9a9;">Deductions</th>
                             <th width="15%" align="right" style="border:1px ridge #afa9a9;">Amount</th>
                         </tr>
-                        <tr>
+                        <tr style="padding-left:5px;">
                             <td>
                                 <?php if($paymentdata[0]['salarytype'] == 1){ echo display('basic_salary');}else{echo display('basic_salary');}?>
                             </td>
@@ -229,7 +229,7 @@ function printDiv(divName) {
                                 }
                                 $first_deduction = !empty($deduction_rows) ? array_shift($deduction_rows) : null;
                             ?>
-                            <td style="padding-left:5px;">
+                            <td>
                                 <?= $first_deduction ? $first_deduction['label'] : '' ?></td>
                             <td align="right">
                                 <?= $first_deduction ? number_format($first_deduction['amount'], 2) : '' ?>
