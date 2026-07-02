@@ -203,7 +203,7 @@ function printDiv(divName) {
                         <tr>
                             <th width="35%" align="left">Earnings</th>
                             <th width="15%" align="right">Amount</th>
-                            <th width=" 35%" align="left">Deductions</th>
+                            <th width=" 35%" align="left" style="padding-left:5px;">Deductions</th>
                             <th width="15%" align="right">Amount</th>
                         </tr>
                         <tr>
