@@ -141,58 +141,59 @@ function printDiv(divName) {
                                 <?= $paymentdata[0]['employee_id']?></td>
                         </tr>
                         <tr>
-                            <td style="padding-left:5px;"><b>Joining Date</b></td>
-                            <td style="padding-left:5px;">
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>Joining Date</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">
                                 <?= !empty($paymentdata[0]['joining_date']) ? date('d F Y', strtotime($paymentdata[0]['joining_date'])) : '-' ?>
                             </td>
-                            <td style="padding-left:5px;"><b>Bank Name</b></td>
-                            <td style="padding-left:5px;">
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>Bank Name</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">
                                 <?= !empty($paymentdata[0]['employee_bank_name']) ? $paymentdata[0]['employee_bank_name'] : '-' ?>
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-left:5px;"><b>Designation</b></td>
-                            <td style="padding-left:5px;"><?= $paymentdata[0]['position_name']?></td>
-                            <td style="padding-left:5px;"><b>Bank Account No</b></td>
-                            <td style="padding-left:5px;">
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>Designation</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">
+                                <?= $paymentdata[0]['position_name']?></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>Bank Account No</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">
                                 <?= !empty($paymentdata[0]['bank_account_no']) ? $paymentdata[0]['bank_account_no'] : '-' ?>
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-left:5px;"><b>Department</b></td>
-                            <td style="padding-left:5px;">
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>Department</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">
                                 <?= !empty($paymentdata[0]['department_name']) ? $paymentdata[0]['department_name'] : '-' ?>
                             </td>
-                            <td style="padding-left:5px;"><b>PAN Number</b></td>
-                            <td style="padding-left:5px;">
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>PAN Number</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">
                                 <?= !empty($paymentdata[0]['pan_number']) ? $paymentdata[0]['pan_number'] : '-' ?>
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-left:5px;"><b>Location</b></td>
-                            <td style="padding-left:5px;">Bhubaneswar</td>
-                            <td style="padding-left:5px;"><b>PF Number</b></td>
-                            <td style="padding-left:5px;">
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>Location</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">Bhubaneswar</td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>PF Number</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">
                                 <?= !empty($paymentdata[0]['pf_number']) ? $paymentdata[0]['pf_number'] : '-' ?>
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-left:5px;"><b>Effective Work Days</b></td>
-                            <td style="padding-left:5px;">
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>Effective Work Days</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">
                                 <?= !empty($paymentdata[0]['working_period']) ? $paymentdata[0]['working_period'] : '-' ?>
                             </td>
-                            <td style="padding-left:5px;"><b>UAN Number</b></td>
-                            <td style="padding-left:5px;">
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>UAN Number</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">
                                 <?= !empty($paymentdata[0]['uan_number']) ? $paymentdata[0]['uan_number'] : '-' ?>
                             </td>
                         </tr>
                         <tr>
-                            <td style="padding-left:5px;"><b>LOP</b></td>
-                            <td style="padding-left:5px;">
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;"><b>LOP</b></td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">
                                 <?= isset($paymentdata[0]['lop_days']) ? $paymentdata[0]['lop_days'] : '0' ?>
                             </td>
-                            <td style="padding-left:5px;">&nbsp;</td>
-                            <td style="padding-left:5px;">&nbsp;</td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">&nbsp;</td>
+                            <td style="padding-left:5px; border:1px ridge #afa9a9;">&nbsp;</td>
                         </tr>
                     </table>
 
