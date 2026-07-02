@@ -130,8 +130,8 @@ function printDiv(divName) {
                     </h3>
 
                     <!-- ================= EMPLOYEE INFORMATION ================= -->
-                    <table width="100%" border="1" cellspacing="0" cellpadding="6"
-                        style="margin-bottom:15px;font-size:12px; border-collapse:collapse;">
+                    <table width="100%" cellspacing="0" cellpadding="6"
+                        style="margin-bottom:15px;font-size:12px; border:1px ridge #444; border-collapse:collapse;">
                         <tr>
                             <td width="21%" style="padding-left:5px;"><b>Name</b></td>
                             <td width="32%" style="padding-left:5px;">
