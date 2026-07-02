@@ -207,7 +207,7 @@ function printDiv(divName) {
                             <th width="15%" align="right" style="border:1px ridge #afa9a9;">Amount</th>
                         </tr>
                         <tr>
-                            <td>
+                            <td style="padding-left:5px;">
                                 <?php if($paymentdata[0]['salarytype'] == 1){ echo display('basic_salary');}else{echo display('basic_salary');}?>
                             </td>
                             <td align="right">
