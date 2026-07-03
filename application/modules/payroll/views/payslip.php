@@ -1,15 +1,32 @@
 <style>
 #payslip {
+    /* background: #fff;
+    color: #000;
+    padding: 20px 30px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.5; */
+    position: relative;
     background: #fff;
     color: #000;
     padding: 20px 30px;
     font-family: 'Helvetica Neue', Arial, sans-serif;
     font-size: 12px;
     line-height: 1.5;
+    overflow: hidden;
 }
 
 #payslip table {
     border-collapse: collapse;
+}
+
+#payslip table,
+#payslip h2,
+#payslip h3,
+#payslip p,
+#payslip div {
+    position: relative;
+    z-index: 2;
 }
 
 #payslip .payslip-title {
@@ -38,26 +55,6 @@
     margin-bottom: 8px;
 }
 
-.watermark {
-    display: none;
-}
-
-@media print {
-
-    .watermark {
-        display: block;
-        position: fixed;
-        top: 15%;
-        left: 10%;
-        width: 80%;
-        height: 80%;
-        background: url('<?php echo base_url("assets/img/icons/accroWatermark.png"); ?>') no-repeat center center;
-        background-size: 60%;
-        opacity: 0.08;
-        z-index: -1;
-    }
-
-}
 
 @media print {
     .print-btn-row {
@@ -86,8 +83,17 @@ function printDiv(divName) {
                         class="fa fa-print"></span></button>
             </div>
             <div id="printableArea">
-                <div class="watermark"></div>
                 <div class="panel-body" id="payslip">
+                    <img src="<?= base_url('assets/img/icons/accroLogo.png'); ?>" style="
+        position:absolute;
+        top:55%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        width:380px;
+        opacity:0.06;
+        z-index:0;
+        pointer-events:none;
+    ">
 
                     <!-- ================= HEADER ================= -->
                     <table width="100%" cellpadding="0" cellspacing="0">
@@ -201,10 +207,14 @@ function printDiv(divName) {
                     <table width="100%" cellspacing="0" cellpadding="6"
                         style="font-size:12px; border:1px ridge #afa9a9;">
                         <tr>
-                            <th width="35%" align="left" style="border:1px ridge #afa9a9;">Earnings</th>
-                            <th width="15%" align="right" style="border:1px ridge #afa9a9;">Amount</th>
-                            <th width=" 35%" align="left" style="border:1px ridge #afa9a9;">Deductions</th>
-                            <th width="15%" align="right" style="border:1px ridge #afa9a9;">Amount</th>
+                            <th width="35%" align="left" style="padding-left:5px; border:1px ridge #afa9a9;">Earnings
+                            </th>
+                            <th width="15%" align="right" style="padding-left:5px; border:1px ridge #afa9a9;">Amount
+                            </th>
+                            <th width=" 35%" align="left" style="padding-left:5px; border:1px ridge #afa9a9;">Deductions
+                            </th>
+                            <th width="15%" align="right" style="padding-left:5px; border:1px ridge #afa9a9;">Amount
+                            </th>
                         </tr>
                         <tr>
                             <td style="padding-left:5px;">
