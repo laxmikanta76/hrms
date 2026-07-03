@@ -91,7 +91,7 @@ function printDiv(divName) {
         transform:translate(-50%,-50%);
         width:1000px;
         height:1000px;
-        opacity:0.06;
+        opacity:0.09;
         z-index:0;
         pointer-events:none;
     ">
