@@ -89,8 +89,7 @@ function printDiv(divName) {
         top:55%;
         left:50%;
         transform:translate(-50%,-50%);
-        width:1250px;
-        height:1000px;
+        width:600px;
         opacity:0.12;
         z-index:0;
         pointer-events:none;
