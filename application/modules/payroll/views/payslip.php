@@ -84,7 +84,7 @@ function printDiv(divName) {
             </div>
             <div id="printableArea">
                 <div class="panel-body" id="payslip">
-                    <img src="<?= base_url('assets/img/icons/accroLogo.png'); ?>" style="
+                    <img src="<?= base_url('assets/img/icons/waterM_log.png'); ?>" style="
         position:absolute;
         top:55%;
         left:50%;
@@ -101,7 +101,7 @@ function printDiv(divName) {
 
                             <!-- Logo -->
                             <td width="120" valign="top">
-                                <img src="<?= base_url('assets/img/icons/waterM_log.png'); ?>" style="width:70px;">
+                                <img src="<?= base_url('assets/img/icons/accroLogo.png'); ?>" style="width:70px;">
                             </td>
 
                             <!-- Empty Space -->
