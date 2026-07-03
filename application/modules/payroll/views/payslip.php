@@ -101,7 +101,7 @@ function printDiv(divName) {
 
                             <!-- Logo -->
                             <td width="120" valign="top">
-                                <img src="<?= base_url('assets/img/icons/accroLogo.png'); ?>" style="width:70px;">
+                                <img src="<?= base_url('assets/img/icons/accroWatermark.png'); ?>" style="width:70px;">
                             </td>
 
                             <!-- Empty Space -->
