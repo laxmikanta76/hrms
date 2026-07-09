@@ -10,20 +10,6 @@
     href="<?php echo base_url((!empty($setting->favicon)?$setting->favicon:'assets/img/icons/favicon.png')) ?>"
     type="image/x-icon">
 
-<!-- PWA Manifest -->
-<link rel="manifest" href="<?php echo base_url('manifest.json'); ?>">
-
-<!-- Theme Color -->
-<meta name="theme-color" content="#0d6efd">
-
-<!-- PWA Mobile Support -->
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-<!-- Apple Touch Icon -->
-<link rel="apple-touch-icon" href="<?php echo base_url('assets/img/pwa/mini-logo.png'); ?>">
-
 
 <!-- Start Global Mandatory Style -->
 <!-- jquery-ui css -->
