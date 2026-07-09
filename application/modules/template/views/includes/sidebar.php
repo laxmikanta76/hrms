@@ -51,6 +51,7 @@
  
         if(isset($HmvcMenu) && $HmvcMenu!=null && sizeof($HmvcMenu) > 0)
      ksort($HmvcMenu);
+    
         foreach ($HmvcMenu as $moduleName => $moduleData) {
 
             // check module permission 
