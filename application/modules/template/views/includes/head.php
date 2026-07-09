@@ -25,7 +25,7 @@
 <link rel="apple-touch-icon" href="<?php echo base_url('assets/img/pwa/mini-logo.png'); ?>">
 
 
-!-- Start Global Mandatory Style -->
+<!-- Start Global Mandatory Style -->
 <!-- jquery-ui css -->
 <link href="<?php echo base_url('assets/css/jquery-ui.min.css') ?>" rel="stylesheet" type="text/css" />
 <!-- <link href="<?php echo base_url('assets/css/animate.css') ?>" rel="stylesheet" type="text/css"/> -->
