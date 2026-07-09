@@ -71,6 +71,23 @@
         $("form :input").attr("autocomplete", "off");
     })
     </script>
+
+    <!-- Register Service Worker -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('<?php echo base_url("service-worker.js"); ?>')
+                .then(function(registration) {
+                    console.log('Service Worker Registered Successfully');
+                })
+                .catch(function(error) {
+                    console.error('Service Worker Registration Failed:', error);
+                });
+        });
+    }
+    </script>
+
+
 </body>
 
 </html>
