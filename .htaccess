@@ -3,6 +3,12 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?/$1 [L]
 
+# Allow Service Worker to control the whole site
+<IfModule mod_headers.c>
+    Header set Service-Worker-Allowed "/"
+</IfModule>
+
+
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php74” package as the default “PHP” programming language.
 <IfModule mime_module>

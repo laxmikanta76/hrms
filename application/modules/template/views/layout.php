@@ -71,6 +71,30 @@
         $("form :input").attr("autocomplete", "off");
     })
     </script>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+
+        window.addEventListener('load', function() {
+
+            navigator.serviceWorker.register("<?php echo base_url('service-worker.js'); ?>")
+
+                .then(function(reg) {
+
+                    console.log("PWA Registered");
+
+                })
+
+                .catch(function(err) {
+
+                    console.log(err);
+
+                });
+
+        });
+
+    }
+    </script>
 </body>
 
 </html>
