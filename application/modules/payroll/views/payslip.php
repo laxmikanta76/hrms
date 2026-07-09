@@ -1,9 +1,4 @@
 <style>
-#scope>.scope-entry {
-    text-align: center;
-    padding-bottom: 10px;
-}
-
 #payslip {
     /* background: #fff;
     color: #000;
@@ -21,10 +16,8 @@
     overflow: hidden;
 }
 
-#title {
-    margin-bottom: 0px;
-    font-size: 38px;
-    font-weight: 600;
+#payslip table {
+    border-collapse: collapse;
 }
 
 #payslip table,
@@ -38,86 +31,35 @@
 
 #payslip .payslip-title {
     text-align: center;
-}
-
-.scope-entry>.title {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
-    text-align: left;
+    margin: 14px 0 14px 0;
 }
 
-#scope>.scope-entry>.value {
-    font-size: 14px;
+#payslip .footer-address-table td {
+    font-size: 10.5px;
+    vertical-align: top;
+    padding: 4px 10px;
+}
+
+#payslip .footer-note-box {
+    border: 1px solid #000;
+    padding: 6px 10px;
+    font-size: 10.5px;
     font-weight: 700;
+    margin-top: 16px;
 }
 
-.content {
-    display: flex;
-    height: 100%;
-}
-
-.content .left-panel {
-    border-right: 1px solid #ccc;
-    width: 50%;
-    padding: 9px 16px 0 0;
-}
-
-#payslip #panel-footer {
-    width: 100%;
-    padding: 9px 16px 0 0;
-}
-
-.content .right-panel {
-    width: 50%;
-    padding: 10px 0 0 16px;
-}
-
-.employee {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.employee .name {
-    font-size: 15px;
-    font-weight: 700;
-    border-bottom: 1px solid #ccc;
-}
-
-#employee #email {
-    font-size: 11px;
-    font-weight: 300;
-}
-
-.details,
-.contributions,
-.ytd,
-.gross {
-    margin-bottom: 20px;
-}
-
-.details .entry,
-.contributions .entry,
-.ytd .entry {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6px;
-}
-
-.details .entry .value,
-.contributions .entry .value,
-.ytd .entry .value {
-    font-weight: 700;
-    max-width: 130px;
+#payslip .print-btn-row {
     text-align: right;
+    margin-bottom: 8px;
 }
 
 
-.details .nti {
-    padding: 3px 0 2px 0;
-    margin-bottom: 10px;
-    font-weight: 800;
-    color: #000;
-    background: rgba(0, 0, 0, 0.04);
+@media print {
+    .print-btn-row {
+        display: none;
+    }
 }
 </style>
 <!-- Printable area start -->
@@ -126,17 +68,17 @@ function printDiv(divName) {
     var printContents = document.getElementById(divName).innerHTML;
     var originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;
-    // document.body.style.marginTop="-45px";
     window.print();
     document.body.innerHTML = originalContents;
 }
 </script>
 <!-- Printable area end -->
 
-<div class="row">
-    <div class="col-sm-12">
-        <div class="panel panel-bd">
-            <div class="panel title text-right">
+<div class="content-wrapper">
+    <section class="content-header">
+
+        <div class="row">
+            <div class="col-sm-12 text-center print-btn-row">
                 <button class="btn btn-warning" onclick="printDiv('printableArea')"><span
                         class="fa fa-print"></span></button>
             </div>
@@ -423,129 +365,34 @@ function printDiv(divName) {
                         </tr>
                     </table>
 
-                                            </tbody>
-                                            <!--                                    <tfoot>
-                                    
-                                    </tfoot>-->
-                                        </table>
-                                    </td>
-                                    <td class="right-panel">
-                                        <table class="" width="100%">
 
 
-
-                                            <thead>
-                                                <tr class="employee">
-                                                    <th class="name text-center" colspan="2"
-                                                        style="border-bottom: 1px solid #ccc;">
-                                                        <?php echo display('deduction'); ?></th>
-
-
-                                                </tr>
-                                            </thead>
-                                            <tbody class="details">
-                                                <?php 
-                                      $totalDeduction = 0;
-                                      foreach($deduction as $deductions){?>
-                                                <tr class="entry">
-                                                    <td class="value"><?= $deductions->sal_name; ?></td>
-                                                    <td class="value">
-                                                        <div><?php echo  $basicsal*($deductions->amount)/100;
-                                            $totalDeduction +=$basicsal*($deductions->amount)/100;
-                                            ?></div>
-                                                    </td>
-
-                                                </tr>
-                                                <?php }?>
-                                                <?php $gross = $totalAddition+($basicsal-$totalDeduction);
-                                     if($paymentdata[0]['total_salary'] < $gross){
-                                    ?>
-                                                <tr class="entry">
-                                                    <td class="value"><?= display('tax')?></td>
-                                                    <td class="value">
-                                                        <div><?php  $tax = $gross - intval(str_replace(',', '', $paymentdata[0]['total_salary']));
-                                            echo $totaltax = number_format($tax,2);
-                                            ?></div>
-                                                    </td>
-
-                                                </tr>
-                                                <?php }?>
-
-                                                <tr class="entry nti">
-                                                    <td class="value" style="float:left; font-weight: bold">
-                                                        <?= display('total_deduction')?></td>
-                                                    <td class="value" style="font-weight: bold">
-                                                        <?php echo $totalDeduction+(!empty($totaltax)?$totaltax:0); ?>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-
-                                        </table>
-                                    </td>
-                                </tr>
-
-                            </table>
-                        </div>
+                    <!-- ================= FOOTER NOTE ================= -->
+                    <div class="footer-note-box" style="margin-top:25px;">
+                        Note: This is a Computer-Generated Payslip. Signature Not Required.
                     </div>
 
-
-                    <div class="row">
-
-
-                        <div class="col-sm-12">
-
-                            <table class="table">
-
-
-                                <tr class="details">
-                                    <tbody class="nti">
-                                        <th class="value"><?php echo display('net_salary'); ?> :
-                                            <?php echo display('in_word').':'.$amountinword; ?></th>
-                                        <td class="value" style="float: right;font-weight: bold">
-                                            <?= $paymentdata[0]['total_salary']?> </td>
-                                    </tbody>
-                                </tr>
-
-
-                            </table>
-
-
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12" style="padding-bottom: 50px;">
-
-                            <div class="col-sm-6" style="float:left;font-weight: bold;"><?= display('ref_number')?>:
-                                .........</div>
-                            <div class="col-sm-6" style="float:right;font-weight: bold;"><?= display('name_of_bank')?>:
-                                <?php echo (!empty($paymentdata[0]['bank_name'])?$paymentdata[0]['bank_name']:'..........')?>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div
-                                style="float:left;width:40%;text-align:center;border-top:1px solid #e4e5e7;font-weight: bold;">
-                                <?php echo display('employee_signature'); ?>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div
-                                style="float:right;width:40%;text-align:center;border-top:1px solid #e4e5e7;font-weight: bold;">
-                                <?php echo display('paid_by'); ?>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- ================= FOOTER: COMPANY ADDRESS ================= -->
+                    <table width="100%" class="footer-address-table"
+                        style="border-top:1px solid #000;margin-top:180px;">
+                        <tr>
+                            <td width="50%">
+                                <strong>Regd. Office:</strong> 6-3-542, Panjagutta, Somajiguda,
+                                Hyderabad, Telangana, India - 500082<br>
+                                &#9742; +91 97772 79222
+                            </td>
+                            <td width="50%" style="border-left:1px solid #888; margin-left:5px;">
+                                <strong>Corporate Office:</strong> A-69, Kharavel Nagar, Bhubaneswar,
+                                Odisha, India - 751001<br>
+                                &#9742; 0674-2533300
+                            </td>
+                        </tr>
+                    </table>
 
                 </div>
             </div>
 
-
         </div>
-    </div>
+</div>
+
 </div>
