@@ -1,32 +1,19 @@
 const CACHE_NAME = "accrosian-hrms-v1";
 
 const urlsToCache = [
-    "/",
-    "/assets/css/bootstrap.min.css",
-    "/assets/css/style.css",
-    "/assets/js/jquery.min.js",
-    "/assets/js/bootstrap.min.js",
-    "/assets/img/logo.png"
+    "./",
+    "./manifest.json",
+    "./offline.html"
 ];
 
-self.addEventListener("install", event => {
+self.addEventListener("install", function(event) {
 
     event.waitUntil(
+
         caches.open(CACHE_NAME)
-            .then(cache => cache.addAll(urlsToCache))
-    );
+        .then(function(cache) {
 
-});
-
-self.addEventListener("fetch", event => {
-
-    event.respondWith(
-
-        caches.match(event.request)
-
-        .then(response => {
-
-            return response || fetch(event.request);
+            return cache.addAll(urlsToCache);
 
         })
 
@@ -34,18 +21,36 @@ self.addEventListener("fetch", event => {
 
 });
 
-self.addEventListener("fetch", function(event){
+self.addEventListener("activate", function(event) {
 
-event.respondWith(
+    event.waitUntil(self.clients.claim());
 
-fetch(event.request)
+});
 
-.catch(function(){
+self.addEventListener("fetch", function(event) {
 
-return caches.match("offline.html");
+    if(event.request.method !== "GET"){
 
-})
+        return;
 
-);
+    }
+
+    event.respondWith(
+
+        caches.match(event.request)
+
+        .then(function(response){
+
+            return response || fetch(event.request);
+
+        })
+
+        .catch(function(){
+
+            return caches.match("./offline.html");
+
+        })
+
+    );
 
 });
