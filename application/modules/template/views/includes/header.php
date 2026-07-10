@@ -57,7 +57,7 @@
                     <li><a href="<?php echo base_url('dashboard/home/setting') ?>"><i class="pe-7s-settings"></i>
                             <?php echo display('setting') ?></a></li>
                     <li>
-                        <a href="javascript:void(0);" id="installApp" onclick="installPWA()" style="display:none;">
+                        <a href="javascript:void(0);" id="installApp" onclick="installPWA()" style="display:block;">
                             <i class="pe-7s-download"></i> Install HRMS App
                         </a>
                     </li>

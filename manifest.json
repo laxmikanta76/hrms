@@ -2,7 +2,7 @@
     "name": "Accrosian HRMS",
     "short_name": "HRMS",
     "description": "Employee Management System",
-    "start_url": "/",
+    "start_url": "/dashboard/home",
     "scope": "/",
     "display": "standalone",
     "orientation": "portrait",
