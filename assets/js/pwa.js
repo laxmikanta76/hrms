@@ -1,17 +1,27 @@
-let deferredPrompt;
+let deferredPrompt = null;
 
-window.addEventListener('beforeinstallprompt', (e)=>{
+window.addEventListener("beforeinstallprompt", (e) => {
 
     e.preventDefault();
 
-    deferredPrompt=e;
+    deferredPrompt = e;
 
-    document.getElementById("installApp").style.display="block";
+    document.getElementById("installApp").style.display = "block";
 
 });
 
-function installPWA(){
+function installPWA() {
+
+    if (!deferredPrompt) {
+        alert("Install is not available on this device/browser yet.");
+        return;
+    }
 
     deferredPrompt.prompt();
+
+    deferredPrompt.userChoice.then(() => {
+        deferredPrompt = null;
+        document.getElementById("installApp").style.display = "none";
+    });
 
 }
