@@ -5,6 +5,8 @@
 <title><?php echo (!empty($setting->title)?$setting->title:null) ?> :: <?php echo (!empty($title)?$title:null) ?>
 </title>
 
+<link rel="stylesheet" href="<?php echo base_url('assets/splash/splash.css'); ?>">
+
 <!-- Favicon and touch icons -->
 <link rel="shortcut icon"
     href="<?php echo base_url((!empty($setting->favicon)?$setting->favicon:'assets/img/icons/favicon.png')) ?>"

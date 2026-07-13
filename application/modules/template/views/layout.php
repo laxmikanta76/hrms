@@ -8,6 +8,16 @@
 
 <body class="hold-transition sidebar-mini">
 
+    <div id="splashScreen">
+
+        <video id="introVideo" autoplay muted playsinline>
+
+            <source src="<?php echo base_url('assets/splash/logo.mp4'); ?>" type="video/mp4">
+
+        </video>
+
+    </div>
+
     <!-- Site wrapper -->
     <div class="wrapper">
 
@@ -76,19 +86,13 @@
     <script>
     if ('serviceWorker' in navigator) {
 
-        window.addEventListener('load', function() {
+        window.addEventListener('load', () => {
 
-            navigator.serviceWorker.register("<?php echo base_url('service-worker.js'); ?>")
+            navigator.serviceWorker.register("<?php echo base_url('service-worker.js');?>")
 
-                .then(function(reg) {
+                .then(() => {
 
-                    console.log("PWA Registered");
-
-                })
-
-                .catch(function(err) {
-
-                    console.log(err);
+                    console.log("Service Worker Registered");
 
                 });
 
@@ -96,6 +100,9 @@
 
     }
     </script>
+
+    <script src="<?php echo base_url('assets/js/pwa.js');?>"></script>
+    <script src="<?php echo base_url('assets/splash/splash.js');?>"></script>
 
 
 </body>

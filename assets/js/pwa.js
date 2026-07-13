@@ -1,27 +1,45 @@
 let deferredPrompt = null;
 
-window.addEventListener("beforeinstallprompt", (e) => {
+window.addEventListener("beforeinstallprompt", (e)=>{
 
     e.preventDefault();
 
     deferredPrompt = e;
 
-    document.getElementById("installApp").style.display = "block";
+    const btn = document.getElementById("installApp");
+
+    if(btn){
+
+        btn.style.display="block";
+
+    }
 
 });
 
-function installPWA() {
+function installPWA(){
 
-    if (!deferredPrompt) {
-        alert("Install is not available on this device/browser yet.");
+    if(!deferredPrompt){
+
+        alert("Install option is not available.");
+
         return;
+
     }
 
     deferredPrompt.prompt();
 
-    deferredPrompt.userChoice.then(() => {
-        deferredPrompt = null;
-        document.getElementById("installApp").style.display = "none";
+    deferredPrompt.userChoice.then(choice=>{
+
+        deferredPrompt=null;
+
+        document.getElementById("installApp").style.display="none";
+
     });
 
 }
+
+window.addEventListener("appinstalled",()=>{
+
+    console.log("HRMS Installed");
+
+});
