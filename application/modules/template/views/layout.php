@@ -8,16 +8,6 @@
 
 <body class="hold-transition sidebar-mini">
 
-    <div id="splashScreen">
-
-        <video id="introVideo" autoplay muted playsinline>
-
-            <source src="<?php echo base_url('assets/splash/logo.mp4'); ?>" type="video/mp4">
-
-        </video>
-
-    </div>
-
     <!-- Site wrapper -->
     <div class="wrapper">
 
