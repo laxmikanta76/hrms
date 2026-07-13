@@ -102,7 +102,6 @@
     </script>
 
     <script src="<?php echo base_url('assets/js/pwa.js');?>"></script>
-    <script src="<?php echo base_url('assets/splash/splash.js');?>"></script>
 
 
 </body>
