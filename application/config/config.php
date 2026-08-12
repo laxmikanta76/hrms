@@ -151,9 +151,9 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = TRUE;
+$config['composer_autoload'] = FALSE;
 
-require FCPATH.'vendor/autoload.php';
+//require FCPATH.'vendor/autoload.php';
 
 
 /*
@@ -395,7 +395,11 @@ $config['encryption_key'] = 'MySuperEncryptionKEY2017';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-$config['sess_driver'] = 'files';
+if (is_cli()) {
+    $config['sess_driver'] = 'null';
+} else {
+    $config['sess_driver'] = 'files';
+}
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = APPPATH.'cache/temp/';

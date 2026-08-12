@@ -223,7 +223,6 @@ public function application(){
         $data['title'] = display('application');//agent_picture
 
 		$this->load->model('leave/Leave_model');
-        $this->Leave_model->ensure_monthly_balance($employee_id,$leave_type,$year,$month);
 		
 		        #-------------------------------#
         $this->form_validation->set_rules('employee_id',display('employee_id'));
@@ -325,7 +324,6 @@ public function application(){
             'apply_hard_copy'       => (!empty($img)?$img:null),
                 
             ];   
-           // print_r($postData);exit();
 
             if ($this->Leave_model->application_create($postData)) { 
                 $this->session->set_flashdata('message', display('successfully_created'));
@@ -339,7 +337,17 @@ public function application(){
             $data['module']  = "leave";//
             $data['type']    = $this->Leave_model->get_leave_type();
             $data['dropdown']= $this->Leave_model->dropdown();
+			$employee_id = $this->session->userdata('employee_id');
+			$is_admin = $this->session->userdata('is_admin');
+            $role_id  = $this->session->userdata('role_id');
+			$supervisor=$this->session->userdata('supervisor');
+            if ($is_admin == 1 || $supervisor == 1 || in_array($role_id, [8, 9])) {
+			// Admin / HR / Supervisor
             $data['mang']    = $this->Leave_model->manageleave();
+			} else {
+            // Normal employee → ONLY own data
+            $data['mang'] = $this->Leave_model->manageleave($employee_id);
+            }
             $data['supr']    = $this->Leave_model->supervisorList();
             $data['weekend'] = $this->db->select('dayname')->from('weekly_holiday')->get()->row()->dayname;
             $data['page']    = "other_leave_application_form";    
@@ -451,8 +459,18 @@ public function application(){
 	public function application_view(){   
         $this->permission->method('leave','read')->redirect();
 
-		$data['title']  = display('selection');  ;
-		$data['mang']   = $this->Leave_model->manageleave();
+		$data['title']  = display('selection');  
+		$employee_id = $this->session->userdata('employee_id');
+		$is_admin = $this->session->userdata('is_admin');
+        $role_id  = $this->session->userdata('role_id');
+		$supervisor=$this->session->userdata('supervisor');
+		if ($is_admin == 1 || $supervisor == 1 || in_array($role_id, [8, 9])) {
+			// Admin / HR / Supervisor
+            $data['mang']    = $this->Leave_model->manageleave();
+			} else {
+            // Normal employee → ONLY own data
+            $data['mang'] = $this->Leave_model->manageleave($employee_id);
+            }
 		$data['module'] = "leave";
 		$data['page']   = "application_view";   
 		echo Modules::run('template/layout', $data); 
@@ -517,48 +535,70 @@ public function application(){
 		}
  
 	}
+	
 	// Leave free for employee
 	public function free_leave(){
+		 header('Content-Type: application/json');
+    
+	    $employee_id = $this->input->post('employee_id');
+	    $leave_type  = $this->input->post('leave_type');
 
-		
-		// $employee_id    = $this->input->post('employee_id');
-		// $type           = $this->input->post('leave_type');
-		// $employee_leave = $this->db->select('SUM(num_aprv_day) as lv')->from('leave_apply')->where('employee_id',$employee_id)->where('leave_type_id',$type)->get()->row();
-		// $totalleave = $this->db->select('leave_days')->from('leave_type')->where('leave_type_id',$type)->get()->row();
-		// $data = array(
-		// 	'enjoy' => (!empty($employee_leave->lv)?$employee_leave->lv:0),
-		// 	'due'   => (!empty($totalleave->leave_days)?$totalleave->leave_days:0),
-		// );
-		// echo json_encode($data);
+	    if (empty($employee_id) || empty($leave_type)) {
+	        echo json_encode([
+	            'status' => 'error',
+	            'enjoy' => 0,
+	            'due'   => 0,
+	            'message' => 'Invalid parameters'
+	        ]);
+	        return;
+	    }
 
-		$employee_id = $this->input->post('employee_id');
-    $leave_type  = $this->input->post('leave_type');
+	    $year  = date('Y');
+	    $month = date('n');
 
-    $year  = date('Y');
-    $month = date('n');
+	    $this->load->model('Leave_model');
 
-    // 🔹 LOAD MODEL
-    $this->load->model('Leave_model');
+	    // Get leave type details
+	    $leaveTypeInfo = $this->db->get_where('leave_type', [
+	        'leave_type_id' => $leave_type
+	    ])->row();
 
-    // 🔹 AUTO CREATE MONTHLY ROW (Railway-safe cron)
-    $this->Leave_model->ensure_monthly_balance(
-        $employee_id,
-        $leave_type,
-        $year,
-        $month
-    );
+	    if (!$leaveTypeInfo) {
+	        echo json_encode([
+	            'status' => 'error',
+	            'enjoy' => 0,
+	            'due'   => 0,
+	            'message' => 'Invalid leave type'
+	        ]);
+	        return;
+	    }
 
-    // 🔹 FETCH MONTHLY BALANCE
-    $balance = $this->db->get_where('employee_leave_balance', [
-        'employee_id'   => $employee_id,
-        'leave_type_id' => $leave_type,
-        'year'          => $year,
-        'month'         => $month
-    ])->row();
+	    // ✅ FIXED: Only READ existing balance, do NOT create
+	    // Balance will be created by monthly cron on 1st of month
+	    $balance = $this->db->get_where('employee_leave_balance', [
+	        'employee_id'   => $employee_id,
+	        'leave_type_id' => $leave_type,
+	        'year'          => $year,
+	        'month'         => $month
+	    ])->row();
 
-    echo json_encode([
-        'enjoy' => $balance ? (int)$balance->used_leave : 0,
-        'due'   => $balance ? (int)$balance->closing_balance : 0
-    ]);
-  }
+	    if ($balance) {
+	        // Balance record exists - return actual balance
+	        echo json_encode([
+	            'status' => 'success',
+	            'enjoy' => (float)$balance->used_leave,
+	            'due'   => (float)$balance->closing_balance,
+	            'opening' => (float)$balance->opening_balance
+	        ]);
+	    } else {
+	        // Balance doesn't exist yet - return default from leave_type
+	        // This will be created by cron job on 1st of month
+	        echo json_encode([
+	            'status' => 'success',
+	            'enjoy' => 0,
+	            'due'   => (float)$leaveTypeInfo->leave_days
+	        ]);
+	    }
+ 
+ }
 }

@@ -84,6 +84,11 @@
                         </div>
                         <input type="hidden" name="latitude" id="latitude_in">
                         <input type="hidden" name="longitude" id="longitude_in">
+                        <div class="form-group">
+                            <label for="remarks">Remarks</label>
+                            <input type="text" name="remarks" id="remarks" class="form-control"
+                                placeholder="Optional remarks (e.g. Late, Client visit)">
+                        </div>
                         <div class="form-group text-center">
                             <button type="submit" id="checkin_btn" class="btn btn-success w-md m-b-5">
                                 <?php echo display('check_in') ?>
@@ -131,6 +136,11 @@
                         </div>
                         <input type="hidden" name="latitude" id="latitude_out">
                         <input type="hidden" name="longitude" id="longitude_out">
+                        <div class="form-group">
+                            <label for="remarks">Remarks</label>
+                            <input type="text" name="remarks" id="remarks" class="form-control"
+                                placeholder="Optional remarks (e.g. Late, Client visit)">
+                        </div>
                         <div class="form-group text-center">
                             <button type="submit" id="checkout_btn" class="btn btn-danger w-md m-b-5">
                                 <?php echo display('check_out') ?>
@@ -244,4 +254,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+</script>
+<script>
+function limitWords(el, maxWords) {
+    let words = el.value.trim().split(/\s+/);
+
+    if (words.length > maxWords) {
+        el.value = words.slice(0, maxWords).join(" ");
+    }
+}
 </script>

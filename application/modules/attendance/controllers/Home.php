@@ -161,10 +161,10 @@ class Home extends MX_Controller {
         if (empty($latitude) || empty($longitude)) {
             $latitude = null;
             $longitude = null;
-       }
+       }     
     
     $id = $this->input->post('attendanc_id');
-    
+    $remarks = $this->input->post('remarks', true);
     // Get employee ID
     if (can_select_employee()) {
        $employee_id = $this->input->post('employee_id', true);
@@ -200,7 +200,8 @@ class Home extends MX_Controller {
             'id'        => 0,
             'time'      => $att_time,
             'latitude'  => $latitude,
-            'longitude' => $longitude
+            'longitude' => $longitude,
+            'remarks'   => $this->input->post('remarks', true)
         ]; 
 
         $update_attendance = [
@@ -210,7 +211,8 @@ class Home extends MX_Controller {
             'id'        => 0,
             'time'      => $att_time,
             'latitude'  => $latitude,
-            'longitude' => $longitude
+            'longitude' => $longitude,
+            'remarks'   => $this->input->post('remarks', true)
         ]; 
 
         if (empty($id)) {
@@ -245,6 +247,7 @@ class Home extends MX_Controller {
      $this->load->helper('employee');
     $timezone = $this->db->select('timezone')->from('setting')->get()->row();
     date_default_timezone_set($timezone->timezone);
+    $remarks = $this->input->post('remarks', true);
 
     $att_time = date('Y-m-d H:i:s');
     $latitude  = $this->input->post('latitude', true);
@@ -312,7 +315,8 @@ class Home extends MX_Controller {
         'id'        => 0,
         'time'      => $att_time,
         'latitude'  => $latitude,
-        'longitude' => $longitude
+        'longitude' => $longitude,
+        'remarks'   => $this->input->post('remarks', true) 
     ]; 
     
     $update = $this->db->insert('attendance_history', $postData);
@@ -717,46 +721,84 @@ public function report_user(){
         $data['office_lng'] = $office->Longitude;
         $this->load->view('attendance/attendance_log_userdetails', $data); 
     }
-    
     // Date between and user wise attendance log
     public function datebetween_attendance(){
 
-    $id        = $this->input->get('employee_id');
-    $from_date = $this->input->get('start_date');
-    $to_date   = $this->input->get('end_date');
-
-    if (!$id || !$from_date || !$to_date) {
-        show_error('Invalid input');
+    $this->load->helper('employee'); // Load role checker
+    
+    // Determine employee ID based on role
+    if (can_select_employee()) {
+        // Admin/HR/Supervisor - can select any employee
+        $id = $this->input->get('employee_id');
+        
+        if (empty($id)) {
+            $this->session->set_flashdata('exception', 'Please select an employee');
+            redirect('attendance/home/att_log_report');
+            return;
+        }
+    } else {
+        // Regular employee - can only view own records
+        $id = $this->session->userdata('employee_id');
+        
+        if (empty($id)) {
+            $this->session->set_flashdata('exception', 'Employee ID not found in session');
+            redirect('attendance/home/att_log_report');
+            return;
+        }
     }
-
-    $data['module']   = "attendance";
+    
+    $from_date = $this->input->get('start_date');
+    $to_date = $this->input->get('end_date');
+    
+    if (empty($from_date)) {
+        $from_date = date('Y-m-01');
+    }
+    
+    if (empty($to_date)) {
+        $to_date = date('Y-m-d');
+    }
+    
+    $data['module']  = "attendance";
     $data['atten_in'] = $this->Csv_model->att_log_datebetween($id, $from_date, $to_date);
-    $data['userlist'] = $this->Csv_model->userlist();
-    $data['start']    = $from_date;
-    $data['end']      = $to_date;
-    $data['user']     = $this->Csv_model->deviceuser($id);
-    $data['company']  = $this->Csv_model->company_info();
-
-    // Create HTML first
-    $html = $this->load->view(
-        'attendance/individual_att_history_pdf',
-        $data,
-        true
-    );
-
-    // Generate PDF
-    $this->load->library('pdfgenerator');
-    $file_name = 'Attendance_'.$id.'_'.$from_date.'_to_'.$to_date;
-
-    $this->pdfgenerator->generate(
-        $html,
-        $file_name,
-        true,
-        "A4",
-        "portrait"
-    );
-
-    exit; // IMPORTANT
+    
+    // User dropdown (only for admins/supervisors)
+    if (can_select_employee()) {
+        $data['userlist'] = $this->Csv_model->userlist();
+    } else {
+        $data['userlist'] = [];
+    }
+    
+    $data['start'] = $from_date;
+    $data['end']   = $to_date;
+    $data['user']  = $this->Csv_model->deviceuser($id);
+    $data['company'] = $this->Csv_model->company_info();
+    
+    // Set a dummy PDF path for now
+    $data['pdf'] = '#';
+    
+    // OPTIONAL: Uncomment if you want PDF generation
+    /*
+    try {
+        $this->load->library('pdfgenerator');
+        $html = $this->load->view('attendance/individual_att_history_pdf', $data, true);
+        
+        $pdf_filename = 'Attendance_History_'.$id.'_'.$from_date.'_to_'.$to_date.'.pdf';
+        $pdf_path = 'assets/data/pdf/attendance/';
+        
+        if (!is_dir($pdf_path)) {
+            mkdir($pdf_path, 0755, true);
+        }
+        
+        file_put_contents($pdf_path . $pdf_filename, $this->pdfgenerator->generate($html, $pdf_filename, true, 'A4', 'portrait'));
+        
+        $data['pdf'] = $pdf_path . $pdf_filename;
+    } catch (Exception $e) {
+        $data['pdf'] = '#';
+    }
+    */
+    
+    $data['page'] = "attendance_log_datebetween";
+    echo Modules::run('template/layout', $data);
         // $id = $this->input->get('employee_id');
         // $from_date =$this->input->get('start_date');
         // $to_date = $this->input->get('end_date');
@@ -803,4 +845,7 @@ public function report_user(){
         ->get()
         ->row();
     }
+
+
+    
 }

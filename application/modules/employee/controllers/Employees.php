@@ -516,7 +516,7 @@ public function cv()
 				'hourly_rate2'            => $this->input->post('h_rate2',true),
 				'hourly_rate3'            => $this->input->post('h_rate3',true),
 				'home_department'         => $this->input->post('h_department',true),
-				'department_text'         => $this->input->post('h_dep_text',true),
+				'gross_salary'            => $this->input->post('gross_salary', true),//newly added
 				'class_code'              => $this->input->post('c_code',true),
 				'class_code_desc'         => $this->input->post('c_code_d',true),
 				'class_acc_date'          => date("Y-m-d", strtotime(!empty($this->input->post('class_acc_date',true))?$this->input->post('class_acc_date',true):date('Y-m-d'))),
@@ -532,6 +532,11 @@ public function cv()
 				'ssn'                     => $this->input->post('ssn',true),
 				'work_in_state'           => $this->input->post('w_s',true),
 				'live_in_state'           => $this->input->post('l_in_s',true),
+				'pan_number'              => $this->input->post('pan_number'),
+                'bank_name'               => $this->input->post('bank_name'),
+                'bank_account_no'         => $this->input->post('bank_account_no'),
+                'pf_number'               => $this->input->post('pf_number'),
+                'uan_number'              => $this->input->post('uan_number'),
 				'home_email'              => $this->input->post('h_email',true),
 				'business_email'          => $this->input->post('b_email',true),
 				'home_phone'              => $this->input->post('h_phone',true),
@@ -1007,11 +1012,19 @@ public function cv()
             'dob'               => date('Y-m-d', strtotime($this->input->post('dob'))),
             'gender'            => $this->input->post('gender', true),
             'marital_status'    => $this->input->post('marital_status', true),
+			'pan_number'        => $this->input->post('pan_number'),
+            'bank_name'         => $this->input->post('bank_name'),
+            'bank_account_no'   => $this->input->post('bank_account_no'),
+            'pf_number'         => $this->input->post('pf_number'),
+            'uan_number'        => $this->input->post('uan_number'),
             'home_email'        => $this->input->post('h_email', true),
             'business_email'    => $this->input->post('b_email', true),
             'home_phone'        => $this->input->post('h_phone', true),
             'business_phone'    => $this->input->post('w_phone', true),
             'cell_phone'        => $this->input->post('c_phone', true),
+			'is_super_visor'    => $this->input->post('is_supervisor',true),
+			'super_visor_id'    => $this->input->post('supervisorname',true),
+	 		'supervisor_report' => $this->input->post('reports',true),
         ];
 
         // ---------- TRANSACTION ----------
@@ -1078,6 +1091,7 @@ public function cv()
     $data['designation']   = $this->Employees_model->designation();
     $data['custominfo']    = $this->Employees_model->customifo($id);
     $data['benifit']       = $this->Employees_model->benifit($id);
+	$data['supervisor']    = $this->Employees_model->supervisorlist();
     $data['module']        = 'employee';
     $data['page']          = 'update_employee_form';
 

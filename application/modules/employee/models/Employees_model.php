@@ -423,6 +423,7 @@ public function insert_employee($data = array())
 			'p.hourly_rate3'            => $keyword,
 			'p.home_department'         => $keyword,
 			'p.department_text'         => $keyword,
+			'p.gross_salary'            => $keyword,
 			'p.super_visor_id'          => $keyword,
 			'p.supervisor_report'       => $keyword,
 			'p.dob'                     => $keyword,
@@ -494,5 +495,3 @@ public function insert_employee($data = array())
         return true;
     }
 }
-
-

@@ -21,8 +21,6 @@
                     <input type="text" class="form-control"
                         value="<?= $this->session->userdata('first_name').' '.$this->session->userdata('last_name') ?>"
                         readonly>
-
-                    <input type="hidden" name="employee_id" value="<?= $this->session->userdata('employee_id') ?>">
                     <?php endif; ?>
                 </div>
                 <div class="form-group">

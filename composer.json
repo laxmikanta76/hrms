@@ -21,5 +21,8 @@
   },
   "require-dev": {
     "mikey179/vfsstream": "^1.6"
-  }
+  },
+  "config": {
+       "platform-check": false
+   }
 }

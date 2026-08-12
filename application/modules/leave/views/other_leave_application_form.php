@@ -14,8 +14,14 @@
         <?php echo display('others_leave_application');?></button>
     <?php endif; ?>
     <?php if($this->permission->method('leave','read')->access()): ?>
+    <?php  $is_admin = $this->session->userdata('is_admin');
+           $role_id  = $this->session->userdata('role_id');
+           $supervisor=$this->session->userdata('supervisor');
+           // 8 = HR, 9 = Supervisor
+        if ($is_admin == 1 || $supervisor==1 || in_array($role_id, [8, 9])) {?>
     <a href="<?php echo base_url();?>/leave/Leave/application_view"
         class="btn btn-primary"><?php echo display('manage_application');?></a>
+    <?php } ?>
     <?php endif; ?>
 </div>
 <!--  -->
@@ -94,33 +100,34 @@
                                     <label for="employee_id" class="col-sm-2 col-form-label">Select
                                         <?php echo display('employee_name') ?></label>
                                     <div class="col-sm-4">
-
-
                                         <?php
-                                  $this->load->helper('employee');
-                                  $emp_id   = $this->session->userdata('employee_id');
-                                  $emp_name = $this->session->userdata('first_name').' '.$this->session->userdata('last_name');
-                               ?>
-                                        <!--  <input type="text" name="employee_id" class="form-control"> -->
+                                         $this->load->helper('employee');
+                                         $emp_id   = $this->session->userdata('employee_id');
+                                         $emp_name = $this->session->userdata('first_name').' '.$this->session->userdata('last_name');
+                                        ?>
+
                                         <?php if (can_select_employee()): ?>
                                         <!-- ADMIN / HR / SUPERVISOR -->
                                         <?php echo form_dropdown('employee_id',$dropdownatn,(!empty($editdata)?$editdata->uid:''),'class="form-control" id="employee_id" style="width:100%"'); ?>
                                         <?php else: ?>
-                                        <!-- EMPLOYEE -->
+                                        <!-- REGULAR EMPLOYEE -->
                                         <input type="text" name="employee_name" class="form-control"
-                                            value="<?php echo $this->session->userdata('first_name').' '.$this->session->userdata('last_name'); ?>"
-                                            readonly>
-                                        <input type="hidden" name="employee_id"
-                                            value="<?php echo $this->session->userdata('employee_id'); ?>">
+                                            value="<?php echo $emp_name; ?>" readonly>
+                                        <input type="hidden" name="employee_id" id="employee_id_hidden"
+                                            value="<?php echo $emp_id; ?>">
                                         <?php endif; ?>
+                                    </div>
 
-                                    </div> <label for="leave_type" class="col-sm-2 col-form-label">Select
+                                    <label for="leave_type" class="col-sm-2 col-form-label">Select
                                         <?php echo display('leave_type') ?></label>
                                     <div class="col-sm-4">
-                                        <?php echo form_dropdown('leave_type_id',$type,null,'class="form-control" style="width:100%" onchange="leavetypechange(this.value)"') ?>
-                                        <span id="enjoy" style="color: red;padding-right: 10px;"></span><span
-                                            id="checkleave" style="color: green;"></span>
+                                        <?php echo form_dropdown('leave_type_id',$type,null,'class="form-control" id="leave_type_id" style="width:100%"'); ?>
+                                        <div style="margin-top: 5px;">
+                                            <span id="enjoy" style="color: #d9534f; font-weight: bold;"></span><br>
+                                            <span id="checkleave" style="color: #5cb85c; font-weight: bold;"></span>
+                                        </div>
                                     </div>
+
                                     <input type="hidden" name="apply_date" class="form-control" id="f"
                                         value="<?php echo date('Y-m-d')?>">
                                 </div>
@@ -132,14 +139,14 @@
                                     <div class="col-sm-4">
                                         <input type="text" name="apply_strt_date"
                                             class="datepicker form-control apply_start" id="apply_start"
-                                            placeholder="<?php echo display('apply_strt_date') ?>">
+                                            placeholder="<?php echo display('apply_strt_date') ?>" required>
                                     </div>
                                     <label for="apply_end_date" class="col-sm-2 col-form-label">
                                         <?php echo display('apply_end_date') ?></label>
                                     <div class="col-sm-4">
                                         <input type="text" name="apply_end_date"
                                             class="datepicker form-control apply_end" id="apply_end"
-                                            placeholder="<?php echo display('apply_end_date') ?>">
+                                            placeholder="<?php echo display('apply_end_date') ?>" required>
 
                                     </div>
                                 </div>
@@ -158,7 +165,12 @@
 
                                     </div>
                                 </div>
-                                <?php  if($this->session->userdata('isAdmin')==1 || $this->session->userdata('supervisor')==1){?>
+                                <?php  $is_admin = $this->session->userdata('is_admin');
+                                       $role_id  = $this->session->userdata('role_id');
+                                       $supervisor=$this->session->userdata('supervisor');
+
+                                      // 8 = HR, 9 = Supervisor
+                                      if ($is_admin == 1 || $supervisor == 1 || in_array($role_id, [8, 9])) {?>
                                 <div class="form-group row">
                                     <label for="leave_aprv_strt_date" class="col-sm-2 col-form-label">
                                         <?php echo display('leave_aprv_strt_date') ?></label>
@@ -166,7 +178,7 @@
                                         <input type="text" name="leave_aprv_strt_date"
                                             class="datepicker form-control leave_aprv_strt_date"
                                             id="leave_aprv_strt_date"
-                                            placeholder="<?php echo display('leave_aprv_strt_date') ?>">
+                                            placeholder="<?php echo display('leave_aprv_strt_date') ?>" required>
 
                                     </div>
                                     <label for="leave_aprv_end_date" class="col-sm-2 col-form-label">
@@ -174,7 +186,7 @@
                                     <div class="col-sm-4">
                                         <input type="text" name="leave_aprv_end_date"
                                             class="datepicker form-control leave_aprv_end_date" id="leave_aprv_end_date"
-                                            placeholder="<?php echo display('leave_aprv_end_date') ?>">
+                                            placeholder="<?php echo display('leave_aprv_end_date') ?>" required>
 
                                     </div>
                                 </div>
@@ -207,7 +219,7 @@
                                         class="col-sm-2 col-form-label"><?php echo display('reason') ?></label>
                                     <div class="col-sm-10">
                                         <textarea name="reason" class="form-control"
-                                            placeholder="<?php echo display('reason') ?>"></textarea>
+                                            placeholder="<?php echo display('reason') ?>" required></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -262,8 +274,8 @@ $(function() {
         dateFormat: 'yy-mm-dd'
     });
 });
-</script>
-<script language="javascript">
+
+// Calculate approved days (excluding weekends)
 $(document).ready(function(e) {
     function calculation() {
         var date1 = new Date($('.leave_aprv_strt_date').val());
@@ -271,12 +283,11 @@ $(document).ready(function(e) {
         var from = new Date($('.leave_aprv_strt_date').val());
         var to = new Date($('.leave_aprv_end_date').val());
         var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
         var d = from;
         var count = 0;
         var weekend = "<?php echo $weekend ?>";
-        var w = weekend.split(',')
-        //alert(w[0]);
+        var w = weekend.split(',');
+
         while (d <= to) {
             d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
             if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
@@ -285,70 +296,129 @@ $(document).ready(function(e) {
         }
 
         var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
         $('.num_aprv_day').val(diffDays + 1);
     }
     $('.leave_aprv_strt_date,.leave_aprv_end_date').change(calculation);
 });
+
+// Calculate apply days (excluding weekends)
 $(document).ready(function(e) {
     function applyday() {
-
         var from = new Date($('.apply_start').val());
         var to = new Date($('.apply_end').val());
         var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
         var d = from;
         var count = 0;
         var weekend = "<?php echo $weekend ?>";
-        var w = weekend.split(',')
-        //alert(w[0]);
+        var w = weekend.split(',');
+
         while (d <= to) {
             d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
             if (DAYS[d.getDay()] == w[0] || DAYS[d.getDay()] == w[1] || DAYS[d.getDay()] == w[2]) {
                 count += 1;
             }
         }
+
         var date1 = new Date($('.apply_start').val());
         var date2 = new Date($('.apply_end').val());
         var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) - count;
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
         $('.apply_day').val(diffDays + 1);
     }
     $('.apply_start,.apply_end').change(applyday);
 });
 
-function leavetypechange(id) {
-    var leave_type = id;
-    var employee_id = $('#employee_id').val();
-    $.ajax({
-        url: "<?php echo base_url('leave/Leave/free_leave')?>",
-        method: 'post',
-        dataType: 'json',
-        data: {
-            'employee_id': employee_id,
-            'leave_type': id
-        },
-        success: function(data) {
-            document.getElementById('enjoy').innerHTML = 'You Enjoyed : ' + data.enjoy + ' Ds';
-            document.getElementById('checkleave').innerHTML = 'Total Leave : ' + data.due + ' Ds';
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            alert('Error get data from ajax');
-        }
-    });
-}
-
+// Date validation
 $(document).ready(function(e) {
     function datecheck() {
         var date = new Date($('#apply_start').val());
         var date1 = new Date($('#leave_aprv_strt_date').val());
         var date2 = new Date($('#leave_aprv_end_date').val());
         if (date > date1 || date > date2) {
-            alert('Can not greater than');
+            alert('Approved date cannot be less than apply date');
             document.getElementById('leave_aprv_strt_date').value = '';
             document.getElementById('leave_aprv_end_date').value = '';
         }
     }
     $('.leave_aprv_strt_date,.leave_aprv_end_date').change(datecheck);
+});
+
+/**
+ * Get Employee ID - works for both admin dropdown and user hidden field
+ */
+function getEmployeeId() {
+    return $('#employee_id').val() ||
+        $('#employee_id_hidden').val() ||
+        $('input[name="employee_id"]').val() ||
+        '';
+}
+
+/**
+ * Fetch and display leave balance
+ */
+function leavetypechange(leave_type_id) {
+    var employee_id = getEmployeeId();
+
+    // Clear previous messages
+    $('#enjoy').html('');
+    $('#checkleave').html('');
+
+    if (!employee_id) {
+        $('#enjoy').html('<span style="color: red;">Employee ID not found</span>');
+        return;
+    }
+
+    if (!leave_type_id) {
+        return;
+    }
+
+    // Show loading
+    $('#enjoy').html('Loading...');
+
+    // Dynamic AJAX call
+    $.ajax({
+        url: "<?php echo base_url('leave/Leave/free_leave'); ?>",
+        method: 'POST',
+        dataType: 'json',
+        data: {
+            'employee_id': employee_id,
+            'leave_type': leave_type_id
+        },
+        success: function(data) {
+            $('#enjoy').html('You Enjoyed: ' + data.enjoy + ' Days');
+            $('#checkleave').html('Available Leave: ' + data.due + ' Days');
+        }
+    });
+}
+
+// Initialize on page load
+$(document).ready(function() {
+    var isAdmin = $('#employee_id').is('select');
+
+    if (isAdmin) {
+        // Admin: reload on employee change
+        $('#employee_id').on('change', function() {
+            var leaveType = $('#leave_type_id').val();
+            if (leaveType) {
+                leavetypechange(leaveType);
+            }
+        });
+    } else {
+        // User: auto-load if leave type selected
+        var initialLeaveType = $('#leave_type_id').val();
+        var empId = getEmployeeId();
+        if (empId && initialLeaveType) {
+            leavetypechange(initialLeaveType);
+        }
+    }
+
+    // When leave type changes (both)
+    $('#leave_type_id').on('change', function() {
+        var leaveType = $(this).val();
+        if (leaveType) {
+            leavetypechange(leaveType);
+        }
+    });
 });
 </script>

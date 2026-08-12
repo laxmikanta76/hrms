@@ -106,8 +106,7 @@ public function emp_salstup_delete($id = null)
 	public function salary_genrate_create($data = array())
 	{
 		return $this->db->insert('salary_sheet_generate', $data);//
-	}
-	
+	}	
 
 	public function salary_generateView($limit = null, $start = null)
 	{
@@ -298,9 +297,10 @@ public function create_employee_payment($data = array())
 	}
 
 	public function salary_paymentinfo($id = null){
-			return $this->db->select('count(DISTINCT(pment.emp_sal_pay_id)) as emp_sal_pay_id,pment.*,p.employee_id,p.first_name,p.last_name,desig.position_name,p.rate as basic,p.rate_type as salarytype')   
+			return $this->db->select('count(DISTINCT(pment.emp_sal_pay_id)) as emp_sal_pay_id,pment.*,p.employee_id,p.first_name,p.last_name,p.hire_date as joining_date,p.bank_name AS employee_bank_name,p.bank_account_no,p.pan_number,p.pf_number,p.uan_number,desig.position_name,dept.department_name,p.rate as basic,p.rate_type as salarytype')   
             ->from('employee_salary_payment pment')
             ->join('employee_history p', 'pment.employee_id = p.employee_id', 'left')
+			->join('department dept', 'dept.dept_id = p.dept_id', 'left')
             ->join('position desig', 'desig.pos_id = p.pos_id', 'left')
             ->where('pment.emp_sal_pay_id',$id)
             ->group_by('pment.emp_sal_pay_id')
@@ -313,4 +313,30 @@ public function setting()
 		return $this->db->get('setting')->row();
 	}
 
+	// NEW: Function to get LOP days from employee_leave_balance table
+	public function get_lop_days($employee_id, $month, $year) {
+		// Get the leave_type_id for LOP from leave_type table
+		$lop_type = $this->db->select('leave_type_id')
+			->from('leave_type')
+			->where('leave_type', 'Loss Of Pay(LOP)')
+			->get()
+			->row();
+		
+		if(!$lop_type) {
+			return 0;
+		}
+		
+		// Get LOP days used from employee_leave_balance
+		$result = $this->db->select('used_leave')
+			->from('employee_leave_balance')
+			->where('employee_id', $employee_id)
+			->where('leave_type_id', $lop_type->leave_type_id)
+			->where('month', $month)
+			->where('year', $year)
+			->get()
+			->row();
+		
+		return $result ? $result->used_leave : 0;
+	}
+	
 }

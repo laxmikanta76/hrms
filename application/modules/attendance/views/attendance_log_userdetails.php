@@ -41,6 +41,8 @@ foreach ($queryd as $attendance) {?>
                                 <th>Location</th>
                                 <th>Radius</th>
                                 <th><?php echo display('action')?></th>
+                                <th>Remarks</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -92,6 +94,8 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                      }
                                     ?>
                                 </td>
+
+
                                 <td>
                                     <?php if ($this->session->userdata('isAdmin') == 1): ?>
                                     <a href="<?php echo base_url("attendance/home/delete_attendance/$attendancedata->atten_his_id/$attendancedata->uid") ?>"
@@ -105,6 +109,9 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                     <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?= !empty($attendancedata->remarks)? htmlspecialchars($attendancedata->remarks): '-' ?>
                                 </td>
                             </tr>
 
@@ -155,7 +162,7 @@ $att_in = $this->db->select('a.*,b.first_name,b.last_name')
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4"><b><?php echo display('n_b_spendtime')?> <?php echo $totaltime;?>
+                                <td colspan="7"><b><?php echo display('n_b_spendtime')?> <?php echo $totaltime;?>
                                         <?php echo display('hours_out_of_workinghour')?></b></td>
                             </tr>
                         </tfoot>
